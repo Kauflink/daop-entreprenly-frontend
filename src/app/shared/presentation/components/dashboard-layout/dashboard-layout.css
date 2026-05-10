@@ -129,7 +129,7 @@
   margin-top: auto;
   height: clamp(40px, 5.19dvh, 56px);
   border-color: #c9c9c9;
-  border-radius: 11px;
+  border-radius: 999px;
   background: #fdfdfd;
   font-size: clamp(12px, 1.3dvh, 14px);
   font-weight: 600;
