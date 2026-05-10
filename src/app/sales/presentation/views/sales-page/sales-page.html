@@ -1,1 +1,222 @@
-<p>sales-page works!</p>
+<div class="sales-page">
+  <header class="page-header">
+    <h1>Ventas</h1>
+    <p class="subtitle">Registra y procesa las ventas del día</p>
+  </header>
+
+  <div class="main-layout">
+    <div class="left-column">
+      <section class="card detail-card">
+        <h2 class="card-title">
+          <span class="title-icon">⚙</span>
+          Detalle de venta
+        </h2>
+
+        <div class="search-container">
+          <input
+            type="text"
+            placeholder="Buscar producto por nombre..."
+            class="search-input"
+            [ngModel]="searchTerm()"
+            (ngModelChange)="onSearchInput($event)"
+            (focus)="onSearchFocus()"
+            (blur)="onSearchBlur()"
+            [disabled]="store.loading()"
+          />
+
+          @if (isDropdownOpen() && filteredProducts().length > 0) {
+          <ul class="suggestions-dropdown">
+            @for (product of filteredProducts(); track product.id) {
+            <li class="suggestion-item" (mousedown)="onSelectProduct(product)">
+              {{ product.name }}
+            </li>
+            }
+          </ul>
+          }
+
+          @if (showNotFound()) {
+          <div class="not-found-message">
+            <span class="error-icon">⊘</span>
+            Producto no encontrado
+          </div>
+          }
+
+          @if (showEmptyTicketError()) {
+          <div class="not-found-message">
+            <span class="error-icon">⊘</span>
+            No hay productos en el ticket
+          </div>
+          }
+        </div>
+
+        <table class="ticket-table">
+          <thead>
+          <tr>
+            <th>Producto</th>
+            <th>Tipo</th>
+            <th>Cantidad/peso</th>
+            <th>P. Unit.</th>
+            <th>Subtotal</th>
+            <th></th>
+          </tr>
+          </thead>
+          <tbody>
+          @if (ticketItems().length === 0) {
+          <tr class="empty-row">
+            <td colspan="6">Aún no se han añadido productos al ticket</td>
+          </tr>
+          } @else {
+          @for (item of ticketItems(); track $index; let i = $index) {
+          <tr>
+            <td class="product-cell">{{ item.productName }}</td>
+            <td>
+              @if (item.type === 'unit') {
+              <span class="badge badge-unit">📦 Unidad</span>
+              } @else {
+              <span class="badge badge-weight">⚖ Peso</span>
+              }
+            </td>
+            <td>
+              @if (item.type === 'unit') {
+              {{ item.quantity }} und
+              } @else {
+              {{ item.weightKg }} kg
+              }
+            </td>
+            <td>S/ {{ item.unitPrice.toFixed(2) }}</td>
+            <td>S/ {{ item.subtotal.toFixed(2) }}</td>
+            <td>
+              <button class="delete-btn" (click)="onDeleteItem(i)">🗑</button>
+            </td>
+          </tr>
+          }
+          }
+          </tbody>
+        </table>
+      </section>
+
+      <section class="cash-summary">
+        <h2 class="cash-title">Resumen de Caja</h2>
+        <p class="cash-subtitle">Ingresos acumulados por método de pago</p>
+
+        <div class="cash-widgets">
+          <div class="cash-widget total-day">
+            <p class="widget-label">
+              <span class="widget-icon">🧾</span>
+              Total del Día
+            </p>
+            <p class="widget-value">S/ {{ totalDay().toFixed(2) }}</p>
+          </div>
+          <div class="cash-widget">
+            <p class="widget-label">
+              <span class="widget-icon">💵</span>
+              Efectivo
+            </p>
+            <p class="widget-value">S/ {{ totalCash().toFixed(2) }}</p>
+          </div>
+          <div class="cash-widget">
+            <p class="widget-label">
+              <span class="widget-icon">💳</span>
+              Tarjeta - Yape/Plin
+            </p>
+            <p class="widget-value">S/ {{ totalDigital().toFixed(2) }}</p>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <aside class="right-column">
+      <section class="card summary-card">
+        <h2 class="card-title">
+          <span class="title-icon">⚙</span>
+          Resumen
+        </h2>
+        <div class="summary-row">
+          <span>Subtotal</span>
+          <span>S/ {{ subtotal().toFixed(2) }}</span>
+        </div>
+        <div class="summary-row">
+          <span>Items</span>
+          <span>{{ itemCount() }} productos</span>
+        </div>
+        <hr/>
+        <div class="summary-total">
+          <span>Total</span>
+          <span class="total-value">S/ {{ subtotal().toFixed(2) }}</span>
+        </div>
+      </section>
+
+      <section class="card payment-card">
+        <h2 class="card-title">
+          <span class="title-icon">⚙</span>
+          Método de Pago
+        </h2>
+        <div class="payment-buttons">
+          <button
+            class="payment-btn"
+            [class.selected]="paymentMethod() === 'CASH'"
+            [disabled]="ticketItems().length === 0"
+            (click)="onSelectPayment('CASH')"
+          >
+            <span class="payment-icon">💵</span>
+            <span class="payment-label">Efectivo</span>
+          </button>
+          <button
+            class="payment-btn"
+            [class.selected]="paymentMethod() === 'DIGITAL'"
+            [disabled]="ticketItems().length === 0"
+            (click)="onSelectPayment('DIGITAL')"
+          >
+            <span class="payment-icon">💳</span>
+            <span class="payment-label">Tarjeta yape/plin</span>
+          </button>
+        </div>
+
+        @if (showPaymentError()) {
+        <div class="payment-error">
+          <span class="error-icon">⊘</span>
+          Por favor, seleccione un método de pago
+        </div>
+        }
+      </section>
+
+      <button
+        class="btn-finalize"
+        [class.btn-finalize-inactive]="ticketItems().length === 0 || paymentMethod() === null"
+        (click)="onFinalizeSale()"
+      >
+        Finalizar Venta y Emitir Boleta
+      </button>
+      <button class="btn-cancel" (click)="onCancelSale()">Cancelar Venta</button>
+    </aside>
+  </div>
+
+  <!-- Modal Cantidad -->
+  @if (isQuantityModalOpen()) {
+  <app-quantity-modal
+    [product]="selectedProduct()!"
+    (confirm)="onQuantityConfirm($event)"
+    (cancel)="onQuantityCancel()"
+  />
+  }
+
+  <!-- Modal Peso -->
+  @if (isWeightModalOpen()) {
+  <app-weight-modal
+    [product]="selectedProduct()!"
+    (confirm)="onWeightConfirm($event)"
+    (cancel)="onWeightCancel()"
+  />
+  }
+
+  <!-- Modal Venta Exitosa -->
+  @if (showSuccessModal()) {
+  <div class="modal-backdrop" (click)="onCloseSuccessModal()">
+    <div class="success-modal" (click)="$event.stopPropagation()">
+      <button class="close-btn" (click)="onCloseSuccessModal()">✕</button>
+      <h2 class="success-title">Venta Exitosa</h2>
+      <div class="success-check">✅</div>
+    </div>
+  </div>
+  }
+</div>

@@ -10,9 +10,9 @@
     {
       "id": 2,
       "name": "Pollo entero",
-      "unitPrice": 12,
+      "unitPrice": 12.0,
       "isWeighted": true,
-      "availableStock": 25
+      "availableStock": 25.0
     },
     {
       "id": 3,
@@ -31,14 +31,14 @@
     {
       "id": 5,
       "name": "Inca Kola 1.5L",
-      "unitPrice": 7,
+      "unitPrice": 7.0,
       "isWeighted": false,
       "availableStock": 60
     },
     {
       "id": 6,
       "name": "Queso fresco",
-      "unitPrice": 18,
+      "unitPrice": 18.0,
       "isWeighted": true,
       "availableStock": 8.5
     },
@@ -68,7 +68,7 @@
           "quantity": 2,
           "weightKg": null,
           "unitPrice": 3.5,
-          "subtotal": 7
+          "subtotal": 7.0
         },
         {
           "productId": 4,
@@ -80,11 +80,15 @@
         }
       ],
       "total": 10,
+          "subtotal": 3.0
+        }
+      ],
+      "total": 10.0,
       "paymentMethod": "CASH",
       "paymentReceipt": {
         "method": "CASH",
         "transactionCode": "CASH-001",
-        "amount": 10,
+        "amount": 10.0,
         "confirmedAt": "2026-05-08T10:30:00"
       },
       "status": "COMPLETED",
@@ -120,11 +124,16 @@
   "cash-registers": [
     {
       "id": 1,
-      "date": "2026-05-08",
-      "totalCash": 10,
-      "totalDigital": 13.75
+      "date": "2026-05-10",
+      "totalCash": 11,
+      "totalDigital": 45.5
     }
   ],
+  "iot-scale": {
+    "id": 1,
+    "connected": false,
+    "deviceId": "SCALE-001"
+  },
   "profile": {
     "user": {
       "id": 1,
