@@ -14,13 +14,19 @@ export const routes: Routes = [
         loadComponent: () => import('./shared/presentation/views/home/home').then((m) => m.Home),
       },
       {
+        path: 'sales',
+        loadChildren: () =>
+          import('./sales/presentation/views/sales.routes').then((m) => m.salesRoutes),
+        title: `${baseTitle} - Sales`,
+      },
+      {
         path: '',
         redirectTo: 'home',
-        pathMatch: 'full'
+        pathMatch: 'full',
       },
       {
         path: '**',
-        redirectTo: 'home'
+        redirectTo: 'home',
       },
     ],
   },
