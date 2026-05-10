@@ -39,21 +39,45 @@ export class SaleItem {
     return 0;
   }
 
-  get productId(): number { return this._productId; }
-  set productId(value: number) { this._productId = value; }
+  get productId(): number {
+    return this._productId;
+  }
+  set productId(value: number) {
+    this._productId = value;
+  }
 
-  get productName(): string { return this._productName; }
-  set productName(value: string) { this._productName = value; }
+  get productName(): string {
+    return this._productName;
+  }
+  set productName(value: string) {
+    this._productName = value;
+  }
 
-  get quantity(): number | null { return this._quantity; }
-  set quantity(value: number | null) { this._quantity = value; }
+  get quantity(): number | null {
+    return this._quantity;
+  }
+  set quantity(value: number | null) {
+    this._quantity = value;
+  }
 
-  get weightKg(): number | null { return this._weightKg; }
-  set weightKg(value: number | null) { this._weightKg = value; }
+  get weightKg(): number | null {
+    return this._weightKg;
+  }
+  set weightKg(value: number | null) {
+    this._weightKg = value;
+  }
 
-  get unitPrice(): number { return this._unitPrice; }
-  set unitPrice(value: number) { this._unitPrice = value; }
+  get unitPrice(): number {
+    return this._unitPrice;
+  }
+  set unitPrice(value: number) {
+    this._unitPrice = value;
+  }
 
-  get subtotal(): number { return this._subtotal; }
-  set subtotal(value: number) { this._subtotal = value; }
+  get subtotal(): number {
+    return this._subtotal;
+  }
+  set subtotal(value: number) {
+    this._subtotal = value;
+  }
 }
