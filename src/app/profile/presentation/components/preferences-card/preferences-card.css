@@ -78,7 +78,9 @@ form {
   line-height: 16px;
   color: #65381e;
   cursor: pointer;
-  transition: background-color 0.2s, border-color 0.2s;
+  transition:
+    background-color 0.2s,
+    border-color 0.2s;
   text-align: center;
 }
 

@@ -4,9 +4,11 @@ import { UserProfile } from '../domain/model/user-profile.entity';
 import { UserProfileResource, UserProfileResponse } from './profile-response';
 
 @Injectable({ providedIn: 'root' })
-export class ProfileAssembler
-  implements BaseAssembler<UserProfile, UserProfileResource, UserProfileResponse>
-{
+export class ProfileAssembler implements BaseAssembler<
+  UserProfile,
+  UserProfileResource,
+  UserProfileResponse
+> {
   toEntityFromResource(resource: UserProfileResource): UserProfile {
     return {
       id: resource.id,

@@ -19,12 +19,13 @@
     </section>
 
     <!-- Fila inferior: notificaciones + contraseña -->
-    <section class="col col--notifications" aria-label="Notificaciones">
-      <app-notifications-card />
-    </section>
-
-    <section class="col col--password" aria-label="Seguridad">
-      <app-change-password-card />
-    </section>
+    <div class="col col--bottom">
+      <section aria-label="Notificaciones">
+        <app-notifications-card />
+      </section>
+      <section aria-label="Seguridad">
+        <app-change-password-card />
+      </section>
+    </div>
   </div>
 </main>
