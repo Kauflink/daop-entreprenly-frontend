@@ -1,41 +1,93 @@
 .page {
   background: #f6f4f4;
-  min-height: 100%;
-  padding: 24px;
   box-sizing: border-box;
+  height: calc(100dvh - 98px);
+  display: flex;
+  min-height: 0;
 }
 
 .grid {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  grid-template-rows: auto auto;
+  flex: 1;
+  grid-template-columns: 481fr 446fr 502fr;
+  grid-template-rows: minmax(0, 498fr) minmax(0, 423fr);
   grid-template-areas:
     'left center right'
-    'notifications password password';
-  gap: 24px;
-  max-width: 1600px;
+    'bottom bottom bottom';
+  column-gap: 24px;
+  row-gap: 25px;
+  max-width: 1510px;
+  width: 100%;
+  height: 100%;
   margin: 0 auto;
+  align-items: stretch;
+  min-height: 0;
 }
 
 .col {
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 25px;
+  min-height: 0;
 }
 
-.col--left { grid-area: left; }
-.col--center { grid-area: center; }
-.col--right { grid-area: right; }
-.col--notifications { grid-area: notifications; }
-.col--password { grid-area: password; }
+.col--left {
+  grid-area: left;
+}
+.col--center {
+  grid-area: center;
+}
+.col--right {
+  grid-area: right;
+  gap: 10px;
+}
+
+.col--left > app-user-info-card {
+  flex: 2 1 0;
+  min-height: 0;
+}
+.col--left > app-upload-photo-card {
+  flex: 3 1 0;
+  min-height: 0;
+}
+.col--center > app-update-profile-card {
+  flex: 3 1 0;
+  min-height: 0;
+}
+.col--center > app-phone-verify-card {
+  flex: 2 1 0;
+  min-height: 0;
+}
+
+.row--bottom {
+  grid-area: bottom;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  align-items: stretch;
+  min-height: 0;
+}
 
 @media (max-width: 1200px) {
+  .page {
+    height: auto;
+  }
+
   .grid {
+    height: auto;
     grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto auto;
     grid-template-areas:
       'left center'
       'right right'
-      'notifications password';
+      'bottom bottom';
+  }
+
+  .col--left > app-user-info-card,
+  .col--left > app-upload-photo-card,
+  .col--center > app-update-profile-card,
+  .col--center > app-phone-verify-card {
+    flex: 0 0 auto;
   }
 }
 
@@ -46,11 +98,17 @@
       'left'
       'center'
       'right'
-      'notifications'
-      'password';
+      'bottom';
   }
 
-  .page {
-    padding: 16px;
+  .col--left > app-user-info-card,
+  .col--left > app-upload-photo-card,
+  .col--center > app-update-profile-card,
+  .col--center > app-phone-verify-card {
+    flex: 0 0 auto;
+  }
+
+  .row--bottom {
+    grid-template-columns: 1fr;
   }
 }

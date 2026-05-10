@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, effect, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ProfileStore } from '../../../application/profile-store';
 
@@ -9,7 +9,7 @@ import { ProfileStore } from '../../../application/profile-store';
   templateUrl: './update-profile-card.html',
   styleUrl: './update-profile-card.css',
 })
-export class UpdateProfileCard implements OnInit {
+export class UpdateProfileCard {
   private readonly fb = inject(FormBuilder);
   protected readonly store = inject(ProfileStore);
 
@@ -18,9 +18,11 @@ export class UpdateProfileCard implements OnInit {
     lastName: ['', [Validators.required, Validators.minLength(2)]],
   });
 
-  ngOnInit(): void {
-    const { firstName, lastName } = this.store.profile();
-    this.form.setValue({ firstName, lastName });
+  constructor() {
+    effect(() => {
+      const { firstName, lastName } = this.store.profile();
+      this.form.setValue({ firstName, lastName }, { emitEvent: false });
+    });
   }
 
   protected onSubmit(): void {
