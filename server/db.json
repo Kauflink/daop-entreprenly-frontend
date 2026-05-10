@@ -131,10 +131,10 @@
       "totalDigital": 23.5
     },
     {
+      "id": 3,
       "date": "2026-05-10",
       "totalCash": 0,
-      "totalDigital": 0,
-      "id": 3
+      "totalDigital": 0
     }
   ],
   "iot-scale": {
@@ -149,7 +149,7 @@
       "currentPlan": {
         "id": "plan-free",
         "name": "Plan Free",
-        "shortDescription": "Incluido autom\u00e1ticamente al crear la cuenta. No requiere tarjeta ni genera cargos.",
+        "shortDescription": "Incluido automáticamente al crear la cuenta. No requiere tarjeta ni genera cargos.",
         "monthlyPrice": 0,
         "annualPrice": 0,
         "status": "free",
@@ -158,7 +158,7 @@
         "recommended": false,
         "features": [
           {
-            "description": "Inventario b\u00e1sico con productos y lotes limitados.",
+            "description": "Inventario básico con productos y lotes limitados.",
             "available": true
           },
           {
@@ -217,11 +217,11 @@
         }
       ],
       "billingSetup": {
-        "paymentMethodTitle": "M\u00e9todo de pago",
-        "paymentMethodDescription": "A\u00fan no hay tarjeta o medio de pago registrado.",
-        "paymentMethodActionLabel": "Agregar m\u00e9todo de pago",
-        "fiscalDataTitle": "Datos de facturaci\u00f3n",
-        "fiscalDataDescription": "Completa RUC, raz\u00f3n social y correo de comprobantes.",
+        "paymentMethodTitle": "Método de pago",
+        "paymentMethodDescription": "Aún no hay tarjeta o medio de pago registrado.",
+        "paymentMethodActionLabel": "Agregar método de pago",
+        "fiscalDataTitle": "Datos de facturación",
+        "fiscalDataDescription": "Completa RUC, razón social y correo de comprobantes.",
         "fiscalDataActionLabel": "Completar datos",
         "hasPaymentMethod": false,
         "hasFiscalData": false
@@ -230,7 +230,7 @@
         {
           "id": "created-account",
           "title": "Cuenta creada",
-          "detail": "16 abril 2026 - Plan Free asignado autom\u00e1ticamente"
+          "detail": "16 abril 2026 - Plan Free asignado automáticamente"
         },
         {
           "id": "current-status",
@@ -239,13 +239,12 @@
         },
         {
           "id": "billing",
-          "title": "Facturaci\u00f3n",
+          "title": "Facturación",
           "detail": "Pendiente de completar para actualizar a Plan Control"
         }
       ]
     }
-  ]
-}
+  ],
   "profile": {
     "user": {
       "id": 1,
