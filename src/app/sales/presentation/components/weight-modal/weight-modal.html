@@ -1,0 +1,55 @@
+<div class="modal-backdrop" (click)="onBackdropClick($event)">
+  <div class="modal-content">
+    <header class="modal-header">
+      <div class="modal-title-wrapper">
+        <h2 class="modal-title">Registrar Peso</h2>
+        <p class="modal-subtitle">
+          @if (isScaleConnected()) {
+          Registrando el peso del producto
+          } @else {
+          Ingresa el peso del producto manualmente
+          }
+        </p>
+      </div>
+      <button class="close-btn" (click)="onCancel()" aria-label="Cerrar">✕</button>
+    </header>
+
+    <div class="weight-display">
+      <label class="display-label">Peso (kg)</label>
+      <div class="display-value" [class.waiting]="isWaitingForScale()">
+        @if (isWaitingForScale()) {
+        Esperando respuesta de la balanza...
+        } @else {
+        {{ displayValue() || '0.000' }}
+        }
+      </div>
+    </div>
+
+    <!-- Solo mostrar teclado si NO hay balanza conectada -->
+    @if (!isScaleConnected()) {
+    <div class="keypad">
+      @for (key of keypadKeys; track key) {
+      <button class="keypad-btn" (click)="onKeyPress(key)">{{ key }}</button>
+      }
+      <button class="keypad-btn keypad-dot" (click)="onDotPress()">.</button>
+      <button class="keypad-btn keypad-zero" (click)="onZeroPress()">0</button>
+      <button class="keypad-btn keypad-backspace" (click)="onBackspace()">◀</button>
+    </div>
+
+    <button
+      class="confirm-btn"
+      [disabled]="!canConfirm()"
+      (click)="onConfirm()"
+    >
+      Confirmar Peso
+    </button>
+
+    @if (hasInsufficientStock()) {
+    <div class="error-message">
+      <span class="error-icon">⊘</span>
+      Stock insuficiente
+    </div>
+    }
+    }
+  </div>
+</div>
