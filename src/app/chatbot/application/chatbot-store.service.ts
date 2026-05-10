@@ -10,6 +10,7 @@ export class ChatbotStoreService {
   private api = inject(ChatbotApiService);
 
   readonly session = signal<WhatsappSession | null>(null);
+  readonly isSessionLoaded = signal(false);
   readonly conversations = signal<Conversation[]>([]);
   readonly selectedConversationId = signal<number | null>(null);
   readonly messages = signal<ChatMessage[]>([]);
@@ -24,6 +25,7 @@ export class ChatbotStoreService {
   loadSession(): void {
     this.api.whatsappSessions.getAll().subscribe(sessions => {
       this.session.set(sessions[0] ?? null);
+      this.isSessionLoaded.set(true);
     });
   }
 

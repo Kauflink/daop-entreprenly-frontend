@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, effect, ElementRef, inject, OnInit, viewChild } from '@angular/core';
+import { Router } from '@angular/router';
 import { ChatbotStoreService } from '../../../application/chatbot-store.service';
 import { ConversationList } from '../../components/conversation-list/conversation-list';
 import { ConversationHeader } from '../../components/conversation-header/conversation-header';
@@ -13,10 +14,19 @@ import { ChatInput } from '../../components/chat-input/chat-input';
 })
 export class Conversations implements OnInit {
   protected readonly store = inject(ChatbotStoreService);
-
+  private readonly router = inject(Router);
   private readonly messagesContainer = viewChild<ElementRef>('messagesContainer');
 
   constructor() {
+    effect(() => {
+      if (this.store.isSessionLoaded()) {
+        const session = this.store.session();
+        if (!session || session.status !== 'connected') {
+          this.router.navigate(['/dashboard/chatbot']);
+        }
+      }
+    });
+
     effect(() => {
       this.store.messages();
       const el = this.messagesContainer()?.nativeElement;
@@ -27,6 +37,7 @@ export class Conversations implements OnInit {
   }
 
   ngOnInit(): void {
+    this.store.loadSession();
     this.store.loadConversations();
   }
 
