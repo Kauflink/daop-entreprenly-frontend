@@ -1,0 +1,37 @@
+<div class="card">
+  <h2 class="card__title">Actualizar perfil</h2>
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
+    <div class="field">
+      <label for="firstName" class="field__label">Nombre</label>
+      <input
+        id="firstName"
+        type="text"
+        formControlName="firstName"
+        class="field__input"
+        placeholder="Ingresa tu nombre"
+        autocomplete="given-name"
+      />
+    </div>
+
+    <div class="field">
+      <label for="lastName" class="field__label">Apellidos</label>
+      <input
+        id="lastName"
+        type="text"
+        formControlName="lastName"
+        class="field__input"
+        placeholder="Ingresa tus apellidos"
+        autocomplete="family-name"
+      />
+    </div>
+
+    <button
+      type="submit"
+      class="btn-primary"
+      [disabled]="form.invalid"
+    >
+      Guardar cambios del perfil
+    </button>
+  </form>
+</div>
