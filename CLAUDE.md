@@ -128,3 +128,11 @@ Patrón daos-language-reference de UPC. Cada BC tiene 4 capas:
 - Trabajo en rama `feature/sales`
 - Develop tiene el DashboardLayout base
 - Avisar al equipo antes de tocar código compartido (shared/)
+
+## Funcionalidad implementada (Iteraciones 1-8)
+...
+- ✅ Iteración 8: Persistencia del Resumen de Caja
+  - cash-register-response.ts, cash-register-assembler.ts, cash-registers-api-endpoint.ts
+  - getTodayCashRegister() y updateCashRegister() en sales-api.ts
+  - Carga automática del cash-register al iniciar sales-page
+  - Persistencia en db.json al finalizar venta
