@@ -1,6 +1,19 @@
 {
-  "option": {
-    "home": "Inicio",
-    "help": "Ayuda"
+  "dashboard": {
+    "sidebarLabel": "Navegación principal",
+    "brandLabel": "Ir al dashboard de Entreprenly",
+    "currentUserLabel": "Usuario actual",
+    "welcome": "Bienvenido, usuario",
+    "logout": "Cerrar sesión",
+    "nav": {
+      "home": "Home",
+      "products": "Productos",
+      "batches": "Lotes",
+      "sales": "Ventas",
+      "subscription": "Suscripción",
+      "orders": "Pedidos",
+      "chatbot": "Chatbot",
+      "help": "Ayuda"
+    }
   }
 }
