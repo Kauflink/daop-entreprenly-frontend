@@ -1,0 +1,37 @@
+<div class="flex h-full overflow-hidden rounded-xl bg-white shadow-sm">
+
+  <div class="w-64 flex-shrink-0">
+    <app-conversation-list
+      [conversations]="store.conversations()"
+      [selectedId]="store.selectedConversationId()"
+      (conversationSelected)="onConversationSelected($event)"
+    />
+  </div>
+
+  <div class="flex flex-1 flex-col">
+    @if (store.selectedConversation(); as conversation) {
+      <app-conversation-header [conversation]="conversation" />
+
+      <div class="flex flex-1 flex-col gap-3 overflow-y-auto bg-gray-50 p-6">
+        @for (message of store.messages(); track message.id) {
+          <app-message-bubble
+            [message]="message"
+            [clientInitials]="conversation.clientName.split(' ')[0][0] + (conversation.clientName.split(' ')[1]?.[0] ?? '')"
+          />
+        }
+      </div>
+
+      <app-chat-input (messageSent)="onMessageSent($event)" />
+    } @else {
+      <div class="flex flex-1 flex-col items-center justify-center gap-3 bg-gray-50">
+        <div class="flex h-16 w-16 items-center justify-center rounded-full bg-orange-400">
+          <span class="text-2xl text-white">💬</span>
+        </div>
+        <p class="text-center text-sm text-orange-400">
+          Envía y recibe mensajes sin necesidad<br />de tener tu teléfono conectado
+        </p>
+      </div>
+    }
+  </div>
+
+</div>

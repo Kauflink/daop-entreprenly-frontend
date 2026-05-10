@@ -9,6 +9,11 @@ const baseTitle = 'Entreprenly';
 export const routes: Routes = [
   { path: 'home', component: Home, title: `${baseTitle} - Home` },
   { path: 'help', loadComponent: help, title: `${baseTitle} - Help` },
+  {
+    path: 'chatbot',
+    loadChildren: () =>
+      import('./chatbot/presentation/views/chatbot.routes').then(m => m.CHATBOT_ROUTES),
+  },
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: '**', loadComponent: pageNotFound, title: `${baseTitle} - Page Not Found` },
 ];
