@@ -24,6 +24,13 @@ export const routes: Routes = [
           import('./sales/presentation/views/sales.routes').then((m) => m.salesRoutes)
       },
       {
+        path: 'subscription',
+        loadChildren: () =>
+          import('./subscription/presentation/views/subscription.routes').then(
+            (m) => m.subscriptionRoutes,
+          )
+      },
+      {
         path: '',
         redirectTo: 'home',
         pathMatch: 'full'
