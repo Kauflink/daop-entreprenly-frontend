@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, effect, ElementRef, inject, OnInit, viewChild } from '@angular/core';
 import { ChatbotStoreService } from '../../../application/chatbot-store.service';
 import { ConversationList } from '../../components/conversation-list/conversation-list';
 import { ConversationHeader } from '../../components/conversation-header/conversation-header';
@@ -13,6 +13,18 @@ import { ChatInput } from '../../components/chat-input/chat-input';
 })
 export class Conversations implements OnInit {
   protected readonly store = inject(ChatbotStoreService);
+
+  private readonly messagesContainer = viewChild<ElementRef>('messagesContainer');
+
+  constructor() {
+    effect(() => {
+      this.store.messages();
+      const el = this.messagesContainer()?.nativeElement;
+      if (el) {
+        setTimeout(() => { el.scrollTop = el.scrollHeight; }, 0);
+      }
+    });
+  }
 
   ngOnInit(): void {
     this.store.loadConversations();

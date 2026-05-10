@@ -1,4 +1,6 @@
-import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input, output, signal } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { interval } from 'rxjs';
 
 @Component({
   selector: 'app-qr-connection-card',
@@ -47,11 +49,30 @@ import { ChangeDetectionStrategy, Component, input, output } from '@angular/core
           <rect x="16" y="18" width="1" height="3"/><rect x="18" y="19" width="3" height="1"/>
         </svg>
       </div>
-      <p class="text-sm text-gray-400">El código expira en 60 segundos</p>
+      <p class="text-sm" [class]="seconds() <= 10 ? 'text-red-400' : 'text-gray-400'">
+        El código expira en {{ seconds() }} segundo{{ seconds() === 1 ? '' : 's' }}
+      </p>
     </div>
   `,
 })
 export class QrConnectionCard {
   readonly hasError = input<boolean>(false);
   readonly retry = output<void>();
+  readonly expired = output<void>();
+
+  protected readonly seconds = signal(120);
+
+  constructor() {
+    interval(1000)
+      .pipe(takeUntilDestroyed())
+      .subscribe(() => {
+        this.seconds.update(s => {
+          if (s <= 1) {
+            this.expired.emit();
+            return 0;
+          }
+          return s - 1;
+        });
+      });
+  }
 }

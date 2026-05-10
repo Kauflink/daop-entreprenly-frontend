@@ -13,7 +13,7 @@
       @if (store.selectedConversation(); as conversation) {
         <app-conversation-header [conversation]="conversation" />
 
-        <div class="flex flex-1 flex-col gap-3 overflow-y-auto bg-gray-50 p-6">
+        <div class="flex flex-1 flex-col gap-3 overflow-y-auto bg-gray-50 p-6" #messagesContainer>
           @for (message of store.messages(); track message.id) {
             <app-message-bubble
               [message]="message"
