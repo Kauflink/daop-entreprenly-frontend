@@ -6,5 +6,5 @@
  */
 export enum CajaUpdateSource {
   PRESENCIAL = 'PRESENCIAL',
-  WHATSAPP = 'WHATSAPP'
+  WHATSAPP = 'WHATSAPP',
 }
