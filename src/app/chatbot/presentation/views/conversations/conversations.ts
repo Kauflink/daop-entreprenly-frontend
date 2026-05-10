@@ -39,6 +39,17 @@ export class Conversations implements OnInit {
   ngOnInit(): void {
     this.store.loadSession();
     this.store.loadConversations();
+    this.store.loadOrders();
+  }
+
+  protected onApprove(): void {
+    const order = this.store.pendingOrder();
+    if (order) this.store.approveOrder(order.id);
+  }
+
+  protected onReject(): void {
+    const order = this.store.pendingOrder();
+    if (order) this.store.rejectOrder(order.id);
   }
 
   protected onConversationSelected(id: number): void {
