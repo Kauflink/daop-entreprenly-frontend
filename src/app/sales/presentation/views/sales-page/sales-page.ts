@@ -1,4 +1,4 @@
-import { Component, computed, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { SalesStore } from '../../../application/sales-store';
 import { ProductSummary } from '../../../domain/model/product-summary.entity';
@@ -22,6 +22,7 @@ type PaymentMethod = 'CASH' | 'DIGITAL' | null;
   imports: [FormsModule, QuantityModal, WeightModal],
   templateUrl: './sales-page.html',
   styleUrl: './sales-page.css',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SalesPage {
   protected readonly store = inject(SalesStore);
@@ -69,10 +70,10 @@ export class SalesPage {
   protected readonly showEmptyTicketError = signal<boolean>(false);
   protected readonly showSuccessModal = signal<boolean>(false);
 
-  // === Resumen de Caja ===
-  protected readonly totalCash = signal<number>(0);
-  protected readonly totalDigital = signal<number>(0);
-  protected readonly totalDay = computed<number>(() => this.totalCash() + this.totalDigital());
+  // === Resumen de Caja (delegado al store para persistencia) ===
+  protected readonly totalCash = computed<number>(() => this.store.totalCash());
+  protected readonly totalDigital = computed<number>(() => this.store.totalDigital());
+  protected readonly totalDay = computed<number>(() => this.store.totalDay());
 
   // ===== Handlers Buscador =====
   protected onSearchInput(value: string): void {
@@ -168,11 +169,7 @@ export class SalesPage {
     }
 
     const total = this.subtotal();
-    if (this.paymentMethod() === 'CASH') {
-      this.totalCash.update((v) => v + total);
-    } else {
-      this.totalDigital.update((v) => v + total);
-    }
+    this.store.addSaleToRegister(total, this.paymentMethod() === 'DIGITAL');
 
     this.showSuccessModal.set(true);
 
