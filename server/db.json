@@ -102,7 +102,7 @@
   ],
   "iot-scale": {
     "id": 1,
-    "connected": true,
+    "connected": false,
     "deviceId": "SCALE-001"
   }
 }
