@@ -1,26 +1,28 @@
 .page {
   background: #f6f4f4;
-  min-height: 100%;
-  padding: 5px;
   box-sizing: border-box;
 }
 
 .grid {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: 481fr 446fr 502fr;
   grid-template-rows: auto auto;
   grid-template-areas:
     'left center right'
     'bottom bottom bottom';
-  gap: 25px;
-  max-width: 1600px;
-  margin: 1px;
+  column-gap: 24px;
+  row-gap: 16px;
+  max-width: 1510px;
+  width: 100%;
+  margin: 0 auto;
+  align-items: stretch;
 }
 
 .col {
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 16px;
+  min-height: 0;
 }
 
 .col--left {
@@ -32,21 +34,30 @@
 .col--right {
   grid-area: right;
 }
-.col--bottom {
+
+.col--left > app-user-info-card {
+  flex: 2 1 0;
+  min-height: 0;
+}
+.col--left > app-upload-photo-card {
+  flex: 3 1 0;
+  min-height: 0;
+}
+.col--center > app-update-profile-card {
+  flex: 3 1 0;
+  min-height: 0;
+}
+.col--center > app-phone-verify-card {
+  flex: 2 1 0;
+  min-height: 0;
+}
+
+.row--bottom {
   grid-area: bottom;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 25px;
-  align-items: stretch;
-}
-
-.col--bottom > section {
-  display: flex;
-  flex-direction: column;
-}
-
-.col--bottom > section > * {
-  flex: 1;
+  gap: 24px;
+  align-items: start;
 }
 
 @media (max-width: 1200px) {
@@ -69,11 +80,14 @@
       'bottom';
   }
 
-  .col--bottom {
-    grid-template-columns: 1fr;
+  .col--left > app-user-info-card,
+  .col--left > app-upload-photo-card,
+  .col--center > app-update-profile-card,
+  .col--center > app-phone-verify-card {
+    flex: 0 0 auto;
   }
 
-  .page {
-    padding: 16px;
+  .row--bottom {
+    grid-template-columns: 1fr;
   }
 }
