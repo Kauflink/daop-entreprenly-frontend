@@ -1,0 +1,290 @@
+:host {
+  display: block;
+}
+
+.sales-page {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+/* ===== HEADER ===== */
+.page-header {
+  margin-bottom: 24px;
+}
+
+.page-header h1 {
+  font-size: 32px;
+  margin: 0 0 4px 0;
+  font-weight: bold;
+  color: #1e1e1e;
+}
+
+.page-header .subtitle {
+  color: #666;
+  margin: 0;
+  font-size: 14px;
+}
+
+/* ===== LAYOUT PRINCIPAL ===== */
+.main-layout {
+  display: grid;
+  grid-template-columns: 1fr 380px;
+  gap: 24px;
+  align-items: start;
+}
+
+.left-column {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.right-column {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* ===== CARDS ===== */
+.card {
+  background: white;
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.card-title {
+  font-size: 18px;
+  font-weight: bold;
+  margin: 0 0 16px 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #1e1e1e;
+}
+
+.title-icon {
+  color: #f59e0b;
+  font-size: 16px;
+}
+
+/* ===== DETALLE DE VENTA ===== */
+.search-bar {
+  margin-bottom: 16px;
+}
+
+.search-input {
+  width: 100%;
+  padding: 14px 24px;
+  background: #1e1e1e;
+  color: white;
+  border: none;
+  border-radius: 30px;
+  font-size: 14px;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.search-input:disabled {
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+.search-input::placeholder {
+  color: #999;
+}
+
+.ticket-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.ticket-table th {
+  text-align: left;
+  padding: 12px 8px;
+  font-weight: 500;
+  color: #1e1e1e;
+  border-bottom: 1px solid #eee;
+  font-size: 14px;
+}
+
+.ticket-table td {
+  padding: 12px 8px;
+  font-size: 14px;
+}
+
+.empty-row td {
+  text-align: center;
+  color: #999;
+  padding: 40px 0;
+}
+
+/* ===== RESUMEN (columna derecha) ===== */
+.summary-card .summary-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 6px 0;
+  font-size: 14px;
+  color: #666;
+}
+
+.summary-card hr {
+  border: none;
+  border-top: 1px solid #eee;
+  margin: 12px 0;
+}
+
+.summary-card .summary-total {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 18px;
+  font-weight: bold;
+  color: #1e1e1e;
+}
+
+.total-value {
+  color: #f59e0b;
+}
+
+/* ===== MÉTODO DE PAGO ===== */
+.payment-buttons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.payment-btn {
+  background: #e0e0e0;
+  border: none;
+  border-radius: 16px;
+  padding: 20px 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  color: #1e1e1e;
+  transition: all 0.2s ease;
+}
+
+.payment-btn:not(:disabled):hover {
+  background: #ffd9b3;
+}
+
+.payment-btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.payment-icon {
+  font-size: 32px;
+}
+
+.payment-label {
+  font-weight: 500;
+  text-align: center;
+}
+
+/* ===== BOTONES DE ACCIÓN ===== */
+.btn-finalize {
+  background: #f59e0b;
+  color: white;
+  border: none;
+  border-radius: 30px;
+  padding: 14px;
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.btn-finalize:not(:disabled):hover {
+  background: #ea7c0a;
+}
+
+.btn-finalize:disabled {
+  background: #f5c478;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+.btn-cancel {
+  background: white;
+  color: #666;
+  border: 1px solid #ddd;
+  border-radius: 30px;
+  padding: 14px;
+  font-size: 15px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.btn-cancel:hover {
+  background: #f5f5f5;
+}
+
+/* ===== RESUMEN DE CAJA ===== */
+.cash-title {
+  font-size: 24px;
+  font-weight: bold;
+  margin: 0 0 4px 0;
+  color: #1e1e1e;
+}
+
+.cash-subtitle {
+  color: #666;
+  margin: 0 0 16px 0;
+  font-size: 14px;
+}
+
+.cash-widgets {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+.cash-widget {
+  background: white;
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.cash-widget.total-day {
+  background: linear-gradient(135deg, #f59e0b 0%, #ea7c0a 100%);
+  color: white;
+}
+
+.cash-widget.total-day .widget-label,
+.cash-widget.total-day .widget-value {
+  color: white;
+}
+
+.widget-label {
+  font-size: 13px;
+  margin: 0 0 12px 0;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #666;
+}
+
+.widget-icon {
+  font-size: 16px;
+}
+
+.widget-value {
+  font-size: 28px;
+  font-weight: bold;
+  margin: 0;
+  color: #1e1e1e;
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 1080px) {
+  .main-layout {
+    grid-template-columns: 1fr;
+  }
+}
