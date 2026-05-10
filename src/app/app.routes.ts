@@ -14,6 +14,11 @@ export const routes: Routes = [
         loadComponent: () => import('./shared/presentation/views/home/home').then((m) => m.Home),
       },
       {
+        path: 'profile',
+        loadChildren: () =>
+          import('./profile/presentation/profile.routes').then((m) => m.profileRoutes),
+      },
+      {
         path: '',
         redirectTo: 'home',
         pathMatch: 'full'
