@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { RouterLink, RouterLinkActive } from '@angular/router';
+import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { TranslatePipe } from '@ngx-translate/core';
 
@@ -11,7 +11,7 @@ interface NavigationItem {
 
 @Component({
   selector: 'app-dashboard-layout',
-  imports: [RouterLink, RouterLinkActive, MatIconModule, TranslatePipe],
+  imports: [RouterOutlet, RouterLink, RouterLinkActive, MatIconModule, TranslatePipe],
   templateUrl: './dashboard-layout.html',
   styleUrl: './dashboard-layout.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -21,22 +21,22 @@ export class DashboardLayout {
     {
       labelKey: 'dashboard.nav.home',
       icon: 'dashboard',
-      route: '/dashboard/home'
+      route: '/dashboard/home',
     },
     {
       labelKey: 'dashboard.nav.products',
       icon: 'inventory_2',
-      route: '/dashboard/products'
+      route: '/dashboard/products',
     },
     {
       labelKey: 'dashboard.nav.batches',
       icon: 'category',
-      route: '/dashboard/batches'
+      route: '/dashboard/batches',
     },
     {
       labelKey: 'dashboard.nav.sales',
       icon: 'receipt_long',
-      route: '/dashboard/sales'
+      route: '/dashboard/sales',
     },
     {
       labelKey: 'dashboard.nav.subscription',
@@ -46,17 +46,17 @@ export class DashboardLayout {
     {
       labelKey: 'dashboard.nav.orders',
       icon: 'shopping_cart',
-      route: '/dashboard/orders'
+      route: '/dashboard/orders',
     },
     {
       labelKey: 'dashboard.nav.chatbot',
       icon: 'smart_toy',
-      route: '/dashboard/chatbot'
+      route: '/dashboard/chatbot',
     },
     {
       labelKey: 'dashboard.nav.help',
       icon: 'help_outline',
-      route: '/dashboard/help'
+      route: '/dashboard/help',
     },
   ];
 }
