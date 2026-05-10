@@ -1,0 +1,95 @@
+.card {
+  background: #ffffff;
+  border: 1px solid #c9c9c9;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.25);
+  border-radius: 25px;
+  padding: 20px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.card__title {
+  font-family: 'Reddit Sans', sans-serif;
+  font-weight: 800;
+  font-size: 16px;
+  line-height: 21px;
+  color: #292a2d;
+  margin: 0;
+  text-align: center;
+}
+
+.dropzone {
+  background: #fbfaf8;
+  border-radius: 25px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.25);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.dropzone__avatar {
+  width: 101px;
+  height: 102px;
+  border-radius: 50%;
+  background: #0c0f12;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.dropzone__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.dropzone__icon {
+  color: #ffffff;
+  font-size: 52px;
+  width: 52px;
+  height: 52px;
+}
+
+.dropzone__actions {
+  display: flex;
+  justify-content: center;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.btn-select {
+  background: #ffffff;
+  border: 1px solid #c9c9c9;
+  border-radius: 25px;
+  padding: 10px 24px;
+  font-family: 'Reddit Sans', sans-serif;
+  font-weight: 800;
+  font-size: 12px;
+  line-height: 16px;
+  color: #511e00;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.btn-select:hover {
+  background: #f6f4f4;
+}
+
+.btn-select:focus-visible {
+  outline: 2px solid #f38313;
+  outline-offset: 2px;
+}
