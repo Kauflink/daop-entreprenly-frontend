@@ -6,25 +6,29 @@ import { FormsModule } from '@angular/forms';
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [FormsModule],
   template: `
-    <div class="border-t border-gray-200 p-4">
+    <div class="border-t border-gray-200 bg-white px-4 py-3">
       <div
-        class="flex items-center gap-2 rounded-full border px-4 py-2"
-        [class]="isEmpty() ? 'border-red-300 bg-red-50' : 'border-orange-300 bg-orange-50'"
+        class="flex items-center gap-2 rounded-full px-4 py-2.5"
+        [class]="isEmpty() ? 'bg-gray-100' : 'bg-green-50'"
       >
         <input
-          class="flex-1 bg-transparent text-sm outline-none placeholder:text-gray-400"
+          class="flex-1 bg-transparent text-sm outline-none"
+          [class]="isEmpty() ? 'placeholder:text-gray-400' : 'placeholder:text-gray-400'"
           [placeholder]="isEmpty() ? 'El mensaje no puede estar vacío' : 'Escribe un mensaje...'"
           [(ngModel)]="text"
           (keyup.enter)="submit()"
+          (input)="isEmpty.set(false)"
           aria-label="Escribe un mensaje"
         />
         <button
-          class="flex h-8 w-8 items-center justify-center rounded-full bg-green-600 text-white transition-colors hover:bg-green-700 disabled:opacity-40"
+          class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-green-700 text-white transition-colors hover:bg-green-800 disabled:opacity-40"
           [disabled]="!text.trim()"
           (click)="submit()"
           aria-label="Enviar mensaje"
         >
-          ▶
+          <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
+          </svg>
         </button>
       </div>
     </div>

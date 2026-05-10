@@ -5,14 +5,14 @@ import { Conversation } from '../../../domain/model/conversation.entity';
   selector: 'app-conversation-header',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <div class="flex items-center gap-3 border-b border-gray-200 px-6 py-3">
+    <div class="flex items-center gap-3 border-b border-gray-200 bg-white px-5 py-3">
       <div
-        class="flex h-10 w-10 items-center justify-center rounded-full bg-orange-300 text-sm font-semibold text-white"
+        class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-orange-400 text-sm font-bold text-white"
       >
         {{ initials() }}
       </div>
       <div>
-        <p class="font-semibold text-gray-800">{{ conversation().clientName }}</p>
+        <p class="font-bold text-gray-900">{{ conversation().clientName }}</p>
         <p class="text-xs text-green-500">En línea</p>
       </div>
     </div>
