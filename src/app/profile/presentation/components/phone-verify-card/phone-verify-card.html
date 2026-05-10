@@ -1,0 +1,20 @@
+<div class="card">
+  <h2 class="card__title">Verificar o cambiar número de teléfono</h2>
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
+    <div class="field">
+      <label for="phone" class="field__label">Número</label>
+      <div class="field__row">
+        <input
+          id="phone"
+          type="tel"
+          formControlName="phone"
+          class="field__input"
+          placeholder="+51 999 999 999"
+          autocomplete="tel"
+        />
+        <button type="submit" class="btn-verify" [disabled]="form.invalid">Verificar</button>
+      </div>
+    </div>
+  </form>
+</div>

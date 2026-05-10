@@ -22,15 +22,31 @@ export class PaymentReceipt {
     this._confirmedAt = receipt.confirmedAt ?? new Date();
   }
 
-  get method(): PaymentMethod { return this._method; }
-  set method(value: PaymentMethod) { this._method = value; }
+  get method(): PaymentMethod {
+    return this._method;
+  }
+  set method(value: PaymentMethod) {
+    this._method = value;
+  }
 
-  get transactionCode(): string { return this._transactionCode; }
-  set transactionCode(value: string) { this._transactionCode = value; }
+  get transactionCode(): string {
+    return this._transactionCode;
+  }
+  set transactionCode(value: string) {
+    this._transactionCode = value;
+  }
 
-  get amount(): number { return this._amount; }
-  set amount(value: number) { this._amount = value; }
+  get amount(): number {
+    return this._amount;
+  }
+  set amount(value: number) {
+    this._amount = value;
+  }
 
-  get confirmedAt(): Date { return this._confirmedAt; }
-  set confirmedAt(value: Date) { this._confirmedAt = value; }
+  get confirmedAt(): Date {
+    return this._confirmedAt;
+  }
+  set confirmedAt(value: Date) {
+    this._confirmedAt = value;
+  }
 }
