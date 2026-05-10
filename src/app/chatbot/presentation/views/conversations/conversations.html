@@ -1,37 +1,48 @@
-<div class="flex h-full overflow-hidden rounded-xl bg-white shadow-sm">
+<div class="flex h-full flex-col p-6 pt-4">
+  <div class="flex flex-1 overflow-hidden rounded-2xl bg-white shadow-sm">
 
-  <div class="w-64 flex-shrink-0">
-    <app-conversation-list
-      [conversations]="store.conversations()"
-      [selectedId]="store.selectedConversationId()"
-      (conversationSelected)="onConversationSelected($event)"
-    />
-  </div>
+    <div class="w-64 flex-shrink-0">
+      <app-conversation-list
+        [conversations]="store.conversations()"
+        [selectedId]="store.selectedConversationId()"
+        (conversationSelected)="onConversationSelected($event)"
+      />
+    </div>
 
-  <div class="flex flex-1 flex-col">
-    @if (store.selectedConversation(); as conversation) {
-      <app-conversation-header [conversation]="conversation" />
+    <div class="flex flex-1 flex-col border-l border-gray-200">
+      @if (store.selectedConversation(); as conversation) {
+        <app-conversation-header [conversation]="conversation" />
 
-      <div class="flex flex-1 flex-col gap-3 overflow-y-auto bg-gray-50 p-6">
-        @for (message of store.messages(); track message.id) {
-          <app-message-bubble
-            [message]="message"
-            [clientInitials]="conversation.clientName.split(' ')[0][0] + (conversation.clientName.split(' ')[1]?.[0] ?? '')"
-          />
-        }
-      </div>
-
-      <app-chat-input (messageSent)="onMessageSent($event)" />
-    } @else {
-      <div class="flex flex-1 flex-col items-center justify-center gap-3 bg-gray-50">
-        <div class="flex h-16 w-16 items-center justify-center rounded-full bg-orange-400">
-          <span class="text-2xl text-white">💬</span>
+        <div class="flex flex-1 flex-col gap-3 overflow-y-auto bg-gray-50 p-6">
+          @for (message of store.messages(); track message.id) {
+            <app-message-bubble
+              [message]="message"
+              [clientInitials]="conversation.clientName.split(' ')[0][0] + (conversation.clientName.split(' ')[1]?.[0] ?? '')"
+            />
+          }
         </div>
-        <p class="text-center text-sm text-orange-400">
-          Envía y recibe mensajes sin necesidad<br />de tener tu teléfono conectado
-        </p>
-      </div>
-    }
-  </div>
 
+        <app-chat-input (messageSent)="onMessageSent($event)" />
+      } @else if (store.conversations().length === 0) {
+        <div class="flex flex-1 flex-col items-center justify-center gap-3 bg-gray-50">
+          <svg class="h-16 w-16 text-orange-400" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M20 2H4C2.9 2 2 2.9 2 4v13c0 1.1.9 2 2 2h3l3 3 3-3h7c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM9 11H7V9h2v2zm4 0h-2V9h2v2zm4 0h-2V9h2v2z"/>
+          </svg>
+          <p class="text-center text-sm text-orange-400">
+            Aún no hay conversaciones.<br />Los chats de tus clientes aparecerán aquí<br />cuando el chatbot reciba mensajes.
+          </p>
+        </div>
+      } @else {
+        <div class="flex flex-1 flex-col items-center justify-center gap-3 bg-gray-50">
+          <svg class="h-16 w-16 text-orange-400" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M20 2H4C2.9 2 2 2.9 2 4v13c0 1.1.9 2 2 2h3l3 3 3-3h7c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM9 11H7V9h2v2zm4 0h-2V9h2v2zm4 0h-2V9h2v2z"/>
+          </svg>
+          <p class="text-center text-sm text-orange-400">
+            Envía y recibe mensajes sin necesidad<br />de tener tu teléfono conectado
+          </p>
+        </div>
+      }
+    </div>
+
+  </div>
 </div>
