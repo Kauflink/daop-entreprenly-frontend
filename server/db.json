@@ -1,61 +1,4 @@
 {
-  "products": [
-    { "id": 1, "name": "Arroz Costeño 1kg",        "unitPrice": 5.50,  "isWeighted": true,  "availableStock": 50.5 },
-    { "id": 2, "name": "Pollo entero",              "unitPrice": 12.00, "isWeighted": true,  "availableStock": 25.0 },
-    { "id": 3, "name": "Coca Cola 500ml",           "unitPrice": 3.50,  "isWeighted": false, "availableStock": 100  },
-    { "id": 4, "name": "Pan francés",               "unitPrice": 0.50,  "isWeighted": false, "availableStock": 200  },
-    { "id": 5, "name": "Inca Kola 1.5L",            "unitPrice": 7.00,  "isWeighted": false, "availableStock": 60   },
-    { "id": 6, "name": "Queso fresco",              "unitPrice": 18.00, "isWeighted": true,  "availableStock": 8.5  },
-    { "id": 7, "name": "Galleta Soda Field x6",     "unitPrice": 4.20,  "isWeighted": false, "availableStock": 45   },
-    { "id": 8, "name": "Aceite Primor 1L",          "unitPrice": 9.80,  "isWeighted": false, "availableStock": 30   }
-  ],
-  "sales": [
-    {
-      "id": 1,
-      "sellerId": 1,
-      "items": [
-        { "productId": 3, "productName": "Coca Cola 500ml", "quantity": 2, "weightKg": null, "unitPrice": 3.50, "subtotal": 7.00 },
-        { "productId": 4, "productName": "Pan francés",     "quantity": 6, "weightKg": null, "unitPrice": 0.50, "subtotal": 3.00 }
-      ],
-      "total": 10.00,
-      "paymentMethod": "CASH",
-      "paymentReceipt": {
-        "method": "CASH",
-        "transactionCode": "CASH-001",
-        "amount": 10.00,
-        "confirmedAt": "2026-05-08T10:30:00"
-      },
-      "status": "COMPLETED",
-      "createdAt": "2026-05-08T10:25:00",
-      "completedAt": "2026-05-08T10:30:00"
-    },
-    {
-      "id": 2,
-      "sellerId": 1,
-      "items": [
-        { "productId": 1, "productName": "Arroz Costeño 1kg", "quantity": null, "weightKg": 2.5, "unitPrice": 5.50, "subtotal": 13.75 }
-      ],
-      "total": 13.75,
-      "paymentMethod": "YAPE",
-      "paymentReceipt": {
-        "method": "YAPE",
-        "transactionCode": "YAPE-987654",
-        "amount": 13.75,
-        "confirmedAt": "2026-05-08T11:15:00"
-      },
-      "status": "COMPLETED",
-      "createdAt": "2026-05-08T11:10:00",
-      "completedAt": "2026-05-08T11:15:00"
-    }
-  ],
-  "cash-registers": [
-    {
-      "id": 1,
-      "date": "2026-05-08",
-      "totalCash": 10.00,
-      "totalDigital": 13.75
-    }
-  ],
   "whatsapp-sessions": [
     {
       "id": 1,
@@ -72,7 +15,7 @@
       "sellerId": 1,
       "clientPhone": "+51 987 654 321",
       "clientName": "Andrea Torres",
-      "lastMessage": "Comprobante enviado",
+      "lastMessage": "Quiero 3 Coca Cola 600ml",
       "lastMessageTime": "10:22",
       "status": "WAITING_PAYMENT",
       "createdAt": "2026-04-15T10:00:00.000Z"
@@ -149,86 +92,6 @@
     },
     {
       "id": 7,
-      "conversationId": 1,
-      "content": "Ya no quiero agregar más productos",
-      "sender": "client",
-      "type": "text",
-      "sentAt": "2026-04-15T10:03:00.000Z"
-    },
-    {
-      "id": 8,
-      "conversationId": 1,
-      "content": "Resumen de tu pedido:\n— 3 und Coca Cola 600ml — S/18.00\n— 1.5 kg Manzanas — S/1.50\nEntrega: Av. Los Álamos 234, Miraflores\nTotal: S/19.50\n¿Confirmas el pedido?",
-      "sender": "bot",
-      "type": "text",
-      "sentAt": "2026-04-15T10:03:30.000Z"
-    },
-    {
-      "id": 9,
-      "conversationId": 1,
-      "content": "Sí, confirmo",
-      "sender": "client",
-      "type": "text",
-      "sentAt": "2026-04-15T10:04:00.000Z"
-    },
-    {
-      "id": 10,
-      "conversationId": 1,
-      "content": "Sistema: pedido #0042 registrado — estado: pendiente — 10:22:33",
-      "sender": "system",
-      "type": "text",
-      "sentAt": "2026-04-15T10:04:10.000Z"
-    },
-    {
-      "id": 11,
-      "conversationId": 1,
-      "content": "Instrucciones de pago para el pedido #0042:\n\nYape / Plin al número: 999 888 777\nMonto exacto: S/19.50\nReferencia: #0042\n\nEnvía el comprobante aquí cuando realices el pago.",
-      "sender": "bot",
-      "type": "text",
-      "sentAt": "2026-04-15T10:04:30.000Z"
-    },
-    {
-      "id": 12,
-      "conversationId": 1,
-      "content": "/assets/placeholder-comprobante.svg",
-      "sender": "client",
-      "type": "image",
-      "sentAt": "2026-04-15T10:18:00.000Z"
-    },
-    {
-      "id": 13,
-      "conversationId": 1,
-      "content": "Sistema: comprobante recibido — pendiente de validación — 10:18:05",
-      "sender": "system",
-      "type": "text",
-      "sentAt": "2026-04-15T10:18:05.000Z"
-    },
-    {
-      "id": 14,
-      "conversationId": 1,
-      "content": "Comprobante recibido. El comerciante lo revisará en breve y te notificaremos.",
-      "sender": "bot",
-      "type": "text",
-      "sentAt": "2026-04-15T10:18:10.000Z"
-    },
-    {
-      "id": 15,
-      "conversationId": 1,
-      "content": "Comerciante aprobó el pago — 10:22",
-      "sender": "system",
-      "type": "text",
-      "sentAt": "2026-04-15T10:22:00.000Z"
-    },
-    {
-      "id": 16,
-      "conversationId": 1,
-      "content": "Tu pago fue recibido y verificado correctamente.\nEl pedido #0042 está confirmado y en preparación.",
-      "sender": "bot",
-      "type": "text",
-      "sentAt": "2026-04-15T10:22:10.000Z"
-    },
-    {
-      "id": 17,
       "conversationId": 2,
       "content": "Cuanto cuesta el arroz",
       "sender": "client",
@@ -236,12 +99,60 @@
       "sentAt": "2026-04-15T09:45:00.000Z"
     },
     {
-      "id": 18,
+      "id": 8,
       "conversationId": 2,
       "content": "Arroz por kg — S/2.50/kg · disponible",
       "sender": "bot",
       "type": "text",
       "sentAt": "2026-04-15T09:45:20.000Z"
+    },
+    {
+      "id": 9,
+      "conversationId": 1,
+      "content": "Agregado a tu pedido: 3 und Coca Cola 600ml — S/18.00 ¿Deseas agregar más productos?",
+      "sender": "client",
+      "type": "text",
+      "sentAt": "2026-05-10T07:18:14.832Z"
+    },
+    {
+      "id": 10,
+      "conversationId": 1,
+      "content": "Comerciante está escribiendo...",
+      "sender": "system",
+      "type": "text",
+      "sentAt": "2026-05-10T07:18:15.051Z"
+    },
+    {
+      "id": 11,
+      "conversationId": 1,
+      "content": "Entendido. ¿En qué más puedo ayudarte?",
+      "sender": "bot",
+      "type": "text",
+      "sentAt": "2026-05-10T07:18:17.069Z"
+    },
+    {
+      "id": 12,
+      "conversationId": 1,
+      "content": "3",
+      "sender": "client",
+      "type": "text",
+      "sentAt": "2026-05-10T07:18:24.670Z"
+    },
+    {
+      "id": 13,
+      "conversationId": 1,
+      "content": "Comerciante está escribiendo...",
+      "sender": "system",
+      "type": "text",
+      "sentAt": "2026-05-10T07:18:24.685Z"
+    },
+    {
+      "id": 14,
+      "conversationId": 1,
+      "content": "Entendido. ¿En qué más puedo ayudarte?",
+      "sender": "bot",
+      "type": "text",
+      "sentAt": "2026-05-10T07:18:26.698Z"
     }
   ],
   "chat-orders": [
@@ -250,10 +161,18 @@
       "conversationId": 1,
       "orderNumber": "#0042",
       "items": [
-        { "productName": "Coca Cola 600ml", "quantity": 3, "unitPrice": 6.00 },
-        { "productName": "Manzanas", "quantity": 1.5, "unitPrice": 1.00 }
+        {
+          "productName": "Coca Cola 600ml",
+          "quantity": 3,
+          "unitPrice": 6
+        },
+        {
+          "productName": "Manzanas",
+          "quantity": 1.5,
+          "unitPrice": 1
+        }
       ],
-      "total": 19.50,
+      "total": 19.5,
       "deliveryAddress": "Av. Los Álamos 234, Miraflores",
       "paymentMethod": "Yape",
       "status": "WAITING_PAYMENT",
