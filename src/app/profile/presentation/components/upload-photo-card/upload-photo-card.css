@@ -8,10 +8,10 @@
   border: 1px solid #c9c9c9;
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.25);
   border-radius: 25px;
-  padding: 10px 24px;
+  padding: clamp(14px, 2dvh, 22px);
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: clamp(5px, 0.74dvh, 8px);
   height: 100%;
   box-sizing: border-box;
 }
@@ -19,8 +19,8 @@
 .card__title {
   font-family: 'Reddit Sans', sans-serif;
   font-weight: 800;
-  font-size: 16px;
-  line-height: 21px;
+  font-size: clamp(13px, 1.48dvh, 16px);
+  line-height: 1.3;
   color: #292a2d;
   margin: 0;
   text-align: left;
@@ -30,24 +30,26 @@
   background: #fbfaf8;
   border-radius: 25px;
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.25);
-  padding: 10px;
+  padding: clamp(6px, 0.93dvh, 10px);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 8px;
+  gap: clamp(5px, 0.74dvh, 8px);
   flex: 1;
+  min-height: 0;
 }
 
 .dropzone__avatar {
-  width: 101px;
-  height: 102px;
+  width: clamp(60px, 9.44dvh, 101px);
+  height: clamp(60px, 9.44dvh, 102px);
   border-radius: 50%;
   background: #0c0f12;
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
+  flex-shrink: 0;
 }
 
 .dropzone__img {
@@ -58,9 +60,9 @@
 
 .dropzone__icon {
   color: #ffffff;
-  font-size: 52px;
-  width: 52px;
-  height: 52px;
+  font-size: clamp(32px, 4.81dvh, 52px);
+  width: clamp(32px, 4.81dvh, 52px);
+  height: clamp(32px, 4.81dvh, 52px);
 }
 
 .dropzone__actions {
@@ -84,11 +86,11 @@
   background: #ffffff;
   border: 1px solid #c9c9c9;
   border-radius: 25px;
-  padding: 7px 24px;
+  padding: clamp(5px, 0.65dvh, 7px) 24px;
   font-family: 'Reddit Sans', sans-serif;
   font-weight: 800;
-  font-size: 12px;
-  line-height: 16px;
+  font-size: clamp(10px, 1.11dvh, 12px);
+  line-height: 1.3;
   color: #511e00;
   cursor: pointer;
   transition: background-color 0.2s;
