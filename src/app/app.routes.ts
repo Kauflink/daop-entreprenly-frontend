@@ -11,12 +11,17 @@ export const routes: Routes = [
     children: [
       {
         path: 'home',
-        loadComponent: () => import('./shared/presentation/views/home/home').then((m) => m.Home),
+        loadComponent: () => import('./shared/presentation/views/home/home').then((m) => m.Home)
       },
       {
         path: 'profile',
         loadChildren: () =>
-          import('./profile/presentation/profile.routes').then((m) => m.profileRoutes),
+          import('./profile/presentation/profile.routes').then((m) => m.profileRoutes)
+      },
+      {
+        path: 'sales',
+        loadChildren: () =>
+          import('./sales/presentation/views/sales.routes').then((m) => m.salesRoutes)
       },
       {
         path: '',
@@ -26,19 +31,18 @@ export const routes: Routes = [
       {
         path: '**',
         redirectTo: 'home'
-      },
-    ],
+      }
+    ]
   },
   {
     path: '',
     redirectTo: '/dashboard',
-    pathMatch: 'full',
+    pathMatch: 'full'
   },
   {
     path: '**',
     loadComponent: () =>
       import('./shared/presentation/views/page-not-found/page-not-found').then(
-        (m) => m.PageNotFound,
-      ),
+        (m) => m.PageNotFound)
   },
 ];
