@@ -28,13 +28,9 @@ export class ProfileStore {
     chatbotMessages: false,
   });
 
-  readonly fullName = computed(
-    () => `${this.profile().firstName} ${this.profile().lastName}`,
-  );
+  readonly fullName = computed(() => `${this.profile().firstName} ${this.profile().lastName}`);
 
-  readonly roleAndPlan = computed(
-    () => `${this.profile().role} - ${this.profile().plan}`,
-  );
+  readonly roleAndPlan = computed(() => `${this.profile().role} - ${this.profile().plan}`);
 
   updateProfile(partial: Partial<Omit<UserProfile, 'id'>>): void {
     this.profile.update((p) => ({ ...p, ...partial }));
