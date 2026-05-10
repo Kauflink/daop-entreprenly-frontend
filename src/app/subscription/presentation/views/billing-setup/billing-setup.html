@@ -1,0 +1,39 @@
+<section class="billing-panel" aria-labelledby="billing-title">
+  <p class="eyebrow">{{ 'subscription.billing.eyebrow' | translate }}</p>
+  <h2 id="billing-title">{{ 'subscription.billing.title' | translate }}</h2>
+
+  <div class="billing-grid">
+    <article
+      class="billing-card"
+      [class.billing-card--complete]="billingSetup().hasPaymentMethod"
+    >
+      <div class="billing-card__body">
+        <span class="billing-card__icon" aria-hidden="true">
+          <mat-icon>credit_card</mat-icon>
+        </span>
+        <div>
+          <h3>{{ billingSetup().paymentMethodTitle }}</h3>
+          <p>{{ billingSetup().paymentMethodDescription }}</p>
+        </div>
+      </div>
+      <button type="button" (click)="requestPaymentMethod()">
+        {{ billingSetup().paymentMethodActionLabel }}
+      </button>
+    </article>
+
+    <article class="billing-card" [class.billing-card--complete]="billingSetup().hasFiscalData">
+      <div class="billing-card__body">
+        <span class="billing-card__icon" aria-hidden="true">
+          <mat-icon>receipt_long</mat-icon>
+        </span>
+        <div>
+          <h3>{{ billingSetup().fiscalDataTitle }}</h3>
+          <p>{{ billingSetup().fiscalDataDescription }}</p>
+        </div>
+      </div>
+      <button type="button" (click)="requestFiscalData()">
+        {{ billingSetup().fiscalDataActionLabel }}
+      </button>
+    </article>
+  </div>
+</section>

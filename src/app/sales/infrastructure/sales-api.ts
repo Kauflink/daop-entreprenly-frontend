@@ -32,6 +32,6 @@ export class SalesApi extends BaseApi {
   }
 
   getScaleStatus(): Observable<ScaleStatus> {
-    return this.http.get<ScaleStatus>(`${environment.salesProviderApiBaseUrl}/iot-scale`);
+    return this.http.get<ScaleStatus>(`${environment.entreprenlyProviderApiBaseUrl}/iot-scale`);
   }
 }
