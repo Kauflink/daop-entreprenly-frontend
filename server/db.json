@@ -1,4 +1,61 @@
 {
+  "products": [
+    { "id": 1, "name": "Arroz Costeño 1kg",        "unitPrice": 5.50,  "isWeighted": true,  "availableStock": 50.5 },
+    { "id": 2, "name": "Pollo entero",              "unitPrice": 12.00, "isWeighted": true,  "availableStock": 25.0 },
+    { "id": 3, "name": "Coca Cola 500ml",           "unitPrice": 3.50,  "isWeighted": false, "availableStock": 100  },
+    { "id": 4, "name": "Pan francés",               "unitPrice": 0.50,  "isWeighted": false, "availableStock": 200  },
+    { "id": 5, "name": "Inca Kola 1.5L",            "unitPrice": 7.00,  "isWeighted": false, "availableStock": 60   },
+    { "id": 6, "name": "Queso fresco",              "unitPrice": 18.00, "isWeighted": true,  "availableStock": 8.5  },
+    { "id": 7, "name": "Galleta Soda Field x6",     "unitPrice": 4.20,  "isWeighted": false, "availableStock": 45   },
+    { "id": 8, "name": "Aceite Primor 1L",          "unitPrice": 9.80,  "isWeighted": false, "availableStock": 30   }
+  ],
+  "sales": [
+    {
+      "id": 1,
+      "sellerId": 1,
+      "items": [
+        { "productId": 3, "productName": "Coca Cola 500ml", "quantity": 2, "weightKg": null, "unitPrice": 3.50, "subtotal": 7.00 },
+        { "productId": 4, "productName": "Pan francés",     "quantity": 6, "weightKg": null, "unitPrice": 0.50, "subtotal": 3.00 }
+      ],
+      "total": 10.00,
+      "paymentMethod": "CASH",
+      "paymentReceipt": {
+        "method": "CASH",
+        "transactionCode": "CASH-001",
+        "amount": 10.00,
+        "confirmedAt": "2026-05-08T10:30:00"
+      },
+      "status": "COMPLETED",
+      "createdAt": "2026-05-08T10:25:00",
+      "completedAt": "2026-05-08T10:30:00"
+    },
+    {
+      "id": 2,
+      "sellerId": 1,
+      "items": [
+        { "productId": 1, "productName": "Arroz Costeño 1kg", "quantity": null, "weightKg": 2.5, "unitPrice": 5.50, "subtotal": 13.75 }
+      ],
+      "total": 13.75,
+      "paymentMethod": "YAPE",
+      "paymentReceipt": {
+        "method": "YAPE",
+        "transactionCode": "YAPE-987654",
+        "amount": 13.75,
+        "confirmedAt": "2026-05-08T11:15:00"
+      },
+      "status": "COMPLETED",
+      "createdAt": "2026-05-08T11:10:00",
+      "completedAt": "2026-05-08T11:15:00"
+    }
+  ],
+  "cash-registers": [
+    {
+      "id": 1,
+      "date": "2026-05-08",
+      "totalCash": 10.00,
+      "totalDigital": 13.75
+    }
+  ],
   "whatsapp-sessions": [
     {
       "id": 1,
