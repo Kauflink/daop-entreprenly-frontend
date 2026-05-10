@@ -16,7 +16,7 @@ export class CashRegistersApiEndpoint extends BaseApiEndpoint<
   constructor(http: HttpClient) {
     super(
       http,
-      `${environment.salesProviderApiBaseUrl}${environment.salesProviderCashRegistersEndpointPath}`,
+      `${environment.entreprenlyProviderApiBaseUrl}${environment.entreprenlyProviderCashRegistersEndpointPath}`,
       new CashRegisterAssembler(),
     );
   }
