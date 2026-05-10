@@ -1,0 +1,48 @@
+<div class="card">
+  <h2 class="card__title">Configurar notificaciones</h2>
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
+    <div class="toggle-item">
+      <div class="toggle-item__text">
+        <p class="toggle-item__name">Alertas de Stock y Lotes</p>
+        <p class="toggle-item__desc">
+          Avisos sobre stock bajo, lotes vencidos o próximos a vencer.
+        </p>
+      </div>
+      <label class="toggle-item__switch" aria-label="Activar alertas de stock y lotes">
+        <input type="checkbox" formControlName="stockAlerts" class="visually-hidden" />
+        <span class="toggle-item__track" aria-hidden="true"></span>
+      </label>
+    </div>
+
+    <div class="toggle-item">
+      <div class="toggle-item__text">
+        <p class="toggle-item__name">Validaciones de pago</p>
+        <p class="toggle-item__desc">
+          Notificaciones cuando llega un comprobante o queda un pago pendiente.
+        </p>
+      </div>
+      <label class="toggle-item__switch" aria-label="Activar validaciones de pago">
+        <input type="checkbox" formControlName="paymentAlerts" class="visually-hidden" />
+        <span class="toggle-item__track" aria-hidden="true"></span>
+      </label>
+    </div>
+
+    <div class="toggle-item">
+      <div class="toggle-item__text">
+        <p class="toggle-item__name">Mensajes del chatbot</p>
+        <p class="toggle-item__desc">
+          Aviso de nuevas conversaciones y respuestas del chatbot.
+        </p>
+      </div>
+      <label class="toggle-item__switch" aria-label="Activar mensajes del chatbot">
+        <input type="checkbox" formControlName="chatbotMessages" class="visually-hidden" />
+        <span class="toggle-item__track" aria-hidden="true"></span>
+      </label>
+    </div>
+
+    <button type="submit" class="btn-primary">
+      Guardar notificaciones
+    </button>
+  </form>
+</div>
