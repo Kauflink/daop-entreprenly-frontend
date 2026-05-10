@@ -76,10 +76,6 @@
           "quantity": 6,
           "weightKg": null,
           "unitPrice": 0.5,
-          "subtotal": 3
-        }
-      ],
-      "total": 10,
           "subtotal": 3.0
         }
       ],
@@ -125,7 +121,7 @@
     {
       "id": 1,
       "date": "2026-05-10",
-      "totalCash": 11,
+      "totalCash": 11.0,
       "totalDigital": 45.5
     }
   ],
