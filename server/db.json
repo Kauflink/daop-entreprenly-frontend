@@ -72,7 +72,7 @@
       "sellerId": 1,
       "clientPhone": "+51 987 654 321",
       "clientName": "Andrea Torres",
-      "lastMessage": "Quiero 3 Coca Cola 600ml",
+      "lastMessage": "Comprobante enviado",
       "lastMessageTime": "10:22",
       "status": "WAITING_PAYMENT",
       "createdAt": "2026-04-15T10:00:00.000Z"
@@ -149,6 +149,86 @@
     },
     {
       "id": 7,
+      "conversationId": 1,
+      "content": "Ya no quiero agregar más productos",
+      "sender": "client",
+      "type": "text",
+      "sentAt": "2026-04-15T10:03:00.000Z"
+    },
+    {
+      "id": 8,
+      "conversationId": 1,
+      "content": "Resumen de tu pedido:\n— 3 und Coca Cola 600ml — S/18.00\n— 1.5 kg Manzanas — S/1.50\nEntrega: Av. Los Álamos 234, Miraflores\nTotal: S/19.50\n¿Confirmas el pedido?",
+      "sender": "bot",
+      "type": "text",
+      "sentAt": "2026-04-15T10:03:30.000Z"
+    },
+    {
+      "id": 9,
+      "conversationId": 1,
+      "content": "Sí, confirmo",
+      "sender": "client",
+      "type": "text",
+      "sentAt": "2026-04-15T10:04:00.000Z"
+    },
+    {
+      "id": 10,
+      "conversationId": 1,
+      "content": "Sistema: pedido #0042 registrado — estado: pendiente — 10:22:33",
+      "sender": "system",
+      "type": "text",
+      "sentAt": "2026-04-15T10:04:10.000Z"
+    },
+    {
+      "id": 11,
+      "conversationId": 1,
+      "content": "Instrucciones de pago para el pedido #0042:\n\nYape / Plin al número: 999 888 777\nMonto exacto: S/19.50\nReferencia: #0042\n\nEnvía el comprobante aquí cuando realices el pago.",
+      "sender": "bot",
+      "type": "text",
+      "sentAt": "2026-04-15T10:04:30.000Z"
+    },
+    {
+      "id": 12,
+      "conversationId": 1,
+      "content": "/assets/placeholder-comprobante.svg",
+      "sender": "client",
+      "type": "image",
+      "sentAt": "2026-04-15T10:18:00.000Z"
+    },
+    {
+      "id": 13,
+      "conversationId": 1,
+      "content": "Sistema: comprobante recibido — pendiente de validación — 10:18:05",
+      "sender": "system",
+      "type": "text",
+      "sentAt": "2026-04-15T10:18:05.000Z"
+    },
+    {
+      "id": 14,
+      "conversationId": 1,
+      "content": "Comprobante recibido. El comerciante lo revisará en breve y te notificaremos.",
+      "sender": "bot",
+      "type": "text",
+      "sentAt": "2026-04-15T10:18:10.000Z"
+    },
+    {
+      "id": 15,
+      "conversationId": 1,
+      "content": "Comerciante aprobó el pago — 10:22",
+      "sender": "system",
+      "type": "text",
+      "sentAt": "2026-04-15T10:22:00.000Z"
+    },
+    {
+      "id": 16,
+      "conversationId": 1,
+      "content": "Tu pago fue recibido y verificado correctamente.\nEl pedido #0042 está confirmado y en preparación.",
+      "sender": "bot",
+      "type": "text",
+      "sentAt": "2026-04-15T10:22:10.000Z"
+    },
+    {
+      "id": 17,
       "conversationId": 2,
       "content": "Cuanto cuesta el arroz",
       "sender": "client",
@@ -156,7 +236,7 @@
       "sentAt": "2026-04-15T09:45:00.000Z"
     },
     {
-      "id": 8,
+      "id": 18,
       "conversationId": 2,
       "content": "Arroz por kg — S/2.50/kg · disponible",
       "sender": "bot",

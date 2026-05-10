@@ -1,9 +1,11 @@
 import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import { WhatsappSession } from '../../../domain/model/whatsapp-session.entity';
 
 @Component({
   selector: 'app-whatsapp-status-card',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [RouterLink],
   template: `
     @if (justConnected()) {
       <div class="mb-4 rounded-2xl border border-green-200 bg-green-50 p-4">
@@ -44,6 +46,12 @@ import { WhatsappSession } from '../../../domain/model/whatsapp-session.entity';
               <p class="mt-1 text-sm text-gray-500">
                 El chatbot se encuentra operativo y procesando mensajes automáticamente.
               </p>
+              <a
+                routerLink="/dashboard/chatbot/conversations"
+                class="mt-3 inline-block w-fit rounded-full bg-orange-500 px-5 py-1.5 text-sm font-medium text-white transition-colors hover:bg-orange-600"
+              >
+                Ver conversaciones →
+              </a>
             }
             @if (s.status === 'expired' || s.status === 'disconnected') {
               <button
