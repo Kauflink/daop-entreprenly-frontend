@@ -1,0 +1,30 @@
+<main class="page" aria-label="Configuración de perfil">
+  <div class="grid">
+    <!-- Columna izquierda: info + foto -->
+    <section class="col col--left" aria-label="Foto de perfil">
+      <app-user-info-card />
+      <app-upload-photo-card />
+    </section>
+
+    <!-- Columna central: actualizar perfil + teléfono -->
+    <section class="col col--center" aria-label="Datos del perfil">
+      <app-update-profile-card />
+      <app-phone-verify-card />
+    </section>
+
+    <!-- Columna derecha: preferencias + email -->
+    <section class="col col--right" aria-label="Preferencias y email">
+      <app-preferences-card />
+      <app-email-change-card />
+    </section>
+
+    <!-- Fila inferior: notificaciones + contraseña -->
+    <section class="col col--notifications" aria-label="Notificaciones">
+      <app-notifications-card />
+    </section>
+
+    <section class="col col--password" aria-label="Seguridad">
+      <app-change-password-card />
+    </section>
+  </div>
+</main>
