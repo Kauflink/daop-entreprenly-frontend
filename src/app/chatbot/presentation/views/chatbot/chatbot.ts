@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/core';
-import { ChatbotStoreService } from '../../../../application/chatbot-store.service';
+import { ChatbotStoreService } from '../../../application/chatbot-store.service';
 import { QrConnectionCard } from '../../components/qr-connection-card/qr-connection-card';
 import { WhatsappStatusCard } from '../../components/whatsapp-status-card/whatsapp-status-card';
 
