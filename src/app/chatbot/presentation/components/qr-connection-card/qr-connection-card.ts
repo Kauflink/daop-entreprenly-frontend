@@ -36,6 +36,13 @@ import { QRCodeComponent } from 'angularx-qrcode';
       <p class="text-sm" [class]="seconds() <= 10 ? 'font-medium text-red-400' : 'text-gray-400'">
         {{ isExpired() ? 'Generando nuevo código...' : 'El código expira en ' + seconds() + (seconds() === 1 ? ' segundo' : ' segundos') }}
       </p>
+      <button
+        (click)="scanned.emit()"
+        class="mt-2 rounded-full bg-green-500 px-6 py-2 text-sm font-medium text-white transition-colors hover:bg-green-600"
+        type="button"
+      >
+        Simular escaneo
+      </button>
     </div>
   `,
 })
@@ -44,6 +51,7 @@ export class QrConnectionCard {
   readonly phone = input<string>('+51999888777');
   readonly retry = output<void>();
   readonly expired = output<void>();
+  readonly scanned = output<void>();
 
   protected readonly seconds = signal(120);
   protected readonly isExpired = signal(false);

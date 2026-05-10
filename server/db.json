@@ -5,8 +5,8 @@
       "sellerId": 1,
       "phone": "+51 999 888 777",
       "businessName": "Bodega El Huerto",
-      "status": "connected",
-      "connectedAt": "14/04/2026 a las 10:02"
+      "status": "disconnected",
+      "connectedAt": null
     }
   ],
   "conversations": [
@@ -15,8 +15,8 @@
       "sellerId": 1,
       "clientPhone": "+51 987 654 321",
       "clientName": "Andrea Torres",
-      "lastMessage": "Quiero 3 Coca Cola 600ml",
-      "lastMessageTime": "10:22",
+      "lastMessage": "Comprobante enviado",
+      "lastMessageTime": "10:18",
       "status": "WAITING_PAYMENT",
       "createdAt": "2026-04-15T10:00:00.000Z"
     },
@@ -25,7 +25,7 @@
       "sellerId": 1,
       "clientPhone": "+51 912 345 678",
       "clientName": "Luis Ramirez",
-      "lastMessage": "Cuanto cuesta el arroz",
+      "lastMessage": "¿Tienen arroz por kilo?",
       "lastMessageTime": "09:45",
       "status": "ACTIVE",
       "createdAt": "2026-04-15T09:30:00.000Z"
@@ -39,6 +39,16 @@
       "lastMessageTime": "ayer",
       "status": "CLOSED",
       "createdAt": "2026-04-14T11:00:00.000Z"
+    },
+    {
+      "id": 4,
+      "sellerId": 1,
+      "clientPhone": "+51 932 111 222",
+      "clientName": "Pedro Quispe",
+      "lastMessage": "quiero agua san luis 625ml",
+      "lastMessageTime": "ahora",
+      "status": "ACTIVE",
+      "createdAt": "2026-04-15T10:25:00.000Z"
     }
   ],
   "chat-messages": [
@@ -56,7 +66,7 @@
       "content": "Coca Cola 600ml",
       "sender": "client",
       "type": "text",
-      "sentAt": "2026-04-15T10:01:00.000Z"
+      "sentAt": "2026-04-15T10:00:30.000Z"
     },
     {
       "id": 3,
@@ -64,111 +74,183 @@
       "content": "Coca Cola 600ml\nPrecio: S/6.00 por unidad\nStock disponible: 12 unidades\n\n¿Cuántas unidades deseas?",
       "sender": "bot",
       "type": "text",
-      "sentAt": "2026-04-15T10:01:30.000Z"
+      "sentAt": "2026-04-15T10:01:00.000Z"
     },
     {
       "id": 4,
       "conversationId": 1,
-      "content": "Quiero 3",
+      "content": "3",
       "sender": "client",
       "type": "text",
-      "sentAt": "2026-04-15T10:02:00.000Z"
+      "sentAt": "2026-04-15T10:01:30.000Z"
     },
     {
       "id": 5,
       "conversationId": 1,
-      "content": "Sistema: selección registrada en pedido en curso",
-      "sender": "system",
+      "content": "Agregado a tu pedido:\n3 und Coca Cola 600ml — S/18.00\n¿Deseas agregar más productos?",
+      "sender": "bot",
       "type": "text",
-      "sentAt": "2026-04-15T10:02:10.000Z"
+      "sentAt": "2026-04-15T10:02:00.000Z"
     },
     {
       "id": 6,
       "conversationId": 1,
-      "content": "Agregado a tu pedido:\n3 und Coca Cola 600ml — S/18.00\n¿Deseas agregar más productos?",
-      "sender": "bot",
+      "content": "Ya no quiero agregar más productos",
+      "sender": "client",
       "type": "text",
       "sentAt": "2026-04-15T10:02:30.000Z"
     },
     {
       "id": 7,
+      "conversationId": 1,
+      "content": "Resumen de tu pedido:\n— 3 und Coca Cola 600ml — S/18.00\nTotal: S/18.00\n\n¿Confirmas el pedido?",
+      "sender": "bot",
+      "type": "text",
+      "sentAt": "2026-04-15T10:03:00.000Z"
+    },
+    {
+      "id": 8,
+      "conversationId": 1,
+      "content": "Sí, confirmo el pedido",
+      "sender": "client",
+      "type": "text",
+      "sentAt": "2026-04-15T10:03:30.000Z"
+    },
+    {
+      "id": 9,
+      "conversationId": 1,
+      "content": "Sistema: dirección de entrega no registrada — bot solicita al cliente",
+      "sender": "system",
+      "type": "text",
+      "sentAt": "2026-04-15T10:03:35.000Z"
+    },
+    {
+      "id": 10,
+      "conversationId": 1,
+      "content": "¿A dónde enviamos tu pedido?\nAntes de confirmar necesitamos tu dirección de entrega.\n\nPor favor indícanos:\n— Calle y número\n— Distrito o referencia cercana",
+      "sender": "bot",
+      "type": "text",
+      "sentAt": "2026-04-15T10:03:40.000Z"
+    },
+    {
+      "id": 11,
+      "conversationId": 1,
+      "content": "Av. Los Álamos 234, Miraflores",
+      "sender": "client",
+      "type": "text",
+      "sentAt": "2026-04-15T10:04:00.000Z"
+    },
+    {
+      "id": 12,
+      "conversationId": 1,
+      "content": "Sistema: pedido #0042 registrado — estado: pendiente — 10:04",
+      "sender": "system",
+      "type": "text",
+      "sentAt": "2026-04-15T10:04:05.000Z"
+    },
+    {
+      "id": 13,
+      "conversationId": 1,
+      "content": "Instrucciones de pago para el pedido #0042:\n\nYape / Plin al número: 999 888 777\nMonto exacto: S/18.00\nReferencia: #0042\n\nEnvía el comprobante aquí cuando realices el pago.",
+      "sender": "bot",
+      "type": "text",
+      "sentAt": "2026-04-15T10:04:10.000Z"
+    },
+    {
+      "id": 14,
+      "conversationId": 1,
+      "content": "/assets/placeholder-comprobante.svg",
+      "sender": "client",
+      "type": "image",
+      "sentAt": "2026-04-15T10:18:05.000Z"
+    },
+    {
+      "id": 15,
+      "conversationId": 1,
+      "content": "Sistema: comprobante recibido — pendiente de validación — 10:18",
+      "sender": "system",
+      "type": "text",
+      "sentAt": "2026-04-15T10:18:06.000Z"
+    },
+    {
+      "id": 16,
+      "conversationId": 1,
+      "content": "Comprobante recibido. El comerciante lo revisará en breve y te notificaremos.",
+      "sender": "bot",
+      "type": "text",
+      "sentAt": "2026-04-15T10:18:10.000Z"
+    },
+    {
+      "id": 17,
       "conversationId": 2,
-      "content": "Cuanto cuesta el arroz",
+      "content": "Hola, ¿en qué te puedo ayudar hoy?",
+      "sender": "bot",
+      "type": "text",
+      "sentAt": "2026-04-15T09:44:00.000Z"
+    },
+    {
+      "id": 18,
+      "conversationId": 2,
+      "content": "¿Tienen arroz por kilo?",
       "sender": "client",
       "type": "text",
       "sentAt": "2026-04-15T09:45:00.000Z"
     },
     {
-      "id": 8,
+      "id": 19,
       "conversationId": 2,
-      "content": "Arroz por kg — S/2.50/kg · disponible",
+      "content": "Arroz por kg — S/2.50/kg · disponible\n\n¿Cuántos kilos deseas?",
       "sender": "bot",
       "type": "text",
       "sentAt": "2026-04-15T09:45:20.000Z"
     },
     {
-      "id": 9,
-      "conversationId": 1,
-      "content": "Agregado a tu pedido: 3 und Coca Cola 600ml — S/18.00 ¿Deseas agregar más productos?",
-      "sender": "client",
+      "id": 20,
+      "conversationId": 3,
+      "content": "Hola, ¿en qué te puedo ayudar hoy?",
+      "sender": "bot",
       "type": "text",
-      "sentAt": "2026-05-10T07:18:14.832Z"
+      "sentAt": "2026-04-14T11:00:00.000Z"
     },
     {
-      "id": 10,
-      "conversationId": 1,
-      "content": "Comerciante está escribiendo...",
+      "id": 21,
+      "conversationId": 3,
+      "content": "Sistema: conversación cerrada por timeout — sin respuesta del cliente",
       "sender": "system",
       "type": "text",
-      "sentAt": "2026-05-10T07:18:15.051Z"
+      "sentAt": "2026-04-14T12:00:00.000Z"
     },
     {
-      "id": 11,
-      "conversationId": 1,
-      "content": "Entendido. ¿En qué más puedo ayudarte?",
+      "id": 22,
+      "conversationId": 3,
+      "content": "Por favor inténtalo más tarde.",
       "sender": "bot",
       "type": "text",
-      "sentAt": "2026-05-10T07:18:17.069Z"
+      "sentAt": "2026-04-14T12:00:05.000Z"
     },
     {
-      "id": 12,
-      "conversationId": 1,
-      "content": "3",
+      "id": 23,
+      "conversationId": 4,
+      "content": "Hola, ¿en qué te puedo ayudar hoy?",
+      "sender": "bot",
+      "type": "text",
+      "sentAt": "2026-04-15T10:25:00.000Z"
+    },
+    {
+      "id": 24,
+      "conversationId": 4,
+      "content": "quiero agua san luis 625ml",
       "sender": "client",
       "type": "text",
-      "sentAt": "2026-05-10T07:18:24.670Z"
+      "sentAt": "2026-04-15T10:25:30.000Z"
     },
     {
-      "id": 13,
-      "conversationId": 1,
-      "content": "Comerciante está escribiendo...",
-      "sender": "system",
-      "type": "text",
-      "sentAt": "2026-05-10T07:18:24.685Z"
-    },
-    {
-      "id": 14,
-      "conversationId": 1,
-      "content": "Entendido. ¿En qué más puedo ayudarte?",
+      "id": 25,
+      "conversationId": 4,
+      "content": "Agua San Luis 625ml\nPrecio: S/1.50 por unidad\nStock disponible: 24 unidades\n\n¿Cuántas unidades deseas?",
       "sender": "bot",
       "type": "text",
-      "sentAt": "2026-05-10T07:18:26.698Z"
-    },
-    {
-      "id": 15,
-      "conversationId": 1,
-      "content": "desea algo mas",
-      "sender": "bot",
-      "type": "text",
-      "sentAt": "2026-05-10T07:29:36.713Z"
-    },
-    {
-      "id": 16,
-      "conversationId": 1,
-      "content": "f",
-      "sender": "bot",
-      "type": "text",
-      "sentAt": "2026-05-10T07:29:42.534Z"
+      "sentAt": "2026-04-15T10:25:45.000Z"
     }
   ],
   "chat-orders": [
@@ -177,22 +259,13 @@
       "conversationId": 1,
       "orderNumber": "#0042",
       "items": [
-        {
-          "productName": "Coca Cola 600ml",
-          "quantity": 3,
-          "unitPrice": 6
-        },
-        {
-          "productName": "Manzanas",
-          "quantity": 1.5,
-          "unitPrice": 1
-        }
+        { "productName": "Coca Cola 600ml", "quantity": 3, "unitPrice": 6 }
       ],
-      "total": 19.5,
+      "total": 18.0,
       "deliveryAddress": "Av. Los Álamos 234, Miraflores",
       "paymentMethod": "Yape",
       "status": "WAITING_PAYMENT",
-      "createdAt": "2026-04-15T10:22:10.000Z"
+      "createdAt": "2026-04-15T10:18:00.000Z"
     }
   ]
 }

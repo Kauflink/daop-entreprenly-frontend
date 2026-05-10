@@ -25,6 +25,12 @@ export const routes: Routes = [
           import('./chatbot/presentation/views/chatbot.routes').then(m => m.CHATBOT_ROUTES),
       },
       {
+        path: 'orders',
+        loadComponent: () =>
+          import('./chatbot/presentation/views/orders/orders').then(m => m.Orders),
+        title: 'Entreprenly - Pedidos',
+      },
+      {
         path: '',
         redirectTo: 'home',
         pathMatch: 'full',
