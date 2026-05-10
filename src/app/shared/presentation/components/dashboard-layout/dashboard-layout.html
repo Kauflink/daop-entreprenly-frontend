@@ -1,5 +1,16 @@
 <div class="dashboard-shell">
   <aside class="sidebar" [attr.aria-label]="'dashboard.sidebarLabel' | translate">
+    <div class="brand">
+      <img
+        class="brand__logo"
+        ngSrc="assets/brand/entreprenly-logo-dashboard.png"
+        alt="Entreprenly"
+        width="220"
+        height="60"
+        priority
+      />
+    </div>
+
     <div class="profile" [attr.aria-label]="'dashboard.currentUserLabel' | translate">
       <span class="profile__avatar" aria-hidden="true">
         <mat-icon>person</mat-icon>
@@ -32,6 +43,6 @@
   </aside>
 
   <main class="dashboard-content">
-    <router-outlet />
+    <ng-content />
   </main>
 </div>
