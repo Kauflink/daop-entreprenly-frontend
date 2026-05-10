@@ -3,10 +3,10 @@
   border: 1px solid #c9c9c9;
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.25);
   border-radius: 25px;
-  padding: 24px;
+  padding: 12px 24px;
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 10px;
 }
 
 .card__title {
@@ -21,7 +21,7 @@
 form {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 8px;
 }
 
 .field {
@@ -49,7 +49,7 @@ form {
   background: #ffffff;
   border: 1px solid #c9c9c9;
   border-radius: 25px;
-  padding: 12px 20px;
+  padding: 7px 20px;
   font-family: 'Reddit Sans', sans-serif;
   font-weight: 500;
   font-size: 12px;
@@ -71,7 +71,7 @@ form {
   border: 1px solid #c9c9c9;
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.25);
   border-radius: 25px;
-  padding: 12px 24px;
+  padding: 7px 24px;
   font-family: 'Reddit Sans', sans-serif;
   font-weight: 800;
   font-size: 12px;
