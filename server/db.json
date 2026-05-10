@@ -1,3 +1,126 @@
 {
-    
+  "whatsapp-sessions": [
+    {
+      "id": 1,
+      "sellerId": 1,
+      "phone": "+51 999 888 777",
+      "businessName": "Bodega El Huerto",
+      "status": "connected",
+      "connectedAt": "14/04/2026 a las 10:02"
+    }
+  ],
+  "conversations": [
+    {
+      "id": 1,
+      "sellerId": 1,
+      "clientPhone": "+51 987 654 321",
+      "clientName": "Andrea Torres",
+      "lastMessage": "Quiero 3 Coca Cola 600ml",
+      "lastMessageTime": "10:22",
+      "status": "WAITING_PAYMENT",
+      "createdAt": "2026-04-15T10:00:00.000Z"
+    },
+    {
+      "id": 2,
+      "sellerId": 1,
+      "clientPhone": "+51 912 345 678",
+      "clientName": "Luis Ramirez",
+      "lastMessage": "Cuanto cuesta el arroz",
+      "lastMessageTime": "09:45",
+      "status": "ACTIVE",
+      "createdAt": "2026-04-15T09:30:00.000Z"
+    },
+    {
+      "id": 3,
+      "sellerId": 1,
+      "clientPhone": "+51 951 234 567",
+      "clientName": "Maria Castillo",
+      "lastMessage": "Por favor inténtalo más tarde.",
+      "lastMessageTime": "ayer",
+      "status": "CLOSED",
+      "createdAt": "2026-04-14T11:00:00.000Z"
+    }
+  ],
+  "chat-messages": [
+    {
+      "id": 1,
+      "conversationId": 1,
+      "content": "Hola, bienvenida. ¿Qué deseas pedir hoy?",
+      "sender": "bot",
+      "type": "text",
+      "sentAt": "2026-04-15T10:00:00.000Z"
+    },
+    {
+      "id": 2,
+      "conversationId": 1,
+      "content": "Coca Cola 600ml",
+      "sender": "client",
+      "type": "text",
+      "sentAt": "2026-04-15T10:01:00.000Z"
+    },
+    {
+      "id": 3,
+      "conversationId": 1,
+      "content": "Coca Cola 600ml\nPrecio: S/6.00 por unidad\nStock disponible: 12 unidades\n\n¿Cuántas unidades deseas?",
+      "sender": "bot",
+      "type": "text",
+      "sentAt": "2026-04-15T10:01:30.000Z"
+    },
+    {
+      "id": 4,
+      "conversationId": 1,
+      "content": "Quiero 3",
+      "sender": "client",
+      "type": "text",
+      "sentAt": "2026-04-15T10:02:00.000Z"
+    },
+    {
+      "id": 5,
+      "conversationId": 1,
+      "content": "Sistema: selección registrada en pedido en curso",
+      "sender": "system",
+      "type": "text",
+      "sentAt": "2026-04-15T10:02:10.000Z"
+    },
+    {
+      "id": 6,
+      "conversationId": 1,
+      "content": "Agregado a tu pedido:\n3 und Coca Cola 600ml — S/18.00\n¿Deseas agregar más productos?",
+      "sender": "bot",
+      "type": "text",
+      "sentAt": "2026-04-15T10:02:30.000Z"
+    },
+    {
+      "id": 7,
+      "conversationId": 2,
+      "content": "Cuanto cuesta el arroz",
+      "sender": "client",
+      "type": "text",
+      "sentAt": "2026-04-15T09:45:00.000Z"
+    },
+    {
+      "id": 8,
+      "conversationId": 2,
+      "content": "Arroz por kg — S/2.50/kg · disponible",
+      "sender": "bot",
+      "type": "text",
+      "sentAt": "2026-04-15T09:45:20.000Z"
+    }
+  ],
+  "chat-orders": [
+    {
+      "id": 1,
+      "conversationId": 1,
+      "orderNumber": "#0042",
+      "items": [
+        { "productName": "Coca Cola 600ml", "quantity": 3, "unitPrice": 6.00 },
+        { "productName": "Manzanas", "quantity": 1.5, "unitPrice": 1.00 }
+      ],
+      "total": 19.50,
+      "deliveryAddress": "Av. Los Álamos 234, Miraflores",
+      "paymentMethod": "Yape",
+      "status": "WAITING_PAYMENT",
+      "createdAt": "2026-04-15T10:22:10.000Z"
+    }
+  ]
 }

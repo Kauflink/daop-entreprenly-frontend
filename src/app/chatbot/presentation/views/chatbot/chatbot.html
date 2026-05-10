@@ -1,0 +1,20 @@
+<div class="p-8">
+  <h1 class="text-2xl font-semibold text-gray-800">Chatbot</h1>
+
+  @if (store.session() === null || store.session()?.status === 'disconnected') {
+    <p class="mb-6 text-sm text-gray-500">Conecta tu WhatsApp Business para activar el chatbot</p>
+    <div class="rounded-xl bg-white p-8 shadow-sm">
+      <app-qr-connection-card [hasError]="false" />
+    </div>
+  } @else if (store.session()?.status === 'expired') {
+    <p class="mb-6 text-sm text-gray-500">Estado de la conexión</p>
+    <div class="rounded-xl bg-white p-8 shadow-sm">
+      <app-whatsapp-status-card [session]="store.session()" />
+    </div>
+  } @else {
+    <p class="mb-6 text-sm text-gray-500">Estado de la conexión</p>
+    <div class="rounded-xl bg-white p-8 shadow-sm">
+      <app-whatsapp-status-card [session]="store.session()" [justConnected]="false" />
+    </div>
+  }
+</div>
