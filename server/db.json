@@ -1,3 +1,108 @@
 {
-    
+  "products": [
+    {
+      "id": 1,
+      "name": "Arroz Costeño 1kg",
+      "unitPrice": 5.5,
+      "isWeighted": true,
+      "availableStock": 50.5
+    },
+    {
+      "id": 2,
+      "name": "Pollo entero",
+      "unitPrice": 12.0,
+      "isWeighted": true,
+      "availableStock": 25.0
+    },
+    {
+      "id": 3,
+      "name": "Coca Cola 500ml",
+      "unitPrice": 3.5,
+      "isWeighted": false,
+      "availableStock": 100
+    },
+    {
+      "id": 4,
+      "name": "Pan francés",
+      "unitPrice": 0.5,
+      "isWeighted": false,
+      "availableStock": 200
+    },
+    {
+      "id": 5,
+      "name": "Inca Kola 1.5L",
+      "unitPrice": 7.0,
+      "isWeighted": false,
+      "availableStock": 60
+    },
+    {
+      "id": 6,
+      "name": "Queso fresco",
+      "unitPrice": 18.0,
+      "isWeighted": true,
+      "availableStock": 8.5
+    },
+    {
+      "id": 7,
+      "name": "Galleta Soda Field x6",
+      "unitPrice": 4.2,
+      "isWeighted": false,
+      "availableStock": 45
+    },
+    {
+      "id": 8,
+      "name": "Aceite Primor 1L",
+      "unitPrice": 9.8,
+      "isWeighted": false,
+      "availableStock": 30
+    }
+  ],
+  "sales": [
+    {
+      "id": 1,
+      "sellerId": 1,
+      "items": [
+        {
+          "productId": 3,
+          "productName": "Coca Cola 500ml",
+          "quantity": 2,
+          "weightKg": null,
+          "unitPrice": 3.5,
+          "subtotal": 7.0
+        },
+        {
+          "productId": 4,
+          "productName": "Pan francés",
+          "quantity": 6,
+          "weightKg": null,
+          "unitPrice": 0.5,
+          "subtotal": 3.0
+        }
+      ],
+      "total": 10.0,
+      "paymentMethod": "CASH",
+      "paymentReceipt": {
+        "method": "CASH",
+        "transactionCode": "CASH-001",
+        "amount": 10.0,
+        "confirmedAt": "2026-05-08T10:30:00"
+      },
+      "status": "COMPLETED",
+      "createdAt": "2026-05-08T10:25:00",
+      "completedAt": "2026-05-08T10:30:00"
+    }
+  ],
+  "cash-registers": [
+    {
+      "id": 1,
+      "date": "2026-05-10",
+      "totalCash": 0,
+      "totalDigital": 0
+    }
+  ],
+  "iot-scale": {
+    "id": 1,
+    "connected": true,
+    "deviceId": "SCALE-001"
+  }
 }
