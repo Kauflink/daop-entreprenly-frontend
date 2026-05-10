@@ -11,12 +11,17 @@
       />
     </div>
 
-    <div class="profile" [attr.aria-label]="'dashboard.currentUserLabel' | translate">
+    <a
+      class="profile"
+      routerLink="/dashboard/profile"
+      routerLinkActive="profile--active"
+      [attr.aria-label]="'dashboard.currentUserLabel' | translate"
+    >
       <span class="profile__avatar" aria-hidden="true">
         <mat-icon>person</mat-icon>
       </span>
       <strong>{{ 'dashboard.welcome' | translate }}</strong>
-    </div>
+    </a>
 
     <nav>
       <ul class="navigation-list">
@@ -43,6 +48,6 @@
   </aside>
 
   <main class="dashboard-content">
-    <router-outlet/>
+    <router-outlet />
   </main>
 </div>
