@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, effect, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { ProfileStore } from '../../../application/profile-store';
 import { Theme } from '../../../domain/model/user-preferences.entity';
@@ -10,7 +10,7 @@ import { Theme } from '../../../domain/model/user-preferences.entity';
   templateUrl: './preferences-card.html',
   styleUrl: './preferences-card.css',
 })
-export class PreferencesCard implements OnInit {
+export class PreferencesCard {
   private readonly fb = inject(FormBuilder);
   protected readonly store = inject(ProfileStore);
 
@@ -35,16 +35,20 @@ export class PreferencesCard implements OnInit {
     theme: ['light' as Theme],
   });
 
-  ngOnInit(): void {
-    const { language, timezone, theme } = this.store.preferences();
-    this.form.setValue({ language, timezone, theme });
+  constructor() {
+    effect(() => {
+      const { language, timezone, theme } = this.store.preferences();
+      this.form.setValue({ language, timezone, theme }, { emitEvent: false });
+    });
   }
 
   protected setTheme(theme: Theme): void {
     this.form.patchValue({ theme });
+    this.store.updatePreferences({ theme });
   }
 
   protected onSubmit(): void {
-    this.store.updatePreferences(this.form.getRawValue());
+    const { language, timezone } = this.form.getRawValue();
+    this.store.updatePreferences({ language, timezone });
   }
 }

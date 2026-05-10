@@ -10,9 +10,9 @@
     {
       "id": 2,
       "name": "Pollo entero",
-      "unitPrice": 12.0,
+      "unitPrice": 12,
       "isWeighted": true,
-      "availableStock": 25.0
+      "availableStock": 25
     },
     {
       "id": 3,
@@ -31,14 +31,14 @@
     {
       "id": 5,
       "name": "Inca Kola 1.5L",
-      "unitPrice": 7.0,
+      "unitPrice": 7,
       "isWeighted": false,
       "availableStock": 60
     },
     {
       "id": 6,
       "name": "Queso fresco",
-      "unitPrice": 18.0,
+      "unitPrice": 18,
       "isWeighted": true,
       "availableStock": 8.5
     },
@@ -68,7 +68,7 @@
           "quantity": 2,
           "weightKg": null,
           "unitPrice": 3.5,
-          "subtotal": 7.0
+          "subtotal": 7
         },
         {
           "productId": 4,
@@ -76,33 +76,70 @@
           "quantity": 6,
           "weightKg": null,
           "unitPrice": 0.5,
-          "subtotal": 3.0
+          "subtotal": 3
         }
       ],
-      "total": 10.0,
+      "total": 10,
       "paymentMethod": "CASH",
       "paymentReceipt": {
         "method": "CASH",
         "transactionCode": "CASH-001",
-        "amount": 10.0,
+        "amount": 10,
         "confirmedAt": "2026-05-08T10:30:00"
       },
       "status": "COMPLETED",
       "createdAt": "2026-05-08T10:25:00",
       "completedAt": "2026-05-08T10:30:00"
+    },
+    {
+      "id": 2,
+      "sellerId": 1,
+      "items": [
+        {
+          "productId": 1,
+          "productName": "Arroz Costeño 1kg",
+          "quantity": null,
+          "weightKg": 2.5,
+          "unitPrice": 5.5,
+          "subtotal": 13.75
+        }
+      ],
+      "total": 13.75,
+      "paymentMethod": "YAPE",
+      "paymentReceipt": {
+        "method": "YAPE",
+        "transactionCode": "YAPE-987654",
+        "amount": 13.75,
+        "confirmedAt": "2026-05-08T11:15:00"
+      },
+      "status": "COMPLETED",
+      "createdAt": "2026-05-08T11:10:00",
+      "completedAt": "2026-05-08T11:15:00"
     }
   ],
   "cash-registers": [
     {
       "id": 1,
+      "date": "2026-05-09",
+      "totalCash": 56,
+      "totalDigital": 45.5
+    },
+    {
+      "id": 2,
+      "date": "2026-05-08",
+      "totalCash": 70,
+      "totalDigital": 23.5
+    },
+    {
       "date": "2026-05-10",
       "totalCash": 0,
-      "totalDigital": 0
+      "totalDigital": 0,
+      "id": 3
     }
   ],
   "iot-scale": {
     "id": 1,
-    "connected": true,
+    "connected": false,
     "deviceId": "SCALE-001"
   },
   "subscription-dashboard": [
@@ -208,4 +245,27 @@
       ]
     }
   ]
+}
+  "profile": {
+    "user": {
+      "id": 1,
+      "first_name": "Entreprenly",
+      "last_name": "INC",
+      "avatar_url": null,
+      "role": "Administrador",
+      "plan": "Plan Control"
+    },
+    "preferences": {
+      "id": 1,
+      "language": "Español (Perú)",
+      "timezone": "America/Lima (UTC-05:00)",
+      "theme": "light"
+    },
+    "notification_settings": {
+      "id": 1,
+      "stock_alerts": false,
+      "payment_alerts": false,
+      "chatbot_messages": false
+    }
+  }
 }
