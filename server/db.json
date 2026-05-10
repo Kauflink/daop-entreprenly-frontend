@@ -10,9 +10,9 @@
     {
       "id": 2,
       "name": "Pollo entero",
-      "unitPrice": 12.0,
+      "unitPrice": 12,
       "isWeighted": true,
-      "availableStock": 25.0
+      "availableStock": 25
     },
     {
       "id": 3,
@@ -31,14 +31,14 @@
     {
       "id": 5,
       "name": "Inca Kola 1.5L",
-      "unitPrice": 7.0,
+      "unitPrice": 7,
       "isWeighted": false,
       "availableStock": 60
     },
     {
       "id": 6,
       "name": "Queso fresco",
-      "unitPrice": 18.0,
+      "unitPrice": 18,
       "isWeighted": true,
       "availableStock": 8.5
     },
@@ -68,7 +68,7 @@
           "quantity": 2,
           "weightKg": null,
           "unitPrice": 3.5,
-          "subtotal": 7.0
+          "subtotal": 7
         },
         {
           "productId": 4,
@@ -76,15 +76,15 @@
           "quantity": 6,
           "weightKg": null,
           "unitPrice": 0.5,
-          "subtotal": 3.0
+          "subtotal": 3
         }
       ],
-      "total": 10.0,
+      "total": 10,
       "paymentMethod": "CASH",
       "paymentReceipt": {
         "method": "CASH",
         "transactionCode": "CASH-001",
-        "amount": 10.0,
+        "amount": 10,
         "confirmedAt": "2026-05-08T10:30:00"
       },
       "status": "COMPLETED",
@@ -95,9 +95,21 @@
   "cash-registers": [
     {
       "id": 1,
+      "date": "2026-05-09",
+      "totalCash": 56,
+      "totalDigital": 45.5
+    },
+    {
+      "id": 2,
+      "date": "2026-05-08",
+      "totalCash": 70,
+      "totalDigital": 23.5
+    },
+    {
       "date": "2026-05-10",
       "totalCash": 0,
-      "totalDigital": 0
+      "totalDigital": 0,
+      "id": 3
     }
   ],
   "iot-scale": {
