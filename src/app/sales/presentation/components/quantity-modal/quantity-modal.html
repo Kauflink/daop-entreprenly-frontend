@@ -1,0 +1,46 @@
+<div class="modal-backdrop" (click)="onBackdropClick($event)">
+  <div class="modal-content">
+    <!-- Header del modal -->
+    <header class="modal-header">
+      <div class="modal-title-wrapper">
+        <h2 class="modal-title">Registrar Cantidad</h2>
+        <p class="modal-subtitle">Ingrese la cantidad de productos</p>
+      </div>
+      <button class="close-btn" (click)="onCancel()" aria-label="Cerrar">✕</button>
+    </header>
+
+    <!-- Display de cantidad -->
+    <div class="quantity-display">
+      <label class="display-label">Cantidad</label>
+      <div class="display-value">
+        {{ displayValue() || '0' }}
+      </div>
+    </div>
+
+    <!-- Teclado numérico -->
+    <div class="keypad">
+      @for (key of keypadKeys; track key) {
+      <button class="keypad-btn" (click)="onKeyPress(key)">{{ key }}</button>
+      }
+      <button class="keypad-btn keypad-backspace" (click)="onBackspace()">◀</button>
+      <button class="keypad-btn keypad-zero" (click)="onZeroPress()">0</button>
+    </div>
+
+    <!-- Botón confirmar -->
+    <button
+      class="confirm-btn"
+      [disabled]="!canConfirm()"
+      (click)="onConfirm()"
+    >
+      Confirmar Cantidad
+    </button>
+
+    <!-- Mensaje de error: stock insuficiente -->
+    @if (hasInsufficientStock()) {
+    <div class="error-message">
+      <span class="error-icon">⊘</span>
+      Stock insuficiente
+    </div>
+    }
+  </div>
+</div>
