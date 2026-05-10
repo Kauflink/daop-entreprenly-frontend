@@ -4,7 +4,7 @@
   @if (store.session() === null || store.session()?.status === 'disconnected') {
     <p class="mb-6 mt-1 text-sm text-gray-500">Conecta tu WhatsApp Business para activar el chatbot</p>
     <div class="rounded-2xl bg-white shadow-sm">
-      <app-qr-connection-card [hasError]="false" />
+      <app-qr-connection-card [hasError]="false" [phone]="store.session()?.phone ?? '+51999888777'" />
     </div>
   } @else {
     <p class="mb-6 mt-1 text-sm text-gray-500">Estado de la conexión</p>
