@@ -1,10 +1,12 @@
 import { ChangeDetectionStrategy, Component, DestroyRef, inject, input, output, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { interval, timer } from 'rxjs';
+import { QRCodeComponent } from 'angularx-qrcode';
 
 @Component({
   selector: 'app-qr-connection-card',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [QRCodeComponent],
   template: `
     @if (isExpired() || hasError()) {
       <div class="m-5 rounded-2xl border border-red-200 bg-red-50 p-4">
@@ -21,33 +23,15 @@ import { interval, timer } from 'rxjs';
         {{ isExpired() || hasError() ? 'Nuevo código generado' : 'Vincular WhatsApp Business' }}
       </h2>
       <p class="text-sm text-gray-500">Escanea el código QR desde tu app</p>
-      <div class="flex h-48 w-48 items-center justify-center rounded-lg bg-black p-3">
-        <svg viewBox="0 0 21 21" class="h-full w-full" fill="white" xmlns="http://www.w3.org/2000/svg" aria-label="Código QR">
-          <rect x="0" y="0" width="7" height="7" rx="1"/>
-          <rect x="1.5" y="1.5" width="4" height="4" fill="black"/>
-          <rect x="2.5" y="2.5" width="2" height="2"/>
-          <rect x="14" y="0" width="7" height="7" rx="1"/>
-          <rect x="15.5" y="1.5" width="4" height="4" fill="black"/>
-          <rect x="16.5" y="2.5" width="2" height="2"/>
-          <rect x="0" y="14" width="7" height="7" rx="1"/>
-          <rect x="1.5" y="15.5" width="4" height="4" fill="black"/>
-          <rect x="2.5" y="16.5" width="2" height="2"/>
-          <rect x="9" y="0" width="2" height="1"/><rect x="12" y="0" width="1" height="1"/>
-          <rect x="9" y="2" width="1" height="2"/><rect x="11" y="2" width="2" height="1"/>
-          <rect x="9" y="5" width="2" height="1"/><rect x="12" y="4" width="1" height="2"/>
-          <rect x="8" y="8" width="2" height="2"/><rect x="11" y="8" width="2" height="1"/>
-          <rect x="14" y="8" width="1" height="2"/><rect x="16" y="8" width="2" height="1"/>
-          <rect x="19" y="8" width="2" height="2"/>
-          <rect x="8" y="11" width="1" height="2"/><rect x="10" y="11" width="3" height="1"/>
-          <rect x="14" y="11" width="2" height="1"/><rect x="17" y="11" width="1" height="2"/>
-          <rect x="20" y="11" width="1" height="1"/>
-          <rect x="9" y="14" width="2" height="1"/><rect x="12" y="14" width="2" height="1"/>
-          <rect x="16" y="14" width="1" height="2"/><rect x="18" y="14" width="3" height="1"/>
-          <rect x="9" y="16" width="1" height="2"/><rect x="11" y="16" width="2" height="2"/>
-          <rect x="14" y="16" width="1" height="1"/><rect x="19" y="16" width="2" height="1"/>
-          <rect x="8" y="19" width="3" height="2"/><rect x="13" y="19" width="2" height="1"/>
-          <rect x="16" y="18" width="1" height="3"/><rect x="18" y="19" width="3" height="1"/>
-        </svg>
+      <div class="overflow-hidden rounded-xl">
+        <qrcode
+          [qrdata]="whatsappLink"
+          [width]="192"
+          [margin]="2"
+          [errorCorrectionLevel]="'M'"
+          [colorDark]="'#000000'"
+          [colorLight]="'#ffffff'"
+        />
       </div>
       <p class="text-sm" [class]="seconds() <= 10 ? 'font-medium text-red-400' : 'text-gray-400'">
         {{ isExpired() ? 'Generando nuevo código...' : 'El código expira en ' + seconds() + (seconds() === 1 ? ' segundo' : ' segundos') }}
@@ -57,11 +41,17 @@ import { interval, timer } from 'rxjs';
 })
 export class QrConnectionCard {
   readonly hasError = input<boolean>(false);
+  readonly phone = input<string>('+51999888777');
   readonly retry = output<void>();
   readonly expired = output<void>();
 
   protected readonly seconds = signal(120);
   protected readonly isExpired = signal(false);
+
+  protected get whatsappLink(): string {
+    const cleaned = this.phone().replace(/\s+/g, '').replace('+', '');
+    return `https://wa.me/${cleaned}`;
+  }
 
   private resetting = false;
   private readonly destroyRef = inject(DestroyRef);

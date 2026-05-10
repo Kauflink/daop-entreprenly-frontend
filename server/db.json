@@ -153,6 +153,22 @@
       "sender": "bot",
       "type": "text",
       "sentAt": "2026-05-10T07:18:26.698Z"
+    },
+    {
+      "id": 15,
+      "conversationId": 1,
+      "content": "desea algo mas",
+      "sender": "bot",
+      "type": "text",
+      "sentAt": "2026-05-10T07:29:36.713Z"
+    },
+    {
+      "id": 16,
+      "conversationId": 1,
+      "content": "f",
+      "sender": "bot",
+      "type": "text",
+      "sentAt": "2026-05-10T07:29:42.534Z"
     }
   ],
   "chat-orders": [
