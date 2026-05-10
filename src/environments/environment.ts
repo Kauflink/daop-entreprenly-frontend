@@ -1,7 +1,9 @@
 export const environment = {
   production: true,
-  salesProviderApiBaseUrl: 'http://localhost:3000/api/v1',
-  salesProviderSalesEndpointPath: '/sales',
-  salesProviderProductsEndpointPath: '/products',
-  salesProviderCashRegistersEndpointPath: '/cash-registers',
+  entreprenlyProviderApiBaseUrl: 'https://daop.entreprenly.online/api/v1',
+  entreprenlyProviderSalesEndpointPath: '/sales',
+  entreprenlyProviderProductsEndpointPath: '/products',
+  entreprenlyProviderCashRegistersEndpointPath: '/cash-registers',
+  entreprenlyProviderSubscriptionEndpointPath: '/subscription',
+  entreprenlyProviderSubscriptionDashboardEndpointPath: '/subscription-dashboard/1',
 };
