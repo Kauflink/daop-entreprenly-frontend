@@ -14,7 +14,7 @@ export class ProductsApiEndpoint extends BaseApiEndpoint<
   constructor(http: HttpClient) {
     super(
       http,
-      `${environment.salesProviderApiBaseUrl}${environment.salesProviderProductsEndpointPath}`,
+      `${environment.entreprenlyProviderApiBaseUrl}${environment.entreprenlyProviderProductsEndpointPath}`,
       new ProductAssembler(),
     );
   }
