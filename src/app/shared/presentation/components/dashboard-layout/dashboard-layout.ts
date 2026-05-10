@@ -12,7 +12,7 @@ interface NavigationItem {
 
 @Component({
   selector: 'app-dashboard-layout',
-  imports: [RouterLink, RouterLinkActive,RouterOutlet, NgOptimizedImage, MatIconModule, TranslatePipe],
+  imports: [RouterLink, RouterLinkActive, RouterOutlet, NgOptimizedImage, MatIconModule, TranslatePipe],
   templateUrl: './dashboard-layout.html',
   styleUrl: './dashboard-layout.css',
   changeDetection: ChangeDetectionStrategy.OnPush,

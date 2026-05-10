@@ -1,0 +1,31 @@
+<div class="card">
+  <h2 class="card__title">Subir foto de perfil</h2>
+
+  <div class="dropzone">
+    <div class="dropzone__avatar">
+      @if (previewUrl() ?? store.profile().avatarUrl; as url) {
+        <img [src]="url" alt="Vista previa de foto de perfil" class="dropzone__img" />
+      } @else {
+        <mat-icon class="dropzone__icon" aria-hidden="true">person</mat-icon>
+      }
+    </div>
+
+    <div class="dropzone__actions">
+      <input
+        #fileInput
+        type="file"
+        accept="image/*"
+        class="visually-hidden"
+        aria-label="Seleccionar imagen de perfil"
+        (change)="onFileSelected($event)"
+      />
+      <button
+        type="button"
+        class="btn-select"
+        (click)="triggerFileInput(fileInput)"
+      >
+        Seleccionar Imagen
+      </button>
+    </div>
+  </div>
+</div>
