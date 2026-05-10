@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
-import { Conversation } from '../../../../domain/model/conversation.entity';
+import { Conversation } from '../../../domain/model/conversation.entity';
 
 @Component({
   selector: 'app-conversation-list-item',

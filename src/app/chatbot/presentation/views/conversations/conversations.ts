@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/core';
-import { ChatbotStoreService } from '../../../../application/chatbot-store.service';
+import { ChatbotStoreService } from '../../../application/chatbot-store.service';
 import { ConversationList } from '../../components/conversation-list/conversation-list';
 import { ConversationHeader } from '../../components/conversation-header/conversation-header';
 import { MessageBubble } from '../../components/message-bubble/message-bubble';

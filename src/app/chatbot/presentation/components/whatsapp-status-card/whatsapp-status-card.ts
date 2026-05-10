@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
-import { WhatsappSession } from '../../../../domain/model/whatsapp-session.entity';
+import { WhatsappSession } from '../../../domain/model/whatsapp-session.entity';
 
 @Component({
   selector: 'app-whatsapp-status-card',

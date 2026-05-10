@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, input } from '@angular/core';
-import { ChatMessage } from '../../../../domain/model/chat-message.entity';
+import { ChatMessage } from '../../../domain/model/chat-message.entity';
 
 @Component({
   selector: 'app-message-bubble',
