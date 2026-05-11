@@ -109,13 +109,15 @@ export const ACTIVE_SUBSCRIPTION_DASHBOARD_RESPONSE: SubscriptionDashboardRespon
     id: 'plan-control',
     name: 'Plan Control',
     shortDescription:
-      'Tu plan sigue activo hasta el 31 de mayo 2026. No se renovar\u00e1 autom\u00e1ticamente.',
+      'Tu plan sigue activo hasta el 10 de junio de 2026. Se renovará automáticamente.',
     monthlyPrice: 89,
     annualPrice: 890,
     status: 'active',
     statusLabel: 'Plan Control activo',
     badgeLabel: 'Plan actual',
     recommended: false,
+    currentPeriodStartDate: '2026-05-10',
+    currentPeriodEndDate: '2026-06-10',
     features: [
       {
         description: 'Productos y lotes ilimitados',
@@ -177,11 +179,11 @@ export const ACTIVE_SUBSCRIPTION_DASHBOARD_RESPONSE: SubscriptionDashboardRespon
     },
   ],
   billingSetup: {
-    paymentMethodTitle: 'M\u00e9todo de pago',
-    paymentMethodDescription: 'A\u00fan no hay tarjeta o medio de pago registrado.',
-    paymentMethodActionLabel: 'Agregar m\u00e9todos de pago',
-    fiscalDataTitle: 'Datos de facturaci\u00f3n',
-    fiscalDataDescription: 'Completa RUC, raz\u00f3n social y correo de comprobantes.',
+    paymentMethodTitle: 'Método de pago',
+    paymentMethodDescription: 'Aún no hay tarjeta o medio de pago registrado.',
+    paymentMethodActionLabel: 'Agregar métodos de pago',
+    fiscalDataTitle: 'Datos de facturación',
+    fiscalDataDescription: 'Completa RUC, razón social y correo de comprobantes.',
     fiscalDataActionLabel: 'Completar datos',
     hasPaymentMethod: false,
     hasFiscalData: false,
@@ -190,7 +192,7 @@ export const ACTIVE_SUBSCRIPTION_DASHBOARD_RESPONSE: SubscriptionDashboardRespon
     {
       id: 'created-account',
       title: 'Cuenta creada',
-      detail: '16 abril 2026 - Plan Free asignado autom\u00e1ticamente',
+      detail: '16 abril 2026 - Plan Free asignado automáticamente',
     },
     {
       id: 'current-status',
@@ -199,8 +201,33 @@ export const ACTIVE_SUBSCRIPTION_DASHBOARD_RESPONSE: SubscriptionDashboardRespon
     },
     {
       id: 'billing',
-      title: 'Facturaci\u00f3n',
-      detail: 'Pr\u00f3xima renovaci\u00f3n: 31 mayo 2026 - pago mensual',
+      title: 'Facturación',
+      detail: 'Próxima renovación: 10 de junio de 2026 - pago mensual',
     },
   ],
 };
+
+export const SCHEDULED_CANCELLATION_SUBSCRIPTION_DASHBOARD_RESPONSE: SubscriptionDashboardResponse =
+  {
+    ...ACTIVE_SUBSCRIPTION_DASHBOARD_RESPONSE,
+    currentPlan: {
+      ...ACTIVE_SUBSCRIPTION_DASHBOARD_RESPONSE.currentPlan,
+      status: 'scheduled-cancellation',
+      statusLabel: 'Cancelación programada',
+      shortDescription:
+        'Tu plan sigue activo hasta el 10 de junio de 2026. No se renovará automáticamente.',
+    },
+    activity: [
+      ACTIVE_SUBSCRIPTION_DASHBOARD_RESPONSE.activity[0],
+      {
+        id: 'current-status',
+        title: 'Estado actual',
+        detail: 'Cancelación programada - S/ 89/mes',
+      },
+      {
+        id: 'billing',
+        title: 'Facturación',
+        detail: 'Acceso vigente hasta el 10 de junio de 2026 - sin siguiente cobro',
+      },
+    ],
+  };
