@@ -5,8 +5,8 @@
       "sellerId": 1,
       "phone": "+51 999 888 777",
       "businessName": "Bodega El Huerto",
-      "status": "disconnected",
-      "connectedAt": null
+      "status": "connected",
+      "connectedAt": "10/5/2026, 8:53:46 p. m."
     }
   ],
   "conversations": [
@@ -25,9 +25,9 @@
       "sellerId": 1,
       "clientPhone": "+51 912 345 678",
       "clientName": "Luis Ramirez",
-      "lastMessage": "¿Tienen arroz por kilo?",
-      "lastMessageTime": "09:45",
-      "status": "ACTIVE",
+      "lastMessage": "Comprobante recibido. El comerciante lo revisará en breve.",
+      "lastMessageTime": "10:05",
+      "status": "WAITING_PAYMENT",
       "createdAt": "2026-04-15T09:30:00.000Z"
     },
     {
@@ -35,8 +35,8 @@
       "sellerId": 1,
       "clientPhone": "+51 951 234 567",
       "clientName": "Maria Castillo",
-      "lastMessage": "Por favor inténtalo más tarde.",
-      "lastMessageTime": "ayer",
+      "lastMessage": "Tu pedido #0043 quedó pendiente de pago.",
+      "lastMessageTime": "12:05",
       "status": "CLOSED",
       "createdAt": "2026-04-14T11:00:00.000Z"
     },
@@ -45,17 +45,27 @@
       "sellerId": 1,
       "clientPhone": "+51 932 111 222",
       "clientName": "Pedro Quispe",
-      "lastMessage": "quiero agua san luis 625ml",
+      "lastMessage": "¡Hasta pronto!",
       "lastMessageTime": "ahora",
-      "status": "ACTIVE",
+      "status": "CLOSED",
       "createdAt": "2026-04-15T10:25:00.000Z"
+    },
+    {
+      "id": 5,
+      "sellerId": 1,
+      "clientPhone": "+51 964 333 444",
+      "clientName": "Carmen Flores",
+      "lastMessage": "Tu pedido #0045 ha sido bloqueado.",
+      "lastMessageTime": "11:00",
+      "status": "ACTIVE",
+      "createdAt": "2026-04-15T10:30:00.000Z"
     }
   ],
   "chat-messages": [
     {
       "id": 1,
       "conversationId": 1,
-      "content": "Hola, bienvenida. ¿Qué deseas pedir hoy?",
+      "content": "Hola Andrea, bienvenida. ¿Qué deseas pedir hoy?",
       "sender": "bot",
       "type": "text",
       "sentAt": "2026-04-15T10:00:00.000Z"
@@ -87,7 +97,7 @@
     {
       "id": 5,
       "conversationId": 1,
-      "content": "Agregado a tu pedido:\n3 und Coca Cola 600ml — S/18.00\n¿Deseas agregar más productos?",
+      "content": "Agregado a tu pedido:\n3 und Coca Cola 600ml — S/18.00\n\n¿Deseas agregar más productos?",
       "sender": "bot",
       "type": "text",
       "sentAt": "2026-04-15T10:02:00.000Z"
@@ -95,7 +105,7 @@
     {
       "id": 6,
       "conversationId": 1,
-      "content": "Ya no quiero agregar más productos",
+      "content": "No, eso es todo",
       "sender": "client",
       "type": "text",
       "sentAt": "2026-04-15T10:02:30.000Z"
@@ -111,7 +121,7 @@
     {
       "id": 8,
       "conversationId": 1,
-      "content": "Sí, confirmo el pedido",
+      "content": "Sí, confirmo",
       "sender": "client",
       "type": "text",
       "sentAt": "2026-04-15T10:03:30.000Z"
@@ -127,7 +137,7 @@
     {
       "id": 10,
       "conversationId": 1,
-      "content": "¿A dónde enviamos tu pedido?\nAntes de confirmar necesitamos tu dirección de entrega.\n\nPor favor indícanos:\n— Calle y número\n— Distrito o referencia cercana",
+      "content": "¿A dónde enviamos tu pedido?\nPor favor indícanos:\n— Calle y número\n— Distrito o referencia cercana",
       "sender": "bot",
       "type": "text",
       "sentAt": "2026-04-15T10:03:40.000Z"
@@ -159,7 +169,7 @@
     {
       "id": 14,
       "conversationId": 1,
-      "content": "/assets/placeholder-comprobante.svg",
+      "content": "/assets/comprobante-18.00.svg",
       "sender": "client",
       "type": "image",
       "sentAt": "2026-04-15T10:18:05.000Z"
@@ -183,10 +193,10 @@
     {
       "id": 17,
       "conversationId": 2,
-      "content": "Hola, ¿en qué te puedo ayudar hoy?",
+      "content": "Hola Luis, ¿en qué te puedo ayudar hoy?",
       "sender": "bot",
       "type": "text",
-      "sentAt": "2026-04-15T09:44:00.000Z"
+      "sentAt": "2026-04-15T09:40:00.000Z"
     },
     {
       "id": 18,
@@ -194,63 +204,503 @@
       "content": "¿Tienen arroz por kilo?",
       "sender": "client",
       "type": "text",
-      "sentAt": "2026-04-15T09:45:00.000Z"
+      "sentAt": "2026-04-15T09:40:30.000Z"
     },
     {
       "id": 19,
       "conversationId": 2,
-      "content": "Arroz por kg — S/2.50/kg · disponible\n\n¿Cuántos kilos deseas?",
+      "content": "Arroz Extra por kg\nPrecio: S/2.50/kg · Stock: disponible\n\n¿Cuántos kilos deseas?",
+      "sender": "bot",
+      "type": "text",
+      "sentAt": "2026-04-15T09:41:00.000Z"
+    },
+    {
+      "id": 20,
+      "conversationId": 2,
+      "content": "2 kilos",
+      "sender": "client",
+      "type": "text",
+      "sentAt": "2026-04-15T09:41:30.000Z"
+    },
+    {
+      "id": 21,
+      "conversationId": 2,
+      "content": "Agregado:\n2 kg Arroz Extra — S/5.00\n\n¿Deseas agregar más productos?",
+      "sender": "bot",
+      "type": "text",
+      "sentAt": "2026-04-15T09:42:00.000Z"
+    },
+    {
+      "id": 22,
+      "conversationId": 2,
+      "content": "¿Tienen Inca Kola 1.5L?",
+      "sender": "client",
+      "type": "text",
+      "sentAt": "2026-04-15T09:42:30.000Z"
+    },
+    {
+      "id": 23,
+      "conversationId": 2,
+      "content": "Lo sentimos, Inca Kola 1.5L no está disponible en este momento.\n\nTe sugerimos estas alternativas:\n• Coca Cola 1.5L — S/7.50/und\n• Pepsi 1.5L — S/6.50/und\n• Sprite 1.5L — S/6.50/und\n\n¿Te interesa alguna de estas opciones?",
+      "sender": "bot",
+      "type": "text",
+      "sentAt": "2026-04-15T09:43:00.000Z"
+    },
+    {
+      "id": 24,
+      "conversationId": 2,
+      "content": "Sí, dame una Sprite 1.5L",
+      "sender": "client",
+      "type": "text",
+      "sentAt": "2026-04-15T09:43:30.000Z"
+    },
+    {
+      "id": 25,
+      "conversationId": 2,
+      "content": "Agregado:\n1 und Sprite 1.5L — S/6.50\n\n¿Deseas agregar más productos?",
+      "sender": "bot",
+      "type": "text",
+      "sentAt": "2026-04-15T09:44:00.000Z"
+    },
+    {
+      "id": 26,
+      "conversationId": 2,
+      "content": "No, eso es todo",
+      "sender": "client",
+      "type": "text",
+      "sentAt": "2026-04-15T09:44:30.000Z"
+    },
+    {
+      "id": 27,
+      "conversationId": 2,
+      "content": "Resumen de tu pedido:\n— 2 kg Arroz Extra — S/5.00\n— 1 und Sprite 1.5L — S/6.50\nTotal: S/11.50\n\n¿Confirmas el pedido?",
+      "sender": "bot",
+      "type": "text",
+      "sentAt": "2026-04-15T09:44:50.000Z"
+    },
+    {
+      "id": 28,
+      "conversationId": 2,
+      "content": "Sí, confirmo",
+      "sender": "client",
+      "type": "text",
+      "sentAt": "2026-04-15T09:45:10.000Z"
+    },
+    {
+      "id": 29,
+      "conversationId": 2,
+      "content": "Sistema: dirección de entrega no registrada — bot solicita al cliente",
+      "sender": "system",
+      "type": "text",
+      "sentAt": "2026-04-15T09:45:15.000Z"
+    },
+    {
+      "id": 30,
+      "conversationId": 2,
+      "content": "¿A dónde enviamos tu pedido?\nPor favor indícanos:\n— Calle y número\n— Distrito o referencia cercana",
       "sender": "bot",
       "type": "text",
       "sentAt": "2026-04-15T09:45:20.000Z"
     },
     {
-      "id": 20,
+      "id": 31,
+      "conversationId": 2,
+      "content": "Jr. Manco Cápac 456, La Victoria",
+      "sender": "client",
+      "type": "text",
+      "sentAt": "2026-04-15T09:45:40.000Z"
+    },
+    {
+      "id": 32,
+      "conversationId": 2,
+      "content": "Sistema: pedido #0044 registrado — estado: pendiente — 09:45",
+      "sender": "system",
+      "type": "text",
+      "sentAt": "2026-04-15T09:45:45.000Z"
+    },
+    {
+      "id": 33,
+      "conversationId": 2,
+      "content": "Instrucciones de pago para el pedido #0044:\n\nYape / Plin al número: 999 888 777\nMonto exacto: S/11.50\nReferencia: #0044\n\nEnvía el comprobante aquí cuando realices el pago.",
+      "sender": "bot",
+      "type": "text",
+      "sentAt": "2026-04-15T09:45:50.000Z"
+    },
+    {
+      "id": 34,
+      "conversationId": 2,
+      "content": "/assets/comprobante-11.50.svg",
+      "sender": "client",
+      "type": "image",
+      "sentAt": "2026-04-15T10:05:00.000Z"
+    },
+    {
+      "id": 35,
+      "conversationId": 2,
+      "content": "Sistema: comprobante recibido — pendiente de validación — 10:05",
+      "sender": "system",
+      "type": "text",
+      "sentAt": "2026-04-15T10:05:01.000Z"
+    },
+    {
+      "id": 36,
+      "conversationId": 2,
+      "content": "Comprobante recibido. El comerciante lo revisará en breve y te notificaremos.",
+      "sender": "bot",
+      "type": "text",
+      "sentAt": "2026-04-15T10:05:05.000Z"
+    },
+    {
+      "id": 37,
       "conversationId": 3,
-      "content": "Hola, ¿en qué te puedo ayudar hoy?",
+      "content": "Hola María, ¿en qué te puedo ayudar hoy?",
       "sender": "bot",
       "type": "text",
       "sentAt": "2026-04-14T11:00:00.000Z"
     },
     {
-      "id": 21,
+      "id": 38,
       "conversationId": 3,
-      "content": "Sistema: conversación cerrada por timeout — sin respuesta del cliente",
-      "sender": "system",
+      "content": "Hola, quiero fideos Don Vittorio 500g",
+      "sender": "client",
       "type": "text",
-      "sentAt": "2026-04-14T12:00:00.000Z"
+      "sentAt": "2026-04-14T11:00:30.000Z"
     },
     {
-      "id": 22,
+      "id": 39,
       "conversationId": 3,
-      "content": "Por favor inténtalo más tarde.",
+      "content": "Fideos Don Vittorio 500g\nPrecio: S/3.20 por unidad\nStock disponible: 8 unidades\n\n¿Cuántas unidades deseas?",
       "sender": "bot",
       "type": "text",
-      "sentAt": "2026-04-14T12:00:05.000Z"
+      "sentAt": "2026-04-14T11:01:00.000Z"
     },
     {
-      "id": 23,
+      "id": 40,
+      "conversationId": 3,
+      "content": "2 unidades",
+      "sender": "client",
+      "type": "text",
+      "sentAt": "2026-04-14T11:01:30.000Z"
+    },
+    {
+      "id": 41,
+      "conversationId": 3,
+      "content": "Agregado:\n2 und Fideos Don Vittorio 500g — S/6.40\n\n¿Deseas agregar más productos?",
+      "sender": "bot",
+      "type": "text",
+      "sentAt": "2026-04-14T11:02:00.000Z"
+    },
+    {
+      "id": 42,
+      "conversationId": 3,
+      "content": "No, eso es todo",
+      "sender": "client",
+      "type": "text",
+      "sentAt": "2026-04-14T11:02:30.000Z"
+    },
+    {
+      "id": 43,
+      "conversationId": 3,
+      "content": "Resumen de tu pedido:\n— 2 und Fideos Don Vittorio 500g — S/6.40\nTotal: S/6.40\n\n¿Confirmas el pedido?",
+      "sender": "bot",
+      "type": "text",
+      "sentAt": "2026-04-14T11:03:00.000Z"
+    },
+    {
+      "id": 44,
+      "conversationId": 3,
+      "content": "Sí",
+      "sender": "client",
+      "type": "text",
+      "sentAt": "2026-04-14T11:03:30.000Z"
+    },
+    {
+      "id": 45,
+      "conversationId": 3,
+      "content": "¿A dónde enviamos tu pedido?\nPor favor indícanos:\n— Calle y número\n— Distrito o referencia",
+      "sender": "bot",
+      "type": "text",
+      "sentAt": "2026-04-14T11:03:40.000Z"
+    },
+    {
+      "id": 46,
+      "conversationId": 3,
+      "content": "Jr. Las Flores 890, San Borja",
+      "sender": "client",
+      "type": "text",
+      "sentAt": "2026-04-14T11:04:00.000Z"
+    },
+    {
+      "id": 47,
+      "conversationId": 3,
+      "content": "Sistema: pedido #0043 registrado — estado: pendiente — 11:04",
+      "sender": "system",
+      "type": "text",
+      "sentAt": "2026-04-14T11:04:05.000Z"
+    },
+    {
+      "id": 48,
+      "conversationId": 3,
+      "content": "Instrucciones de pago para el pedido #0043:\n\nYape / Plin al número: 999 888 777\nMonto exacto: S/6.40\nReferencia: #0043\n\nEnvía el comprobante aquí cuando realices el pago.",
+      "sender": "bot",
+      "type": "text",
+      "sentAt": "2026-04-14T11:04:10.000Z"
+    },
+    {
+      "id": 49,
+      "conversationId": 3,
+      "content": "Sistema: sin comprobante recibido — recordatorio automático enviado — 11:35",
+      "sender": "system",
+      "type": "text",
+      "sentAt": "2026-04-14T11:35:00.000Z"
+    },
+    {
+      "id": 50,
+      "conversationId": 3,
+      "content": "Hola María, aún no hemos recibido tu comprobante de pago para el pedido #0043.\n\nMonto pendiente: S/6.40\nYape / Plin: 999 888 777\nReferencia: #0043\n\nSi ya realizaste el pago, envía el comprobante aquí. Si deseas cancelar, escríbenos.",
+      "sender": "bot",
+      "type": "text",
+      "sentAt": "2026-04-14T11:35:05.000Z"
+    },
+    {
+      "id": 51,
+      "conversationId": 3,
+      "content": "Sistema: conversación cerrada por inactividad — sin respuesta del cliente — 12:05",
+      "sender": "system",
+      "type": "text",
+      "sentAt": "2026-04-14T12:05:00.000Z"
+    },
+    {
+      "id": 52,
+      "conversationId": 3,
+      "content": "Tu pedido #0043 quedó pendiente de pago. Cuando estés lista para continuar, escríbenos y con gusto te ayudamos.",
+      "sender": "bot",
+      "type": "text",
+      "sentAt": "2026-04-14T12:05:05.000Z"
+    },
+    {
+      "id": 53,
       "conversationId": 4,
-      "content": "Hola, ¿en qué te puedo ayudar hoy?",
+      "content": "Hola Pedro, ¿en qué te puedo ayudar hoy?",
       "sender": "bot",
       "type": "text",
       "sentAt": "2026-04-15T10:25:00.000Z"
     },
     {
-      "id": 24,
+      "id": 54,
       "conversationId": 4,
-      "content": "quiero agua san luis 625ml",
+      "content": "quiero leche Gloria 400g",
       "sender": "client",
       "type": "text",
       "sentAt": "2026-04-15T10:25:30.000Z"
     },
     {
-      "id": 25,
+      "id": 55,
       "conversationId": 4,
-      "content": "Agua San Luis 625ml\nPrecio: S/1.50 por unidad\nStock disponible: 24 unidades\n\n¿Cuántas unidades deseas?",
+      "content": "Lo sentimos, Leche Gloria 400g está completamente agotada.\nNo contamos con stock disponible en este momento.",
       "sender": "bot",
       "type": "text",
       "sentAt": "2026-04-15T10:25:45.000Z"
+    },
+    {
+      "id": 56,
+      "conversationId": 4,
+      "content": "¿Y tienen otra leche?",
+      "sender": "client",
+      "type": "text",
+      "sentAt": "2026-04-15T10:26:00.000Z"
+    },
+    {
+      "id": 57,
+      "conversationId": 4,
+      "content": "En este momento no contamos con ningún tipo de leche disponible en nuestro inventario.\nDisculpa los inconvenientes, Pedro.",
+      "sender": "bot",
+      "type": "text",
+      "sentAt": "2026-04-15T10:26:15.000Z"
+    },
+    {
+      "id": 58,
+      "conversationId": 4,
+      "content": "¿Aceite tienen?",
+      "sender": "client",
+      "type": "text",
+      "sentAt": "2026-04-15T10:26:30.000Z"
+    },
+    {
+      "id": 59,
+      "conversationId": 4,
+      "content": "Lo sentimos, en este momento nuestro inventario está completamente agotado para ese tipo de producto.\n\nTe notificaremos cuando tengamos stock disponible. ¿Hay algo más en lo que pueda ayudarte?",
+      "sender": "bot",
+      "type": "text",
+      "sentAt": "2026-04-15T10:26:45.000Z"
+    },
+    {
+      "id": 60,
+      "conversationId": 4,
+      "content": "Bueno, gracias igual",
+      "sender": "client",
+      "type": "text",
+      "sentAt": "2026-04-15T10:27:00.000Z"
+    },
+    {
+      "id": 61,
+      "conversationId": 4,
+      "content": "Con gusto, Pedro. Puedes consultarnos de nuevo cuando lo necesites. ¡Hasta pronto!",
+      "sender": "bot",
+      "type": "text",
+      "sentAt": "2026-04-15T10:27:15.000Z"
+    },
+    {
+      "id": 62,
+      "conversationId": 5,
+      "content": "Hola Carmen, ¿en qué te puedo ayudar hoy?",
+      "sender": "bot",
+      "type": "text",
+      "sentAt": "2026-04-15T10:30:00.000Z"
+    },
+    {
+      "id": 63,
+      "conversationId": 5,
+      "content": "Quiero azúcar rubia 1kg",
+      "sender": "client",
+      "type": "text",
+      "sentAt": "2026-04-15T10:30:30.000Z"
+    },
+    {
+      "id": 64,
+      "conversationId": 5,
+      "content": "Azúcar Rubia 1kg\nPrecio: S/4.50 por unidad\nStock disponible: 20 unidades\n\n¿Cuántas unidades deseas?",
+      "sender": "bot",
+      "type": "text",
+      "sentAt": "2026-04-15T10:31:00.000Z"
+    },
+    {
+      "id": 65,
+      "conversationId": 5,
+      "content": "2",
+      "sender": "client",
+      "type": "text",
+      "sentAt": "2026-04-15T10:31:30.000Z"
+    },
+    {
+      "id": 66,
+      "conversationId": 5,
+      "content": "Agregado:\n2 und Azúcar Rubia 1kg — S/9.00\n\n¿Deseas agregar más productos?",
+      "sender": "bot",
+      "type": "text",
+      "sentAt": "2026-04-15T10:32:00.000Z"
+    },
+    {
+      "id": 67,
+      "conversationId": 5,
+      "content": "No, eso es todo",
+      "sender": "client",
+      "type": "text",
+      "sentAt": "2026-04-15T10:32:30.000Z"
+    },
+    {
+      "id": 68,
+      "conversationId": 5,
+      "content": "Resumen de tu pedido:\n— 2 und Azúcar Rubia 1kg — S/9.00\nTotal: S/9.00\n\n¿Confirmas el pedido?",
+      "sender": "bot",
+      "type": "text",
+      "sentAt": "2026-04-15T10:33:00.000Z"
+    },
+    {
+      "id": 69,
+      "conversationId": 5,
+      "content": "Sí, confirmo",
+      "sender": "client",
+      "type": "text",
+      "sentAt": "2026-04-15T10:33:30.000Z"
+    },
+    {
+      "id": 70,
+      "conversationId": 5,
+      "content": "¿A dónde enviamos tu pedido?\nPor favor indícanos:\n— Calle y número\n— Distrito o referencia",
+      "sender": "bot",
+      "type": "text",
+      "sentAt": "2026-04-15T10:33:40.000Z"
+    },
+    {
+      "id": 71,
+      "conversationId": 5,
+      "content": "Av. Brasil 567, Jesús María",
+      "sender": "client",
+      "type": "text",
+      "sentAt": "2026-04-15T10:34:00.000Z"
+    },
+    {
+      "id": 72,
+      "conversationId": 5,
+      "content": "Sistema: pedido #0045 registrado — estado: pendiente — 10:34",
+      "sender": "system",
+      "type": "text",
+      "sentAt": "2026-04-15T10:34:05.000Z"
+    },
+    {
+      "id": 73,
+      "conversationId": 5,
+      "content": "Instrucciones de pago para el pedido #0045:\n\nYape / Plin al número: 999 888 777\nMonto exacto: S/9.00\nReferencia: #0045\n\nEnvía el comprobante aquí cuando realices el pago.",
+      "sender": "bot",
+      "type": "text",
+      "sentAt": "2026-04-15T10:34:10.000Z"
+    },
+    {
+      "id": 74,
+      "conversationId": 5,
+      "content": "/assets/comprobante-9.00.svg",
+      "sender": "client",
+      "type": "image",
+      "sentAt": "2026-04-15T10:42:00.000Z"
+    },
+    {
+      "id": 75,
+      "conversationId": 5,
+      "content": "Sistema: comprobante recibido — pendiente de validación — 10:42",
+      "sender": "system",
+      "type": "text",
+      "sentAt": "2026-04-15T10:42:01.000Z"
+    },
+    {
+      "id": 76,
+      "conversationId": 5,
+      "content": "Sistema: comprobante rechazado — imagen ilegible — 10:45",
+      "sender": "system",
+      "type": "text",
+      "sentAt": "2026-04-15T10:45:00.000Z"
+    },
+    {
+      "id": 77,
+      "conversationId": 5,
+      "content": "Tu comprobante no pudo ser validado.\nMotivo: imagen ilegible.\n\nEl pedido #0045 ha vuelto al estado Esperando pago.\nPor favor envía un nuevo comprobante con mayor claridad.",
+      "sender": "bot",
+      "type": "text",
+      "sentAt": "2026-04-15T10:45:05.000Z"
+    },
+    {
+      "id": 78,
+      "conversationId": 5,
+      "content": "/assets/comprobante-9.00.svg",
+      "sender": "client",
+      "type": "image",
+      "sentAt": "2026-04-15T10:55:00.000Z"
+    },
+    {
+      "id": 79,
+      "conversationId": 5,
+      "content": "Sistema: segundo comprobante rechazado — pedido bloqueado por múltiples rechazos — 11:00",
+      "sender": "system",
+      "type": "text",
+      "sentAt": "2026-04-15T11:00:00.000Z"
+    },
+    {
+      "id": 80,
+      "conversationId": 5,
+      "content": "Tu pedido #0045 ha sido bloqueado debido a múltiples rechazos de pago.\n\nPara resolver esta situación, comunícate directamente con la bodega:\nTeléfono: 999 888 777\n\nLamentamos los inconvenientes, Carmen.",
+      "sender": "bot",
+      "type": "text",
+      "sentAt": "2026-04-15T11:00:05.000Z"
     }
   ],
   "chat-orders": [
@@ -259,13 +709,81 @@
       "conversationId": 1,
       "orderNumber": "#0042",
       "items": [
-        { "productName": "Coca Cola 600ml", "quantity": 3, "unitPrice": 6 }
+        {
+          "productName": "Coca Cola 600ml",
+          "quantity": 3,
+          "unitPrice": 6
+        }
       ],
-      "total": 18.0,
+      "total": 18,
       "deliveryAddress": "Av. Los Álamos 234, Miraflores",
       "paymentMethod": "Yape",
       "status": "WAITING_PAYMENT",
-      "createdAt": "2026-04-15T10:18:00.000Z"
+      "hasReceipt": true,
+      "rejectionCount": 0,
+      "createdAt": "2026-04-15T10:04:00.000Z"
+    },
+    {
+      "id": 2,
+      "conversationId": 3,
+      "orderNumber": "#0043",
+      "items": [
+        {
+          "productName": "Fideos Don Vittorio 500g",
+          "quantity": 2,
+          "unitPrice": 3.2
+        }
+      ],
+      "total": 6.4,
+      "deliveryAddress": "Jr. Las Flores 890, San Borja",
+      "paymentMethod": "Yape",
+      "status": "CANCELLED",
+      "hasReceipt": false,
+      "rejectionCount": 0,
+      "createdAt": "2026-04-14T11:04:00.000Z"
+    },
+    {
+      "id": 3,
+      "conversationId": 2,
+      "orderNumber": "#0044",
+      "items": [
+        {
+          "productName": "Arroz Extra",
+          "quantity": 2,
+          "unitPrice": 2.5
+        },
+        {
+          "productName": "Sprite 1.5L",
+          "quantity": 1,
+          "unitPrice": 6.5
+        }
+      ],
+      "total": 11.5,
+      "deliveryAddress": "Jr. Manco Cápac 456, La Victoria",
+      "paymentMethod": "Yape",
+      "status": "WAITING_PAYMENT",
+      "hasReceipt": true,
+      "rejectionCount": 0,
+      "createdAt": "2026-04-15T09:45:00.000Z"
+    },
+    {
+      "id": 4,
+      "conversationId": 5,
+      "orderNumber": "#0045",
+      "items": [
+        {
+          "productName": "Azúcar Rubia 1kg",
+          "quantity": 2,
+          "unitPrice": 4.5
+        }
+      ],
+      "total": 9,
+      "deliveryAddress": "Av. Brasil 567, Jesús María",
+      "paymentMethod": "Yape",
+      "status": "BLOCKED",
+      "hasReceipt": false,
+      "rejectionCount": 2,
+      "createdAt": "2026-04-15T10:34:00.000Z"
     }
   ]
 }
