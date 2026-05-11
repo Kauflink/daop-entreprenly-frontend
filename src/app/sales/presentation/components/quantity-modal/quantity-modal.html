@@ -1,0 +1,41 @@
+<div class="modal-backdrop" (click)="onBackdropClick($event)">
+  <div class="modal-content">
+    <header class="modal-header">
+      <div class="modal-title-wrapper">
+        <h2 class="modal-title">{{ 'sales.quantity-modal.title' | translate }}</h2>
+        <p class="modal-subtitle">{{ 'sales.quantity-modal.subtitle' | translate }}</p>
+      </div>
+      <button class="close-btn" (click)="onCancel()" [attr.aria-label]="'sales.quantity-modal.close' | translate">✕</button>
+    </header>
+
+    <div class="quantity-display">
+      <label class="display-label">{{ 'sales.quantity-modal.label' | translate }}</label>
+      <div class="display-value">
+        {{ displayValue() || '0' }}
+      </div>
+    </div>
+
+    <div class="keypad">
+      @for (key of keypadKeys; track key) {
+      <button class="keypad-btn" (click)="onKeyPress(key)">{{ key }}</button>
+      }
+      <button class="keypad-btn keypad-backspace" (click)="onBackspace()">◀</button>
+      <button class="keypad-btn keypad-zero" (click)="onZeroPress()">0</button>
+    </div>
+
+    <button
+      class="confirm-btn"
+      [disabled]="!canConfirm()"
+      (click)="onConfirm()"
+    >
+      {{ 'sales.quantity-modal.confirm' | translate }}
+    </button>
+
+    @if (hasInsufficientStock()) {
+    <div class="error-message">
+      <span class="error-icon">⊘</span>
+      {{ 'sales.quantity-modal.insufficientStock' | translate }}
+    </div>
+    }
+  </div>
+</div>

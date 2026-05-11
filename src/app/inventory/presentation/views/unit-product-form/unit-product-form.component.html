@@ -1,0 +1,103 @@
+<div class="modal-overlay" (click)="goBack()">
+  <div class="modal-card" (click)="$event.stopPropagation()">
+
+    <button class="btn-close" (click)="goBack()">×</button>
+
+    <div class="modal-header">
+      <h2 class="modal-title">{{ (isEdit ? 'products.form.editTitle' : 'products.form.addTitle') | translate }}</h2>
+      <p class="modal-subtitle">{{ (isEdit ? 'products.form.editSubtitle' : 'products.form.addSubtitle') | translate }}</p>
+    </div>
+
+    <form [formGroup]="form" (ngSubmit)="submit()">
+
+      <div class="form-field">
+        <label class="label-bold">{{ 'products.form.type' | translate }}</label>
+        <div class="input-lock-container">
+          <input type="text" class="input-gray" [value]="'products.form.byUnit' | translate" readonly>
+
+          @if (isEdit && form.get('name')?.invalid) {
+            <div class="no-mod-tag">
+              <span class="icon-lock">🚫</span> {{ 'products.form.noModifiable' | translate }}
+            </div>
+          }
+        </div>
+      </div>
+
+      <div class="form-field">
+        <label class="label-bold">{{ 'products.form.name' | translate }}</label>
+        <div class="field-row-valid">
+          <input type="text"
+                 class="input-gray"
+                 [class.input-error]="form.get('name')?.invalid && form.get('name')?.touched"
+                 formControlName="name">
+          @if (form.get('name')?.invalid && form.get('name')?.touched) {
+            <span class="v-x">✕</span>
+            <span class="v-text">{{ 'form.required' | translate }}</span>
+          }
+        </div>
+      </div>
+
+      <div class="form-field">
+        <label class="label-bold">{{ 'products.form.description' | translate }}</label>
+        <input type="text" class="input-gray" formControlName="description">
+      </div>
+
+      <div class="form-row-details">
+
+        <div class="qr-container">
+          <label class="label-bold">{{ 'products.form.qrCode' | translate }}</label>
+          <div class="qr-card">
+            <img [src]="qrImageUrl" [alt]="form.get('codeQR')?.value || 'QR'">
+          </div>
+          <input type="text" formControlName="codeQR" class="input-gray qr-text-input" placeholder="7501055363483">
+          <app-qr-scanner (scanned)="onQrScanned($event)" />
+        </div>
+
+        <div class="numeric-inputs">
+          <div class="input-group">
+            <label>{{ 'products.form.price' | translate }}:</label>
+            <div class="field-row-valid">
+              <div class="prefix-box" [class.input-error]="form.get('price')?.invalid && form.get('price')?.touched">
+                <span>$</span>
+                <input type="number" formControlName="price">
+              </div>
+              @if (form.get('price')?.invalid && form.get('price')?.touched) {
+                <span class="v-x">✕</span>
+              }
+            </div>
+          </div>
+
+          <div class="input-group">
+            <label>{{ 'products.form.weight' | translate }}:</label>
+            <input type="number" class="input-gray-small" formControlName="weightGrams">
+          </div>
+
+          <div class="input-group">
+            <label>{{ 'products.form.brand' | translate }}:</label>
+            <div class="field-row-valid">
+              <input type="text" class="input-gray-small"
+                     [class.input-error]="form.get('brand')?.invalid && form.get('brand')?.touched"
+                     formControlName="brand">
+              @if (form.get('brand')?.invalid && form.get('brand')?.touched) {
+                <span class="v-x">✕</span>
+              }
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="form-footer">
+        <button type="submit" class="btn-submit"
+                [disabled]="form.invalid"
+                [class.btn-submit--invalid]="form.invalid && submitted">
+          {{ 'products.form.save' | translate }}
+        </button>
+        @if (form.invalid && submitted) {
+          <span class="form-incomplete">{{ 'form.incomplete' | translate }}</span>
+        }
+      </div>
+
+    </form>
+  </div>
+</div>
