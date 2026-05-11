@@ -2,30 +2,29 @@
   <div class="modal-content">
     <header class="modal-header">
       <div class="modal-title-wrapper">
-        <h2 class="modal-title">Registrar Peso</h2>
+        <h2 class="modal-title">{{ 'sales.weight-modal.title' | translate }}</h2>
         <p class="modal-subtitle">
           @if (isScaleConnected()) {
-          Registrando el peso del producto
+          {{ 'sales.weight-modal.subtitleAuto' | translate }}
           } @else {
-          Ingresa el peso del producto manualmente
+          {{ 'sales.weight-modal.subtitleManual' | translate }}
           }
         </p>
       </div>
-      <button class="close-btn" (click)="onCancel()" aria-label="Cerrar">✕</button>
+      <button class="close-btn" (click)="onCancel()" [attr.aria-label]="'sales.weight-modal.close' | translate">✕</button>
     </header>
 
     <div class="weight-display">
-      <label class="display-label">Peso (kg)</label>
+      <label class="display-label">{{ 'sales.weight-modal.label' | translate }}</label>
       <div class="display-value" [class.waiting]="isWaitingForScale()">
         @if (isWaitingForScale()) {
-        Esperando respuesta de la balanza...
+        {{ 'sales.weight-modal.waiting' | translate }}
         } @else {
         {{ displayValue() || '0.000' }}
         }
       </div>
     </div>
 
-    <!-- Solo mostrar teclado si NO hay balanza conectada -->
     @if (!isScaleConnected()) {
     <div class="keypad">
       @for (key of keypadKeys; track key) {
@@ -41,13 +40,13 @@
       [disabled]="!canConfirm()"
       (click)="onConfirm()"
     >
-      Confirmar Peso
+      {{ 'sales.weight-modal.confirm' | translate }}
     </button>
 
     @if (hasInsufficientStock()) {
     <div class="error-message">
       <span class="error-icon">⊘</span>
-      Stock insuficiente
+      {{ 'sales.weight-modal.insufficientStock' | translate }}
     </div>
     }
     }

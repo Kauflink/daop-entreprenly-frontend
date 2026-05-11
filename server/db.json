@@ -1,60 +1,398 @@
 {
-  "products": [
+  "inventory-unit-products": [
+    {
+      "id": 1,
+      "name": "Coca Cola 500ml",
+      "description": "Carbonated soft drink",
+      "codeQR": "7501055363483",
+      "productType": "unit",
+      "price": 2.5,
+      "weightGrams": 500,
+      "brand": "Coca-Cola"
+    },
+    {
+      "id": 2,
+      "name": "Pepsi 500ml",
+      "description": "Carbonated soft drink",
+      "codeQR": "7506305171166",
+      "productType": "unit",
+      "price": 2,
+      "weightGrams": 500,
+      "brand": "Pepsi"
+    },
+    {
+      "id": 3,
+      "name": "Mineral Water 1.5L",
+      "description": "Still natural mineral water",
+      "codeQR": "7751010001258",
+      "productType": "unit",
+      "price": 1.2,
+      "weightGrams": 1500,
+      "brand": "Aqua"
+    },
+    {
+      "id": 4,
+      "name": "Orange Juice 1L",
+      "description": "100% natural orange juice",
+      "codeQR": "0048500206263",
+      "productType": "unit",
+      "price": 3.5,
+      "weightGrams": 1040,
+      "brand": "Tropicana"
+    },
+    {
+      "id": 5,
+      "name": "Whole Milk 1L",
+      "description": "Fresh whole pasteurized milk",
+      "codeQR": "7750403001065",
+      "productType": "unit",
+      "price": 2.8,
+      "weightGrams": 1030,
+      "brand": "Laive"
+    },
+    {
+      "id": 6,
+      "name": "Greek Yogurt 150g",
+      "description": "Plain creamy Greek yogurt",
+      "codeQR": "7750021000124",
+      "productType": "unit",
+      "price": 1.8,
+      "weightGrams": 150,
+      "brand": "Gloria"
+    }
+  ],
+  "inventory-weight-products": [
+    {
+      "id": 1,
+      "name": "White Rice",
+      "description": "Premium long-grain white rice",
+      "codeQR": "WP-RICE-001",
+      "productType": "weight",
+      "pricePerKg": 1.8
+    },
+    {
+      "id": 2,
+      "name": "Brown Sugar",
+      "description": "Unrefined cane brown sugar",
+      "codeQR": "WP-SUGAR-002",
+      "productType": "weight",
+      "pricePerKg": 2.2
+    },
+    {
+      "id": 3,
+      "name": "Black Beans",
+      "description": "Dried black beans bulk",
+      "codeQR": "WP-BEANS-003",
+      "productType": "weight",
+      "pricePerKg": 3
+    },
+    {
+      "id": 4,
+      "name": "Rolled Oats",
+      "description": "Whole grain rolled oats",
+      "codeQR": "WP-OATS-004",
+      "productType": "weight",
+      "pricePerKg": 4.5
+    }
+  ],
+  "inventory-lots": [],
+  "inventory-unit-lots": [
+    {
+      "id": 1,
+      "productId": 1,
+      "codeQR": "LOT-CC-001",
+      "entryDate": "2026-01-10T00:00:00.000Z",
+      "lotType": "unit",
+      "quantity": 80,
+      "expiryDate": "2026-03-15T00:00:00.000Z"
+    },
+    {
+      "id": 2,
+      "productId": 1,
+      "codeQR": "LOT-CC-002",
+      "entryDate": "2026-04-01T00:00:00.000Z",
+      "lotType": "unit",
+      "quantity": 45,
+      "expiryDate": "2026-05-14T00:00:00.000Z"
+    },
+    {
+      "id": 3,
+      "productId": 1,
+      "codeQR": "LOT-CC-003",
+      "entryDate": "2026-03-01T00:00:00.000Z",
+      "lotType": "unit",
+      "quantity": 120,
+      "expiryDate": "2027-01-15T00:00:00.000Z"
+    },
+    {
+      "id": 4,
+      "productId": 2,
+      "codeQR": "LOT-PP-001",
+      "entryDate": "2026-04-15T00:00:00.000Z",
+      "lotType": "unit",
+      "quantity": 3,
+      "expiryDate": "2027-06-01T00:00:00.000Z"
+    },
+    {
+      "id": 5,
+      "productId": 3,
+      "codeQR": "LOT-MW-001",
+      "entryDate": "2026-02-01T00:00:00.000Z",
+      "lotType": "unit",
+      "quantity": 200,
+      "expiryDate": "2027-06-01T00:00:00.000Z"
+    },
+    {
+      "id": 6,
+      "productId": 3,
+      "codeQR": "LOT-MW-002",
+      "entryDate": "2025-10-01T00:00:00.000Z",
+      "lotType": "unit",
+      "quantity": 50,
+      "expiryDate": "2026-02-28T00:00:00.000Z"
+    },
+    {
+      "id": 7,
+      "productId": 4,
+      "codeQR": "LOT-OJ-001",
+      "entryDate": "2026-04-01T00:00:00.000Z",
+      "lotType": "unit",
+      "quantity": 30,
+      "expiryDate": "2026-05-12T00:00:00.000Z"
+    },
+    {
+      "id": 8,
+      "productId": 4,
+      "codeQR": "LOT-OJ-002",
+      "entryDate": "2026-03-15T00:00:00.000Z",
+      "lotType": "unit",
+      "quantity": 60,
+      "expiryDate": "2027-03-01T00:00:00.000Z"
+    },
+    {
+      "id": 9,
+      "productId": 5,
+      "codeQR": "LOT-WM-001",
+      "entryDate": "2026-01-01T00:00:00.000Z",
+      "lotType": "unit",
+      "quantity": 0,
+      "expiryDate": "2027-01-01T00:00:00.000Z"
+    },
+    {
+      "id": 10,
+      "productId": 5,
+      "codeQR": "LOT-WM-002",
+      "entryDate": "2026-02-15T00:00:00.000Z",
+      "lotType": "unit",
+      "quantity": 65,
+      "expiryDate": "2026-11-01T00:00:00.000Z"
+    },
+    {
+      "id": 11,
+      "productId": 6,
+      "codeQR": "LOT-GY-001",
+      "entryDate": "2026-04-20T00:00:00.000Z",
+      "lotType": "unit",
+      "quantity": 4,
+      "expiryDate": "2027-04-01T00:00:00.000Z"
+    }
+  ],
+  "inventory-weight-lots": [
+    {
+      "id": 1,
+      "productId": 1,
+      "codeQR": "WLOT-RICE-001",
+      "entryDate": "2026-01-10T00:00:00.000Z",
+      "lotType": "weight",
+      "quantityKg": 120
+    },
+    {
+      "id": 2,
+      "productId": 1,
+      "codeQR": "WLOT-RICE-002",
+      "entryDate": "2026-03-01T00:00:00.000Z",
+      "lotType": "weight",
+      "quantityKg": 45
+    },
+    {
+      "id": 3,
+      "productId": 2,
+      "codeQR": "WLOT-SUGAR-001",
+      "entryDate": "2026-04-15T00:00:00.000Z",
+      "lotType": "weight",
+      "quantityKg": 2.5
+    },
+    {
+      "id": 4,
+      "productId": 3,
+      "codeQR": "WLOT-BEANS-001",
+      "entryDate": "2026-02-01T00:00:00.000Z",
+      "lotType": "weight",
+      "quantityKg": 0
+    },
+    {
+      "id": 5,
+      "productId": 3,
+      "codeQR": "WLOT-BEANS-002",
+      "entryDate": "2026-03-20T00:00:00.000Z",
+      "lotType": "weight",
+      "quantityKg": 38
+    },
+    {
+      "id": 6,
+      "productId": 4,
+      "codeQR": "WLOT-OATS-001",
+      "entryDate": "2026-01-20T00:00:00.000Z",
+      "lotType": "weight",
+      "quantityKg": 30
+    },
+    {
+      "id": 7,
+      "productId": 4,
+      "codeQR": "WLOT-OATS-002",
+      "entryDate": "2026-04-10T00:00:00.000Z",
+      "lotType": "weight",
+      "quantityKg": 1.5
+    }
+  ],
+  "inventory-stock-alerts": [
+    {
+      "id": 1,
+      "lotId": 1,
+      "productId": 1,
+      "alertType": "expired",
+      "severity": "critical",
+      "message": "Coca Cola 500ml lot #1 expired on 15/3/2026.",
+      "createdAt": "2026-03-16T08:00:00Z"
+    },
+    {
+      "id": 2,
+      "lotId": 2,
+      "productId": 1,
+      "alertType": "expiring_soon",
+      "severity": "warning",
+      "message": "Coca Cola 500ml lot #2 expires on 14/5/2026.",
+      "createdAt": "2026-05-10T08:00:00Z"
+    },
+    {
+      "id": 3,
+      "lotId": 4,
+      "productId": 2,
+      "alertType": "low_stock",
+      "severity": "warning",
+      "message": "Pepsi 500ml total stock is critically low (3 units).",
+      "createdAt": "2026-05-10T08:00:00Z"
+    },
+    {
+      "id": 4,
+      "lotId": 6,
+      "productId": 3,
+      "alertType": "expired",
+      "severity": "critical",
+      "message": "Mineral Water 1.5L lot #6 expired on 28/2/2026.",
+      "createdAt": "2026-03-01T08:00:00Z"
+    },
+    {
+      "id": 5,
+      "lotId": 7,
+      "productId": 4,
+      "alertType": "expiring_soon",
+      "severity": "warning",
+      "message": "Orange Juice 1L lot #7 expires on 12/5/2026.",
+      "createdAt": "2026-05-10T08:00:00Z"
+    },
+    {
+      "id": 6,
+      "lotId": 9,
+      "productId": 5,
+      "alertType": "out_of_stock",
+      "severity": "critical",
+      "message": "Whole Milk 1L lot #9 is out of stock.",
+      "createdAt": "2026-05-10T08:00:00Z"
+    },
+    {
+      "id": 7,
+      "lotId": 11,
+      "productId": 6,
+      "alertType": "low_stock",
+      "severity": "warning",
+      "message": "Greek Yogurt 150g total stock is critically low (4 units).",
+      "createdAt": "2026-05-10T08:00:00Z"
+    },
+    {
+      "id": 8,
+      "lotId": 3,
+      "productId": 2,
+      "alertType": "out_of_stock",
+      "severity": "critical",
+      "message": "Brown Sugar lot #3 is out of stock.",
+      "createdAt": "2026-05-10T08:00:00Z"
+    }
+  ],
+  "sales-products": [
     {
       "id": 1,
       "name": "Arroz Costeño 1kg",
+      "description": "Premium coastal rice 1kg bag",
+      "isWeighted": false,
       "unitPrice": 5.5,
-      "isWeighted": true,
-      "availableStock": 50.5
+      "availableStock": 120
     },
     {
       "id": 2,
       "name": "Pollo entero",
-      "unitPrice": 12,
+      "description": "Fresh whole chicken per kg",
       "isWeighted": true,
-      "availableStock": 25
+      "unitPrice": 9.9,
+      "availableStock": 50
     },
     {
       "id": 3,
       "name": "Coca Cola 500ml",
-      "unitPrice": 3.5,
+      "description": "Coca-Cola 500ml bottle",
       "isWeighted": false,
-      "availableStock": 100
+      "unitPrice": 3.5,
+      "availableStock": 80
     },
     {
       "id": 4,
       "name": "Pan francés",
-      "unitPrice": 0.5,
+      "description": "Traditional French bread roll",
       "isWeighted": false,
+      "unitPrice": 0.5,
       "availableStock": 200
     },
     {
       "id": 5,
-      "name": "Inca Kola 1.5L",
-      "unitPrice": 7,
+      "name": "Inca Kola 500ml",
+      "description": "Inca Kola 500ml bottle",
       "isWeighted": false,
-      "availableStock": 60
+      "unitPrice": 3.5,
+      "availableStock": 75
     },
     {
       "id": 6,
       "name": "Queso fresco",
-      "unitPrice": 18,
+      "description": "Fresh cheese per kg",
       "isWeighted": true,
-      "availableStock": 8.5
+      "unitPrice": 18,
+      "availableStock": 30
     },
     {
       "id": 7,
-      "name": "Galleta Soda Field x6",
-      "unitPrice": 4.2,
+      "name": "Galleta Oreo",
+      "description": "Oreo cookies pack",
       "isWeighted": false,
-      "availableStock": 45
+      "unitPrice": 2,
+      "availableStock": 60
     },
     {
       "id": 8,
       "name": "Aceite Primor 1L",
-      "unitPrice": 9.8,
+      "description": "Primor vegetable oil 1L bottle",
       "isWeighted": false,
-      "availableStock": 30
+      "unitPrice": 8.5,
+      "availableStock": 40
     }
   ],
   "sales": [
@@ -120,15 +458,15 @@
   "cash-registers": [
     {
       "id": 1,
-      "date": "2026-05-09",
-      "totalCash": 56,
-      "totalDigital": 45.5
-    },
-    {
-      "id": 2,
       "date": "2026-05-08",
       "totalCash": 70,
       "totalDigital": 23.5
+    },
+    {
+      "id": 2,
+      "date": "2026-05-09",
+      "totalCash": 56,
+      "totalDigital": 45.5
     },
     {
       "id": 3,
@@ -137,10 +475,10 @@
       "totalDigital": 0
     },
     {
+      "id": 4,
       "date": "2026-05-11",
-      "totalCash": 0,
-      "totalDigital": 0,
-      "id": 4
+      "totalCash": 157.5,
+      "totalDigital": 182
     }
   ],
   "iot-scale": {

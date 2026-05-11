@@ -31,6 +31,13 @@ export const routes: Routes = [
           )
       },
       {
+        path: 'inventory',
+        loadChildren: () =>
+          import('./inventory/presentation/views/inventory.routes').then(
+            (m) => m.inventoryRoutes,
+          )
+      },
+      {
         path: '',
         redirectTo: 'home',
         pathMatch: 'full',

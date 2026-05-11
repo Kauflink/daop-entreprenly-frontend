@@ -1,4 +1,150 @@
 {
+  "option": {
+    "home": "Inicio",
+    "about": "Acerca de",
+    "unitProducts": "Productos por Unidad",
+    "unitLots": "Lotes por Unidad",
+    "weightProducts": "Productos por Peso",
+    "weightLots": "Lotes por Peso",
+    "stockAlerts": "Alertas de Stock"
+  },
+  "about": {
+    "title": "Acerca del Sistema de Inventario",
+    "content": "El Sistema de Inventario de Entrepenly ayuda a gestionar productos, lotes, cantidades de stock y alertas de inventario de forma eficiente."
+  },
+  "home": {
+    "title": "Panel de Inventario",
+    "content": "Bienvenido al Sistema de Gestión de Inventario de Entrepenly."
+  },
+  "stock-alerts": {
+    "title": "Alertas de Stock",
+    "empty": "No hay alertas de stock disponibles.",
+    "low-stock": "Stock Bajo",
+    "out-of-stock": "Sin Stock",
+    "expiring-soon": "Por Vencer",
+    "expired": "Vencido",
+    "warning": "Advertencia",
+    "critical": "Crítico"
+  },
+  "products": {
+    "title": "Productos",
+    "unit-products": "Productos por Unidad",
+    "weight-products": "Productos por Peso",
+    "subtitle": "Catálogo de productos disponibles.",
+    "add": "Agregar producto",
+    "empty": "No hay productos registrados.",
+    "col": {
+      "type": "Tipo",
+      "name": "Nombre",
+      "description": "Descripción",
+      "qrCode": "Código QR",
+      "stock": "Stock Total",
+      "price": "Precio",
+      "byUnit": "Unidad",
+      "byWeight": "Peso",
+      "edit": "Editar"
+    },
+    "form": {
+      "addTitle": "Agregar Nuevo Producto",
+      "editTitle": "Editar Producto",
+      "addSubtitle": "Ingrese la información del nuevo producto.",
+      "editSubtitle": "Modifique la información del producto.",
+      "type": "Tipo de Producto",
+      "byUnit": "Unidad",
+      "name": "Nombre",
+      "namePlaceholder": "Nombre del Producto",
+      "nameRequired": "El nombre es obligatorio",
+      "description": "Descripción",
+      "descriptionPlaceholder": "Descripción del Producto",
+      "descriptionRequired": "La descripción es obligatoria",
+      "qrCode": "Código QR",
+      "qrHint": "Si no se especifica, se usará el código del producto.",
+      "scanQr": "Escanear QR",
+      "closeScanner": "Cerrar escáner",
+      "scannerCameraUnavailable": "No se pudo acceder a la cámara.",
+      "scannerPermissionDenied": "Permite el acceso a la cámara para escanear el QR.",
+      "price": "Precio",
+      "weight": "Peso (g)",
+      "brand": "Marca",
+      "brandPlaceholder": "Marca del Producto",
+      "save": "Guardar",
+      "noModifiable": "No modificable",
+      "byWeight": "Peso",
+      "pricePerKg": "Precio por Kg"
+    }
+  },
+  "lots": {
+    "title": "Lotes de Inventario",
+    "subtitle": "Gestione y rastree sus lotes de productos.",
+    "unit-lots": "Lotes por Unidad",
+    "weight-lots": "Lotes por Peso",
+    "search": "Buscar lotes...",
+    "create": "Crear Lote",
+    "add": "Agregar Lote",
+    "back": "Volver",
+    "prefix": "lote",
+    "totalLots": "Total de Lotes",
+    "expiredLots": "Lotes Vencidos",
+    "outOfStock": "Sin Stock",
+    "totalUnits": "Total de Unidades",
+    "totalLotCount": "Lotes registrados",
+    "viewDetails": "Ver Detalles",
+    "empty": "No se encontraron lotes.",
+    "status": {
+      "expired": "Vencido"
+    },
+    "alerts": {
+      "title": {
+        "expired": "{{count}} lote(s) vencido(s)",
+        "outOfStock": "{{count}} lote(s) sin stock",
+        "expiringSoon": "{{count}} lote(s) próximo(s) a vencer",
+        "lowStock": "{{count}} lote(s) a punto de quedarse sin stock"
+      },
+      "detail": {
+        "expired": "{{productName}} · lote {{lotId}} · venció el {{expiryDate}}",
+        "outOfStock": "{{productName}} · lote {{lotId}} · agotado",
+        "outOfStockNoLot": "{{productName}} · sin lote · agotado",
+        "expiringSoon": "{{productName}} · lote {{lotId}} · vence en {{days}} día(s) ({{expiryDate}})",
+        "lowStock": "{{productName}} · lote {{lotId}} · a punto de agotarse",
+        "lowStockNoLot": "{{productName}} · sin lote · a punto de agotarse"
+      }
+    },
+    "form": {
+      "addTitle": "Agregar Nuevo Lote",
+      "editTitle": "Editar Lote",
+      "addSubtitle": "Ingrese la información del nuevo lote.",
+      "editSubtitle": "Modifique la información del lote.",
+      "type": "Tipo de Lote",
+      "byUnit": "Unidad",
+      "byWeight": "Peso",
+      "product": "Producto",
+      "select": "Seleccione un producto",
+      "qrCode": "Código QR",
+      "qrHint": "Si no se especifica uno, se usará el código del producto.",
+      "entryDate": "Fecha de Ingreso",
+      "expiryDate": "Fecha de Vencimiento",
+      "quantity": "Cantidad",
+      "save": "Guardar Lote"
+    }
+  },
+  "form": {
+    "required": "Debe poner campo válido",
+    "incomplete": "Campo obligatorio incompleto"
+  },
+  "error": {
+    "loadTitle": "No se pudo cargar los detalles en este momento",
+    "loadSubtitle": "Inténtalo más tarde"
+  },
+  "page-not-found": {
+    "title": "Página No Encontrada",
+    "content": "La ruta <strong>{{ invalid_path }}</strong> no existe.",
+    "go-home": "Ir al Inicio"
+  },
+  "footer": {
+    "rights": "Todos los derechos reservados.",
+    "powered-by": "Desarrollado con",
+    "and": "y"
+  },
   "dashboard": {
     "sidebarLabel": "Navegación principal",
     "brandLabel": "Ir al dashboard de Entreprenly",
@@ -8,12 +154,84 @@
     "nav": {
       "home": "Home",
       "products": "Productos",
-      "batches": "Lotes",
+      "lots": "Lotes",
       "sales": "Ventas",
       "subscription": "Suscripción",
       "orders": "Pedidos",
       "chatbot": "Chatbot",
       "help": "Ayuda"
+    }
+  },
+  "sales": {
+    "page": {
+      "title": "Ventas",
+      "subtitle": "Registra y procesa las ventas del día"
+    },
+    "detail": {
+      "title": "Detalle de venta"
+    },
+    "search": {
+      "placeholder": "Buscar producto por nombre...",
+      "notFound": "Producto no encontrado",
+      "emptyTicket": "No hay productos en el ticket"
+    },
+    "ticket": {
+      "col": {
+        "product": "Producto",
+        "type": "Tipo",
+        "quantity": "Cantidad/peso",
+        "unitPrice": "P. Unit.",
+        "subtotal": "Subtotal"
+      },
+      "empty": "Aún no se han añadido productos al ticket",
+      "badge": {
+        "unit": "Unidad",
+        "weight": "Peso"
+      },
+      "unit": "und",
+      "kg": "kg"
+    },
+    "register": {
+      "title": "Resumen de Caja",
+      "subtitle": "Ingresos acumulados por método de pago",
+      "totalDay": "Total del Día",
+      "cash": "Efectivo",
+      "digital": "Tarjeta - Yape/Plin"
+    },
+    "summary": {
+      "title": "Resumen",
+      "subtotal": "Subtotal",
+      "items": "productos",
+      "total": "Total"
+    },
+    "payment": {
+      "title": "Método de Pago",
+      "cash": "Efectivo",
+      "digital": "Tarjeta yape/plin",
+      "error": "Por favor, seleccione un método de pago"
+    },
+    "finalize": "Finalizar Venta y Emitir Boleta",
+    "cancel": "Cancelar Venta",
+    "success": {
+      "title": "Venta Exitosa"
+    },
+    "quantity-modal": {
+      "title": "Registrar Cantidad",
+      "subtitle": "Ingrese la cantidad de productos",
+      "close": "Cerrar",
+      "label": "Cantidad",
+      "confirm": "Confirmar Cantidad",
+      "insufficientStock": "Stock insuficiente"
+    },
+    "weight-modal": {
+      "title": "Registrar Peso",
+      "subtitleAuto": "Registrando el peso del producto",
+      "subtitleManual": "Ingresa el peso del producto manualmente",
+      "close": "Cerrar",
+      "label": "Peso (kg)",
+      "waiting": "Esperando respuesta de la balanza...",
+      "confirm": "Confirmar Peso",
+      "insufficientStock": "Stock insuficiente"
     }
   },
   "subscription": {

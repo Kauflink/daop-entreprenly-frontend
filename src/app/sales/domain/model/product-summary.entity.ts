@@ -1,15 +1,5 @@
 import { BaseEntity } from '../../../shared/infrastructure/base-entity';
 
-/**
- * Representa un producto del catálogo, recibido desde el BC de Inventario
- * a través del Inventory ContextFacade.
- *
- * NO es un agregado de Ventas; es la vista que Ventas tiene de los productos
- * para poder agregarlos al ticket. La fuente de verdad vive en Inventario.
- *
- * isWeighted = true  → producto se vende por peso (kg) usando balanza IoT
- * isWeighted = false → producto se vende por unidad (cantidad)
- */
 export class ProductSummary implements BaseEntity {
   private _id: number;
   private _name: string;
