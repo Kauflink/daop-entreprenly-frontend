@@ -14,7 +14,7 @@
 
     @if (alertSummaries().length > 0) {
       <div class="alerts-container">
-        @for (alert of alertSummaries(); track alert.kind) {
+        @for (alert of alertSummaries(); track alert.alertType) {
           <div
             class="lot-alert"
             [class.lot-alert--danger]="alert.tone === 'danger'"
