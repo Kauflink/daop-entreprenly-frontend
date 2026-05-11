@@ -7,4 +7,5 @@ export const environment = {
   entreprenlyProviderCashRegistersEndpointPath: '/cash-registers',
   entreprenlyProviderSubscriptionEndpointPath: '/subscription',
   entreprenlyProviderSubscriptionDashboardEndpointPath: '/subscription-dashboard/1',
+  entreprenlyProviderSubscriptionActivationEndpointPath: '/subscription-payment-confirmation/1',
 };

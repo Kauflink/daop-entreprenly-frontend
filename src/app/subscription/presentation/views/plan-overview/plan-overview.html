@@ -18,9 +18,9 @@
           <h3 id="current-plan-title">{{ currentPlan().name }}</h3>
           <p>{{ currentPlan().shortDescription }}</p>
         </div>
-        <div class="price-box" aria-label="Costo actual 0 soles por mes">
+        <div class="price-box" [attr.aria-label]="currentPlanPriceAriaLabel()">
           <strong>S/ {{ currentPlan().monthlyPrice }}</strong>
-          <span>por mes</span>
+          <span>{{ currentPlanPriceLabel() }}</span>
         </div>
       </div>
 
@@ -32,6 +32,13 @@
           </li>
         }
       </ul>
+
+      @if (activeCurrentPlan()) {
+        <div class="plan-card__actions">
+          <button class="secondary-primary-action" type="button">Renovar suscripción</button>
+          <button class="secondary-outline-action" type="button">Solicitar cancelación</button>
+        </div>
+      }
     </article>
 
     <article
