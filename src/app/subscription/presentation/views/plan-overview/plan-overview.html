@@ -1,0 +1,98 @@
+<section class="panel plan-overview" aria-labelledby="subscription-plan-title">
+  <div class="panel__header">
+    <div>
+      <p class="eyebrow">{{ 'subscription.overview.eyebrow' | translate }}</p>
+      <h2 id="subscription-plan-title">{{ 'subscription.overview.title' | translate }}</h2>
+      <p class="panel__intro">
+        {{ 'subscription.overview.description' | translate }}
+      </p>
+    </div>
+    <span class="status-badge">{{ currentPlan().statusLabel }}</span>
+  </div>
+
+  <div class="plans-grid">
+    <article class="plan-card" aria-labelledby="current-plan-title">
+      <div class="plan-card__heading">
+        <div>
+          <p class="card-label">{{ currentPlan().badgeLabel }}</p>
+          <h3 id="current-plan-title">{{ currentPlan().name }}</h3>
+          <p>{{ currentPlan().shortDescription }}</p>
+        </div>
+        <div class="price-box" [attr.aria-label]="currentPlanPriceAriaLabel()">
+          <strong>S/ {{ currentPlan().monthlyPrice }}</strong>
+          <span>{{ currentPlanPriceLabel() }}</span>
+        </div>
+      </div>
+
+      <ul class="feature-list">
+        @for (feature of currentPlan().features; track feature.description) {
+          <li>
+            <mat-icon aria-hidden="true">check</mat-icon>
+            <span>{{ feature.description }}</span>
+          </li>
+        }
+      </ul>
+
+      @if (activeCurrentPlan()) {
+        <div class="plan-card__actions">
+          <button class="secondary-primary-action" type="button">Renovar suscripción</button>
+          <button class="secondary-outline-action" type="button">Solicitar cancelación</button>
+        </div>
+      }
+    </article>
+
+    <article
+      class="plan-card plan-card--recommended"
+      [class.plan-card--selected]="controlPlanSelected()"
+      aria-labelledby="recommended-plan-title"
+    >
+      <div class="plan-card__heading">
+        <div>
+          <p class="card-label card-label--accent">{{ recommendedPlan().badgeLabel }}</p>
+          <h3 id="recommended-plan-title">{{ recommendedPlan().name }}</h3>
+        </div>
+        <div class="recommended-price">
+          <strong>S/ {{ selectedPrice() }}</strong>
+          <span>{{ selectedPriceLabel() }}</span>
+        </div>
+      </div>
+
+      <div
+        class="billing-toggle"
+        [class.billing-toggle--annual]="selectedCycle() === 'annual'"
+        role="group"
+        [attr.aria-label]="'subscription.overview.billingFrequencyLabel' | translate"
+      >
+        <button
+          type="button"
+          [class.billing-toggle__button--active]="selectedCycle() === 'monthly'"
+          [attr.aria-pressed]="selectedCycle() === 'monthly'"
+          (click)="selectBillingCycle('monthly')"
+        >
+          {{ 'subscription.overview.monthly' | translate }}
+        </button>
+        <button
+          type="button"
+          [class.billing-toggle__button--active]="selectedCycle() === 'annual'"
+          [attr.aria-pressed]="selectedCycle() === 'annual'"
+          (click)="selectBillingCycle('annual')"
+        >
+          {{ 'subscription.overview.annual' | translate }}
+        </button>
+      </div>
+
+      <ul class="feature-list feature-list--recommended">
+        @for (feature of recommendedPlan().features; track feature.description) {
+          <li>
+            <mat-icon aria-hidden="true">check</mat-icon>
+            <span>{{ feature.description }}</span>
+          </li>
+        }
+      </ul>
+
+      <button class="primary-action" type="button" (click)="requestControlPlan()">
+        {{ 'subscription.overview.upgradeAction' | translate }}
+      </button>
+    </article>
+  </div>
+</section>
