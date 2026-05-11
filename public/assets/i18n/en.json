@@ -439,6 +439,50 @@
         "receiptReceived": "Receipt received",
         "awaitingReceipt": "Awaiting receipt"
       }
+    },
+    "qr": {
+      "expiredTitle": "QR code expired — linking not completed",
+      "expiredDetail": "The QR code was not scanned within the time limit. The previous code was automatically discarded and a new one was generated. Scan the new code to complete the linking.",
+      "newCode": "New code generated",
+      "linkTitle": "Link WhatsApp Business",
+      "scanInstruction": "Scan the QR code from your app",
+      "alt": "QR code to link WhatsApp Business",
+      "generating": "Generating new code...",
+      "expiresIn": "Code expires in {{ seconds }} seconds",
+      "expiresInOne": "Code expires in {{ seconds }} second",
+      "simulateScan": "Simulate scan"
+    },
+    "statusCard": {
+      "connectedTitle": "Account linked successfully",
+      "connectedDetail": "WhatsApp Business connected successfully. The chatbot can now receive and reply to your clients' messages automatically.",
+      "expiredTitle": "Session expired",
+      "expiredDetail": "The WhatsApp Business session was closed externally. The chatbot cannot receive messages until the connection is restored.",
+      "cardTitle": "WhatsApp Business",
+      "activeSince": "active since",
+      "lastConnection": "last connection:",
+      "operative": "The chatbot is operational and processing messages automatically.",
+      "viewConversations": "View conversations →",
+      "disconnect": "Disconnect",
+      "reconnect": "Link again",
+      "connected": "● Connected",
+      "disconnected": "● Disconnected"
+    },
+    "conversationList": {
+      "title": "Conversations"
+    },
+    "header": {
+      "online": "Online"
+    },
+    "message": {
+      "receiptAlt": "Payment receipt"
+    },
+    "input": {
+      "placeholder": "Write a message...",
+      "emptyError": "Message cannot be empty",
+      "ariaLabel": "Write a message",
+      "voiceNote": "Voice note",
+      "attach": "Attach file",
+      "send": "Send message"
     }
   }
 }

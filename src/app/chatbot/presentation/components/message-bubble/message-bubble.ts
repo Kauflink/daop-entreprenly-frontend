@@ -1,9 +1,11 @@
 import { ChangeDetectionStrategy, Component, input } from '@angular/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { ChatMessage } from '../../../domain/model/chat-message.entity';
 
 @Component({
   selector: 'app-message-bubble',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [TranslatePipe],
   template: `
     @if (message().sender === 'system') {
       <div class="flex justify-center py-1">
@@ -20,7 +22,7 @@ import { ChatMessage } from '../../../domain/model/chat-message.entity';
         </div>
         <div class="max-w-xs rounded-2xl rounded-bl-sm bg-orange-400 px-4 py-2.5 shadow-sm">
           @if (message().type === 'image') {
-            <img [src]="message().content" alt="Comprobante de pago" class="w-40 rounded-lg" />
+            <img [src]="message().content" [alt]="'chatbot.message.receiptAlt' | translate" class="w-40 rounded-lg" />
           } @else {
             <p class="text-sm text-white">{{ message().content }}</p>
           }

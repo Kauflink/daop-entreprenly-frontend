@@ -1,45 +1,47 @@
 import { ChangeDetectionStrategy, Component, DestroyRef, computed, inject, input, output, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { TranslatePipe } from '@ngx-translate/core';
 import { interval, timer } from 'rxjs';
 import { buildQrCodeDataUrl } from '../../../../inventory/infrastructure/qr-code-generator';
 
 @Component({
   selector: 'app-qr-connection-card',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [TranslatePipe],
   template: `
     @if (isExpired() || hasError()) {
       <div class="m-5 rounded-2xl border border-red-200 bg-red-50 p-4">
-        <p class="font-semibold text-red-600">Código QR expirado — vinculación no completada</p>
-        <p class="mt-1 text-sm text-red-500">
-          El código QR no fue escaneado en el tiempo límite. El código anterior fue descartado
-          automáticamente y se generó uno nuevo. Escanea el nuevo código para completar la
-          vinculación.
-        </p>
+        <p class="font-semibold text-red-600">{{ 'chatbot.qr.expiredTitle' | translate }}</p>
+        <p class="mt-1 text-sm text-red-500">{{ 'chatbot.qr.expiredDetail' | translate }}</p>
       </div>
     }
     <div class="flex flex-col items-center gap-3 py-20">
       <h2 class="text-lg font-bold text-gray-900">
-        {{ isExpired() || hasError() ? 'Nuevo código generado' : 'Vincular WhatsApp Business' }}
+        {{ (isExpired() || hasError() ? 'chatbot.qr.newCode' : 'chatbot.qr.linkTitle') | translate }}
       </h2>
-      <p class="text-sm text-gray-500">Escanea el código QR desde tu app</p>
+      <p class="text-sm text-gray-500">{{ 'chatbot.qr.scanInstruction' | translate }}</p>
       <div class="overflow-hidden rounded-xl bg-white p-2">
         <img
           class="block size-48"
           [src]="qrCodeDataUrl()"
           width="192"
           height="192"
-          alt="Código QR para vincular WhatsApp Business"
+          [alt]="'chatbot.qr.alt' | translate"
         />
       </div>
       <p class="text-sm" [class]="seconds() <= 10 ? 'font-medium text-red-400' : 'text-gray-400'">
-        {{ isExpired() ? 'Generando nuevo código...' : 'El código expira en ' + seconds() + (seconds() === 1 ? ' segundo' : ' segundos') }}
+        @if (isExpired()) {
+          {{ 'chatbot.qr.generating' | translate }}
+        } @else {
+          {{ (seconds() === 1 ? 'chatbot.qr.expiresInOne' : 'chatbot.qr.expiresIn') | translate: { seconds: seconds() } }}
+        }
       </p>
       <button
         (click)="scanned.emit()"
         class="mt-2 rounded-full bg-green-500 px-6 py-2 text-sm font-medium text-white transition-colors hover:bg-green-600"
         type="button"
       >
-        Simular escaneo
+        {{ 'chatbot.qr.simulateScan' | translate }}
       </button>
     </div>
   `,

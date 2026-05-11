@@ -439,6 +439,50 @@
         "receiptReceived": "Comprobante recibido",
         "awaitingReceipt": "Esperando comprobante"
       }
+    },
+    "qr": {
+      "expiredTitle": "Código QR expirado — vinculación no completada",
+      "expiredDetail": "El código QR no fue escaneado en el tiempo límite. El código anterior fue descartado automáticamente y se generó uno nuevo. Escanea el nuevo código para completar la vinculación.",
+      "newCode": "Nuevo código generado",
+      "linkTitle": "Vincular WhatsApp Business",
+      "scanInstruction": "Escanea el código QR desde tu app",
+      "alt": "Código QR para vincular WhatsApp Business",
+      "generating": "Generando nuevo código...",
+      "expiresIn": "El código expira en {{ seconds }} segundos",
+      "expiresInOne": "El código expira en {{ seconds }} segundo",
+      "simulateScan": "Simular escaneo"
+    },
+    "statusCard": {
+      "connectedTitle": "Cuenta vinculada correctamente",
+      "connectedDetail": "WhatsApp Business conectado exitosamente. El chatbot ya puede recibir y responder mensajes de tus clientes de forma automática.",
+      "expiredTitle": "Sesión expirada",
+      "expiredDetail": "La sesión de WhatsApp Business fue cerrada externamente. El chatbot no puede recibir mensajes hasta que se restaure la conexión.",
+      "cardTitle": "WhatsApp Business",
+      "activeSince": "activo desde el",
+      "lastConnection": "última conexión:",
+      "operative": "El chatbot se encuentra operativo y procesando mensajes automáticamente.",
+      "viewConversations": "Ver conversaciones →",
+      "disconnect": "Desconectar",
+      "reconnect": "Volver a vincular",
+      "connected": "● Conectado",
+      "disconnected": "● Desconectado"
+    },
+    "conversationList": {
+      "title": "Conversaciones"
+    },
+    "header": {
+      "online": "En línea"
+    },
+    "message": {
+      "receiptAlt": "Comprobante de pago"
+    },
+    "input": {
+      "placeholder": "Escribe un mensaje...",
+      "emptyError": "El mensaje no puede estar vacío",
+      "ariaLabel": "Escribe un mensaje",
+      "voiceNote": "Nota de voz",
+      "attach": "Adjuntar archivo",
+      "send": "Enviar mensaje"
     }
   }
 }
