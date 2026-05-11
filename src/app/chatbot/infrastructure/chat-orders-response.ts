@@ -9,6 +9,8 @@ export interface ChatOrderResource extends BaseResource {
   deliveryAddress: string;
   paymentMethod: string;
   status: OrderStatus;
+  hasReceipt: boolean;
+  rejectionCount: number;
   createdAt: string;
 }
 

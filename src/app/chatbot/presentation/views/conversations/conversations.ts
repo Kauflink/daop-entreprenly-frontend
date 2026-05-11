@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, effect, ElementRef, inject, OnInit, viewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, effect, ElementRef, inject, OnInit, signal, viewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { ChatbotStoreService } from '../../../application/chatbot-store.service';
 import { ConversationList } from '../../components/conversation-list/conversation-list';
@@ -17,6 +17,15 @@ export class Conversations implements OnInit {
   private readonly router = inject(Router);
   private readonly messagesContainer = viewChild<ElementRef>('messagesContainer');
 
+  /** Only show the pending payment bar AFTER the comprobante image appears in the chat */
+  protected readonly receiptVisible = computed(() =>
+    this.store.messages().some(m => m.sender === 'client' && m.type === 'image'),
+  );
+
+  protected readonly showRejectForm = signal(false);
+  protected readonly selectedReason = signal('Imagen ilegible');
+  protected readonly rejectReasons = ['Imagen ilegible', 'Monto incorrecto', 'Comprobante falso'] as const;
+
   constructor() {
     effect(() => {
       if (this.store.isSessionLoaded()) {
@@ -34,6 +43,13 @@ export class Conversations implements OnInit {
         setTimeout(() => { el.scrollTop = el.scrollHeight; }, 0);
       }
     });
+
+    // Reset reject form whenever conversation changes
+    effect(() => {
+      this.store.selectedConversationId();
+      this.showRejectForm.set(false);
+      this.selectedReason.set('Imagen ilegible');
+    });
   }
 
   ngOnInit(): void {
@@ -44,12 +60,28 @@ export class Conversations implements OnInit {
 
   protected onApprove(): void {
     const order = this.store.pendingOrder();
-    if (order) this.store.approveOrder(order.id);
+    if (order) {
+      this.store.approveOrder(order.id);
+      this.showRejectForm.set(false);
+    }
   }
 
   protected onReject(): void {
+    this.showRejectForm.set(true);
+  }
+
+  protected onConfirmReject(): void {
     const order = this.store.pendingOrder();
-    if (order) this.store.rejectOrder(order.id);
+    if (order) {
+      this.store.rejectOrder(order.id, this.selectedReason());
+      this.showRejectForm.set(false);
+      this.selectedReason.set('Imagen ilegible');
+    }
+  }
+
+  protected onCancelReject(): void {
+    this.showRejectForm.set(false);
+    this.selectedReason.set('Imagen ilegible');
   }
 
   protected onConversationSelected(id: number): void {
