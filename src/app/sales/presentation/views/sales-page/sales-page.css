@@ -13,16 +13,16 @@
 }
 
 .page-header h1 {
-  font-size: 32px;
+  font-size: 40px;
   margin: 0 0 4px 0;
-  font-weight: bold;
-  color: #1e1e1e;
+  font-weight: 600;
+  color: #0C0F12;
 }
 
 .page-header .subtitle {
-  color: #666;
+  color: #666666;
   margin: 0;
-  font-size: 14px;
+  font-size: 15px;
 }
 
 /* ===== LAYOUT PRINCIPAL ===== */
@@ -64,7 +64,7 @@
 }
 
 .title-icon {
-  color: #f59e0b;
+  color: #F38313;
   font-size: 16px;
 }
 
@@ -121,7 +121,7 @@
 
 .suggestion-item:hover {
   background: #fef3e7;
-  color: #ea7c0a;
+  color: #D4720F;
   font-weight: 500;
 }
 
@@ -186,7 +186,7 @@
 }
 
 .badge-unit {
-  background: #f59e0b;
+  background: #F38313;
   color: white;
 }
 
@@ -239,7 +239,7 @@
 }
 
 .total-value {
-  color: #f59e0b;
+  color: #F38313;
 }
 
 /* ===== MÉTODO DE PAGO ===== */
@@ -274,7 +274,8 @@
 }
 
 .payment-icon {
-  font-size: 32px;
+  font-size: 40px;
+  color: #0C0F12;
 }
 
 .payment-label {
@@ -284,7 +285,7 @@
 
 /* ===== BOTONES ===== */
 .btn-finalize {
-  background: #f59e0b;
+  background: #F38313;
   color: white;
   border: none;
   border-radius: 30px;
@@ -296,7 +297,7 @@
 }
 
 .btn-finalize:not(:disabled):hover {
-  background: #ea7c0a;
+  background: #D4720F;
 }
 
 .btn-finalize-inactive {
@@ -326,6 +327,10 @@
 }
 
 /* ===== RESUMEN DE CAJA ===== */
+.cash-summary {
+  margin-top: 24px;
+}
+
 .cash-title {
   font-size: 24px;
   font-weight: bold;
@@ -353,7 +358,7 @@
 }
 
 .cash-widget.total-day {
-  background: linear-gradient(135deg, #f59e0b 0%, #ea7c0a 100%);
+  background: linear-gradient(to right, #F97316 0%, #666666 100%);
   color: white;
 }
 
@@ -372,7 +377,7 @@
 }
 
 .widget-icon {
-  font-size: 16px;
+  font-size: 18px;
 }
 
 .widget-value {
@@ -391,8 +396,8 @@
 /* ===== MÉTODO DE PAGO SELECCIONADO ===== */
 .payment-btn.selected {
   background: #fef3e7;
-  color: #ea7c0a;
-  outline: 2px solid #f59e0b;
+  color: #D4720F;
+  outline: 2px solid #F38313;
 }
 
 .payment-error {

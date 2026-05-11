@@ -8,7 +8,7 @@
     <div class="left-column">
       <section class="card detail-card">
         <h2 class="card-title">
-          <span class="title-icon">⚙</span>
+          <span class="title-icon">☀</span>
           Detalle de venta
         </h2>
 
@@ -102,21 +102,21 @@
         <div class="cash-widgets">
           <div class="cash-widget total-day">
             <p class="widget-label">
-              <span class="widget-icon">🧾</span>
+              <span class="material-icons widget-icon">receipt</span>
               Total del Día
             </p>
             <p class="widget-value">S/ {{ totalDay().toFixed(2) }}</p>
           </div>
           <div class="cash-widget">
             <p class="widget-label">
-              <span class="widget-icon">💵</span>
+              <span class="material-icons widget-icon">payments</span>
               Efectivo
             </p>
             <p class="widget-value">S/ {{ totalCash().toFixed(2) }}</p>
           </div>
           <div class="cash-widget">
             <p class="widget-label">
-              <span class="widget-icon">💳</span>
+              <span class="material-icons widget-icon">point_of_sale</span>
               Tarjeta - Yape/Plin
             </p>
             <p class="widget-value">S/ {{ totalDigital().toFixed(2) }}</p>
@@ -128,7 +128,7 @@
     <aside class="right-column">
       <section class="card summary-card">
         <h2 class="card-title">
-          <span class="title-icon">⚙</span>
+          <span class="title-icon">☀</span>
           Resumen
         </h2>
         <div class="summary-row">
@@ -148,7 +148,7 @@
 
       <section class="card payment-card">
         <h2 class="card-title">
-          <span class="title-icon">⚙</span>
+          <span class="title-icon">☀</span>
           Método de Pago
         </h2>
         <div class="payment-buttons">
@@ -158,7 +158,7 @@
             [disabled]="ticketItems().length === 0"
             (click)="onSelectPayment('CASH')"
           >
-            <span class="payment-icon">💵</span>
+            <span class="material-icons payment-icon">payments</span>
             <span class="payment-label">Efectivo</span>
           </button>
           <button
@@ -167,7 +167,7 @@
             [disabled]="ticketItems().length === 0"
             (click)="onSelectPayment('DIGITAL')"
           >
-            <span class="payment-icon">💳</span>
+            <span class="material-icons payment-icon">point_of_sale</span>
             <span class="payment-label">Tarjeta yape/plin</span>
           </button>
         </div>
