@@ -34,12 +34,12 @@ export class DashboardLayout {
     {
       labelKey: 'dashboard.nav.products',
       icon: 'inventory_2',
-      route: '/dashboard/products',
+      route: '/dashboard/inventory/products',
     },
     {
-      labelKey: 'dashboard.nav.batches',
+      labelKey: 'dashboard.nav.lots',
       icon: 'category',
-      route: '/dashboard/batches',
+      route: '/dashboard/inventory/lots',
     },
     {
       labelKey: 'dashboard.nav.sales',

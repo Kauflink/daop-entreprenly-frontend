@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { TranslatePipe } from '@ngx-translate/core';
 import { SalesStore } from '../../../application/sales-store';
 import { ProductSummary } from '../../../domain/model/product-summary.entity';
 import { QuantityModal } from '../../components/quantity-modal/quantity-modal';
@@ -19,7 +20,7 @@ type PaymentMethod = 'CASH' | 'DIGITAL' | null;
 
 @Component({
   selector: 'app-sales-page',
-  imports: [FormsModule, QuantityModal, WeightModal],
+  imports: [FormsModule, TranslatePipe, QuantityModal, WeightModal],
   templateUrl: './sales-page.html',
   styleUrl: './sales-page.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
