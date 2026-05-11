@@ -1,7 +1,7 @@
 <div class="sales-page">
   <header class="page-header">
-    <h1>Ventas</h1>
-    <p class="subtitle">Registra y procesa las ventas del día</p>
+    <h1>{{ 'sales.page.title' | translate }}</h1>
+    <p class="subtitle">{{ 'sales.page.subtitle' | translate }}</p>
   </header>
 
   <div class="main-layout">
@@ -9,13 +9,13 @@
       <section class="card detail-card">
         <h2 class="card-title">
           <span class="title-icon">⚙</span>
-          Detalle de venta
+          {{ 'sales.detail.title' | translate }}
         </h2>
 
         <div class="search-container">
           <input
             type="text"
-            placeholder="Buscar producto por nombre..."
+            [placeholder]="'sales.search.placeholder' | translate"
             class="search-input"
             [ngModel]="searchTerm()"
             (ngModelChange)="onSearchInput($event)"
@@ -37,14 +37,14 @@
           @if (showNotFound()) {
           <div class="not-found-message">
             <span class="error-icon">⊘</span>
-            Producto no encontrado
+            {{ 'sales.search.notFound' | translate }}
           </div>
           }
 
           @if (showEmptyTicketError()) {
           <div class="not-found-message">
             <span class="error-icon">⊘</span>
-            No hay productos en el ticket
+            {{ 'sales.search.emptyTicket' | translate }}
           </div>
           }
         </div>
@@ -52,18 +52,18 @@
         <table class="ticket-table">
           <thead>
           <tr>
-            <th>Producto</th>
-            <th>Tipo</th>
-            <th>Cantidad/peso</th>
-            <th>P. Unit.</th>
-            <th>Subtotal</th>
+            <th>{{ 'sales.ticket.col.product' | translate }}</th>
+            <th>{{ 'sales.ticket.col.type' | translate }}</th>
+            <th>{{ 'sales.ticket.col.quantity' | translate }}</th>
+            <th>{{ 'sales.ticket.col.unitPrice' | translate }}</th>
+            <th>{{ 'sales.ticket.col.subtotal' | translate }}</th>
             <th></th>
           </tr>
           </thead>
           <tbody>
           @if (ticketItems().length === 0) {
           <tr class="empty-row">
-            <td colspan="6">Aún no se han añadido productos al ticket</td>
+            <td colspan="6">{{ 'sales.ticket.empty' | translate }}</td>
           </tr>
           } @else {
           @for (item of ticketItems(); track $index; let i = $index) {
@@ -71,16 +71,16 @@
             <td class="product-cell">{{ item.productName }}</td>
             <td>
               @if (item.type === 'unit') {
-              <span class="badge badge-unit">📦 Unidad</span>
+              <span class="badge badge-unit">📦 {{ 'sales.ticket.badge.unit' | translate }}</span>
               } @else {
-              <span class="badge badge-weight">⚖ Peso</span>
+              <span class="badge badge-weight">⚖ {{ 'sales.ticket.badge.weight' | translate }}</span>
               }
             </td>
             <td>
               @if (item.type === 'unit') {
-              {{ item.quantity }} und
+              {{ item.quantity }} {{ 'sales.ticket.unit' | translate }}
               } @else {
-              {{ item.weightKg }} kg
+              {{ item.weightKg }} {{ 'sales.ticket.kg' | translate }}
               }
             </td>
             <td>S/ {{ item.unitPrice.toFixed(2) }}</td>
@@ -96,28 +96,28 @@
       </section>
 
       <section class="cash-summary">
-        <h2 class="cash-title">Resumen de Caja</h2>
-        <p class="cash-subtitle">Ingresos acumulados por método de pago</p>
+        <h2 class="cash-title">{{ 'sales.register.title' | translate }}</h2>
+        <p class="cash-subtitle">{{ 'sales.register.subtitle' | translate }}</p>
 
         <div class="cash-widgets">
           <div class="cash-widget total-day">
             <p class="widget-label">
               <span class="widget-icon">🧾</span>
-              Total del Día
+              {{ 'sales.register.totalDay' | translate }}
             </p>
             <p class="widget-value">S/ {{ totalDay().toFixed(2) }}</p>
           </div>
           <div class="cash-widget">
             <p class="widget-label">
               <span class="widget-icon">💵</span>
-              Efectivo
+              {{ 'sales.register.cash' | translate }}
             </p>
             <p class="widget-value">S/ {{ totalCash().toFixed(2) }}</p>
           </div>
           <div class="cash-widget">
             <p class="widget-label">
               <span class="widget-icon">💳</span>
-              Tarjeta - Yape/Plin
+              {{ 'sales.register.digital' | translate }}
             </p>
             <p class="widget-value">S/ {{ totalDigital().toFixed(2) }}</p>
           </div>
@@ -129,19 +129,18 @@
       <section class="card summary-card">
         <h2 class="card-title">
           <span class="title-icon">⚙</span>
-          Resumen
+          {{ 'sales.summary.title' | translate }}
         </h2>
         <div class="summary-row">
-          <span>Subtotal</span>
+          <span>{{ 'sales.summary.subtotal' | translate }}</span>
           <span>S/ {{ subtotal().toFixed(2) }}</span>
         </div>
         <div class="summary-row">
-          <span>Items</span>
-          <span>{{ itemCount() }} productos</span>
+          <span>{{ itemCount() }} {{ 'sales.summary.items' | translate }}</span>
         </div>
         <hr/>
         <div class="summary-total">
-          <span>Total</span>
+          <span>{{ 'sales.summary.total' | translate }}</span>
           <span class="total-value">S/ {{ subtotal().toFixed(2) }}</span>
         </div>
       </section>
@@ -149,7 +148,7 @@
       <section class="card payment-card">
         <h2 class="card-title">
           <span class="title-icon">⚙</span>
-          Método de Pago
+          {{ 'sales.payment.title' | translate }}
         </h2>
         <div class="payment-buttons">
           <button
@@ -159,7 +158,7 @@
             (click)="onSelectPayment('CASH')"
           >
             <span class="payment-icon">💵</span>
-            <span class="payment-label">Efectivo</span>
+            <span class="payment-label">{{ 'sales.payment.cash' | translate }}</span>
           </button>
           <button
             class="payment-btn"
@@ -168,14 +167,14 @@
             (click)="onSelectPayment('DIGITAL')"
           >
             <span class="payment-icon">💳</span>
-            <span class="payment-label">Tarjeta yape/plin</span>
+            <span class="payment-label">{{ 'sales.payment.digital' | translate }}</span>
           </button>
         </div>
 
         @if (showPaymentError()) {
         <div class="payment-error">
           <span class="error-icon">⊘</span>
-          Por favor, seleccione un método de pago
+          {{ 'sales.payment.error' | translate }}
         </div>
         }
       </section>
@@ -185,13 +184,12 @@
         [class.btn-finalize-inactive]="ticketItems().length === 0 || paymentMethod() === null"
         (click)="onFinalizeSale()"
       >
-        Finalizar Venta y Emitir Boleta
+        {{ 'sales.finalize' | translate }}
       </button>
-      <button class="btn-cancel" (click)="onCancelSale()">Cancelar Venta</button>
+      <button class="btn-cancel" (click)="onCancelSale()">{{ 'sales.cancel' | translate }}</button>
     </aside>
   </div>
 
-  <!-- Modal Cantidad -->
   @if (isQuantityModalOpen()) {
   <app-quantity-modal
     [product]="selectedProduct()!"
@@ -200,7 +198,6 @@
   />
   }
 
-  <!-- Modal Peso -->
   @if (isWeightModalOpen()) {
   <app-weight-modal
     [product]="selectedProduct()!"
@@ -209,12 +206,11 @@
   />
   }
 
-  <!-- Modal Venta Exitosa -->
   @if (showSuccessModal()) {
   <div class="modal-backdrop" (click)="onCloseSuccessModal()">
     <div class="success-modal" (click)="$event.stopPropagation()">
       <button class="close-btn" (click)="onCloseSuccessModal()">✕</button>
-      <h2 class="success-title">Venta Exitosa</h2>
+      <h2 class="success-title">{{ 'sales.success.title' | translate }}</h2>
       <div class="success-check">✅</div>
     </div>
   </div>

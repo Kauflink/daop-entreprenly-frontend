@@ -1,0 +1,74 @@
+<div class="lot-row-card" [class.is-expired]="isExpired(lot.expiryDate)">
+
+  <!-- Contenedor de Acción Izquierda con Badge dinámico -->
+  <!-- Este badge reemplaza el texto suelto de la parte superior de la página -->
+  <div class="edit-action-container">
+    @if (isExpired(lot.expiryDate)) {
+      <span class="status-badge expired">
+        {{ 'stock-alerts.expired' | translate }}
+      </span>
+    }
+    <button class="btn-edit-card" (click)="onEdit.emit(lot.id)">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7M18.5 2.5a2.121 2.121 0 1 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+      </svg>
+    </button>
+  </div>
+
+  <!-- Grilla de Datos Estilo Tabla (Limpia) -->
+  <div class="lot-data-table">
+    <!-- ID del Lote -->
+    <div class="column">
+      <span class="col-label">#ID</span>
+      <span class="col-value">{{ 'lots.prefix' | translate }}-{{ lot.id }}</span>
+    </div>
+
+    <!-- Cantidad con Icono de Caja -->
+    <div class="column">
+      <div class="label-with-icon">
+        <span class="material-icons-outlined icon-small">inventory_2</span>
+        <span class="col-label">{{ 'lots.form.quantity' | translate }}</span>
+      </div>
+      <span class="col-value">{{ lot.quantity }} uds.</span>
+    </div>
+
+    <!-- Fecha Ingreso con Icono de Calendario -->
+    <div class="column">
+      <div class="label-with-icon">
+        <span class="material-icons-outlined icon-small">calendar_today</span>
+        <span class="col-label">{{ 'lots.form.entryDate' | translate }}</span>
+      </div>
+      <span class="col-value">{{ lot.entryDate | date:'d/M/yyyy' }}</span>
+    </div>
+
+    <!-- Fecha Caducidad con Icono de Advertencia -->
+    <div class="column">
+      <div class="label-with-icon">
+        <span class="material-icons-outlined icon-small">warning_amber</span>
+        <span class="col-label">{{ 'lots.form.expiryDate' | translate }}</span>
+      </div>
+      <span class="col-value" [class.text-danger]="isExpired(lot.expiryDate)">
+        {{ lot.expiryDate | date:'d/M/yyyy' }}
+      </span>
+    </div>
+
+    <!-- QR Code y Referencia al Producto -->
+    <div class="column qr-column">
+      <div class="label-with-icon">
+        <span class="material-icons-outlined icon-small">qr_code_2</span>
+        <span class="col-label">{{ 'lots.form.qrCode' | translate }}</span>
+      </div>
+      <div class="qr-info">
+        <span class="col-value">{{ lot.codeQR }}</span>
+        <span class="col-subtext">( {{ 'products.form.qrHint' | translate }} )</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Botón Eliminar Circular (Derecha) -->
+  <button class="btn-delete-card" (click)="onDelete.emit(lot.id)">
+    <span class="material-icons">delete</span>
+  </button>
+</div>
+
+<router-outlet></router-outlet>

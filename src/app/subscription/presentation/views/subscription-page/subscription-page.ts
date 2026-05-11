@@ -1,7 +1,8 @@
-import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, inject, signal } from '@angular/core';
 import { TranslatePipe } from '@ngx-translate/core';
 import { SubscriptionStore } from '../../../application/subscription-store';
 import { BillingCycle } from '../../../domain/model/subscription-plan.entity';
+import { UpgradePlanModal } from '../../components/upgrade-plan-modal/upgrade-plan-modal';
 import { BillingSetup } from '../billing-setup/billing-setup';
 import { PlanOverview } from '../plan-overview/plan-overview';
 import { PlanUsage } from '../plan-usage/plan-usage';
@@ -14,6 +15,7 @@ import { SubscriptionActivity } from '../subscription-activity/subscription-acti
     PlanUsage,
     BillingSetup,
     SubscriptionActivity,
+    UpgradePlanModal,
     TranslatePipe,
   ],
   templateUrl: './subscription-page.html',
@@ -27,6 +29,7 @@ export class SubscriptionPage implements OnInit {
   protected readonly selectedCycle = this.subscriptionApp.selectedCycle;
   protected readonly controlPlanSelected = this.subscriptionApp.controlPlanSelected;
   protected readonly feedback = this.subscriptionApp.feedback;
+  protected readonly upgradeModalOpen = signal(false);
 
   ngOnInit(): void {
     this.subscriptionApp.loadDashboard();
@@ -37,7 +40,15 @@ export class SubscriptionPage implements OnInit {
   }
 
   protected selectControlPlan(): void {
-    this.subscriptionApp.selectControlPlan();
+    this.upgradeModalOpen.set(true);
+  }
+
+  protected closeUpgradeModal(): void {
+    this.upgradeModalOpen.set(false);
+  }
+
+  protected activateControlPlan(): void {
+    this.subscriptionApp.activateControlPlan();
   }
 
   protected addPaymentMethod(): void {
