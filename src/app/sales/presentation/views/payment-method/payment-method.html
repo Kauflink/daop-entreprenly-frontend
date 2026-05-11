@@ -1,0 +1,43 @@
+<section class="card payment-card">
+  <h2 class="card-title">
+    <span class="title-icon">☀</span>
+    Método de Pago
+  </h2>
+
+  <div class="payment-buttons">
+    <button
+      class="payment-btn"
+      [class.selected]="selectedMethod() === 'CASH'"
+      [disabled]="!hasItems()"
+      (click)="methodSelected.emit('CASH')"
+    >
+      <span class="material-icons payment-icon">payments</span>
+      <span class="payment-label">Efectivo</span>
+    </button>
+    <button
+      class="payment-btn"
+      [class.selected]="selectedMethod() === 'DIGITAL'"
+      [disabled]="!hasItems()"
+      (click)="methodSelected.emit('DIGITAL')"
+    >
+      <span class="material-icons payment-icon">point_of_sale</span>
+      <span class="payment-label">Tarjeta yape/plin</span>
+    </button>
+  </div>
+
+  @if (showError()) {
+  <div class="payment-error">
+    <span class="error-icon">⊘</span>
+    Por favor, seleccione un método de pago
+  </div>
+  }
+</section>
+
+<button
+  class="btn-finalize"
+  [class.btn-finalize-inactive]="!hasItems() || selectedMethod() === null"
+  (click)="finalizeSale.emit()"
+>
+  Finalizar Venta y Emitir Boleta
+</button>
+<button class="btn-cancel" (click)="cancelSale.emit()">Cancelar Venta</button>
