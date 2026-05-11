@@ -35,11 +35,7 @@ export class SalesApi extends BaseApi {
     return this.productsEndpoint.getAll();
   }
 
-  getProduct(id: number): Observable<ProductSummary> {
-    return this.productsEndpoint.getById(id);
-  }
-
-  getSales(): Observable<Sale[]> {
+getSales(): Observable<Sale[]> {
     return this.salesEndpoint.getAll();
   }
 
