@@ -56,7 +56,7 @@
   font-size: 18px;
   font-weight: bold;
   margin: 0 0 2px 0;
-  color: #1e1e1e;
+  color: var(--color-text-strong);
 }
 
 .modal-subtitle {
@@ -66,7 +66,7 @@
 }
 
 .close-btn {
-  background: #f0f0f0;
+  background: var(--color-card-border);
   border: none;
   border-radius: 50%;
   width: 32px;
@@ -81,7 +81,7 @@
 }
 
 .close-btn:hover {
-  background: #e0e0e0;
+  background: var(--color-card-border);
 }
 
 /* ===== DISPLAY DE CANTIDAD ===== */
@@ -92,18 +92,18 @@
 .display-label {
   display: block;
   font-size: 13px;
-  color: #1e1e1e;
+  color: var(--color-text-strong);
   font-weight: 600;
   margin-bottom: 6px;
 }
 
 .display-value {
-  background: #f5f5f5;
+  background: var(--color-bg-page);
   border-radius: 12px;
   padding: 14px 18px;
   font-size: 18px;
   font-weight: 500;
-  color: #1e1e1e;
+  color: var(--color-text-strong);
   min-height: 24px;
 }
 
@@ -116,35 +116,35 @@
 }
 
 .keypad-btn {
-  background: #f5f5f5;
+  background: var(--color-bg-page);
   border: none;
   border-radius: 12px;
   padding: 16px 0;
   font-size: 18px;
   font-weight: 500;
-  color: #1e1e1e;
+  color: var(--color-text-strong);
   cursor: pointer;
   transition: all 0.15s ease;
 }
 
 .keypad-btn:hover {
-  background: #fef3e7;
-  color: #ea7c0a;
+  background: var(--color-theme-btn-active-bg);
+  color: var(--color-primary-hover);
 }
 
 .keypad-btn:active {
-  background: #f59e0b;
+  background: var(--color-primary);
   color: white;
   transform: scale(0.97);
 }
 
 .keypad-backspace {
-  background: #f59e0b;
+  background: var(--color-primary);
   color: white;
 }
 
 .keypad-backspace:hover {
-  background: #ea7c0a;
+  background: var(--color-primary-hover);
   color: white;
 }
 
@@ -154,14 +154,14 @@
 }
 
 .keypad-zero:hover {
-  background: #ea7c0a;
+  background: var(--color-primary-hover);
   color: white;
 }
 
 /* ===== BOTÓN CONFIRMAR ===== */
 .confirm-btn {
   width: 100%;
-  background: #f59e0b;
+  background: var(--color-primary);
   color: white;
   border: none;
   border-radius: 12px;
@@ -173,11 +173,11 @@
 }
 
 .confirm-btn:not(:disabled):hover {
-  background: #ea7c0a;
+  background: var(--color-primary-hover);
 }
 
 .confirm-btn:disabled {
-  background: #f5c478;
+  background: var(--color-primary);
   cursor: not-allowed;
   opacity: 0.7;
 }
@@ -186,8 +186,8 @@
 .error-message {
   margin-top: 12px;
   padding: 10px 16px;
-  background: #fde2e2;
-  color: #c93030;
+  background: var(--color-danger);
+  color: var(--color-danger);
   border-radius: 30px;
   font-size: 13px;
   font-weight: 500;

@@ -14,7 +14,7 @@
   font-size: 28px;
   font-weight: 700;
   margin: 0;
-  color: #111827;
+  color: var(--color-text-strong);
 }
 
 .page-subtitle {
@@ -34,7 +34,7 @@
   height: 44px;
   border: none;
   border-radius: 999px;
-  background: #111827;
+  background: var(--color-text-strong);
   color: white;
   padding: 0 18px;
   outline: none;
@@ -50,7 +50,7 @@
   padding: 0 22px;
   border: none;
   border-radius: 999px;
-  background: #F38313;
+  background: var(--color-primary);
   color: white;
   font-family: 'Reddit Sans', sans-serif;
   font-weight: 700;
@@ -85,12 +85,12 @@
   font-family: 'Reddit Sans', sans-serif;
   font-weight: 700;
   margin: 8px 0 4px;
-  color: #0C0F12;
+  color: var(--color-text-strong);
 }
 
 .stat-label {
   font-size: 14px;
-  color: #666666;
+  color: var(--color-text-muted);
 }
 
 .lot-alert-slider {
@@ -146,13 +146,13 @@
 }
 
 .lot-alert--danger {
-  background: #ffc1c7;
+  background: var(--color-danger);
   border-color: #ff5a5f;
-  color: #ff3030;
+  color: var(--color-danger);
 }
 
 .lot-alert--warning {
-  background: #fff6dc;
+  background: var(--color-theme-btn-active-bg);
   border-color: #d9a900;
   color: #c58b00;
 }
@@ -213,7 +213,7 @@
 .product-name {
   font-size: 16px;
   font-weight: 700;
-  color: #111827;
+  color: var(--color-text-strong);
 }
 
 .product-brand {
@@ -232,7 +232,7 @@
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  background: #F38313;
+  background: var(--color-primary);
   color: white;
   font-family: 'Reddit Sans', sans-serif;
   font-weight: 700;
@@ -242,7 +242,7 @@
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  background: #0C0F12;
+  background: var(--color-text-strong);
   color: white;
   font-family: 'Reddit Sans', sans-serif;
   font-weight: 700;
@@ -346,7 +346,7 @@
   justify-content: center;
   width: 36px;
   height: 36px;
-  background: #f0f0f0;
+  background: var(--color-card-border);
   border: none;
   border-radius: 50%;
   color: #1f2937;
@@ -358,7 +358,7 @@
 }
 
 .btn-close-circle:hover {
-  background: #e5e5e5;
+  background: var(--color-card-border);
 }
 
 .modal-title-main {
