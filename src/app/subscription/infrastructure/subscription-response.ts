@@ -36,6 +36,26 @@ export interface BillingSetupResponse {
   fiscalDataActionLabel: string;
   hasPaymentMethod: boolean;
   hasFiscalData: boolean;
+  paymentMethods?: BillingPaymentMethodResponse[];
+  fiscalData?: BillingFiscalDataResponse | null;
+}
+
+export interface BillingPaymentMethodResponse {
+  id: string;
+  cardBrand: string;
+  lastFour: string;
+  holderName: string;
+  expiryMonth: string;
+  expiryYear: string;
+  isDefault: boolean;
+}
+
+export interface BillingFiscalDataResponse {
+  documentType: string;
+  documentNumber: string;
+  businessName: string;
+  receiptEmail: string;
+  fiscalAddress: string;
 }
 
 export interface SubscriptionActivityResponse {
