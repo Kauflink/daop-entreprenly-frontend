@@ -1,16 +1,17 @@
 import { ChangeDetectionStrategy, Component, computed, inject, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { ChatbotStoreService } from '../../../application/chatbot-store.service';
 import { ChatOrder } from '../../../domain/model/chat-order.entity';
 
 @Component({
   selector: 'app-orders',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [RouterLink],
+  imports: [RouterLink, TranslatePipe],
   template: `
     <div class="p-8">
-      <h1 class="text-2xl font-bold text-gray-900">Pedidos</h1>
-      <p class="mb-6 mt-1 text-sm text-gray-500">Historial y validación de comprobantes</p>
+      <h1 class="text-2xl font-bold text-gray-900">{{ 'chatbot.orders.title' | translate }}</h1>
+      <p class="mb-6 mt-1 text-sm text-gray-500">{{ 'chatbot.orders.subtitle' | translate }}</p>
 
       @if (!store.isConnected()) {
         <div class="flex flex-col items-center justify-center rounded-2xl bg-white p-20 shadow-sm">
@@ -18,9 +19,9 @@ import { ChatOrder } from '../../../domain/model/chat-order.entity';
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
               d="M8.111 16.404a5.5 5.5 0 017.778 0M12 20h.01m-7.08-7.071c3.904-3.905 10.236-3.905 14.14 0M1.394 9.393c5.857-5.857 15.355-5.857 21.213 0" />
           </svg>
-          <p class="mt-3 text-sm text-gray-400">Conecta tu WhatsApp para ver los pedidos</p>
+          <p class="mt-3 text-sm text-gray-400">{{ 'chatbot.orders.connectPrompt' | translate }}</p>
           <a routerLink="/dashboard/chatbot" class="mt-4 text-sm text-orange-500 hover:underline">
-            Ir a configuración →
+            {{ 'chatbot.orders.goToConfig' | translate }}
           </a>
         </div>
       } @else if (allOrders().length === 0) {
@@ -29,9 +30,9 @@ import { ChatOrder } from '../../../domain/model/chat-order.entity';
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
               d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
           </svg>
-          <p class="mt-3 text-sm text-gray-400">No hay pedidos registrados aún</p>
+          <p class="mt-3 text-sm text-gray-400">{{ 'chatbot.orders.empty' | translate }}</p>
           <a routerLink="/dashboard/chatbot/conversations" class="mt-4 text-sm text-orange-500 hover:underline">
-            Ver conversaciones →
+            {{ 'chatbot.orders.goToConversations' | translate }}
           </a>
         </div>
       }
@@ -60,7 +61,7 @@ import { ChatOrder } from '../../../domain/model/chat-order.entity';
               @if (order.hasReceipt) {
                 <img
                   [src]="receiptUrl(order.total)"
-                  alt="Comprobante de pago"
+                  [alt]="'chatbot.orders.receiptAlt' | translate"
                   class="h-44 w-36 rounded-xl object-cover shadow-sm"
                 />
               }
@@ -73,60 +74,62 @@ import { ChatOrder } from '../../../domain/model/chat-order.entity';
                       <span class="text-gray-900">S/{{ (item.quantity * item.unitPrice).toFixed(2) }}</span>
                     </div>
                   }
-                  <p class="mt-1 text-xs text-gray-400">Entrega: {{ order.deliveryAddress }}</p>
+                  <p class="mt-1 text-xs text-gray-400">{{ 'chatbot.orders.delivery' | translate }} {{ order.deliveryAddress }}</p>
                   <div class="mt-1 flex justify-between border-t border-gray-100 pt-2 text-sm font-semibold">
-                    <span class="text-orange-500">Total</span>
+                    <span class="text-orange-500">{{ 'chatbot.orders.total' | translate }}</span>
                     <span class="text-orange-500">S/{{ order.total.toFixed(2) }}</span>
                   </div>
                 </div>
 
                 <div class="rounded-xl bg-gray-50 px-4 py-3">
-                  <p class="mb-2 text-xs font-semibold uppercase tracking-wide text-gray-400">Trazabilidad</p>
+                  <p class="mb-2 text-xs font-semibold uppercase tracking-wide text-gray-400">
+                    {{ 'chatbot.orders.traceability' | translate }}
+                  </p>
                   <ol class="flex flex-col gap-1.5">
                     <li class="flex items-center gap-2 text-xs text-gray-600">
                       <span class="h-1.5 w-1.5 shrink-0 rounded-full bg-green-400"></span>
-                      Pedido registrado — {{ formatDate(order.createdAt) }}
+                      {{ 'chatbot.orders.trace.registered' | translate: { date: formatDate(order.createdAt) } }}
                     </li>
                     <li class="flex items-center gap-2 text-xs text-gray-600">
                       <span class="h-1.5 w-1.5 shrink-0 rounded-full bg-blue-400"></span>
-                      Instrucciones de pago enviadas al cliente
+                      {{ 'chatbot.orders.trace.paymentSent' | translate }}
                     </li>
                     @if (order.hasReceipt || order.rejectionCount > 0) {
                       <li class="flex items-center gap-2 text-xs text-gray-600">
                         <span class="h-1.5 w-1.5 shrink-0 rounded-full bg-orange-400"></span>
-                        Comprobante recibido vía WhatsApp
+                        {{ 'chatbot.orders.trace.receiptReceived' | translate }}
                       </li>
                     }
                     @if (order.rejectionCount > 0) {
                       <li class="flex items-center gap-2 text-xs text-red-500">
                         <span class="h-1.5 w-1.5 shrink-0 rounded-full bg-red-400"></span>
-                        Comprobante rechazado ({{ order.rejectionCount }}x) — imagen ilegible
+                        {{ 'chatbot.orders.trace.receiptRejected' | translate: { count: order.rejectionCount } }}
                       </li>
                     }
                     @if (order.status === 'CONFIRMED') {
                       <li class="flex items-center gap-2 text-xs font-medium text-green-700">
                         <span class="h-1.5 w-1.5 shrink-0 rounded-full bg-green-500"></span>
-                        Pago validado por el comerciante
+                        {{ 'chatbot.orders.trace.paymentApproved' | translate }}
                       </li>
                     } @else if (order.status === 'BLOCKED') {
                       <li class="flex items-center gap-2 text-xs font-medium text-red-700">
                         <span class="h-1.5 w-1.5 shrink-0 rounded-full bg-red-600"></span>
-                        Pedido bloqueado — múltiples rechazos
+                        {{ 'chatbot.orders.trace.blocked' | translate }}
                       </li>
                     } @else if (order.status === 'CANCELLED') {
                       <li class="flex items-center gap-2 text-xs font-medium text-gray-500">
                         <span class="h-1.5 w-1.5 shrink-0 rounded-full bg-gray-400"></span>
-                        Pedido cancelado por inactividad — stock repuesto
+                        {{ 'chatbot.orders.trace.cancelled' | translate }}
                       </li>
                     } @else if (order.status === 'WAITING_PAYMENT' && order.hasReceipt) {
                       <li class="flex items-center gap-2 text-xs text-orange-500">
                         <span class="h-1.5 w-1.5 animate-pulse shrink-0 rounded-full bg-orange-400"></span>
-                        Pendiente de validación por el comerciante
+                        {{ 'chatbot.orders.trace.pendingValidation' | translate }}
                       </li>
                     } @else if (order.status === 'WAITING_PAYMENT' && !order.hasReceipt) {
                       <li class="flex items-center gap-2 text-xs text-gray-400">
                         <span class="h-1.5 w-1.5 animate-pulse shrink-0 rounded-full bg-gray-300"></span>
-                        Esperando comprobante del cliente
+                        {{ 'chatbot.orders.trace.awaitingReceipt' | translate }}
                       </li>
                     }
                   </ol>
@@ -139,16 +142,16 @@ import { ChatOrder } from '../../../domain/model/chat-order.entity';
                       (click)="approve(order.id)"
                       class="rounded-full border-2 border-green-500 px-6 py-1.5 text-sm font-medium text-green-600 transition-colors hover:bg-green-50"
                     >
-                      Aprobar Pago
+                      {{ 'chatbot.orders.approvePayment' | translate }}
                     </button>
                     <button
                       type="button"
                       (click)="reject(order.id)"
                       class="rounded-full border-2 border-red-400 px-6 py-1.5 text-sm font-medium text-red-500 transition-colors hover:bg-red-50"
                     >
-                      Rechazar
+                      {{ 'chatbot.orders.rejectPayment' | translate }}
                       @if (order.rejectionCount > 0) {
-                        <span class="ml-1 text-xs opacity-70">(bloqueará al cliente)</span>
+                        <span class="ml-1 text-xs opacity-70">{{ 'chatbot.orders.willBlock' | translate }}</span>
                       }
                     </button>
                   </div>
@@ -156,7 +159,7 @@ import { ChatOrder } from '../../../domain/model/chat-order.entity';
 
                 @if (order.status === 'BLOCKED') {
                   <div class="rounded-lg bg-red-50 px-4 py-2.5 text-xs text-red-600">
-                    Pedido bloqueado. El cliente debe contactar a la bodega directamente.
+                    {{ 'chatbot.orders.blockedMessage' | translate }}
                   </div>
                 }
               </div>
@@ -169,6 +172,7 @@ import { ChatOrder } from '../../../domain/model/chat-order.entity';
 })
 export class Orders implements OnInit {
   protected readonly store = inject(ChatbotStoreService);
+  private readonly translate = inject(TranslateService);
 
   protected readonly allOrders = computed(() =>
     [...this.store.orders()].sort(
@@ -214,11 +218,11 @@ export class Orders implements OnInit {
   }
 
   protected badgeLabel(status: string, hasReceipt: boolean): string {
-    if (status === 'CONFIRMED') return 'Pago aprobado';
-    if (status === 'BLOCKED') return 'Pedido bloqueado';
-    if (status === 'CANCELLED') return 'Pedido cancelado';
-    if (status === 'WAITING_PAYMENT' && hasReceipt) return 'Comprobante recibido';
-    if (status === 'WAITING_PAYMENT' && !hasReceipt) return 'Esperando comprobante';
+    if (status === 'CONFIRMED') return this.translate.instant('chatbot.orders.status.approved');
+    if (status === 'BLOCKED') return this.translate.instant('chatbot.orders.status.blocked');
+    if (status === 'CANCELLED') return this.translate.instant('chatbot.orders.status.cancelled');
+    if (status === 'WAITING_PAYMENT' && hasReceipt) return this.translate.instant('chatbot.orders.status.receiptReceived');
+    if (status === 'WAITING_PAYMENT' && !hasReceipt) return this.translate.instant('chatbot.orders.status.awaitingReceipt');
     return status;
   }
 

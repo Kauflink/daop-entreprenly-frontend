@@ -1,15 +1,15 @@
 <div class="p-8">
-  <h1 class="text-2xl font-bold text-gray-900">Chatbot</h1>
+  <h1 class="text-2xl font-bold text-gray-900">{{ 'chatbot.page.title' | translate }}</h1>
 
   @if (!store.isSessionLoaded()) {
-    <p class="mt-1 text-sm text-gray-400">Cargando...</p>
+    <p class="mt-1 text-sm text-gray-400">{{ 'chatbot.page.loading' | translate }}</p>
   } @else if (store.session() === null || store.session()?.status === 'disconnected') {
-    <p class="mb-6 mt-1 text-sm text-gray-500">Conecta tu WhatsApp Business para activar el chatbot</p>
+    <p class="mb-6 mt-1 text-sm text-gray-500">{{ 'chatbot.page.connectPrompt' | translate }}</p>
     <div class="rounded-2xl bg-white shadow-sm">
       <app-qr-connection-card [hasError]="false" [phone]="store.session()?.phone ?? '+51999888777'" (scanned)="onScanned()" />
     </div>
   } @else {
-    <p class="mb-6 mt-1 text-sm text-gray-500">Estado de la conexión</p>
+    <p class="mb-6 mt-1 text-sm text-gray-500">{{ 'chatbot.page.connectionStatus' | translate }}</p>
     <app-whatsapp-status-card [session]="store.session()" [justConnected]="justConnected()" (reconnect)="onReconnect()" />
     <p class="mt-6 text-xs text-gray-300">
       Demo: para reiniciar los escenarios, corre

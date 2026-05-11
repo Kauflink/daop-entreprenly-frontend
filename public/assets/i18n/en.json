@@ -385,5 +385,60 @@
       },
       "saveAction": "Save preferences"
     }
+  },
+  "chatbot": {
+    "page": {
+      "title": "Chatbot",
+      "loading": "Loading...",
+      "connectPrompt": "Connect your WhatsApp Business to activate the chatbot",
+      "connectionStatus": "Connection status"
+    },
+    "conversations": {
+      "empty": "No conversations yet.\nYour clients' chats will appear here\nwhen the chatbot receives messages.",
+      "placeholder": "Send and receive messages without needing your phone connected"
+    },
+    "payment": {
+      "pendingBar": "Pending payment — Order {{ orderNumber }}",
+      "pendingBarDetail": "{{ paymentMethod }} · S/{{ total }} · Validate the receipt sent",
+      "approve": "Approve payment",
+      "reject": "Reject",
+      "rejectTitle": "Rejection reason",
+      "confirmReject": "Confirm rejection",
+      "cancelReject": "Cancel"
+    },
+    "orders": {
+      "title": "Orders",
+      "subtitle": "History and receipt validation",
+      "connectPrompt": "Connect your WhatsApp to view orders",
+      "goToConfig": "Go to settings →",
+      "empty": "No orders registered yet",
+      "goToConversations": "View conversations →",
+      "receiptAlt": "Payment receipt",
+      "delivery": "Delivery:",
+      "total": "Total",
+      "traceability": "Traceability",
+      "trace": {
+        "registered": "Order registered — {{ date }}",
+        "paymentSent": "Payment instructions sent to client",
+        "receiptReceived": "Receipt received via WhatsApp",
+        "receiptRejected": "Receipt rejected ({{ count }}x) — illegible image",
+        "paymentApproved": "Payment validated by merchant",
+        "blocked": "Order blocked — multiple rejections",
+        "cancelled": "Order cancelled due to inactivity — stock restored",
+        "pendingValidation": "Pending validation by merchant",
+        "awaitingReceipt": "Awaiting client's receipt"
+      },
+      "approvePayment": "Approve Payment",
+      "rejectPayment": "Reject",
+      "willBlock": "(will block client)",
+      "blockedMessage": "Order blocked. Client must contact the store directly.",
+      "status": {
+        "approved": "Payment approved",
+        "blocked": "Order blocked",
+        "cancelled": "Order cancelled",
+        "receiptReceived": "Receipt received",
+        "awaitingReceipt": "Awaiting receipt"
+      }
+    }
   }
 }

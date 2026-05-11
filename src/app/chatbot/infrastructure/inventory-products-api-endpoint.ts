@@ -18,16 +18,16 @@ export class InventoryProductsApiEndpoint {
         const unitProducts: InventoryProduct[] = (unit ?? []).map((p: any) => ({
           id: p.id,
           name: p.name,
-          unitPrice: p.unitPrice,
+          unitPrice: p.price,
           isWeighted: false,
-          availableStock: p.availableStock ?? 0,
+          availableStock: p.stock ?? 0,
         }));
         const weightProducts: InventoryProduct[] = (weight ?? []).map((p: any) => ({
           id: p.id + 1000,
           name: p.name,
-          unitPrice: p.unitPrice,
+          unitPrice: p.pricePerKg,
           isWeighted: true,
-          availableStock: p.availableStock ?? 0,
+          availableStock: p.stock ?? 0,
         }));
         return [...unitProducts, ...weightProducts];
       }),
