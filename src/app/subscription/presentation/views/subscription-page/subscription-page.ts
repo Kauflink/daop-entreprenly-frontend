@@ -1,7 +1,14 @@
 import { ChangeDetectionStrategy, Component, OnInit, inject, signal } from '@angular/core';
 import { TranslatePipe } from '@ngx-translate/core';
 import { SubscriptionStore } from '../../../application/subscription-store';
+import {
+  BillingFiscalData,
+  BillingPaymentMethodInput,
+} from '../../../domain/model/billing-setup.entity';
 import { BillingCycle } from '../../../domain/model/subscription-plan.entity';
+import { BillingDataModal } from '../../components/billing-data-modal/billing-data-modal';
+import { PaymentMethodModal } from '../../components/payment-method-modal/payment-method-modal';
+import { SubscriptionHistoryModal } from '../../components/subscription-history-modal/subscription-history-modal';
 import {
   SubscriptionPlanActionModal,
   SubscriptionPlanActionModalMode,
@@ -21,6 +28,9 @@ import { SubscriptionActivity } from '../subscription-activity/subscription-acti
     SubscriptionActivity,
     UpgradePlanModal,
     SubscriptionPlanActionModal,
+    PaymentMethodModal,
+    BillingDataModal,
+    SubscriptionHistoryModal,
     TranslatePipe,
   ],
   templateUrl: './subscription-page.html',
@@ -36,6 +46,10 @@ export class SubscriptionPage implements OnInit {
   protected readonly feedback = this.subscriptionApp.feedback;
   protected readonly upgradeModalOpen = signal(false);
   protected readonly planActionModalMode = signal<SubscriptionPlanActionModalMode | null>(null);
+  protected readonly paymentMethodModalOpen = signal(false);
+  protected readonly billingDataModalOpen = signal(false);
+  protected readonly historyModalOpen = signal(false);
+  protected readonly historyDownloaded = signal(false);
 
   ngOnInit(): void {
     this.subscriptionApp.loadDashboard();
@@ -83,15 +97,56 @@ export class SubscriptionPage implements OnInit {
     this.closePlanActionModal();
   }
 
-  protected addPaymentMethod(): void {
-    this.subscriptionApp.addPaymentMethod();
+  protected openPaymentMethodModal(): void {
+    this.paymentMethodModalOpen.set(true);
   }
 
-  protected completeFiscalData(): void {
-    this.subscriptionApp.completeFiscalData();
+  protected closePaymentMethodModal(): void {
+    this.paymentMethodModalOpen.set(false);
+  }
+
+  protected savePaymentMethod(paymentMethod: BillingPaymentMethodInput): void {
+    this.subscriptionApp.addPaymentMethod(paymentMethod);
+    this.closePaymentMethodModal();
+  }
+
+  protected saveUpgradePaymentMethod(paymentMethod: BillingPaymentMethodInput): void {
+    this.subscriptionApp.addPaymentMethod(paymentMethod);
+  }
+
+  protected selectUpgradePaymentMethod(paymentMethodId: string): void {
+    this.subscriptionApp.selectPaymentMethod(paymentMethodId);
+  }
+
+  protected openBillingDataModal(): void {
+    this.billingDataModalOpen.set(true);
+  }
+
+  protected closeBillingDataModal(): void {
+    this.billingDataModalOpen.set(false);
+  }
+
+  protected saveFiscalData(fiscalData: BillingFiscalData): void {
+    this.subscriptionApp.completeFiscalData(fiscalData);
+    this.closeBillingDataModal();
+  }
+
+  protected saveUpgradeFiscalData(fiscalData: BillingFiscalData): void {
+    this.subscriptionApp.completeFiscalData(fiscalData);
+  }
+
+  protected openHistoryModal(): void {
+    this.historyDownloaded.set(false);
+    this.historyModalOpen.set(true);
+  }
+
+  protected closeHistoryModal(): void {
+    this.historyModalOpen.set(false);
+    this.historyDownloaded.set(false);
   }
 
   protected downloadActivityHistory(): void {
     this.subscriptionApp.downloadActivityHistory();
+    this.historyDownloaded.set(true);
   }
 }
