@@ -1,10 +1,12 @@
-import { Component, computed, EventEmitter, Input, OnInit, Output, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, EventEmitter, Input, OnInit, Output, signal } from '@angular/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { ProductSummary } from '../../../domain/model/product-summary.entity';
 import { SalesApi } from '../../../infrastructure/sales-api';
 
 @Component({
   selector: 'app-weight-modal',
-  imports: [],
+  imports: [TranslatePipe],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './weight-modal.html',
   styleUrl: './weight-modal.css',
 })

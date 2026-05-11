@@ -1,7 +1,4 @@
-/**
- * Representa un ítem dentro del ticket de venta.
- * Puede ser por unidad (quantity) o por peso (weightKg), nunca ambos.
- */
+
 export class SaleItem {
   private _productId: number;
   private _productName: string;
