@@ -1,10 +1,11 @@
 import { ChangeDetectionStrategy, Component, effect, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { TranslateModule } from '@ngx-translate/core';
 import { ProfileStore } from '../../../application/profile-store';
 
 @Component({
   selector: 'app-notifications-card',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, TranslateModule],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './notifications-card.html',
   styleUrl: './notifications-card.css',
