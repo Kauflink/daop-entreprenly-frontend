@@ -6,7 +6,8 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "server": "npx json-server server/db.json"
   },
   "private": true,
   "packageManager": "npm@11.12.1",
@@ -21,6 +22,9 @@
     "@angular/router": "^21.2.0",
     "@ngx-translate/core": "^17.0.0",
     "@ngx-translate/http-loader": "^17.0.0",
+    "angularx-qrcode": "^21.0.5",
+    "html5-qrcode": "^2.3.8",
+    "qrcode-generator-ts": "^0.0.4",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0"
   },

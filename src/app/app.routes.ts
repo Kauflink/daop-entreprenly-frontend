@@ -11,24 +11,48 @@ export const routes: Routes = [
     children: [
       {
         path: 'home',
-        loadComponent: () => import('./shared/presentation/views/home/home').then((m) => m.Home)
+        loadComponent: () => import('./shared/presentation/views/home/home').then((m) => m.Home),
+        title: `${baseTitle} - Home`,
+      },
+      {
+        path: 'help',
+        loadComponent: () => import('./shared/presentation/views/help/help').then((m) => m.Help),
+        title: `${baseTitle} - Help`,
       },
       {
         path: 'profile',
         loadChildren: () =>
-          import('./profile/presentation/profile.routes').then((m) => m.profileRoutes)
+          import('./profile/presentation/profile.routes').then((m) => m.profileRoutes),
       },
       {
         path: 'sales',
         loadChildren: () =>
-          import('./sales/presentation/views/sales.routes').then((m) => m.salesRoutes)
+          import('./sales/presentation/views/sales.routes').then((m) => m.salesRoutes),
       },
       {
         path: 'subscription',
         loadChildren: () =>
           import('./subscription/presentation/views/subscription.routes').then(
             (m) => m.subscriptionRoutes,
-          )
+          ),
+      },
+      {
+        path: 'inventory',
+        loadChildren: () =>
+          import('./inventory/presentation/views/inventory.routes').then(
+            (m) => m.inventoryRoutes,
+          ),
+      },
+      {
+        path: 'chatbot',
+        loadChildren: () =>
+          import('./chatbot/presentation/views/chatbot.routes').then(m => m.CHATBOT_ROUTES),
+      },
+      {
+        path: 'orders',
+        loadComponent: () =>
+          import('./chatbot/presentation/views/orders/orders').then(m => m.Orders),
+        title: 'Entreprenly - Pedidos',
       },
       {
         path: '',
@@ -38,8 +62,8 @@ export const routes: Routes = [
       {
         path: '**',
         redirectTo: 'home',
-      }
-    ]
+      },
+    ],
   },
   {
     path: '',

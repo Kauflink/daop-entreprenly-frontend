@@ -1,0 +1,28 @@
+<div class="scanner-trigger-row">
+  <button
+    type="button"
+    class="qr-cam-btn"
+    [disabled]="scanning()"
+    [attr.aria-label]="'products.form.scanQr' | translate"
+    (click)="openScanner()">
+    <mat-icon>photo_camera</mat-icon>
+  </button>
+  <span class="qr-cam-hint">{{ 'products.form.qrHint' | translate }}</span>
+</div>
+
+@if (scannerOpen()) {
+  <div class="scanner-panel">
+    <div [id]="readerId" class="scanner-reader"></div>
+    <button
+      type="button"
+      class="scanner-close"
+      [attr.aria-label]="'products.form.closeScanner' | translate"
+      (click)="closeScanner()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+}
+
+@if (errorKey(); as key) {
+  <span class="scanner-error">{{ key | translate }}</span>
+}
