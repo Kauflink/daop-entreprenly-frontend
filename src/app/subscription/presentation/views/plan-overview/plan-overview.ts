@@ -18,6 +18,9 @@ export class PlanOverview {
 
   readonly billingCycleSelected = output<BillingCycle>();
   readonly controlPlanRequested = output<void>();
+  readonly renewalRequested = output<void>();
+  readonly cancellationRequested = output<void>();
+  readonly keepPlanRequested = output<void>();
 
   protected readonly selectedPrice = computed(() =>
     this.selectedCycle() === 'monthly'
@@ -33,7 +36,15 @@ export class PlanOverview {
   protected readonly currentPlanPriceAriaLabel = computed(
     () => `Costo actual ${this.currentPlan().monthlyPrice} soles ${this.currentPlanPriceLabel()}`,
   );
-  protected readonly activeCurrentPlan = computed(() => this.currentPlan().status === 'active');
+  protected readonly planControlCurrentPlan = computed(() =>
+    ['active', 'scheduled-cancellation'].includes(this.currentPlan().status),
+  );
+  protected readonly cancellationScheduled = computed(
+    () => this.currentPlan().status === 'scheduled-cancellation',
+  );
+  protected readonly cancellationActionLabel = computed(() =>
+    this.cancellationScheduled() ? 'Mantener plan' : 'Solicitar cancelación',
+  );
 
   protected selectBillingCycle(cycle: BillingCycle): void {
     this.billingCycleSelected.emit(cycle);
@@ -41,5 +52,18 @@ export class PlanOverview {
 
   protected requestControlPlan(): void {
     this.controlPlanRequested.emit();
+  }
+
+  protected requestRenewal(): void {
+    this.renewalRequested.emit();
+  }
+
+  protected requestCancellationAction(): void {
+    if (this.cancellationScheduled()) {
+      this.keepPlanRequested.emit();
+      return;
+    }
+
+    this.cancellationRequested.emit();
   }
 }
