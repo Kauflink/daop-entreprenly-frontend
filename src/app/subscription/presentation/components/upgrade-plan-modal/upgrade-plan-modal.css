@@ -62,7 +62,7 @@ p {
 }
 
 h2 {
-  color: #080604;
+  color: var(--color-text-strong);
   font-size: 28px;
   font-weight: 850;
   line-height: 1.16;
@@ -76,7 +76,7 @@ h3 {
 }
 
 .helper-text {
-  color: #6e645d;
+  color: var(--color-text-muted);
   font-size: 13px;
   line-height: 1.6;
   margin-top: 28px;
@@ -91,9 +91,9 @@ h3 {
 
 .step-tabs button {
   min-height: 44px;
-  border: 1px solid #ece6e3;
+  border: 1px solid var(--color-card-border);
   border-radius: 12px;
-  background: #fbfaf8;
+  background: var(--color-inner-bg);
   color: rgb(81 30 0 / 50%);
   cursor: pointer;
   font: inherit;
@@ -130,7 +130,7 @@ h3 {
 .summary-card p,
 .ready-card p,
 .success-card p {
-  color: #716861;
+  color: var(--color-text-muted);
   font-size: 14px;
   line-height: 1.5;
   margin-top: 7px;
@@ -142,7 +142,7 @@ h3 {
 
 .ready-card {
   display: block;
-  border-color: #b9e2c8;
+  border-color: var(--color-success);
   background: #f2fbf6;
   margin-top: 24px;
   min-height: 118px;
@@ -176,8 +176,8 @@ select {
   min-height: 46px;
   border: 1px solid var(--color-inner-bg);
   border-radius: 12px;
-  background: #fffdfa;
-  color: #080604;
+  background: var(--color-card-bg);
+  color: var(--color-text-strong);
   font: inherit;
   padding: 0 14px;
 }
@@ -234,19 +234,19 @@ small {
   gap: 12px;
   border: 1px solid var(--color-inner-bg);
   border-radius: 16px;
-  background: #fffdfa;
-  color: #080604;
+  background: var(--color-card-bg);
+  color: var(--color-text-strong);
   cursor: pointer;
   padding: 14px 16px;
 }
 
 .payment-option--selected {
-  border-color: #bee3cb;
-  background: #f2fbf5;
+  border-color: var(--color-success);
+  background: var(--color-inner-bg);
 }
 
 .payment-option small {
-  color: #716861;
+  color: var(--color-text-muted);
 }
 
 .modal-actions {

@@ -24,7 +24,11 @@ export const appConfig: ApplicationConfig = {
     }),
     provideAppInitializer(() => {
       const translate = inject(TranslateService);
-      translate.use(translate.getBrowserLang() || 'en');
+      let saved: string | null = null;
+      try {
+        saved = localStorage.getItem('entreprenly-lang');
+      } catch {}
+      translate.use(saved || translate.getBrowserLang() || 'en');
     }),
   ],
 };
