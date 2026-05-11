@@ -15,5 +15,46 @@
       "chatbot": "Chatbot",
       "help": "Help"
     }
+  },
+  "subscription": {
+    "page": {
+      "title": "Subscription",
+      "description": "Check your current plan, review available limits, upgrade to Plan Control, and manage billing from the dashboard.",
+      "loading": "Loading subscription dashboard..."
+    },
+    "overview": {
+      "eyebrow": "Subscription",
+      "title": "Current plan and billing",
+      "description": "Manage your business plan, review available limits, and upgrade to Plan Control when you need to operate without restrictions.",
+      "billingFrequencyLabel": "Billing frequency",
+      "monthly": "Monthly",
+      "annual": "Annual",
+      "upgradeAction": "Upgrade to Plan Control"
+    },
+    "usage": {
+      "eyebrow": "Plan usage",
+      "title": "Available limits",
+      "counter": "{{ used }} of {{ max }}"
+    },
+    "billing": {
+      "eyebrow": "Billing",
+      "title": "Payment method and tax data"
+    },
+    "activity": {
+      "eyebrow": "History",
+      "title": "Subscription activity",
+      "downloadAction": "Download history"
+    },
+    "plans": {
+      "free": {
+        "name": "Plan Free",
+        "status": "Plan Free active",
+        "badge": "Current plan"
+      },
+      "control": {
+        "name": "Plan Control",
+        "badge": "Recommended"
+      }
+    }
   }
 }

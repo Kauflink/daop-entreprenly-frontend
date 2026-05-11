@@ -15,5 +15,46 @@
       "chatbot": "Chatbot",
       "help": "Ayuda"
     }
+  },
+  "subscription": {
+    "page": {
+      "title": "Suscripci\u00f3n",
+      "description": "Consulta tu plan actual, revisa l\u00edmites disponibles, actualiza a Plan Control y gestiona facturaci\u00f3n desde el dashboard.",
+      "loading": "Cargando panel de suscripci\u00f3n..."
+    },
+    "overview": {
+      "eyebrow": "Suscripci\u00f3n",
+      "title": "Plan actual y facturaci\u00f3n",
+      "description": "Administra el plan de tu negocio, revisa los l\u00edmites disponibles y actualiza a Plan Control cuando necesites operar sin restricciones.",
+      "billingFrequencyLabel": "Frecuencia de facturaci\u00f3n",
+      "monthly": "Mensual",
+      "annual": "Anual",
+      "upgradeAction": "Actualizar a Plan Control"
+    },
+    "usage": {
+      "eyebrow": "Uso del plan",
+      "title": "L\u00edmites disponibles",
+      "counter": "{{ used }} de {{ max }}"
+    },
+    "billing": {
+      "eyebrow": "Facturaci\u00f3n",
+      "title": "M\u00e9todo de pago y datos fiscales"
+    },
+    "activity": {
+      "eyebrow": "Historial",
+      "title": "Actividad de la suscripci\u00f3n",
+      "downloadAction": "Descargar historial"
+    },
+    "plans": {
+      "free": {
+        "name": "Plan Free",
+        "status": "Plan Free activo",
+        "badge": "Plan actual"
+      },
+      "control": {
+        "name": "Plan Control",
+        "badge": "Recomendado"
+      }
+    }
   }
 }
