@@ -2,6 +2,21 @@
 
 @import 'tailwindcss';
 
+@keyframes msgIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.msg-animate {
+  animation: msgIn 0.22s ease-out both;
+}
+
 :root {
   --color-bg-page: #f6f4f4;
   --color-card-bg: #ffffff;

@@ -91,10 +91,10 @@ h3 {
 
 .step-tabs button {
   min-height: 44px;
-  border: 1px solid var(--color-inner-bg);
+  border: 1px solid #ece6e3;
   border-radius: 12px;
-  background: #fffdfa;
-  color: #a17a66;
+  background: #fbfaf8;
+  color: rgb(81 30 0 / 50%);
   cursor: pointer;
   font: inherit;
   font-size: 11px;
@@ -105,17 +105,7 @@ h3 {
 
 .step-tabs button:disabled {
   cursor: default;
-}
-
-.step-tab--active {
-  border-color: #fedcac;
-  color: var(--color-label-accent);
-}
-
-.step-tab--complete {
-  border-color: #b9e2c8;
-  background: #f2fbf6;
-  color: #075f24;
+  opacity: 1;
 }
 
 .summary-card,
@@ -177,7 +167,12 @@ label {
   font-weight: 850;
 }
 
-input {
+.field-wide {
+  grid-column: 1 / -1;
+}
+
+input,
+select {
   min-height: 46px;
   border: 1px solid var(--color-inner-bg);
   border-radius: 12px;
@@ -185,6 +180,22 @@ input {
   color: #080604;
   font: inherit;
   padding: 0 14px;
+}
+
+.card-number-field {
+  position: relative;
+}
+
+.card-number-field input {
+  width: 100%;
+  padding-right: 88px;
+}
+
+.card-number-field app-card-brand-badge {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
 }
 
 input[aria-invalid='true'] {
@@ -202,15 +213,47 @@ small {
   margin-top: 24px;
 }
 
+.payment-options {
+  display: grid;
+  gap: 10px;
+  border: 0;
+  margin: 0;
+  padding: 0;
+}
+
+.payment-options legend {
+  color: var(--color-label-accent);
+  font-size: 12px;
+  font-weight: 850;
+  margin-bottom: 6px;
+}
+
+.payment-option {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border: 1px solid var(--color-inner-bg);
+  border-radius: 16px;
+  background: #fffdfa;
+  color: #080604;
+  cursor: pointer;
+  padding: 14px 16px;
+}
+
+.payment-option--selected {
+  border-color: #bee3cb;
+  background: #f2fbf5;
+}
+
+.payment-option small {
+  color: #716861;
+}
+
 .modal-actions {
   display: flex;
   grid-column: 1 / -1;
   justify-content: flex-end;
   gap: 12px;
-  margin-top: 24px;
-}
-
-.modal-actions--end {
   margin-top: 24px;
 }
 
@@ -238,7 +281,8 @@ small {
 }
 
 button:focus-visible,
-input:focus-visible {
+input:focus-visible,
+select:focus-visible {
   outline: 3px solid rgb(243 131 19 / 32%);
   outline-offset: 3px;
 }
