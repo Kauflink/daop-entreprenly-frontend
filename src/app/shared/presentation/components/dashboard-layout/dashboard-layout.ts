@@ -12,7 +12,14 @@ interface NavigationItem {
 
 @Component({
   selector: 'app-dashboard-layout',
-  imports: [RouterLink, RouterLinkActive, RouterOutlet, NgOptimizedImage, MatIconModule, TranslatePipe],
+  imports: [
+    RouterLink,
+    RouterLinkActive,
+    RouterOutlet,
+    NgOptimizedImage,
+    MatIconModule,
+    TranslatePipe,
+  ],
   templateUrl: './dashboard-layout.html',
   styleUrl: './dashboard-layout.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -22,22 +29,22 @@ export class DashboardLayout {
     {
       labelKey: 'dashboard.nav.home',
       icon: 'dashboard',
-      route: '/dashboard/home'
+      route: '/dashboard/home',
     },
     {
       labelKey: 'dashboard.nav.products',
       icon: 'inventory_2',
-      route: '/dashboard/products'
+      route: '/dashboard/inventory/products',
     },
     {
-      labelKey: 'dashboard.nav.batches',
+      labelKey: 'dashboard.nav.lots',
       icon: 'category',
-      route: '/dashboard/batches'
+      route: '/dashboard/inventory/lots',
     },
     {
       labelKey: 'dashboard.nav.sales',
       icon: 'receipt_long',
-      route: '/dashboard/sales'
+      route: '/dashboard/sales',
     },
     {
       labelKey: 'dashboard.nav.subscription',
@@ -47,17 +54,17 @@ export class DashboardLayout {
     {
       labelKey: 'dashboard.nav.orders',
       icon: 'shopping_cart',
-      route: '/dashboard/orders'
+      route: '/dashboard/orders',
     },
     {
       labelKey: 'dashboard.nav.chatbot',
       icon: 'smart_toy',
-      route: '/dashboard/chatbot'
+      route: '/dashboard/chatbot',
     },
     {
       labelKey: 'dashboard.nav.help',
       icon: 'help_outline',
-      route: '/dashboard/help'
+      route: '/dashboard/help',
     },
   ];
 }

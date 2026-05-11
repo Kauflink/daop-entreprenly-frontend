@@ -1,0 +1,37 @@
+<div class="card">
+  <h2 class="card__title">{{ 'profile.updateProfile.title' | translate }}</h2>
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
+    <div class="field">
+      <label for="firstName" class="field__label">
+        {{ 'profile.updateProfile.fields.firstName.label' | translate }}
+      </label>
+      <input
+        id="firstName"
+        type="text"
+        formControlName="firstName"
+        class="field__input"
+        [placeholder]="'profile.updateProfile.fields.firstName.placeholder' | translate"
+        autocomplete="given-name"
+      />
+    </div>
+
+    <div class="field">
+      <label for="lastName" class="field__label">
+        {{ 'profile.updateProfile.fields.lastName.label' | translate }}
+      </label>
+      <input
+        id="lastName"
+        type="text"
+        formControlName="lastName"
+        class="field__input"
+        [placeholder]="'profile.updateProfile.fields.lastName.placeholder' | translate"
+        autocomplete="family-name"
+      />
+    </div>
+
+    <button type="submit" class="btn-primary" [disabled]="form.invalid">
+      {{ 'profile.updateProfile.saveAction' | translate }}
+    </button>
+  </form>
+</div>
