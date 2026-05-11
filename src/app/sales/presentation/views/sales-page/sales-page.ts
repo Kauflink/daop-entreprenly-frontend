@@ -6,10 +6,18 @@ import { WeightModal } from '../../components/weight-modal/weight-modal';
 import { CashSummary } from '../cash-summary/cash-summary';
 import { PaymentMethod, PaymentMethodComponent } from '../payment-method/payment-method';
 import { SalesCart, TicketItem } from '../sales-cart/sales-cart';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-sales-page',
-  imports: [QuantityModal, WeightModal, CashSummary, PaymentMethodComponent, SalesCart],
+  imports: [
+    QuantityModal,
+    WeightModal,
+    CashSummary,
+    PaymentMethodComponent,
+    TranslatePipe,
+    SalesCart,
+  ],
   templateUrl: './sales-page.html',
   styleUrl: './sales-page.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
