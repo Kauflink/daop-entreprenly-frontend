@@ -1,4 +1,4 @@
-import { Injectable, computed, inject, signal } from '@angular/core';
+import { DestroyRef, Injectable, computed, inject, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { of, retry, switchMap } from 'rxjs';
 import { CashRegister } from '../domain/model/cash-register.entity';
@@ -23,8 +23,9 @@ export class SalesStore {
   readonly productCount = computed(() => this.products().length);
   readonly totalCash = computed(() => this.cashRegisterSignal()?.totalCash ?? 0);
   readonly totalDigital = computed(() => this.cashRegisterSignal()?.totalDigital ?? 0);
-  readonly totalDay = computed(() => this.cashRegisterSignal()?.totalDay ?? 0);
+  readonly totalDay = computed(() => (this.cashRegisterSignal()?.totalCash ?? 0) + (this.cashRegisterSignal()?.totalDigital ?? 0));
 
+  private readonly destroyRef = inject(DestroyRef);
   private readonly salesApi = inject(SalesApi);
 
   constructor() {
@@ -38,15 +39,13 @@ export class SalesStore {
 
     this.salesApi
       .getProducts()
-      .pipe(retry(2), takeUntilDestroyed())
+      .pipe(retry(2), takeUntilDestroyed(this.destroyRef))
       .subscribe({
         next: (products) => {
-          console.log('✅ Products loaded:', products);
           this.productsSignal.set(products);
           this.loadingSignal.set(false);
         },
         error: (err) => {
-          console.error('❌ Error loading products:', err);
           this.errorSignal.set(this.formatError(err, 'Failed to load products'));
           this.loadingSignal.set(false);
         },
@@ -61,7 +60,7 @@ export class SalesStore {
         switchMap((register) =>
           register ? of(register) : this.salesApi.createTodayCashRegister(today),
         ),
-        takeUntilDestroyed(),
+        takeUntilDestroyed(this.destroyRef),
       )
       .subscribe({
         next: (register) => this.cashRegisterSignal.set(register),
