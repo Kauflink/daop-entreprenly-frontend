@@ -27,6 +27,13 @@ export class PlanOverview {
   protected readonly selectedPriceLabel = computed(() =>
     this.selectedCycle() === 'monthly' ? 'pago mensual' : 'pago anual',
   );
+  protected readonly currentPlanPriceLabel = computed(() =>
+    this.currentPlan().monthlyPrice === 0 ? 'por mes' : 'pago mensual',
+  );
+  protected readonly currentPlanPriceAriaLabel = computed(
+    () => `Costo actual ${this.currentPlan().monthlyPrice} soles ${this.currentPlanPriceLabel()}`,
+  );
+  protected readonly activeCurrentPlan = computed(() => this.currentPlan().status === 'active');
 
   protected selectBillingCycle(cycle: BillingCycle): void {
     this.billingCycleSelected.emit(cycle);
