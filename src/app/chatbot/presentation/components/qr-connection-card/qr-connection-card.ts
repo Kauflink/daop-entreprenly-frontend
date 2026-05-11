@@ -1,12 +1,11 @@
-import { ChangeDetectionStrategy, Component, DestroyRef, inject, input, output, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, computed, inject, input, output, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { interval, timer } from 'rxjs';
-import { QRCodeComponent } from 'angularx-qrcode';
+import { buildQrCodeDataUrl } from '../../../../inventory/infrastructure/qr-code-generator';
 
 @Component({
   selector: 'app-qr-connection-card',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [QRCodeComponent],
   template: `
     @if (isExpired() || hasError()) {
       <div class="m-5 rounded-2xl border border-red-200 bg-red-50 p-4">
@@ -23,14 +22,13 @@ import { QRCodeComponent } from 'angularx-qrcode';
         {{ isExpired() || hasError() ? 'Nuevo código generado' : 'Vincular WhatsApp Business' }}
       </h2>
       <p class="text-sm text-gray-500">Escanea el código QR desde tu app</p>
-      <div class="overflow-hidden rounded-xl">
-        <qrcode
-          [qrdata]="whatsappLink"
-          [width]="192"
-          [margin]="2"
-          [errorCorrectionLevel]="'M'"
-          [colorDark]="'#000000'"
-          [colorLight]="'#ffffff'"
+      <div class="overflow-hidden rounded-xl bg-white p-2">
+        <img
+          class="block size-48"
+          [src]="qrCodeDataUrl()"
+          width="192"
+          height="192"
+          alt="Código QR para vincular WhatsApp Business"
         />
       </div>
       <p class="text-sm" [class]="seconds() <= 10 ? 'font-medium text-red-400' : 'text-gray-400'">
@@ -55,23 +53,23 @@ export class QrConnectionCard {
 
   protected readonly seconds = signal(120);
   protected readonly isExpired = signal(false);
-
-  protected get whatsappLink(): string {
+  protected readonly whatsappLink = computed(() => {
     const cleaned = this.phone().replace(/\s+/g, '').replace('+', '');
     return `https://wa.me/${cleaned}`;
-  }
+  });
+  protected readonly qrCodeDataUrl = computed(() => buildQrCodeDataUrl(this.whatsappLink(), 192));
 
   private resetting = false;
   private readonly destroyRef = inject(DestroyRef);
 
   constructor() {
     interval(1000)
-      .pipe(takeUntilDestroyed())
+      .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(() => {
         if (this.resetting) return;
 
-        this.seconds.update(s => {
-          if (s <= 1) {
+        this.seconds.update((seconds) => {
+          if (seconds <= 1) {
             this.isExpired.set(true);
             this.expired.emit();
             this.resetting = true;
@@ -86,7 +84,8 @@ export class QrConnectionCard {
 
             return 0;
           }
-          return s - 1;
+
+          return seconds - 1;
         });
       });
   }
