@@ -274,5 +274,115 @@
         "badge": "Recommended"
       }
     }
+  },
+  "profile": {
+    "userInfo": {
+      "avatarAlt": "Profile picture"
+    },
+    "uploadPhoto": {
+      "title": "Upload profile photo",
+      "previewAlt": "Profile photo preview",
+      "fileInputLabel": "Select profile image",
+      "selectAction": "Select Image"
+    },
+    "updateProfile": {
+      "title": "Update profile",
+      "fields": {
+        "firstName": {
+          "label": "First name",
+          "placeholder": "Enter your first name"
+        },
+        "lastName": {
+          "label": "Last name",
+          "placeholder": "Enter your last name"
+        }
+      },
+      "saveAction": "Save profile changes"
+    },
+    "phoneVerify": {
+      "title": "Verify or change phone number",
+      "fields": {
+        "phone": {
+          "label": "Number",
+          "placeholder": "+51 999 999 999"
+        }
+      },
+      "verifyAction": "Verify"
+    },
+    "emailChange": {
+      "title": "Change email with re-verification",
+      "fields": {
+        "email": {
+          "label": "New email",
+          "placeholder": "new-email@entreprenly.online"
+        }
+      },
+      "verifyAction": "Verify"
+    },
+    "changePassword": {
+      "title": "Change password",
+      "fields": {
+        "current": {
+          "label": "Current password",
+          "placeholder": "Current password",
+          "showLabel": "Show current password",
+          "hideLabel": "Hide current password"
+        },
+        "new": {
+          "label": "New password",
+          "placeholder": "New password",
+          "showLabel": "Show new password",
+          "hideLabel": "Hide new password"
+        },
+        "confirm": {
+          "label": "Confirm new password",
+          "placeholder": "Confirm new password",
+          "showLabel": "Show confirmation",
+          "hideLabel": "Hide confirmation"
+        }
+      },
+      "errors": {
+        "mismatch": "Passwords do not match."
+      },
+      "updateAction": "Update password"
+    },
+    "notifications": {
+      "title": "Configure notifications",
+      "items": {
+        "stock": {
+          "name": "Stock and Batch Alerts",
+          "desc": "Notices about low stock, expired batches, or batches close to expiring.",
+          "toggleLabel": "Enable stock and batch alerts"
+        },
+        "payment": {
+          "name": "Payment validations",
+          "desc": "Notifications when a receipt arrives or a payment is pending.",
+          "toggleLabel": "Enable payment validations"
+        },
+        "chatbot": {
+          "name": "Chatbot messages",
+          "desc": "Notices about new conversations and chatbot responses.",
+          "toggleLabel": "Enable chatbot messages"
+        }
+      },
+      "saveAction": "Save notifications"
+    },
+    "preferences": {
+      "title": "Language, timezone, and theme preferences",
+      "fields": {
+        "language": {
+          "label": "Language"
+        },
+        "timezone": {
+          "label": "Timezone"
+        }
+      },
+      "theme": {
+        "label": "Visual theme",
+        "light": "Light",
+        "dark": "Dark"
+      },
+      "saveAction": "Save preferences"
+    }
   }
 }

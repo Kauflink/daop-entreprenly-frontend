@@ -1,5 +1,6 @@
-import { computed, inject, Injectable, signal } from '@angular/core';
+import { computed, effect, inject, Injectable, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { TranslateService } from '@ngx-translate/core';
 import { catchError, of, tap } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { UserProfile } from '../domain/model/user-profile.entity';
@@ -20,6 +21,7 @@ interface ProfileResponse {
 @Injectable({ providedIn: 'root' })
 export class ProfileStore {
   private readonly http = inject(HttpClient);
+  private readonly translate = inject(TranslateService);
   private readonly profileUrl =
     environment.entreprenlyProviderApiBaseUrl + environment.entreprenlyProviderProfileEndpointPath;
 
@@ -51,6 +53,12 @@ export class ProfileStore {
   readonly roleAndPlan = computed(() => `${this.profile().role} - ${this.profile().plan}`);
 
   constructor() {
+    effect(() => {
+      const lang = this.preferences().language;
+      if (lang && lang !== this.translate.currentLang) {
+        this.translate.use(lang);
+      }
+    });
     this.load();
   }
 
