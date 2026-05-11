@@ -6,7 +6,7 @@
 
 .page {
   padding: 36px 40px;
-  background: #f2f2f2;
+  background: var(--color-bg-page);
   min-height: 100vh;
   box-sizing: border-box;
 }
@@ -28,7 +28,7 @@
 
 .page-subtitle {
   font-size: 13px;
-  color: #999;
+  color: var(--color-text-muted);
   margin: 0;
 }
 
@@ -36,7 +36,7 @@
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  background: #ff6b00;
+  background: var(--color-primary);
   color: #fff;
   border: none;
   border-radius: 24px;
@@ -48,7 +48,7 @@
   white-space: nowrap;
 }
 
-.btn-add:hover  { background: #e05e00; }
+.btn-add:hover  { background: var(--color-primary-hover); }
 .btn-add:active { transform: scale(0.97); }
 .plus { font-size: 18px; line-height: 1; }
 
@@ -66,7 +66,7 @@
   border-bottom: 1px solid var(--color-card-border);
   font-size: 13px;
   font-weight: 600;
-  color: #aaa;
+  color: var(--color-text-muted);
 }
 
 .col-qr    { text-align: center; }
@@ -77,6 +77,6 @@
 .empty-state {
   text-align: center;
   padding: 48px;
-  color: #bbb;
+  color: var(--color-text-muted);
   font-size: 14px;
 }
