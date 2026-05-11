@@ -1,0 +1,62 @@
+<div class="subscription-page">
+  <header class="page-header">
+    <h1>{{ 'subscription.page.title' | translate }}</h1>
+    <p>
+      {{ 'subscription.page.description' | translate }}
+    </p>
+  </header>
+
+  @if (loading()) {
+    <p class="loading-message" role="status">{{ 'subscription.page.loading' | translate }}</p>
+  } @else {
+    @if (feedback()) {
+      <p class="feedback-message" role="status" aria-live="polite">{{ feedback() }}</p>
+    }
+
+    <app-plan-overview
+      [currentPlan]="dashboard().currentPlan"
+      [recommendedPlan]="dashboard().recommendedPlan"
+      [selectedCycle]="selectedCycle()"
+      [controlPlanSelected]="controlPlanSelected()"
+      (billingCycleSelected)="selectBillingCycle($event)"
+      (controlPlanRequested)="selectControlPlan()"
+      (renewalRequested)="openRenewalModal()"
+      (cancellationRequested)="openCancellationModal()"
+      (keepPlanRequested)="openKeepPlanModal()"
+    />
+
+    <div class="secondary-grid">
+      <app-plan-usage [limits]="dashboard().limits" [planStatus]="dashboard().currentPlan.status" />
+      <app-billing-setup
+        [billingSetup]="dashboard().billingSetup"
+        (paymentMethodRequested)="addPaymentMethod()"
+        (fiscalDataRequested)="completeFiscalData()"
+      />
+    </div>
+
+    <app-subscription-activity
+      [activity]="dashboard().activity"
+      (historyDownloadRequested)="downloadActivityHistory()"
+    />
+
+    @if (upgradeModalOpen()) {
+      <app-upgrade-plan-modal
+        [plan]="dashboard().recommendedPlan"
+        [billingCycle]="selectedCycle()"
+        (closed)="closeUpgradeModal()"
+        (subscriptionActivated)="activateControlPlan()"
+      />
+    }
+
+    @if (planActionModalMode(); as modalMode) {
+      <app-subscription-plan-action-modal
+        [mode]="modalMode"
+        [currentPlan]="dashboard().currentPlan"
+        [billingCycle]="dashboard().defaultBillingCycle"
+        (closed)="closePlanActionModal()"
+        (cancellationConfirmed)="confirmCancellation()"
+        (keepPlanConfirmed)="keepControlPlan()"
+      />
+    }
+  }
+</div>

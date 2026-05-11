@@ -1,3 +1,129 @@
 /* You can add global styles to this file, and also import other style files */
 
 @import 'tailwindcss';
+
+@keyframes msgIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.msg-animate {
+  animation: msgIn 0.22s ease-out both;
+}
+
+:root {
+  --color-bg-page: #f6f4f4;
+  --color-card-bg: #ffffff;
+  --color-card-border: #c9c9c9;
+  --color-card-shadow: 0 0 15px rgba(0, 0, 0, 0.25);
+
+  --color-surface: #ffffff;
+  --color-surface-elevated: #fbfaf8;
+
+  --color-inner-bg: #fbfaf8;
+  --color-inner-border: #ede8e5;
+
+  --color-text-primary: #292a2d;
+  --color-text-strong: #0c0f12;
+  --color-text-secondary: #8e8f90;
+  --color-text-muted: #7e7e7e;
+  --color-text-role: #939392;
+  --color-label-accent: #65381e;
+  --color-text-on-primary: #f6e8dc;
+  --color-text-on-dark: #ffffff;
+
+  --color-avatar-bg: #0c0f12;
+  --color-avatar-fg: #ffffff;
+
+  --color-primary: #f38313;
+  --color-primary-hover: #e07410;
+  --color-primary-text: #f6e8dc;
+  --color-btn-select-text: #511e00;
+
+  --color-theme-btn-border: #eae4e0;
+  --color-theme-btn-active-bg: #fffcf5;
+  --color-theme-btn-active-border: #fbd2a6;
+
+  --color-sidebar-bg: #f38313;
+  --color-sidebar-item-bg: #fef8f1;
+  --color-sidebar-item-text: #511e00;
+  --color-sidebar-item-active-bg: #6f2700;
+  --color-sidebar-item-active-text: #ffffff;
+  --color-sidebar-shadow: 0px 4px 50px rgba(178, 178, 178, 0.5);
+
+  --color-logout-bg: #fdfdfd;
+  --color-logout-text: #511e00;
+
+  --color-danger: #d32f2f;
+  --color-success: #2e7d32;
+  --color-warning: #ed6c02;
+}
+
+:root[data-theme='dark'] {
+  --color-bg-page: #1a1a1d;
+  --color-card-bg: #25262a;
+  --color-card-border: #3a3b3f;
+  --color-card-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+
+  --color-surface: #25262a;
+  --color-surface-elevated: #2d2e32;
+
+  --color-inner-bg: #2d2e32;
+  --color-inner-border: #3a3b3f;
+
+  --color-text-primary: #f0f0f0;
+  --color-text-strong: #ffffff;
+  --color-text-secondary: #b0b0b3;
+  --color-text-muted: #9a9a9d;
+  --color-text-role: #b0b0b3;
+  --color-label-accent: #f5b97a;
+  --color-text-on-primary: #f6e8dc;
+  --color-text-on-dark: #ffffff;
+
+  --color-avatar-bg: #f6e8dc;
+  --color-avatar-fg: #0c0f12;
+
+  --color-primary: #f38313;
+  --color-primary-hover: #ff9d3f;
+  --color-primary-text: #f6e8dc;
+  --color-btn-select-text: #f5b97a;
+
+  --color-theme-btn-border: #4a4b4f;
+  --color-theme-btn-active-bg: #3a2c1e;
+  --color-theme-btn-active-border: #fbd2a6;
+
+  --color-sidebar-bg: #2a1f15;
+  --color-sidebar-item-bg: #3a2c1e;
+  --color-sidebar-item-text: #f5b97a;
+  --color-sidebar-item-active-bg: #f38313;
+  --color-sidebar-item-active-text: #1a1a1d;
+  --color-sidebar-shadow: 0px 4px 50px rgba(0, 0, 0, 0.6);
+
+  --color-logout-bg: #3a3b3f;
+  --color-logout-text: #f5b97a;
+
+  --color-danger: #ef5350;
+  --color-success: #66bb6a;
+  --color-warning: #ffa726;
+}
+
+html,
+body {
+  background: var(--color-bg-page);
+  color: var(--color-text-primary);
+}
+
+html,
+body,
+button,
+input,
+textarea,
+select {
+  font-family: 'Reddit Sans', Arial, sans-serif;
+}

@@ -1,0 +1,39 @@
+<section class="usage-panel" aria-labelledby="usage-title">
+  <div class="section-heading">
+    <div>
+      <p class="eyebrow">{{ 'subscription.usage.eyebrow' | translate }}</p>
+      <h2 id="usage-title">{{ 'subscription.usage.title' | translate }}</h2>
+    </div>
+    <span class="mini-badge">{{ statusLabel() }}</span>
+  </div>
+
+  <div class="limits-list">
+    @for (limit of limits(); track limit.id) {
+      <article class="limit-item">
+        <div class="limit-item__header">
+          <h3>{{ limit.label }}</h3>
+          @if (controlPlanAccessEnabled()) {
+            <p>{{ limitValueLabel(limit) }}</p>
+          } @else {
+            <p>
+              {{
+                'subscription.usage.counter'
+                  | translate: { used: limit.usedValue, max: limit.maxValue }
+              }}
+            </p>
+          }
+        </div>
+        <div
+          class="progress-track"
+          role="progressbar"
+          [attr.aria-label]="'Uso de ' + limit.label"
+          [attr.aria-valuenow]="limit.usedValue"
+          aria-valuemin="0"
+          [attr.aria-valuemax]="limit.maxValue > 0 ? limit.maxValue : null"
+        >
+          <span class="progress-fill" [style.width.%]="progressValue(limit)"></span>
+        </div>
+      </article>
+    }
+  </div>
+</section>
