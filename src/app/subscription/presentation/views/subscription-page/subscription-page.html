@@ -23,7 +23,7 @@
     />
 
     <div class="secondary-grid">
-      <app-plan-usage [limits]="dashboard().limits" />
+      <app-plan-usage [limits]="dashboard().limits" [planStatus]="dashboard().currentPlan.status" />
       <app-billing-setup
         [billingSetup]="dashboard().billingSetup"
         (paymentMethodRequested)="addPaymentMethod()"
@@ -35,5 +35,14 @@
       [activity]="dashboard().activity"
       (historyDownloadRequested)="downloadActivityHistory()"
     />
+
+    @if (upgradeModalOpen()) {
+      <app-upgrade-plan-modal
+        [plan]="dashboard().recommendedPlan"
+        [billingCycle]="selectedCycle()"
+        (closed)="closeUpgradeModal()"
+        (subscriptionActivated)="activateControlPlan()"
+      />
+    }
   }
 </div>
