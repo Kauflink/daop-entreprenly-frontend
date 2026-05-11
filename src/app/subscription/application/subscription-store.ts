@@ -1,7 +1,15 @@
 import { Injectable, Signal, WritableSignal, computed, inject, signal } from '@angular/core';
-import { BillingSetup } from '../domain/model/billing-setup.entity';
+import { InventoryStoreService } from '../../inventory/application/inventory-store.service';
+import {
+  BillingFiscalData,
+  BillingPaymentMethod,
+  BillingPaymentMethodInput,
+  BillingSetup,
+  detectCardBrand,
+} from '../domain/model/billing-setup.entity';
 import { SubscriptionActivity } from '../domain/model/subscription-activity.entity';
 import { SubscriptionDashboard } from '../domain/model/subscription-dashboard.entity';
+import { SubscriptionLimit } from '../domain/model/subscription-limit.entity';
 import { BillingCycle } from '../domain/model/subscription-plan.entity';
 import { SubscriptionApi } from '../infrastructure/subscription-api';
 
@@ -10,6 +18,7 @@ import { SubscriptionApi } from '../infrastructure/subscription-api';
 })
 export class SubscriptionStore {
   private readonly subscriptionApi = inject(SubscriptionApi);
+  private readonly inventoryStore = inject(InventoryStoreService);
   private readonly dashboardSignal: WritableSignal<SubscriptionDashboard> = signal(
     new SubscriptionDashboard(),
   );
@@ -18,8 +27,16 @@ export class SubscriptionStore {
   private readonly selectedCycleSignal: WritableSignal<BillingCycle> = signal('monthly');
   private readonly selectedPlanIdSignal: WritableSignal<string | null> = signal(null);
   private readonly feedbackSignal = signal('');
+  private readonly inventoryProductCount = computed(
+    () => this.inventoryStore.unitProductCount() + this.inventoryStore.weightProductCount(),
+  );
+  private readonly inventoryLotCount = computed(
+    () => this.inventoryStore.unitLotCount() + this.inventoryStore.weightLotCount(),
+  );
 
-  readonly dashboard: Signal<SubscriptionDashboard> = computed(() => this.dashboardSignal());
+  readonly dashboard: Signal<SubscriptionDashboard> = computed(() =>
+    this.withInventoryUsage(this.dashboardSignal()),
+  );
   readonly loading: Signal<boolean> = computed(() => this.loadingSignal());
   readonly selectedCycle: Signal<BillingCycle> = computed(() => this.selectedCycleSignal());
   readonly selectedPlanId: Signal<string | null> = computed(() => this.selectedPlanIdSignal());
@@ -53,58 +70,92 @@ export class SubscriptionStore {
   }
 
   activateControlPlan(): void {
-    this.subscriptionApi.activateControlPlan().subscribe((dashboard) => {
+    this.subscriptionApi
+      .activateControlPlan(this.selectedCycleSignal(), this.dashboard())
+      .subscribe((dashboard) => {
+        this.dashboardSignal.set(dashboard);
+        this.selectedPlanIdSignal.set(null);
+        this.feedbackSignal.set('Suscripción actualizada a Plan Control.');
+      });
+  }
+
+  scheduleCancellation(): void {
+    this.subscriptionApi.scheduleCancellation(this.dashboard()).subscribe((dashboard) => {
       this.dashboardSignal.set(dashboard);
-      this.selectedPlanIdSignal.set(null);
-      this.feedbackSignal.set('SuscripciÃ³n actualizada a Plan Control.');
+      this.feedbackSignal.set('Cancelación programada.');
     });
   }
 
-  addPaymentMethod(): void {
+  keepControlPlan(): void {
+    this.subscriptionApi.keepControlPlan(this.dashboard()).subscribe((dashboard) => {
+      this.dashboardSignal.set(dashboard);
+      this.feedbackSignal.set('Plan Control se mantendrá activo.');
+    });
+  }
+
+  addPaymentMethod(paymentMethodInput: BillingPaymentMethodInput): void {
+    const dashboard = this.dashboard();
+    const currentPaymentMethods = dashboard.billingSetup.paymentMethods;
+    const paymentMethod = this.toPaymentMethod(paymentMethodInput, currentPaymentMethods);
     const billingSetup = new BillingSetup({
-      ...this.dashboardSignal().billingSetup,
+      ...dashboard.billingSetup,
       hasPaymentMethod: true,
-      paymentMethodDescription: 'Método de pago preparado para futuros cobros.',
-      paymentMethodActionLabel: 'Editar método de pago',
+      paymentMethodDescription: this.toPaymentMethodDescription(paymentMethod),
+      paymentMethodActionLabel: 'Agregar métodos de pago',
+      paymentMethods: [
+        ...currentPaymentMethods.map((method) => ({ ...method, isDefault: false })),
+        paymentMethod,
+      ],
     });
 
-    this.dashboardSignal.update(
-      (dashboard) =>
-        new SubscriptionDashboard({
-          ...dashboard,
-          billingSetup,
-        }),
-    );
-    this.feedbackSignal.set('Método de pago registrado para la suscripción.');
+    this.saveBillingSetup(billingSetup, 'Método de pago registrado para la suscripción.');
   }
 
-  completeFiscalData(): void {
+  selectPaymentMethod(paymentMethodId: string): void {
+    const dashboard = this.dashboard();
+    const selectedPaymentMethod = dashboard.billingSetup.paymentMethods.find(
+      (paymentMethod) => paymentMethod.id === paymentMethodId,
+    );
+
+    if (!selectedPaymentMethod) {
+      return;
+    }
+
     const billingSetup = new BillingSetup({
-      ...this.dashboardSignal().billingSetup,
-      hasFiscalData: true,
-      fiscalDataDescription: 'Datos fiscales listos para emitir comprobantes.',
-      fiscalDataActionLabel: 'Editar datos fiscales',
+      ...dashboard.billingSetup,
+      hasPaymentMethod: true,
+      paymentMethodDescription: this.toPaymentMethodDescription(selectedPaymentMethod),
+      paymentMethods: dashboard.billingSetup.paymentMethods.map((paymentMethod) => ({
+        ...paymentMethod,
+        isDefault: paymentMethod.id === paymentMethodId,
+      })),
     });
 
-    this.dashboardSignal.update(
-      (dashboard) =>
-        new SubscriptionDashboard({
-          ...dashboard,
-          billingSetup,
-        }),
-    );
-    this.feedbackSignal.set('Datos fiscales completados para facturación.');
+    this.saveBillingSetup(billingSetup, 'Método de pago seleccionado para la suscripción.');
+  }
+
+  completeFiscalData(fiscalData: BillingFiscalData): void {
+    const dashboard = this.dashboard();
+    const billingSetup = new BillingSetup({
+      ...dashboard.billingSetup,
+      hasFiscalData: true,
+      fiscalDataDescription: `${fiscalData.documentType} ${fiscalData.documentNumber} - ${fiscalData.businessName}`,
+      fiscalDataActionLabel: 'Editar datos fiscales',
+      fiscalData,
+    });
+
+    this.saveBillingSetup(billingSetup, 'Datos fiscales completados para facturación.');
   }
 
   downloadActivityHistory(): void {
-    const activity = this.dashboardSignal().activity;
+    const activity = this.subscriptionActivityRows();
 
     if (activity.length === 0) {
       this.feedbackSignal.set('No hay actividad suficiente para descargar.');
       return;
     }
 
-    const csvContent = this.toSubscriptionActivityCsv(activity);
+    const csvContent = `\uFEFF${this.toSubscriptionActivityCsv(activity)}`;
     const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8' });
     const url = URL.createObjectURL(blob);
     const anchor = document.createElement('a');
@@ -121,10 +172,115 @@ export class SubscriptionStore {
       [item.title, item.detail].map((value) => this.toCsvValue(value)).join(','),
     );
 
-    return ['Evento,Detalle', ...rows].join('\n');
+    return ['sep=,', 'Evento,Detalle', ...rows].join('\r\n');
   }
 
   private toCsvValue(value: string): string {
     return `"${value.replaceAll('"', '""')}"`;
+  }
+
+  private subscriptionActivityRows(): SubscriptionActivity[] {
+    const dashboard = this.dashboard();
+
+    return [
+      ...dashboard.activity,
+      new SubscriptionActivity({
+        id: 'payment-method',
+        title: 'Método de pago',
+        detail: this.paymentMethodActivityDetail(dashboard.billingSetup),
+      }),
+      new SubscriptionActivity({
+        id: 'fiscal-data',
+        title: 'Datos fiscales',
+        detail: this.fiscalDataActivityDetail(dashboard.billingSetup),
+      }),
+    ];
+  }
+
+  private paymentMethodActivityDetail(billingSetup: BillingSetup): string {
+    const paymentMethod =
+      billingSetup.paymentMethods.find((method) => method.isDefault) ??
+      billingSetup.paymentMethods.at(-1);
+
+    if (!paymentMethod) {
+      return 'Sin método de pago registrado.';
+    }
+
+    return `${paymentMethod.cardBrand} terminada en ${paymentMethod.lastFour} registrada para pagos y renovaciones`;
+  }
+
+  private fiscalDataActivityDetail(billingSetup: BillingSetup): string {
+    const fiscalData = billingSetup.fiscalData;
+
+    if (fiscalData === null) {
+      return 'Datos fiscales pendientes de completar.';
+    }
+
+    return `${fiscalData.documentType} ${fiscalData.documentNumber} - ${fiscalData.businessName}`;
+  }
+
+  private withInventoryUsage(dashboard: SubscriptionDashboard): SubscriptionDashboard {
+    return new SubscriptionDashboard({
+      ...dashboard,
+      limits: dashboard.limits.map((limit) => this.withCurrentLimitUsage(limit)),
+    });
+  }
+
+  private withCurrentLimitUsage(limit: SubscriptionLimit): SubscriptionLimit {
+    if (limit.id === 'products') {
+      return new SubscriptionLimit({
+        ...limit,
+        usedValue: this.inventoryProductCount(),
+      });
+    }
+
+    if (limit.id === 'active-batches') {
+      return new SubscriptionLimit({
+        ...limit,
+        usedValue: this.inventoryLotCount(),
+      });
+    }
+
+    return limit;
+  }
+
+  private saveBillingSetup(billingSetup: BillingSetup, feedback: string): void {
+    const nextDashboard = new SubscriptionDashboard({
+      ...this.dashboard(),
+      billingSetup,
+    });
+
+    this.dashboardSignal.set(nextDashboard);
+    this.subscriptionApi
+      .updateBillingSetup(nextDashboard, billingSetup)
+      .subscribe((dashboard) => {
+        this.dashboardSignal.set(dashboard);
+        this.feedbackSignal.set(feedback);
+      });
+  }
+
+  private toPaymentMethod(
+    paymentMethodInput: BillingPaymentMethodInput,
+    currentPaymentMethods: BillingPaymentMethod[],
+  ): BillingPaymentMethod {
+    const sanitizedCardNumber = paymentMethodInput.cardNumber.replace(/\D/g, '');
+
+    return {
+      id: this.nextPaymentMethodId(currentPaymentMethods),
+      cardBrand: detectCardBrand(sanitizedCardNumber).label,
+      lastFour: sanitizedCardNumber.slice(-4),
+      holderName: paymentMethodInput.holderName.trim(),
+      expiryMonth: paymentMethodInput.expiryMonth.padStart(2, '0'),
+      expiryYear: paymentMethodInput.expiryYear.slice(-2),
+      isDefault: true,
+    };
+  }
+
+  private nextPaymentMethodId(paymentMethods: BillingPaymentMethod[]): string {
+    return `payment-method-${paymentMethods.length + 1}`;
+  }
+
+  private toPaymentMethodDescription(paymentMethod: BillingPaymentMethod): string {
+    return `${paymentMethod.cardBrand} terminada en ${paymentMethod.lastFour} - vence ${paymentMethod.expiryMonth}/${paymentMethod.expiryYear}`;
   }
 }

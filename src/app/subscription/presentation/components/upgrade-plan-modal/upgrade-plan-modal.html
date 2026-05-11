@@ -29,6 +29,9 @@
           type="button"
           [class.step-tab--active]="isStepActive(step.id)"
           [class.step-tab--complete]="isStepComplete(step.id)"
+          [style.background-color]="stepBackgroundColor(step.id)"
+          [style.border-color]="stepBorderColor(step.id)"
+          [style.color]="stepTextColor(step.id)"
           [attr.aria-current]="isStepActive(step.id) ? 'step' : null"
           [disabled]="!isStepActive(step.id) && !isStepComplete(step.id)"
           (click)="goToStep(step.id)"
@@ -58,40 +61,65 @@
       @case ('billing') {
         <form class="billing-form" [formGroup]="fiscalForm" (ngSubmit)="continue()">
           <label>
-            <span>RUC</span>
+            <span>Tipo de documento</span>
+            <select formControlName="documentType">
+              <option value="RUC">RUC</option>
+              <option value="DNI">DNI</option>
+              <option value="CE">CE</option>
+            </select>
+          </label>
+
+          <label>
+            <span>Número de documento</span>
             <input
               type="text"
               inputmode="numeric"
               autocomplete="off"
-              formControlName="ruc"
-              [attr.aria-invalid]="hasFieldError('ruc')"
+              formControlName="documentNumber"
+              [attr.aria-invalid]="hasFiscalFieldError('documentNumber')"
             />
-            @if (hasFieldError('ruc')) {
-              <small>Ingresa un RUC válido de 11 dígitos.</small>
+            @if (hasFiscalFieldError('documentNumber')) {
+              <small>Ingresa un documento válido.</small>
             }
           </label>
 
           <label>
-            <span>Razón social</span>
-            <input type="text" autocomplete="organization" formControlName="businessName" />
+            <span>Razón social o nombre</span>
+            <input
+              type="text"
+              autocomplete="organization"
+              formControlName="businessName"
+              [attr.aria-invalid]="hasFiscalFieldError('businessName')"
+            />
+            @if (hasFiscalFieldError('businessName')) {
+              <small>Ingresa la razón social o nombre.</small>
+            }
           </label>
 
           <label>
-            <span>Correo de facturación</span>
+            <span>Correo de comprobantes</span>
             <input
               type="email"
               autocomplete="email"
-              formControlName="billingEmail"
-              [attr.aria-invalid]="hasFieldError('billingEmail')"
+              formControlName="receiptEmail"
+              [attr.aria-invalid]="hasFiscalFieldError('receiptEmail')"
             />
-            @if (hasFieldError('billingEmail')) {
+            @if (hasFiscalFieldError('receiptEmail')) {
               <small>Ingresa un correo válido.</small>
             }
           </label>
 
-          <label>
-            <span>Distrito</span>
-            <input type="text" autocomplete="address-level2" formControlName="district" />
+          <label class="field-wide">
+            <span>Dirección fiscal</span>
+            <input
+              type="text"
+              autocomplete="street-address"
+              formControlName="fiscalAddress"
+              [attr.aria-invalid]="hasFiscalFieldError('fiscalAddress')"
+            />
+            @if (hasFiscalFieldError('fiscalAddress')) {
+              <small>Ingresa la dirección fiscal.</small>
+            }
           </label>
 
           <div class="modal-actions">
@@ -102,22 +130,134 @@
       }
 
       @case ('payment') {
-        <div class="stack">
-          <article class="summary-card summary-card--plain">
-            <div>
-              <h3>Tarjeta registrada</h3>
-              <p>Visa terminada en 4242 · Cobro seguro</p>
+        @if (paymentMethods().length > 0) {
+          <div class="stack">
+            @if (paymentMethods().length === 1 && selectedPaymentMethod(); as paymentMethod) {
+              <article class="summary-card summary-card--plain">
+                <div>
+                  <app-card-brand-badge [brand]="paymentMethod.cardBrand" />
+                  <h3>Tarjeta registrada</h3>
+                  <p>
+                    {{ paymentMethod.cardBrand }} terminada en {{ paymentMethod.lastFour }} · vence
+                    {{ paymentMethod.expiryMonth }}/{{ paymentMethod.expiryYear }}
+                  </p>
+                </div>
+              </article>
+            } @else {
+              <fieldset class="payment-options">
+                <legend>Selecciona un método de pago</legend>
+                @for (paymentMethod of paymentMethods(); track paymentMethod.id) {
+                  <label
+                    class="payment-option"
+                    [class.payment-option--selected]="
+                      effectiveSelectedPaymentMethodId() === paymentMethod.id
+                    "
+                  >
+                    <input
+                      type="radio"
+                      name="upgradePaymentMethod"
+                      [value]="paymentMethod.id"
+                      [checked]="effectiveSelectedPaymentMethodId() === paymentMethod.id"
+                      (change)="selectPaymentMethod(paymentMethod.id)"
+                    />
+                    <app-card-brand-badge [brand]="paymentMethod.cardBrand" />
+                    <span>
+                      <strong>
+                        {{ paymentMethod.cardBrand }} terminada en {{ paymentMethod.lastFour }}
+                      </strong>
+                      <small>
+                        {{ paymentMethod.holderName }} · vence {{ paymentMethod.expiryMonth }}/{{
+                          paymentMethod.expiryYear
+                        }}
+                      </small>
+                    </span>
+                  </label>
+                }
+              </fieldset>
+            }
+
+            <article class="summary-card summary-card--plain">
+              <h3>Total a cobrar</h3>
+              <strong>S/ {{ planPrice() }}</strong>
+            </article>
+          </div>
+          <div class="modal-actions">
+            <button class="secondary-button" type="button" (click)="back()">Volver</button>
+            <button class="primary-button" type="button" (click)="continue()">Continuar</button>
+          </div>
+        } @else {
+          <form class="billing-form" [formGroup]="paymentForm" (ngSubmit)="continue()">
+            <label>
+              <span>Número de tarjeta</span>
+              <div class="card-number-field">
+                <input
+                  type="text"
+                  inputmode="numeric"
+                  autocomplete="cc-number"
+                  formControlName="cardNumber"
+                  placeholder="4242 4242 4242 4242"
+                  [attr.aria-invalid]="hasPaymentFieldError('cardNumber')"
+                />
+                <app-card-brand-badge [brand]="detectedPaymentCardBrand()" />
+              </div>
+              @if (hasPaymentFieldError('cardNumber')) {
+                <small>Ingresa un número de tarjeta válido.</small>
+              }
+            </label>
+
+            <label>
+              <span>Titular</span>
+              <input
+                type="text"
+                autocomplete="cc-name"
+                formControlName="holderName"
+                [attr.aria-invalid]="hasPaymentFieldError('holderName')"
+              />
+              @if (hasPaymentFieldError('holderName')) {
+                <small>Ingresa el nombre del titular.</small>
+              }
+            </label>
+
+            <label>
+              <span>Vencimiento</span>
+              <input
+                type="text"
+                inputmode="numeric"
+                autocomplete="cc-exp"
+                formControlName="expiry"
+                placeholder="12/29"
+                [attr.aria-invalid]="hasPaymentFieldError('expiry')"
+              />
+              @if (hasPaymentFieldError('expiry')) {
+                <small>Usa el formato MM/AA.</small>
+              }
+            </label>
+
+            <label>
+              <span>CVV</span>
+              <input
+                type="password"
+                inputmode="numeric"
+                autocomplete="cc-csc"
+                formControlName="cvv"
+                [attr.aria-invalid]="hasPaymentFieldError('cvv')"
+              />
+              @if (hasPaymentFieldError('cvv')) {
+                <small>Ingresa 3 o 4 dígitos.</small>
+              }
+            </label>
+
+            <article class="summary-card summary-card--plain field-wide">
+              <h3>Total a cobrar</h3>
+              <strong>S/ {{ planPrice() }}</strong>
+            </article>
+
+            <div class="modal-actions">
+              <button class="secondary-button" type="button" (click)="back()">Volver</button>
+              <button class="primary-button" type="submit">Continuar</button>
             </div>
-          </article>
-          <article class="summary-card summary-card--plain">
-            <h3>Total a cobrar</h3>
-            <strong>S/ {{ planPrice() }}</strong>
-          </article>
-        </div>
-        <div class="modal-actions">
-          <button class="secondary-button" type="button" (click)="back()">Volver</button>
-          <button class="primary-button" type="button" (click)="continue()">Continuar</button>
-        </div>
+          </form>
+        }
       }
 
       @case ('activation') {
