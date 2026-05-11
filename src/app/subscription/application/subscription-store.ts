@@ -52,6 +52,14 @@ export class SubscriptionStore {
     this.feedbackSignal.set('Plan Control seleccionado. Completa facturación para continuar.');
   }
 
+  activateControlPlan(): void {
+    this.subscriptionApi.activateControlPlan().subscribe((dashboard) => {
+      this.dashboardSignal.set(dashboard);
+      this.selectedPlanIdSignal.set(null);
+      this.feedbackSignal.set('SuscripciÃ³n actualizada a Plan Control.');
+    });
+  }
+
   addPaymentMethod(): void {
     const billingSetup = new BillingSetup({
       ...this.dashboardSignal().billingSetup,
