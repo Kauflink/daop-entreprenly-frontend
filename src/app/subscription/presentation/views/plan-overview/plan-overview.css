@@ -86,6 +86,11 @@ h3 {
   text-transform: uppercase;
 }
 
+.status-badge--warning {
+  background: #fff7e9;
+  color: #511e00;
+}
+
 .plans-grid {
   display: grid;
   grid-template-columns: 1.15fr 1fr;
