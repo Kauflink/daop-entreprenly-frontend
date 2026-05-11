@@ -329,72 +329,6 @@
       "createdAt": "2026-05-10T08:00:00Z"
     }
   ],
-  "sales-products": [
-    {
-      "id": 1,
-      "name": "Arroz Costeño 1kg",
-      "description": "Premium coastal rice 1kg bag",
-      "isWeighted": false,
-      "unitPrice": 5.5,
-      "availableStock": 120
-    },
-    {
-      "id": 2,
-      "name": "Pollo entero",
-      "description": "Fresh whole chicken per kg",
-      "isWeighted": true,
-      "unitPrice": 9.9,
-      "availableStock": 50
-    },
-    {
-      "id": 3,
-      "name": "Coca Cola 500ml",
-      "description": "Coca-Cola 500ml bottle",
-      "isWeighted": false,
-      "unitPrice": 3.5,
-      "availableStock": 80
-    },
-    {
-      "id": 4,
-      "name": "Pan francés",
-      "description": "Traditional French bread roll",
-      "isWeighted": false,
-      "unitPrice": 0.5,
-      "availableStock": 200
-    },
-    {
-      "id": 5,
-      "name": "Inca Kola 500ml",
-      "description": "Inca Kola 500ml bottle",
-      "isWeighted": false,
-      "unitPrice": 3.5,
-      "availableStock": 75
-    },
-    {
-      "id": 6,
-      "name": "Queso fresco",
-      "description": "Fresh cheese per kg",
-      "isWeighted": true,
-      "unitPrice": 18,
-      "availableStock": 30
-    },
-    {
-      "id": 7,
-      "name": "Galleta Oreo",
-      "description": "Oreo cookies pack",
-      "isWeighted": false,
-      "unitPrice": 2,
-      "availableStock": 60
-    },
-    {
-      "id": 8,
-      "name": "Aceite Primor 1L",
-      "description": "Primor vegetable oil 1L bottle",
-      "isWeighted": false,
-      "unitPrice": 8.5,
-      "availableStock": 40
-    }
-  ],
   "sales": [
     {
       "id": 1,
@@ -458,28 +392,11 @@
   "cash-registers": [
     {
       "id": 1,
-      "date": "2026-05-08",
-      "totalCash": 70,
-      "totalDigital": 23.5
-    },
-    {
-      "id": 2,
-      "date": "2026-05-09",
-      "totalCash": 56,
-      "totalDigital": 45.5
-    },
-    {
-      "id": 3,
-      "date": "2026-05-10",
+      "date": "2026-05-11",
       "totalCash": 0,
       "totalDigital": 0
-    },
-    {
-      "id": 4,
-      "date": "2026-05-11",
-      "totalCash": 157.5,
-      "totalDigital": 182
     }
+
   ],
   "iot-scale": {
     "id": 1,
