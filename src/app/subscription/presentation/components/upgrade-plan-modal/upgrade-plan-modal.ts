@@ -109,6 +109,30 @@ export class UpgradePlanModal {
     return this.stepIndex(step) < this.activeIndex();
   }
 
+  protected stepBackgroundColor(step: UpgradeStep): string {
+    if (this.isStepActive(step)) {
+      return '#FFFCF5';
+    }
+
+    return this.isStepComplete(step) ? '#F2FBF5' : '#FBFAF8';
+  }
+
+  protected stepBorderColor(step: UpgradeStep): string {
+    if (this.isStepActive(step)) {
+      return '#FDEAD3';
+    }
+
+    return this.isStepComplete(step) ? '#BEE3CB' : '#ECE6E3';
+  }
+
+  protected stepTextColor(step: UpgradeStep): string {
+    if (this.isStepActive(step)) {
+      return '#511E00';
+    }
+
+    return this.isStepComplete(step) ? '#004E1D' : 'rgb(81 30 0 / 50%)';
+  }
+
   protected hasFieldError(fieldName: keyof typeof this.fiscalForm.controls): boolean {
     const field = this.fiscalForm.controls[fieldName];
     return field.invalid && (field.dirty || field.touched);
