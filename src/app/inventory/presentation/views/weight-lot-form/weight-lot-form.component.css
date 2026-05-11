@@ -44,7 +44,7 @@
 .btn-close-circle:hover { background: var(--color-card-border); }
 
 .modal-title-main { font-size: 22px; font-family: 'Reddit Sans', sans-serif; font-weight: 700; margin: 0 0 6px; color: var(--color-text-strong); }
-.modal-subtitle   { font-size: 13px; color: #888; margin: 0 0 24px; }
+.modal-subtitle   { font-size: 13px; color: var(--color-text-muted); margin: 0 0 24px; }
 
 .custom-form { display: flex; flex-direction: column; gap: 16px; }
 
@@ -58,12 +58,12 @@
   border-radius: 12px;
   padding: 12px 16px;
   font-size: 15px;
-  color: #333;
+  color: var(--color-text-primary);
   width: 100%;
   box-sizing: border-box;
   transition: border 0.2s;
 }
-.grey-input:focus { outline: none; border-color: #f58220; }
+.grey-input:focus { outline: none; border-color: var(--color-primary); }
 .input-error { border-color: var(--color-danger) !important; background: var(--color-bg-page); }
 
 .readonly-container {
@@ -83,7 +83,7 @@
 
 .product-selected-info { display: flex; flex-direction: column; gap: 2px; }
 .product-selected-name  { font-size: 15px; font-weight: 600; color: var(--color-text-strong); }
-.product-selected-brand { font-size: 12px; color: #888; }
+.product-selected-brand { font-size: 12px; color: var(--color-text-muted); }
 
 .badge {
   display: inline-flex;
@@ -95,7 +95,7 @@
   white-space: nowrap;
 }
 .badge--unit   { display: inline-flex; align-items: center; gap: 6px; background: var(--color-primary); color: #fff; font-family: 'Reddit Sans', sans-serif; font-weight: 700; }
-.badge--weight { display: inline-flex; align-items: center; gap: 6px; background: var(--color-text-strong); color: #fff; font-family: 'Reddit Sans', sans-serif; font-weight: 700; }
+.badge--weight { display: inline-flex; align-items: center; gap: 6px; background: var(--color-avatar-bg); color: var(--color-avatar-fg); font-family: 'Reddit Sans', sans-serif; font-weight: 700; }
 
 .qr-layout-container {
   display: flex;
@@ -109,7 +109,7 @@
 .qr-preview-box img { width: 90px; height: 90px; object-fit: contain; }
 
 .qr-details { display: flex; flex-direction: column; gap: 6px; flex: 1; }
-.qr-hint    { font-size: 12px; color: #999; }
+.qr-hint    { font-size: 12px; color: var(--color-text-muted); }
 
 .button-container { display: flex; flex-direction: column; align-items: center; gap: 6px; margin-top: 8px; }
 
@@ -124,7 +124,7 @@
   cursor: pointer;
   transition: background 0.2s, transform 0.1s;
 }
-.btn-save-orange:hover:not(:disabled) { background: #e07216; transform: translateY(-1px); }
+.btn-save-orange:hover:not(:disabled) { background: var(--color-primary-hover); transform: translateY(-1px); }
 .btn-save-orange:disabled { background: var(--color-danger); cursor: not-allowed; }
 .btn-save-orange--invalid { background: var(--color-danger) !important; cursor: not-allowed; }
 .form-incomplete { font-size: 12px; color: var(--color-danger); font-weight: 500; }

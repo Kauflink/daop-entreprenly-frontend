@@ -700,14 +700,14 @@
     },
     "preferences": {
       "id": 1,
-      "language": "es",
+      "language": "en",
       "timezone": "America/Bogota (UTC-05:00)",
-      "theme": "light"
+      "theme": "dark"
     },
     "notification_settings": {
       "id": 1,
       "stock_alerts": true,
-      "payment_alerts": false,
+      "payment_alerts": true,
       "chatbot_messages": false
     }
   },
@@ -717,8 +717,7 @@
       "sellerId": 1,
       "phone": "+51 999 888 777",
       "businessName": "Bodega El Huerto",
-      "status": "connected",
-      "connectedAt": "10/5/2026, 11:03:29 p. m."
+      "status": "disconnected"
     }
   ],
   "conversations": [
@@ -729,7 +728,7 @@
       "clientName": "Andrea Torres",
       "lastMessage": "Comprobante enviado",
       "lastMessageTime": "10:18",
-      "status": "WAITING_PAYMENT",
+      "status": "COMPLETED",
       "createdAt": "2026-04-15T10:00:00.000Z"
     },
     {
@@ -1413,6 +1412,22 @@
       "sender": "bot",
       "type": "text",
       "sentAt": "2026-04-15T11:00:05.000Z"
+    },
+    {
+      "id": 81,
+      "conversationId": 1,
+      "content": "Sistema: pago validado por el comerciante — 01:43 p. m.",
+      "sender": "system",
+      "type": "text",
+      "sentAt": "2026-05-11T18:43:30.319Z"
+    },
+    {
+      "id": 82,
+      "conversationId": 1,
+      "content": "Tu pago fue recibido y verificado correctamente.\nEl pedido #0042 está confirmado y en preparación. ¡Gracias por tu compra!",
+      "sender": "bot",
+      "type": "text",
+      "sentAt": "2026-05-11T18:43:30.319Z"
     }
   ],
   "chat-orders": [
@@ -1430,7 +1445,7 @@
       "total": 18,
       "deliveryAddress": "Av. Los Álamos 234, Miraflores",
       "paymentMethod": "Yape",
-      "status": "WAITING_PAYMENT",
+      "status": "CONFIRMED",
       "hasReceipt": true,
       "rejectionCount": 0,
       "createdAt": "2026-04-15T10:04:00.000Z"
