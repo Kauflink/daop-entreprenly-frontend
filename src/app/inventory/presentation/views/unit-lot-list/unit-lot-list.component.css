@@ -78,9 +78,14 @@
 }
 
 .lot-alert--danger {
-  background: var(--color-danger);
+  background: #fff1f1;
   border-color: #ff5a5f;
-  color: var(--color-danger);
+  color: #7f1111;
+}
+
+.lot-alert--danger .lot-alert-copy strong,
+.lot-alert--danger .lot-alert-copy span {
+  color: #7f1111;
 }
 
 .lot-alert--warning {

@@ -67,6 +67,8 @@ export class SubscriptionAssembler {
       fiscalDataActionLabel: response.fiscalDataActionLabel,
       hasPaymentMethod: response.hasPaymentMethod,
       hasFiscalData: response.hasFiscalData,
+      paymentMethods: response.paymentMethods ?? [],
+      fiscalData: response.fiscalData ?? null,
     });
   }
 
