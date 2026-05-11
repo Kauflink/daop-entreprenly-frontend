@@ -20,6 +20,30 @@ export const routes: Routes = [
         title: `${baseTitle} - Help`,
       },
       {
+        path: 'profile',
+        loadChildren: () =>
+          import('./profile/presentation/profile.routes').then((m) => m.profileRoutes),
+      },
+      {
+        path: 'sales',
+        loadChildren: () =>
+          import('./sales/presentation/views/sales.routes').then((m) => m.salesRoutes),
+      },
+      {
+        path: 'subscription',
+        loadChildren: () =>
+          import('./subscription/presentation/views/subscription.routes').then(
+            (m) => m.subscriptionRoutes,
+          ),
+      },
+      {
+        path: 'inventory',
+        loadChildren: () =>
+          import('./inventory/presentation/views/inventory.routes').then(
+            (m) => m.inventoryRoutes,
+          ),
+      },
+      {
         path: 'chatbot',
         loadChildren: () =>
           import('./chatbot/presentation/views/chatbot.routes').then(m => m.CHATBOT_ROUTES),
@@ -44,13 +68,12 @@ export const routes: Routes = [
   {
     path: '',
     redirectTo: '/dashboard',
-    pathMatch: 'full',
+    pathMatch: 'full'
   },
   {
     path: '**',
     loadComponent: () =>
       import('./shared/presentation/views/page-not-found/page-not-found').then(
-        (m) => m.PageNotFound,
-      ),
+        (m) => m.PageNotFound)
   },
 ];

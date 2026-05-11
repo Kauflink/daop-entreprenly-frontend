@@ -1,4 +1,150 @@
 {
+  "option": {
+    "home": "Home",
+    "about": "About",
+    "unitProducts": "Unit Products",
+    "unitLots": "Unit Lots",
+    "weightProducts": "Weight Products",
+    "weightLots": "Weight Lots",
+    "stockAlerts": "Stock Alerts"
+  },
+  "about": {
+    "title": "About Inventory System",
+    "content": "Entrepenly Inventory System helps manage products, lots, stock quantities, and inventory alerts efficiently."
+  },
+  "home": {
+    "title": "Inventory Dashboard",
+    "content": "Welcome to the Entrepenly Inventory Management System."
+  },
+  "stock-alerts": {
+    "title": "Stock Alerts",
+    "empty": "No stock alerts available.",
+    "low-stock": "Low Stock",
+    "out-of-stock": "Out of Stock",
+    "expiring-soon": "Expiring Soon",
+    "expired": "Expired",
+    "warning": "Warning",
+    "critical": "Critical"
+  },
+  "products": {
+    "title": "Products",
+    "unit-products": "Unit Products",
+    "weight-products": "Weight Products",
+    "subtitle": "Available products catalog.",
+    "add": "Add product",
+    "empty": "No products registered.",
+    "col": {
+      "type": "Type",
+      "name": "Name",
+      "description": "Description",
+      "qrCode": "QR Code",
+      "stock": "Total Stock",
+      "price": "Price",
+      "byUnit": "Unit",
+      "byWeight": "Weight",
+      "edit": "Edit"
+    },
+    "form": {
+      "addTitle": "Add New Product",
+      "editTitle": "Edit Product",
+      "addSubtitle": "Enter the new product information.",
+      "editSubtitle": "Modify the product information.",
+      "type": "Product Type",
+      "byUnit": "Unit",
+      "name": "Name",
+      "namePlaceholder": "Product Name",
+      "nameRequired": "Name is required",
+      "description": "Description",
+      "descriptionPlaceholder": "Product Description",
+      "descriptionRequired": "Description is required",
+      "qrCode": "QR Code",
+      "qrHint": "If not specified, the product code will be used.",
+      "scanQr": "Scan QR",
+      "closeScanner": "Close scanner",
+      "scannerCameraUnavailable": "Could not access the camera.",
+      "scannerPermissionDenied": "Allow camera access to scan the QR.",
+      "price": "Price",
+      "weight": "Weight(g)",
+      "brand": "Brand",
+      "brandPlaceholder": "Product Brand",
+      "save": "Save",
+      "noModifiable": "No modifiable",
+      "byWeight": "Weight",
+      "pricePerKg": "Price per Kg"
+    }
+  },
+  "lots": {
+    "title": "Inventory Lots",
+    "subtitle": "Manage and track your product batches.",
+    "unit-lots": "Unit Lots",
+    "weight-lots": "Weight Lots",
+    "search": "Search lots...",
+    "create": "Create Lot",
+    "add": "Add Lot",
+    "back": "Back",
+    "prefix": "lot",
+    "totalLots": "Total Lots",
+    "expiredLots": "Expired Lots",
+    "outOfStock": "Out of Stock",
+    "totalUnits": "Total Units",
+    "totalLotCount": "Lots recorded",
+    "viewDetails": "View Details",
+    "empty": "No lots found.",
+    "status": {
+      "expired": "Expired"
+    },
+    "alerts": {
+      "title": {
+        "expired": "{{count}} expired lot(s)",
+        "outOfStock": "{{count}} lot(s) out of stock",
+        "expiringSoon": "{{count}} lot(s) expiring soon",
+        "lowStock": "{{count}} lot(s) about to run out of stock"
+      },
+      "detail": {
+        "expired": "{{productName}} · lot {{lotId}} · expired on {{expiryDate}}",
+        "outOfStock": "{{productName}} · lot {{lotId}} · depleted",
+        "outOfStockNoLot": "{{productName}} · no lot · depleted",
+        "expiringSoon": "{{productName}} · lot {{lotId}} · expires in {{days}} day(s) ({{expiryDate}})",
+        "lowStock": "{{productName}} · lot {{lotId}} · about to run out",
+        "lowStockNoLot": "{{productName}} · no lot · about to run out"
+      }
+    },
+    "form": {
+      "addTitle": "Add New Lot",
+      "editTitle": "Edit Lot",
+      "addSubtitle": "Enter the new lot information.",
+      "editSubtitle": "Modify the lot information.",
+      "type": "Lot Type",
+      "byUnit": "Unit",
+      "byWeight": "Weight",
+      "product": "Product",
+      "select": "Select a product",
+      "qrCode": "QR Code",
+      "qrHint": "If not specified, the product code will be used.",
+      "entryDate": "Entry Date",
+      "expiryDate": "Expiry Date",
+      "quantity": "Quantity",
+      "save": "Save Lot"
+    }
+  },
+  "form": {
+    "required": "Must enter a valid value",
+    "incomplete": "Required fields are incomplete"
+  },
+  "error": {
+    "loadTitle": "Details could not be loaded at this time",
+    "loadSubtitle": "Please try again later"
+  },
+  "page-not-found": {
+    "title": "Page Not Found",
+    "content": "The path <strong>{{ invalid_path }}</strong> does not exist.",
+    "go-home": "Go Home"
+  },
+  "footer": {
+    "rights": "All rights reserved.",
+    "powered-by": "Powered by",
+    "and": "and"
+  },
   "dashboard": {
     "sidebarLabel": "Main navigation",
     "brandLabel": "Go to Entreprenly dashboard",
@@ -8,12 +154,235 @@
     "nav": {
       "home": "Home",
       "products": "Products",
-      "batches": "Batches",
+      "lots": "Lots",
       "sales": "Sales",
       "subscription": "Subscription",
       "orders": "Orders",
       "chatbot": "Chatbot",
       "help": "Help"
+    }
+  },
+  "sales": {
+    "page": {
+      "title": "Sales",
+      "subtitle": "Record and process today's sales"
+    },
+    "detail": {
+      "title": "Sale Detail"
+    },
+    "search": {
+      "placeholder": "Search product by name...",
+      "notFound": "Product not found",
+      "emptyTicket": "No products in the ticket"
+    },
+    "ticket": {
+      "col": {
+        "product": "Product",
+        "type": "Type",
+        "quantity": "Qty / Weight",
+        "unitPrice": "Unit Price",
+        "subtotal": "Subtotal"
+      },
+      "empty": "No products have been added to the ticket yet",
+      "badge": {
+        "unit": "Unit",
+        "weight": "Weight"
+      },
+      "unit": "units",
+      "kg": "kg"
+    },
+    "register": {
+      "title": "Cash Register Summary",
+      "subtitle": "Accumulated income by payment method",
+      "totalDay": "Day Total",
+      "cash": "Cash",
+      "digital": "Card - Yape/Plin"
+    },
+    "summary": {
+      "title": "Summary",
+      "subtotal": "Subtotal",
+      "items": "items",
+      "total": "Total"
+    },
+    "payment": {
+      "title": "Payment Method",
+      "cash": "Cash",
+      "digital": "Card - Yape/Plin",
+      "error": "Please select a payment method"
+    },
+    "finalize": "Finalize Sale and Issue Receipt",
+    "cancel": "Cancel Sale",
+    "success": {
+      "title": "Successful Sale"
+    },
+    "quantity-modal": {
+      "title": "Register Quantity",
+      "subtitle": "Enter the number of units",
+      "close": "Close",
+      "label": "Quantity",
+      "confirm": "Confirm Quantity",
+      "insufficientStock": "Insufficient stock"
+    },
+    "weight-modal": {
+      "title": "Register Weight",
+      "subtitleAuto": "Recording product weight",
+      "subtitleManual": "Enter the product weight manually",
+      "close": "Close",
+      "label": "Weight (kg)",
+      "waiting": "Waiting for scale response...",
+      "confirm": "Confirm Weight",
+      "insufficientStock": "Insufficient stock"
+    }
+  },
+  "subscription": {
+    "page": {
+      "title": "Subscription",
+      "description": "Check your current plan, review available limits, upgrade to Plan Control, and manage billing from the dashboard.",
+      "loading": "Loading subscription dashboard..."
+    },
+    "overview": {
+      "eyebrow": "Subscription",
+      "title": "Current plan and billing",
+      "description": "Manage your business plan, review available limits, and upgrade to Plan Control when you need to operate without restrictions.",
+      "billingFrequencyLabel": "Billing frequency",
+      "monthly": "Monthly",
+      "annual": "Annual",
+      "upgradeAction": "Upgrade to Plan Control"
+    },
+    "usage": {
+      "eyebrow": "Plan usage",
+      "title": "Available limits",
+      "counter": "{{ used }} of {{ max }}"
+    },
+    "billing": {
+      "eyebrow": "Billing",
+      "title": "Payment method and tax data"
+    },
+    "activity": {
+      "eyebrow": "History",
+      "title": "Subscription activity",
+      "downloadAction": "Download history"
+    },
+    "plans": {
+      "free": {
+        "name": "Plan Free",
+        "status": "Plan Free active",
+        "badge": "Current plan"
+      },
+      "control": {
+        "name": "Plan Control",
+        "badge": "Recommended"
+      }
+    }
+  },
+  "profile": {
+    "userInfo": {
+      "avatarAlt": "Profile picture"
+    },
+    "uploadPhoto": {
+      "title": "Upload profile photo",
+      "previewAlt": "Profile photo preview",
+      "fileInputLabel": "Select profile image",
+      "selectAction": "Select Image"
+    },
+    "updateProfile": {
+      "title": "Update profile",
+      "fields": {
+        "firstName": {
+          "label": "First name",
+          "placeholder": "Enter your first name"
+        },
+        "lastName": {
+          "label": "Last name",
+          "placeholder": "Enter your last name"
+        }
+      },
+      "saveAction": "Save profile changes"
+    },
+    "phoneVerify": {
+      "title": "Verify or change phone number",
+      "fields": {
+        "phone": {
+          "label": "Number",
+          "placeholder": "+51 999 999 999"
+        }
+      },
+      "verifyAction": "Verify"
+    },
+    "emailChange": {
+      "title": "Change email with re-verification",
+      "fields": {
+        "email": {
+          "label": "New email",
+          "placeholder": "new-email@entreprenly.online"
+        }
+      },
+      "verifyAction": "Verify"
+    },
+    "changePassword": {
+      "title": "Change password",
+      "fields": {
+        "current": {
+          "label": "Current password",
+          "placeholder": "Current password",
+          "showLabel": "Show current password",
+          "hideLabel": "Hide current password"
+        },
+        "new": {
+          "label": "New password",
+          "placeholder": "New password",
+          "showLabel": "Show new password",
+          "hideLabel": "Hide new password"
+        },
+        "confirm": {
+          "label": "Confirm new password",
+          "placeholder": "Confirm new password",
+          "showLabel": "Show confirmation",
+          "hideLabel": "Hide confirmation"
+        }
+      },
+      "errors": {
+        "mismatch": "Passwords do not match."
+      },
+      "updateAction": "Update password"
+    },
+    "notifications": {
+      "title": "Configure notifications",
+      "items": {
+        "stock": {
+          "name": "Stock and Batch Alerts",
+          "desc": "Notices about low stock, expired batches, or batches close to expiring.",
+          "toggleLabel": "Enable stock and batch alerts"
+        },
+        "payment": {
+          "name": "Payment validations",
+          "desc": "Notifications when a receipt arrives or a payment is pending.",
+          "toggleLabel": "Enable payment validations"
+        },
+        "chatbot": {
+          "name": "Chatbot messages",
+          "desc": "Notices about new conversations and chatbot responses.",
+          "toggleLabel": "Enable chatbot messages"
+        }
+      },
+      "saveAction": "Save notifications"
+    },
+    "preferences": {
+      "title": "Language, timezone, and theme preferences",
+      "fields": {
+        "language": {
+          "label": "Language"
+        },
+        "timezone": {
+          "label": "Timezone"
+        }
+      },
+      "theme": {
+        "label": "Visual theme",
+        "light": "Light",
+        "dark": "Dark"
+      },
+      "saveAction": "Save preferences"
     }
   }
 }

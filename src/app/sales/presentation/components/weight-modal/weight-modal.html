@@ -1,0 +1,54 @@
+<div class="modal-backdrop" (click)="onBackdropClick($event)">
+  <div class="modal-content">
+    <header class="modal-header">
+      <div class="modal-title-wrapper">
+        <h2 class="modal-title">{{ 'sales.weight-modal.title' | translate }}</h2>
+        <p class="modal-subtitle">
+          @if (isScaleConnected()) {
+          {{ 'sales.weight-modal.subtitleAuto' | translate }}
+          } @else {
+          {{ 'sales.weight-modal.subtitleManual' | translate }}
+          }
+        </p>
+      </div>
+      <button class="close-btn" (click)="onCancel()" [attr.aria-label]="'sales.weight-modal.close' | translate">✕</button>
+    </header>
+
+    <div class="weight-display">
+      <label class="display-label">{{ 'sales.weight-modal.label' | translate }}</label>
+      <div class="display-value" [class.waiting]="isWaitingForScale()">
+        @if (isWaitingForScale()) {
+        {{ 'sales.weight-modal.waiting' | translate }}
+        } @else {
+        {{ displayValue() || '0.000' }}
+        }
+      </div>
+    </div>
+
+    @if (!isScaleConnected()) {
+    <div class="keypad">
+      @for (key of keypadKeys; track key) {
+      <button class="keypad-btn" (click)="onKeyPress(key)">{{ key }}</button>
+      }
+      <button class="keypad-btn keypad-dot" (click)="onDotPress()">.</button>
+      <button class="keypad-btn keypad-zero" (click)="onZeroPress()">0</button>
+      <button class="keypad-btn keypad-backspace" (click)="onBackspace()">◀</button>
+    </div>
+
+    <button
+      class="confirm-btn"
+      [disabled]="!canConfirm()"
+      (click)="onConfirm()"
+    >
+      {{ 'sales.weight-modal.confirm' | translate }}
+    </button>
+
+    @if (hasInsufficientStock()) {
+    <div class="error-message">
+      <span class="error-icon">⊘</span>
+      {{ 'sales.weight-modal.insufficientStock' | translate }}
+    </div>
+    }
+    }
+  </div>
+</div>
