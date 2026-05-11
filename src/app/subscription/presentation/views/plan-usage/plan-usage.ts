@@ -14,13 +14,15 @@ export class PlanUsage {
   readonly planStatus = input.required<string>();
 
   protected readonly statusLabel = computed(() =>
-    this.planStatus() === 'active' ? 'Control' : 'Free',
+    this.controlPlanAccessEnabled() ? 'Control' : 'Free',
   );
 
-  protected readonly activePlan = computed(() => this.planStatus() === 'active');
+  protected readonly controlPlanAccessEnabled = computed(() =>
+    ['active', 'scheduled-cancellation'].includes(this.planStatus()),
+  );
 
   protected limitValueLabel(limit: SubscriptionLimit): string {
-    if (!this.activePlan()) {
+    if (!this.controlPlanAccessEnabled()) {
       return '';
     }
 
@@ -40,7 +42,7 @@ export class PlanUsage {
   }
 
   protected progressValue(limit: SubscriptionLimit): number {
-    if (this.activePlan() && limit.maxValue <= 0) {
+    if (this.controlPlanAccessEnabled() && limit.maxValue <= 0) {
       return 100;
     }
 
