@@ -1,7 +1,7 @@
 .lot-row-card {
   display: flex;
   align-items: center;
-  background: #ffffff;
+  background: var(--color-card-bg);
   border: 1.5px solid #e9ecef;
   border-radius: 40px; /* Bordes muy redondeados según imagen */
   padding: 20px 35px;
@@ -37,10 +37,10 @@
 .btn-edit-card {
   width: 50px;
   height: 50px;
-  background: #ffffff;
+  background: var(--color-card-bg);
   border: 1px solid #dee2e6;
   border-radius: 12px;
-  color: #495057;
+  color: var(--color-text-secondary);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -82,13 +82,13 @@
 .col-value {
   font-size: 13px;
   font-weight: 700;
-  color: #212529;
+  color: var(--color-text-strong);
   padding-left: 2px;
 }
 
 .col-subtext {
   font-size: 11px;
-  color: #adb5bd;
+  color: var(--color-text-muted);
   font-weight: 500;
 }
 
@@ -109,5 +109,5 @@
 
 .btn-delete-card:hover {
   transform: scale(1.1);
-  background: #fa5252;
+  background: var(--color-danger);
 }
