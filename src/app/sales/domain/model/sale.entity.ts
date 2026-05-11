@@ -4,11 +4,6 @@ import { PaymentReceipt } from './payment-receipt.entity';
 import { PaymentMethod } from './payment-method.enum';
 import { SaleStatus } from './sale-status.enum';
 
-/**
- * Aggregate root de Ventas.
- * Representa una venta presencial completa, desde la apertura del ticket
- * hasta la emisión del comprobante.
- */
 export class Sale implements BaseEntity {
   private _id: number;
   private _sellerId: number;

@@ -1,9 +1,5 @@
 import { PaymentMethod } from './payment-method.enum';
 
-/**
- * Representa el comprobante del pago confirmado manualmente por el cajero.
- * El sistema NO verifica con APIs externas; solo registra lo que el cajero confirma.
- */
 export class PaymentReceipt {
   private _method: PaymentMethod;
   private _transactionCode: string;

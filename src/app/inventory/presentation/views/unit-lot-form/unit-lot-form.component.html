@@ -1,0 +1,115 @@
+<div class="modal-overlay" (click)="closeModal()">
+  <div class="modal-card" (click)="$event.stopPropagation()">
+
+    <button type="button" class="btn-close-circle" aria-label="Close modal" (click)="closeModal()">x</button>
+
+    <h2 class="modal-title-main">
+      {{ (isEdit ? 'lots.form.editTitle' : 'lots.form.addTitle') | translate }}
+    </h2>
+    <p class="modal-subtitle">
+      {{ (isEdit ? 'lots.form.editSubtitle' : 'lots.form.addSubtitle') | translate }}
+    </p>
+
+    <form [formGroup]="form" (ngSubmit)="submit()" class="custom-form">
+
+      <!-- Producto (readonly) -->
+      <div class="form-field-wrapper">
+        <label class="label-bold">{{ 'lots.form.product' | translate }}</label>
+        <div class="product-selected-row">
+          <div class="product-selected-info">
+            <span class="product-selected-name">{{ selectedProduct?.name }}</span>
+            <span class="product-selected-brand">{{ selectedProduct?.brand }}</span>
+          </div>
+          <span class="badge badge--unit">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 8l-9-4-9 4v8l9 4 9-4V8z"/><path d="M3 8l9 4 9-4"/><path d="M12 12v8"/></svg>
+            {{ 'products.col.byUnit' | translate }}
+          </span>
+        </div>
+      </div>
+
+      <!-- ID solo en edición -->
+      @if (isEdit) {
+        <div class="form-field-wrapper">
+          <label class="label-bold">ID</label>
+          <div class="readonly-container">
+            <input type="text" [value]="'lot-' + unitLotId" readonly class="grey-input">
+            <span class="icon-lock">🔒</span>
+          </div>
+        </div>
+      }
+
+      <!-- Cantidad -->
+      <div class="form-field-wrapper">
+        <label class="label-bold">
+          {{ 'lots.form.quantity' | translate }} ({{ 'products.col.byUnit' | translate }})
+        </label>
+        <div class="field-row-valid">
+          <input
+            type="number"
+            formControlName="quantity"
+            placeholder="0"
+            class="grey-input"
+            [class.input-error]="form.get('quantity')?.invalid && form.get('quantity')?.touched">
+          @if (form.get('quantity')?.invalid && form.get('quantity')?.touched) {
+            <span class="v-x">✕</span>
+            <span class="v-text">{{ 'form.required' | translate }}</span>
+          }
+        </div>
+      </div>
+
+      <!-- Fecha de Ingreso -->
+      <div class="form-field-wrapper">
+        <label class="label-bold">{{ 'lots.form.entryDate' | translate }}</label>
+        <div class="field-row-valid">
+          <input
+            type="date"
+            formControlName="entryDate"
+            class="grey-input"
+            [class.input-error]="form.get('entryDate')?.invalid && form.get('entryDate')?.touched">
+          @if (form.get('entryDate')?.invalid && form.get('entryDate')?.touched) {
+            <span class="v-x">✕</span>
+            <span class="v-text">{{ 'form.required' | translate }}</span>
+          }
+        </div>
+      </div>
+
+      <!-- Fecha de Caducidad -->
+      <div class="form-field-wrapper">
+        <label class="label-bold">{{ 'lots.form.expiryDate' | translate }}</label>
+        <div class="field-row-valid">
+          <input
+            type="date"
+            formControlName="expiryDate"
+            class="grey-input"
+            [class.input-error]="form.get('expiryDate')?.invalid && form.get('expiryDate')?.touched">
+          @if (form.get('expiryDate')?.invalid && form.get('expiryDate')?.touched) {
+            <span class="v-x">✕</span>
+            <span class="v-text">{{ 'form.required' | translate }}</span>
+          }
+        </div>
+      </div>
+
+      <!-- QR -->
+      <div class="qr-layout-container">
+        <div class="qr-preview-box">
+          <img [src]="qrImageUrl" [alt]="form.controls.qrCode.value || 'QR'">
+        </div>
+        <div class="qr-details">
+          <label class="label-bold">{{ 'lots.form.qrCode' | translate }}</label>
+          <input type="text" formControlName="qrCode" placeholder="7501055363483" class="grey-input">
+        </div>
+      </div>
+      <app-qr-scanner (scanned)="onQrScanned($event)" />
+
+      <div class="button-container">
+        <button type="submit" class="btn-save-orange" [class.btn-save-orange--invalid]="form.invalid && submitted">
+          {{ 'lots.form.save' | translate }}
+        </button>
+        @if (form.invalid && submitted) {
+          <span class="form-incomplete">{{ 'form.incomplete' | translate }}</span>
+        }
+      </div>
+
+    </form>
+  </div>
+</div>

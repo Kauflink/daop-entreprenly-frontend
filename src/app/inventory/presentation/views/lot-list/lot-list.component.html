@@ -1,0 +1,256 @@
+<div class="page">
+  <div class="page-header">
+    <div>
+      <h1 class="page-title">
+        {{ 'lots.title' | translate }}
+      </h1>
+      <p class="page-subtitle">
+        {{ 'lots.subtitle' | translate }}
+      </p>
+    </div>
+    <div class="header-actions">
+      <input
+        class="search-input"
+        type="text"
+        [placeholder]="'lots.search' | translate"
+        [ngModel]="searchTerm()"
+        (ngModelChange)="searchTerm.set($event)"
+      />
+      <button
+        class="btn-create"
+        (click)="navigateToCreate()">
+        + {{ 'lots.create' | translate }}
+      </button>
+    </div>
+  </div>
+  <div class="stats-row">
+    <div class="stat-card">
+      <div class="stat-icon stat-icon--orange">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#C07428" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M2.97 12.92A2 2 0 0 0 2 14.63v3.24a2 2 0 0 0 .97 1.71l3 1.8a2 2 0 0 0 2.06 0L12 19v-5.5l-5-3-4.03 2.42Z"/>
+          <path d="M7 16.5l-4.74-2.85"/><path d="M7 16.5l5-3"/><path d="M7 16.5V21"/>
+          <path d="M12 13.5V19l3.97 2.38a2 2 0 0 0 2.06 0l3-1.8a2 2 0 0 0 .97-1.71v-3.24a2 2 0 0 0-.97-1.71L17 10.5l-5 3Z"/>
+          <path d="M17 16.5l-5-3"/><path d="M17 16.5l4.74-2.85"/><path d="M17 16.5V21"/>
+          <path d="M7.97 4.42A2 2 0 0 0 7 6.13v4.37l5 3 5-3V6.13a2 2 0 0 0-.97-1.71l-3-1.8a2 2 0 0 0-2.06 0l-3 1.8Z"/>
+          <path d="M12 8 7.26 5.15"/><path d="M12 8l4.74-2.85"/><path d="M12 8v4.5"/>
+        </svg>
+      </div>
+      <p class="stat-number">
+        {{ totalLotsCount() }}
+      </p>
+      <p class="stat-label">
+        {{ 'lots.totalLots' | translate }}
+      </p>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon stat-icon--red">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#FD4444" stroke-width="1.8" stroke-linecap="round">
+          <circle cx="12" cy="12" r="10"/>
+          <line x1="12" y1="7" x2="12" y2="13"/>
+          <circle cx="12" cy="16.5" r="1" fill="#FD4444" stroke="none"/>
+        </svg>
+      </div>
+      <p class="stat-number">
+        {{ expiredAlertsCount() }}
+      </p>
+      <p class="stat-label">
+        {{ 'lots.expiredLots' | translate }}
+      </p>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon stat-icon--orange">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#F38313" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="23 18 13.5 8.5 8.5 13.5 1 6"/>
+          <polyline points="17 18 23 18 23 12"/>
+        </svg>
+      </div>
+      <p class="stat-number">
+        {{ outOfStockAlertsCount() }}
+      </p>
+      <p class="stat-label">
+        {{ 'lots.outOfStock' | translate }}
+      </p>
+    </div>
+  </div>
+
+  @if (activeAlertSummary(); as alert) {
+    <div class="lot-alert-slider">
+      <button
+        type="button"
+        class="alert-slide-btn"
+        [disabled]="alertSummaries().length <= 1"
+        (click)="previousAlert()">
+        <mat-icon>chevron_left</mat-icon>
+      </button>
+
+        <div
+          class="lot-alert"
+          [class.lot-alert--danger]="alert.tone === 'danger'"
+          [class.lot-alert--warning]="alert.tone === 'warning'"
+          [class.lot-alert--low]="alert.tone === 'low'">
+          @if (alert.tone === 'warning') {
+            <svg class="lot-alert-icon" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+              <line x1="12" y1="9" x2="12" y2="13"/>
+              <circle cx="12" cy="17" r="1" fill="currentColor" stroke="none"/>
+            </svg>
+          } @else if (alert.tone === 'low') {
+            <svg class="lot-alert-icon" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="23 18 13.5 8.5 8.5 13.5 1 6"/>
+              <polyline points="17 18 23 18 23 12"/>
+            </svg>
+          } @else {
+            <svg class="lot-alert-icon" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"/>
+              <line x1="12" y1="8" x2="12" y2="12"/>
+              <circle cx="12" cy="16.5" r="1" fill="currentColor" stroke="none"/>
+            </svg>
+          }
+          <div class="lot-alert-copy">
+            <strong>{{ alert.titleKey | translate: alert.titleParams }}</strong>
+            <span>{{ alert.detailKey | translate: alert.detailParams }}</span>
+          </div>
+        </div>
+
+      <button
+        type="button"
+        class="alert-slide-btn"
+        [disabled]="alertSummaries().length <= 1"
+        (click)="nextAlert()">
+        <mat-icon>chevron_right</mat-icon>
+      </button>
+    </div>
+  }
+
+  <div class="cards-wrapper">
+    <button
+      class="scroll-btn scroll-btn-left"
+      (click)="scrollLeft()">
+      ❮
+    </button>
+    <div
+      class="cards-grid"
+      #cardsContainer>
+      @if (cards().length === 0) {
+        <p class="empty">
+          {{ 'lots.empty' | translate }}
+        </p>
+      }
+      @for (card of cards(); track card.lotType + '-' + card.product.id) {
+        <div class="lot-card">
+          <div class="lot-card-top">
+            <div class="lot-card-names">
+              <span class="product-name">
+                {{ card.product.name }}
+              </span>
+              @if (card.product.brand) {
+
+                <span class="product-brand">
+                  {{ card.product.brand }}
+                </span>
+              }
+            </div>
+            @if (card.lotType === 'unit') {
+              <span class="badge badge--unit">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 8l-9-4-9 4v8l9 4 9-4V8z"/><path d="M3 8l9 4 9-4"/><path d="M12 12v8"/></svg>
+                {{ 'products.col.byUnit' | translate }}
+              </span>
+            } @else {
+              <span class="badge badge--weight">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 3v18"/><path d="M5 7l7-4 7 4"/><path d="M3 11l2-4 2 4a2 2 0 0 1-4 0z"/><path d="M17 11l2-4 2 4a2 2 0 0 1-4 0z"/><path d="M4 21h16"/></svg>
+                {{ 'products.col.byWeight' | translate }}
+              </span>
+            }
+          </div>
+          <div class="lot-card-body">
+            <div class="stock-row">
+              <span class="stock-number">
+                {{ card.totalStock }}
+              </span>
+              <span class="stock-label">
+                {{
+                  (
+                    card.lotType === 'unit'
+                      ? 'lots.totalUnits'
+                      : 'products.form.weight'
+                  ) | translate
+                }}
+              </span>
+            </div>
+            <div class="count-row">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#F38313" stroke-width="1.8">
+                <path d="M21 8l-9-4-9 4v8l9 4 9-4V8z"/>
+                <path d="M3 8l9 4 9-4"/>
+                <path d="M12 12v8"/>
+              </svg>
+              <span class="count-label">
+                {{ card.lots.length }}
+                {{ 'lots.totalLotCount' | translate }}
+              </span>
+            </div>
+          </div>
+          <div class="lot-card-footer">
+            <button
+              class="btn-details"
+              (click)="navigateToDetails(card.product.id, card.lotType)">
+              {{ 'lots.viewDetails' | translate }}
+            </button>
+            <button
+              class="btn-add"
+              (click)="navigateToAdd(card.product.id, card.lotType)"> + {{ 'lots.add' | translate }}
+            </button>
+          </div>
+        </div>
+      }
+    </div>
+    <button
+      class="scroll-btn scroll-btn-right"
+      (click)="scrollRight()">
+      ❯
+    </button>
+  </div>
+</div>
+@if (showProductSelector()) {
+  <div
+    class="modal-overlay"
+    (click)="closeSelector()">
+    <div
+      class="modal-card"
+      (click)="$event.stopPropagation()">
+      <button
+        type="button"
+        class="btn-close-circle"
+        aria-label="Close modal"
+        (click)="closeSelector()">
+        x
+      </button>
+      <h2 class="modal-title-main">
+        {{ 'lots.form.addTitle' | translate }}
+      </h2>
+      <p class="modal-subtitle">
+        {{ 'lots.form.select' | translate }}
+      </p>
+      <div class="form-field-wrapper">
+        <label class="label-bold">
+          {{ 'lots.form.product' | translate }}
+        </label>
+        <select
+          class="product-select"
+          #productSelect
+          (change)="handleProductSelect(productSelect.value)">
+          <option value="">
+            {{ 'lots.form.select' | translate }}
+          </option>
+          @for (p of allProducts(); track p.type + '-' + p.id) {
+            <option [value]="p.id + '-' + p.type">
+              {{ p.name }}
+              @if (p.brand) {- {{ p.brand }}}
+              ({{(p.type === 'unit' ? 'products.col.byUnit' : 'products.col.byWeight') | translate }})
+            </option>
+          }
+        </select>
+      </div>
+    </div>
+  </div>
+}
+<router-outlet></router-outlet>
