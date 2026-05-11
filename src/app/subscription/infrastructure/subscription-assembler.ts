@@ -15,6 +15,7 @@ import {
 export class SubscriptionAssembler {
   static toEntityFromResponse(response: SubscriptionDashboardResponse): SubscriptionDashboard {
     return new SubscriptionDashboard({
+      defaultBillingCycle: response.defaultBillingCycle,
       currentPlan: this.toPlanEntityFromResponse(response.currentPlan),
       recommendedPlan: this.toPlanEntityFromResponse(response.recommendedPlan),
       limits: response.limits.map((limit) => this.toLimitEntityFromResponse(limit)),
@@ -34,6 +35,8 @@ export class SubscriptionAssembler {
       statusLabel: response.statusLabel,
       badgeLabel: response.badgeLabel,
       recommended: response.recommended,
+      currentPeriodStartDate: response.currentPeriodStartDate ?? '',
+      currentPeriodEndDate: response.currentPeriodEndDate ?? '',
       features: response.features.map((feature) => this.toFeatureEntityFromResponse(feature)),
     });
   }
