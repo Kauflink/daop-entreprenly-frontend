@@ -1,7 +1,7 @@
 <div class="card">
   <h2 class="card__title">{{ 'profile.notifications.title' | translate }}</h2>
 
-  <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
+  <form [formGroup]="form" novalidate>
     <div class="toggle-item">
       <div class="toggle-item__text">
         <p class="toggle-item__name">{{ 'profile.notifications.items.stock.name' | translate }}</p>
@@ -52,8 +52,5 @@
       </label>
     </div>
 
-    <button type="submit" class="btn-primary">
-      {{ 'profile.notifications.saveAction' | translate }}
-    </button>
   </form>
 </div>

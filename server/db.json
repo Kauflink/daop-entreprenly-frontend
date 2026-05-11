@@ -704,12 +704,12 @@
     "preferences": {
       "id": 1,
       "language": "en",
-      "timezone": "America/Lima (UTC-05:00)",
-      "theme": "light"
+      "timezone": "America/Bogota (UTC-05:00)",
+      "theme": "dark"
     },
     "notification_settings": {
       "id": 1,
-      "stock_alerts": false,
+      "stock_alerts": true,
       "payment_alerts": false,
       "chatbot_messages": false
     }
