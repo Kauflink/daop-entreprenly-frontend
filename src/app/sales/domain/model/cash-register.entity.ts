@@ -1,10 +1,5 @@
 import { BaseEntity } from '../../../shared/infrastructure/base-entity';
 
-/**
- * Aggregate de la caja del día.
- * Acumula los totales en efectivo y digital (Tarjeta + Yape + Plin agrupados).
- * Hay una caja por día.
- */
 export class CashRegister implements BaseEntity {
   private _id: number;
   private _date: string;
@@ -18,9 +13,6 @@ export class CashRegister implements BaseEntity {
     this._totalDigital = register.totalDigital ?? 0;
   }
 
-  /**
-   * Devuelve el total acumulado del día (efectivo + digital).
-   */
   get totalDay(): number {
     return Number((this._totalCash + this._totalDigital).toFixed(2));
   }

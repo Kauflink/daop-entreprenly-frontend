@@ -1,0 +1,143 @@
+<!-- backdrop -->
+<div class="overlay" (click)="close()"></div>
+
+<!-- modal -->
+<div class="modal">
+
+  <!-- header -->
+  <div class="modal-header">
+    <div>
+      <h2 class="modal-title">{{ (editId() ? 'products.form.editTitle' : 'products.form.addTitle') | translate }}</h2>
+      <p class="modal-subtitle">{{ 'products.form.addSubtitle' | translate }}</p>
+    </div>
+    <button class="btn-close" type="button" (click)="close()">✕</button>
+  </div>
+
+  <form [formGroup]="form" (ngSubmit)="save()">
+
+    <!-- tipo -->
+    <div class="field-group">
+      <label class="field-label">{{ 'products.form.type' | translate }}</label>
+      <div class="type-toggle">
+        <button type="button"
+                class="unit"
+                [class.active]="isUnit()"
+                (click)="setType('unit')">
+          {{ 'products.form.byUnit' | translate }}
+        </button>
+        <button type="button"
+                class="weight"
+                [class.active]="!isUnit()"
+                (click)="setType('weight')">
+          {{ 'products.form.byWeight' | translate }}
+        </button>
+      </div>
+    </div>
+
+    <!-- nombre -->
+    <div class="field-group">
+      <label class="field-label">{{ 'products.form.name' | translate }}</label>
+      <div class="field-row-valid">
+        <input class="field-input"
+               formControlName="name"
+               type="text"
+               [class.field-input--error]="form.get('name')?.invalid && form.get('name')?.touched"
+               [placeholder]="'products.form.namePlaceholder' | translate" />
+        @if (form.get('name')?.invalid && form.get('name')?.touched) {
+          <span class="v-x">✕</span>
+          <span class="v-text">{{ 'form.required' | translate }}</span>
+        }
+      </div>
+    </div>
+
+    <!-- descripción -->
+    <div class="field-group">
+      <label class="field-label">{{ 'products.form.description' | translate }}</label>
+      <input class="field-input"
+             formControlName="description"
+             type="text"
+             [placeholder]="'products.form.descriptionPlaceholder' | translate" />
+    </div>
+
+    <!-- qr + side fields -->
+    <div class="qr-row">
+
+      <!-- qr section -->
+      <div class="qr-section">
+        <label class="field-label">{{ 'products.form.qrCode' | translate }}</label>
+        <div class="qr-box">
+          <img [src]="qrImageUrl" [alt]="qrCode()" />
+        </div>
+        <input
+          type="text"
+          class="field-input qr-manual-input"
+          [value]="qrCode()"
+          (input)="onQrScanned($any($event.target).value)"
+          placeholder="7501055363483" />
+        <app-qr-scanner (scanned)="onQrScanned($event)" />
+      </div>
+
+      <!-- right fields -->
+      <div class="side-fields">
+        @if (isUnit()) {
+          <div class="field-group">
+            <label class="field-label">{{ 'products.form.price' | translate }}</label>
+            <div class="field-row-valid">
+              <div class="input-prefix" [class.input-prefix--error]="form.get('price')?.invalid && form.get('price')?.touched">
+                <span>$</span>
+                <input class="field-input prefix"
+                       formControlName="price"
+                       type="number" step="0.01" min="0" />
+              </div>
+              @if (form.get('price')?.invalid && form.get('price')?.touched) {
+                <span class="v-x">✕</span>
+              }
+            </div>
+          </div>
+
+          <div class="field-group">
+            <label class="field-label">{{ 'products.form.weight' | translate }}</label>
+            <input class="field-input"
+                   formControlName="weightGrams"
+                   type="number" step="0.01" min="0" />
+          </div>
+
+          <div class="field-group">
+            <label class="field-label">{{ 'products.form.brand' | translate }}</label>
+            <input class="field-input"
+                   formControlName="brand"
+                   type="text"
+                   [placeholder]="'products.form.brandPlaceholder' | translate" />
+          </div>
+        } @else {
+          <div class="field-group">
+            <label class="field-label">{{ 'products.form.pricePerKg' | translate }}</label>
+            <div class="field-row-valid">
+              <div class="input-prefix" [class.input-prefix--error]="form.get('pricePerKg')?.invalid && form.get('pricePerKg')?.touched">
+                <span>$</span>
+                <input class="field-input prefix"
+                       formControlName="pricePerKg"
+                       type="number" step="0.01" min="0" />
+              </div>
+              @if (form.get('pricePerKg')?.invalid && form.get('pricePerKg')?.touched) {
+                <span class="v-x">✕</span>
+              }
+            </div>
+          </div>
+        }
+      </div>
+
+    </div>
+
+    <!-- footer -->
+    <div class="modal-footer">
+      <button class="btn-save" type="submit" [class.btn-save--invalid]="form.invalid && submitted">
+        {{ 'products.form.save' | translate }}
+      </button>
+      @if (form.invalid && submitted) {
+        <span class="form-incomplete">{{ 'form.incomplete' | translate }}</span>
+      }
+    </div>
+
+  </form>
+</div>
