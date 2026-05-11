@@ -20,6 +20,9 @@
       [controlPlanSelected]="controlPlanSelected()"
       (billingCycleSelected)="selectBillingCycle($event)"
       (controlPlanRequested)="selectControlPlan()"
+      (renewalRequested)="openRenewalModal()"
+      (cancellationRequested)="openCancellationModal()"
+      (keepPlanRequested)="openKeepPlanModal()"
     />
 
     <div class="secondary-grid">
@@ -42,6 +45,17 @@
         [billingCycle]="selectedCycle()"
         (closed)="closeUpgradeModal()"
         (subscriptionActivated)="activateControlPlan()"
+      />
+    }
+
+    @if (planActionModalMode(); as modalMode) {
+      <app-subscription-plan-action-modal
+        [mode]="modalMode"
+        [currentPlan]="dashboard().currentPlan"
+        [billingCycle]="dashboard().defaultBillingCycle"
+        (closed)="closePlanActionModal()"
+        (cancellationConfirmed)="confirmCancellation()"
+        (keepPlanConfirmed)="keepControlPlan()"
       />
     }
   }

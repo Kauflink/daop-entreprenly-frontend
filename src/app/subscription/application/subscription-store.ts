@@ -53,10 +53,24 @@ export class SubscriptionStore {
   }
 
   activateControlPlan(): void {
-    this.subscriptionApi.activateControlPlan().subscribe((dashboard) => {
+    this.subscriptionApi.activateControlPlan(this.selectedCycleSignal()).subscribe((dashboard) => {
       this.dashboardSignal.set(dashboard);
       this.selectedPlanIdSignal.set(null);
-      this.feedbackSignal.set('SuscripciÃ³n actualizada a Plan Control.');
+      this.feedbackSignal.set('Suscripción actualizada a Plan Control.');
+    });
+  }
+
+  scheduleCancellation(): void {
+    this.subscriptionApi.scheduleCancellation(this.dashboardSignal()).subscribe((dashboard) => {
+      this.dashboardSignal.set(dashboard);
+      this.feedbackSignal.set('Cancelación programada.');
+    });
+  }
+
+  keepControlPlan(): void {
+    this.subscriptionApi.keepControlPlan(this.dashboardSignal()).subscribe((dashboard) => {
+      this.dashboardSignal.set(dashboard);
+      this.feedbackSignal.set('Plan Control se mantendrá activo.');
     });
   }
 
