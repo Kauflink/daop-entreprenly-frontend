@@ -1,8 +1,8 @@
 .lot-row-card {
   display: flex;
   align-items: center;
-  background: white;
-  border: 1px solid #e2e8f0;
+  background: var(--color-card-bg);
+  border: 1px solid var(--color-card-border);
   border-radius: 20px;
   padding: 1rem 1.5rem;
   margin-bottom: 1rem;
@@ -11,7 +11,7 @@
 }
 
 .lot-row-card.expired {
-  border-left: 5px solid #ef4444;
+  border-left: 5px solid var(--color-danger);
 }
 
 .lot-data-grid {
@@ -29,7 +29,7 @@
 
 .label {
   font-size: 0.65rem;
-  color: #94a3b8;
+  color: var(--color-text-muted);
   font-weight: 700;
   text-transform: uppercase;
   margin-bottom: 4px;
@@ -38,7 +38,7 @@
 .value {
   font-size: 0.85rem;
   font-weight: 600;
-  color: #1e293b;
+  color: var(--color-text-strong);
 }
 
 .qr-code {
@@ -48,10 +48,9 @@
 
 .sub-label {
   font-size: 0.6rem;
-  color: #94a3b8;
+  color: var(--color-text-muted);
 }
 
-/* Botones de acción */
 .action-btn {
   display: flex;
   align-items: center;
@@ -62,16 +61,16 @@
 }
 
 .edit-square {
-  background: #f8fafc;
-  color: #64748b;
-  border: 1px solid #e2e8f0;
+  background: var(--color-inner-bg);
+  color: var(--color-text-secondary);
+  border: 1px solid var(--color-card-border);
   border-radius: 10px;
   width: 42px;
   height: 42px;
 }
 
 .delete-circle {
-  background: #ef4444;
+  background: var(--color-danger);
   border-radius: 50%;
   width: 34px;
   height: 34px;
@@ -83,5 +82,5 @@
 }
 
 .text-danger {
-  color: #ef4444;
+  color: var(--color-danger);
 }

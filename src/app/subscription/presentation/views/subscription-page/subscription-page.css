@@ -14,7 +14,7 @@
 }
 
 .page-header h1 {
-  color: #000000;
+  color: var(--color-text-strong);
   font-size: 38px;
   font-weight: 800;
   line-height: 1.12;
@@ -45,11 +45,11 @@
 
 .loading-message {
   background: var(--color-card-bg);
-  color: #4f463f;
+  color: var(--color-text-primary);
 }
 
 .feedback-message {
-  background: #fff8e9;
+  background: var(--color-theme-btn-active-bg);
   color: var(--color-label-accent);
   font-weight: 700;
 }

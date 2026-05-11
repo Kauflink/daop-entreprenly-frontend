@@ -15,8 +15,8 @@
   position: absolute;
   top: 30px;
   right: 40px;
-  background: #000;
-  color: #fff;
+  background: var(--color-avatar-bg);
+  color: var(--color-avatar-fg);
   border: none;
   padding: 10px 25px;
   border-radius: 25px;
@@ -104,7 +104,7 @@
 .content-card {
   width: 100%;
   max-width: 950px;
-  background: white;
+  background: var(--color-card-bg);
   border-radius: 30px;
   padding: 40px;
   box-shadow: 0 4px 20px rgba(0,0,0,0.05);
@@ -136,7 +136,7 @@
 }
 
 .title-group h2 { margin: 0; font-size: 24px; color: var(--color-text-strong); }
-.title-group p { margin: 0; color: #888; font-weight: 500; }
+.title-group p { margin: 0; color: var(--color-text-muted); font-weight: 500; }
 
 .stats-group .stat-item {
   display: flex;
@@ -144,8 +144,8 @@
   gap: 8px;
 }
 
-.stat-item .value { font-size: 20px; font-weight: 800; }
-.stat-item .label { color: #888; font-size: 14px; }
+.stat-item .value { font-size: 20px; font-weight: 800; color: var(--color-text-strong); }
+.stat-item .label { color: var(--color-text-muted); font-size: 14px; }
 
 /* --- TABLA DE LOTES (GRID) --- */
 .table-header-labels {
@@ -164,7 +164,7 @@
   grid-template-columns: 50px 1fr 1fr 1fr 1fr 1.5fr 50px; /* Misma estructura que el header */
   align-items: center;
   background: var(--color-card-bg);
-  border: 1px solid #f1f3f5;
+  border: 1px solid var(--color-card-border);
   border-radius: 20px;
   padding: 18px 15px 12px;
   margin-bottom: 12px;
@@ -173,7 +173,7 @@
 
 .lot-row:hover {
   border-color: var(--color-primary);
-  background: #fffcf9;
+  background: var(--color-theme-btn-active-bg);
 }
 
 /* Contenedor de celdas de datos */
@@ -226,8 +226,8 @@
 
 /* --- BOTONES DE ACCIÓN --- */
 .btn-edit-square {
-  background: #f8f9fa;
-  border: 1px solid #dee2e6;
+  background: var(--color-inner-bg);
+  border: 1px solid var(--color-card-border);
   width: 40px;
   height: 40px;
   border-radius: 12px;
@@ -277,7 +277,7 @@
 
 .btn-add-main:hover {
   transform: translateY(-2px);
-  background: #ea580c;
+  background: var(--color-primary-hover);
 }
 
 .plus-icon { font-size: 22px; line-height: 1; }
