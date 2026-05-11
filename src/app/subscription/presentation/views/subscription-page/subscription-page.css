@@ -23,7 +23,7 @@
 
 .page-header p {
   max-width: 780px;
-  color: #666666;
+  color: var(--color-text-muted);
   font-size: 18px;
   line-height: 1.55;
   margin: 0;
@@ -37,20 +37,20 @@
 
 .loading-message,
 .feedback-message {
-  border: 1px solid #eadbd0;
+  border: 1px solid var(--color-inner-bg);
   border-radius: 14px;
   margin: 0;
   padding: 14px 18px;
 }
 
 .loading-message {
-  background: #ffffff;
+  background: var(--color-card-bg);
   color: #4f463f;
 }
 
 .feedback-message {
   background: #fff8e9;
-  color: #5a260f;
+  color: var(--color-label-accent);
   font-weight: 700;
 }
 
