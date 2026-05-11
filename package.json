@@ -21,6 +21,8 @@
     "@angular/router": "^21.2.0",
     "@ngx-translate/core": "^17.0.0",
     "@ngx-translate/http-loader": "^17.0.0",
+    "html5-qrcode": "^2.3.8",
+    "qrcode-generator-ts": "^0.0.4",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0"
   },
