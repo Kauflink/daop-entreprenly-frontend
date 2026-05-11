@@ -1,0 +1,60 @@
+:host {
+  display: block;
+  margin-top: 24px;
+}
+
+.cash-title {
+  font-size: 24px;
+  font-weight: bold;
+  margin: 0 0 4px 0;
+  color: #0C0F12;
+}
+
+.cash-subtitle {
+  color: #666666;
+  margin: 0 0 16px 0;
+  font-size: 15px;
+}
+
+.cash-widgets {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+.cash-widget {
+  background: white;
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.cash-widget.total-day {
+  background: linear-gradient(to right, #F97316 0%, #666666 100%);
+  color: white;
+}
+
+.cash-widget.total-day .widget-label,
+.cash-widget.total-day .widget-value {
+  color: white;
+}
+
+.widget-label {
+  font-size: 13px;
+  margin: 0 0 12px 0;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #666666;
+}
+
+.widget-icon {
+  font-size: 18px;
+}
+
+.widget-value {
+  font-size: 28px;
+  font-weight: bold;
+  margin: 0;
+  color: #0C0F12;
+}
