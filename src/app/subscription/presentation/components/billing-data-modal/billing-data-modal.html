@@ -1,0 +1,83 @@
+<div class="modal-backdrop" aria-hidden="true"></div>
+
+<section
+  class="billing-modal"
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby="billing-data-modal-title"
+  cdkTrapFocus
+  cdkTrapFocusAutoCapture
+>
+  <button class="icon-button" type="button" aria-label="Cerrar modal" (click)="close()">×</button>
+  <p class="eyebrow">Suscripción</p>
+  <h2 id="billing-data-modal-title">Completar datos de facturación</h2>
+
+  <form class="modal-form" [formGroup]="fiscalForm" (ngSubmit)="save()">
+    <label>
+      <span>Tipo de documento</span>
+      <select formControlName="documentType">
+        <option value="RUC">RUC</option>
+        <option value="DNI">DNI</option>
+        <option value="CE">CE</option>
+      </select>
+    </label>
+
+    <label>
+      <span>Número de documento</span>
+      <input
+        type="text"
+        inputmode="numeric"
+        autocomplete="off"
+        formControlName="documentNumber"
+        [attr.aria-invalid]="hasFieldError('documentNumber')"
+      />
+      @if (hasFieldError('documentNumber')) {
+        <small>Ingresa un documento válido.</small>
+      }
+    </label>
+
+    <label>
+      <span>Razón social o nombre</span>
+      <input
+        type="text"
+        autocomplete="organization"
+        formControlName="businessName"
+        [attr.aria-invalid]="hasFieldError('businessName')"
+      />
+      @if (hasFieldError('businessName')) {
+        <small>Ingresa la razón social o nombre.</small>
+      }
+    </label>
+
+    <label>
+      <span>Correo de comprobantes</span>
+      <input
+        type="email"
+        autocomplete="email"
+        formControlName="receiptEmail"
+        [attr.aria-invalid]="hasFieldError('receiptEmail')"
+      />
+      @if (hasFieldError('receiptEmail')) {
+        <small>Ingresa un correo válido.</small>
+      }
+    </label>
+
+    <label class="field-wide">
+      <span>Dirección fiscal</span>
+      <input
+        type="text"
+        autocomplete="street-address"
+        formControlName="fiscalAddress"
+        [attr.aria-invalid]="hasFieldError('fiscalAddress')"
+      />
+      @if (hasFieldError('fiscalAddress')) {
+        <small>Ingresa la dirección fiscal.</small>
+      }
+    </label>
+
+    <div class="modal-actions">
+      <button class="secondary-button" type="button" (click)="close()">Cancelar</button>
+      <button class="primary-button" type="submit">Guardar datos</button>
+    </div>
+  </form>
+</section>
