@@ -329,66 +329,7 @@
       "createdAt": "2026-05-10T08:00:00Z"
     }
   ],
-  "sales": [
-    {
-      "id": 1,
-      "sellerId": 1,
-      "items": [
-        {
-          "productId": 3,
-          "productName": "Coca Cola 500ml",
-          "quantity": 2,
-          "weightKg": null,
-          "unitPrice": 3.5,
-          "subtotal": 7
-        },
-        {
-          "productId": 4,
-          "productName": "Pan francés",
-          "quantity": 6,
-          "weightKg": null,
-          "unitPrice": 0.5,
-          "subtotal": 3
-        }
-      ],
-      "total": 10,
-      "paymentMethod": "CASH",
-      "paymentReceipt": {
-        "method": "CASH",
-        "transactionCode": "CASH-001",
-        "amount": 10,
-        "confirmedAt": "2026-05-08T10:30:00"
-      },
-      "status": "COMPLETED",
-      "createdAt": "2026-05-08T10:25:00",
-      "completedAt": "2026-05-08T10:30:00"
-    },
-    {
-      "id": 2,
-      "sellerId": 1,
-      "items": [
-        {
-          "productId": 1,
-          "productName": "Arroz Costeño 1kg",
-          "quantity": null,
-          "weightKg": 2.5,
-          "unitPrice": 5.5,
-          "subtotal": 13.75
-        }
-      ],
-      "total": 13.75,
-      "paymentMethod": "YAPE",
-      "paymentReceipt": {
-        "method": "YAPE",
-        "transactionCode": "YAPE-987654",
-        "amount": 13.75,
-        "confirmedAt": "2026-05-08T11:15:00"
-      },
-      "status": "COMPLETED",
-      "createdAt": "2026-05-08T11:10:00",
-      "completedAt": "2026-05-08T11:15:00"
-    }
-  ],
+  "sales": [],
   "cash-registers": [
     {
       "id": 1,
