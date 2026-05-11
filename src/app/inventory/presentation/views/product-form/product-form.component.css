@@ -13,7 +13,7 @@
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 101;
-  background: #fff;
+  background: var(--color-card-bg);
   border-radius: 16px;
   padding: 28px 32px 24px;
   width: min(680px, 92vw);
@@ -34,7 +34,7 @@
   font-size: 1.25rem;
   font-family: 'Reddit Sans', sans-serif;
   font-weight: 700;
-  color: #0C0F12;
+  color: var(--color-text-strong);
   margin: 0 0 4px;
 }
 
@@ -56,7 +56,7 @@
 }
 
 .btn-close:hover {
-  background: #f0f0f0;
+  background: var(--color-card-border);
 }
 
 /* ── type toggle ───────────────────────────────────────────── */
@@ -74,7 +74,7 @@
   font-size: 0.85rem;
   font-weight: 600;
   cursor: pointer;
-  background: #f5f5f5;
+  background: var(--color-bg-page);
   color: #555;
   transition: all 0.2s ease;
 }
@@ -91,8 +91,8 @@
 
 /* unidad activo = naranja */
 .type-toggle button.unit.active {
-  background: #F38313;
-  border-color: #F38313;
+  background: var(--color-primary);
+  border-color: var(--color-primary);
   box-shadow: 0 2px 8px rgba(245, 124, 0, 0.35);
 }
 
@@ -118,21 +118,21 @@
 }
 
 .field-input {
-  border: 1.5px solid #e0e0e0;
+  border: 1.5px solid var(--color-card-border);
   border-radius: 8px;
   padding: 8px 12px;
   font-size: 0.9rem;
   color: #222;
   outline: none;
   transition: border-color 0.2s;
-  background: #fafafa;
+  background: var(--color-bg-page);
   width: 100%;
   box-sizing: border-box;
 }
 
 .field-input:focus {
-  border-color: #F38313;
-  background: #fff;
+  border-color: var(--color-primary);
+  background: var(--color-card-bg);
 }
 
 .field-error {
@@ -144,24 +144,24 @@
 .input-prefix {
   display: flex;
   align-items: center;
-  border: 1.5px solid #e0e0e0;
+  border: 1.5px solid var(--color-card-border);
   border-radius: 8px;
-  background: #fafafa;
+  background: var(--color-bg-page);
   overflow: hidden;
   transition: border-color 0.2s;
 }
 
 .input-prefix:focus-within {
-  border-color: #F38313;
-  background: #fff;
+  border-color: var(--color-primary);
+  background: var(--color-card-bg);
 }
 
 .input-prefix span {
   padding: 0 10px;
   font-size: 0.9rem;
   color: #555;
-  border-right: 1.5px solid #e0e0e0;
-  background: #f0f0f0;
+  border-right: 1.5px solid var(--color-card-border);
+  background: var(--color-card-border);
   align-self: stretch;
   display: flex;
   align-items: center;
@@ -196,10 +196,10 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  border: 1.5px solid #e0e0e0;
+  border: 1.5px solid var(--color-card-border);
   border-radius: 10px;
   padding: 10px;
-  background: #fafafa;
+  background: var(--color-bg-page);
   gap: 6px;
 }
 
@@ -227,7 +227,7 @@
 }
 
 .btn-save {
-  background: #F38313;
+  background: var(--color-primary);
   color: #fff;
   border: none;
   border-radius: 10px;
@@ -248,7 +248,7 @@
 }
 
 .btn-save--invalid {
-  background: #ffb3b3 !important;
+  background: var(--color-danger) !important;
   box-shadow: none !important;
   cursor: not-allowed;
 }
@@ -258,7 +258,7 @@
   text-align: center;
   margin-top: 6px;
   font-size: 0.78rem;
-  color: #ff6b6b;
+  color: var(--color-danger);
   font-weight: 500;
 }
 
@@ -271,14 +271,14 @@
 .field-row-valid .field-input { flex: 1; }
 
 .field-input--error {
-  border-color: #ff6b6b !important;
+  border-color: var(--color-danger) !important;
   background: #fff5f5 !important;
 }
 
 .input-prefix--error {
-  border-color: #ff6b6b !important;
+  border-color: var(--color-danger) !important;
   background: #fff5f5 !important;
 }
 
-.v-x { color: #ff6b6b; font-size: 15px; font-weight: 700; flex-shrink: 0; }
-.v-text { color: #ff6b6b; font-size: 12px; white-space: nowrap; flex-shrink: 0; }
+.v-x { color: var(--color-danger); font-size: 15px; font-weight: 700; flex-shrink: 0; }
+.v-text { color: var(--color-danger); font-size: 12px; white-space: nowrap; flex-shrink: 0; }

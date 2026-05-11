@@ -1,6 +1,6 @@
 .page-container {
   padding: 60px 20px;
-  background-color: #f5f5f5;
+  background-color: var(--color-bg-page);
   min-height: 100vh;
   position: relative;
   display: flex;
@@ -66,7 +66,7 @@
 }
 
 .lot-alert-copy strong {
-  color: #111827;
+  color: var(--color-text-strong);
   font-size: 15px;
   font-weight: 700;
 }
@@ -76,13 +76,13 @@
 }
 
 .lot-alert--danger {
-  background: #ffc1c7;
+  background: var(--color-danger);
   border-color: #ff5a5f;
-  color: #ff3030;
+  color: var(--color-danger);
 }
 
 .lot-alert--warning {
-  background: #fff6dc;
+  background: var(--color-theme-btn-active-bg);
   border-color: #d9a900;
   color: #c58b00;
 }
@@ -110,7 +110,7 @@
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  background: #0C0F12;
+  background: var(--color-text-strong);
   color: white;
   padding: 5px 14px;
   border-radius: 999px;
@@ -126,7 +126,7 @@
   margin-top: 10px;
 }
 
-.title-group h2 { margin: 0; font-size: 24px; color: #1a1a1a; }
+.title-group h2 { margin: 0; font-size: 24px; color: var(--color-text-strong); }
 
 .stats-group .stat-item {
   display: flex;
@@ -142,7 +142,7 @@
   display: grid;
   grid-template-columns: 50px 1fr 1fr 1fr 1.5fr 50px;
   padding: 0 20px 15px;
-  color: #adb5bd;
+  color: var(--color-text-muted);
   font-size: 13px;
   font-weight: 600;
   text-align: center;
@@ -152,7 +152,7 @@
   display: grid;
   grid-template-columns: 50px 1fr 1fr 1fr 1.5fr 50px;
   align-items: center;
-  background: #fff;
+  background: var(--color-card-bg);
   border: 1px solid #f1f3f5;
   border-radius: 20px;
   padding: 18px 15px 12px;
@@ -161,11 +161,11 @@
 }
 
 .lot-row:hover {
-  border-color: #1a1a1a;
-  background: #fafafa;
+  border-color: var(--color-text-strong);
+  background: var(--color-bg-page);
 }
 
-.id-cell { font-weight: 700; color: #212529 !important; }
+.id-cell { font-weight: 700; color: var(--color-text-strong) !important; }
 .qty-cell { font-weight: 500; }
 
 .qr-cell {
@@ -174,8 +174,8 @@
   align-items: center;
 }
 
-.qr-code { font-family: monospace; font-size: 12px; color: #212529; }
-.qr-sub { font-size: 10px; color: #adb5bd; }
+.qr-code { font-family: monospace; font-size: 12px; color: var(--color-text-strong); }
+.qr-sub { font-size: 10px; color: var(--color-text-muted); }
 
 .row-action-cell {
   display: flex;
@@ -193,11 +193,11 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #495057;
+  color: var(--color-text-secondary);
 }
 
 .btn-delete-circle {
-  background: #fa5252;
+  background: var(--color-danger);
   border: none;
   width: 35px;
   height: 35px;
@@ -217,7 +217,7 @@
 }
 
 .btn-add-main {
-  background: #1a1a1a;
+  background: var(--color-text-strong);
   color: white;
   border: none;
   padding: 14px 35px;

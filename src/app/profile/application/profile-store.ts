@@ -59,6 +59,12 @@ export class ProfileStore {
         this.translate.use(lang);
       }
     });
+    effect(() => {
+      const theme = this.preferences().theme;
+      if (theme) {
+        document.documentElement.dataset['theme'] = theme;
+      }
+    });
     this.load();
   }
 
