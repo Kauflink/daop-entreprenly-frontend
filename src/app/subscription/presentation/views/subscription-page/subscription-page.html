@@ -36,7 +36,8 @@
 
     <app-subscription-activity
       [activity]="dashboard().activity"
-      (historyDownloadRequested)="downloadActivityHistory()"
+      [billingSetup]="dashboard().billingSetup"
+      (historyDownloadRequested)="openHistoryModal()"
     />
 
     @if (upgradeModalOpen()) {
@@ -75,6 +76,16 @@
         [fiscalData]="dashboard().billingSetup.fiscalData"
         (closed)="closeBillingDataModal()"
         (saved)="saveFiscalData($event)"
+      />
+    }
+
+    @if (historyModalOpen()) {
+      <app-subscription-history-modal
+        [activity]="dashboard().activity"
+        [billingSetup]="dashboard().billingSetup"
+        [downloaded]="historyDownloaded()"
+        (closed)="closeHistoryModal()"
+        (historyDownloadRequested)="downloadActivityHistory()"
       />
     }
   }

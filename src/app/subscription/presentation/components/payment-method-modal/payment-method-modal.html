@@ -15,14 +15,17 @@
   <form class="modal-form" [formGroup]="paymentForm" (ngSubmit)="save()">
     <label>
       <span>Número de tarjeta</span>
-      <input
-        type="text"
-        inputmode="numeric"
-        autocomplete="cc-number"
-        formControlName="cardNumber"
-        placeholder="4242 4242 4242 4242"
-        [attr.aria-invalid]="hasFieldError('cardNumber')"
-      />
+      <div class="card-number-field">
+        <input
+          type="text"
+          inputmode="numeric"
+          autocomplete="cc-number"
+          formControlName="cardNumber"
+          placeholder="4242 4242 4242 4242"
+          [attr.aria-invalid]="hasFieldError('cardNumber')"
+        />
+        <app-card-brand-badge [brand]="detectedCardBrand()" />
+      </div>
       @if (hasFieldError('cardNumber')) {
         <small>Ingresa un número de tarjeta válido.</small>
       }

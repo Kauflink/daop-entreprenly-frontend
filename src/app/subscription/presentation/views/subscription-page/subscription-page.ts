@@ -8,6 +8,7 @@ import {
 import { BillingCycle } from '../../../domain/model/subscription-plan.entity';
 import { BillingDataModal } from '../../components/billing-data-modal/billing-data-modal';
 import { PaymentMethodModal } from '../../components/payment-method-modal/payment-method-modal';
+import { SubscriptionHistoryModal } from '../../components/subscription-history-modal/subscription-history-modal';
 import {
   SubscriptionPlanActionModal,
   SubscriptionPlanActionModalMode,
@@ -29,6 +30,7 @@ import { SubscriptionActivity } from '../subscription-activity/subscription-acti
     SubscriptionPlanActionModal,
     PaymentMethodModal,
     BillingDataModal,
+    SubscriptionHistoryModal,
     TranslatePipe,
   ],
   templateUrl: './subscription-page.html',
@@ -46,6 +48,8 @@ export class SubscriptionPage implements OnInit {
   protected readonly planActionModalMode = signal<SubscriptionPlanActionModalMode | null>(null);
   protected readonly paymentMethodModalOpen = signal(false);
   protected readonly billingDataModalOpen = signal(false);
+  protected readonly historyModalOpen = signal(false);
+  protected readonly historyDownloaded = signal(false);
 
   ngOnInit(): void {
     this.subscriptionApp.loadDashboard();
@@ -131,7 +135,18 @@ export class SubscriptionPage implements OnInit {
     this.subscriptionApp.completeFiscalData(fiscalData);
   }
 
+  protected openHistoryModal(): void {
+    this.historyDownloaded.set(false);
+    this.historyModalOpen.set(true);
+  }
+
+  protected closeHistoryModal(): void {
+    this.historyModalOpen.set(false);
+    this.historyDownloaded.set(false);
+  }
+
   protected downloadActivityHistory(): void {
     this.subscriptionApp.downloadActivityHistory();
+    this.historyDownloaded.set(true);
   }
 }
