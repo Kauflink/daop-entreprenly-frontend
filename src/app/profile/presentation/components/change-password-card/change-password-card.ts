@@ -8,6 +8,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
+import { TranslateModule } from '@ngx-translate/core';
 
 const passwordsMatchValidator: ValidatorFn = (group: AbstractControl): ValidationErrors | null => {
   const newPwd = group.get('newPassword')?.value;
@@ -17,7 +18,7 @@ const passwordsMatchValidator: ValidatorFn = (group: AbstractControl): Validatio
 
 @Component({
   selector: 'app-change-password-card',
-  imports: [ReactiveFormsModule, MatIconModule],
+  imports: [ReactiveFormsModule, MatIconModule, TranslateModule],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './change-password-card.html',
   styleUrl: './change-password-card.css',

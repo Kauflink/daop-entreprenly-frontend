@@ -7,7 +7,9 @@
         {{ 'subscription.overview.description' | translate }}
       </p>
     </div>
-    <span class="status-badge">{{ currentPlan().statusLabel }}</span>
+    <span class="status-badge" [class.status-badge--warning]="cancellationScheduled()">
+      {{ currentPlan().statusLabel }}
+    </span>
   </div>
 
   <div class="plans-grid">
@@ -33,10 +35,18 @@
         }
       </ul>
 
-      @if (activeCurrentPlan()) {
+      @if (planControlCurrentPlan()) {
         <div class="plan-card__actions">
-          <button class="secondary-primary-action" type="button">Renovar suscripción</button>
-          <button class="secondary-outline-action" type="button">Solicitar cancelación</button>
+          <button class="secondary-primary-action" type="button" (click)="requestRenewal()">
+            Renovar suscripción
+          </button>
+          <button
+            class="secondary-outline-action"
+            type="button"
+            (click)="requestCancellationAction()"
+          >
+            {{ cancellationActionLabel() }}
+          </button>
         </div>
       }
     </article>

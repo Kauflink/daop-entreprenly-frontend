@@ -121,7 +121,7 @@
   position: absolute;
   top: 12px;
   right: 12px;
-  background: #f0f0f0;
+  background: var(--color-card-border);
   border: none;
   border-radius: 50%;
   width: 32px;

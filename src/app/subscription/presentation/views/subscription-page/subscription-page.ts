@@ -2,6 +2,10 @@ import { ChangeDetectionStrategy, Component, OnInit, inject, signal } from '@ang
 import { TranslatePipe } from '@ngx-translate/core';
 import { SubscriptionStore } from '../../../application/subscription-store';
 import { BillingCycle } from '../../../domain/model/subscription-plan.entity';
+import {
+  SubscriptionPlanActionModal,
+  SubscriptionPlanActionModalMode,
+} from '../../components/subscription-plan-action-modal/subscription-plan-action-modal';
 import { UpgradePlanModal } from '../../components/upgrade-plan-modal/upgrade-plan-modal';
 import { BillingSetup } from '../billing-setup/billing-setup';
 import { PlanOverview } from '../plan-overview/plan-overview';
@@ -16,6 +20,7 @@ import { SubscriptionActivity } from '../subscription-activity/subscription-acti
     BillingSetup,
     SubscriptionActivity,
     UpgradePlanModal,
+    SubscriptionPlanActionModal,
     TranslatePipe,
   ],
   templateUrl: './subscription-page.html',
@@ -30,6 +35,7 @@ export class SubscriptionPage implements OnInit {
   protected readonly controlPlanSelected = this.subscriptionApp.controlPlanSelected;
   protected readonly feedback = this.subscriptionApp.feedback;
   protected readonly upgradeModalOpen = signal(false);
+  protected readonly planActionModalMode = signal<SubscriptionPlanActionModalMode | null>(null);
 
   ngOnInit(): void {
     this.subscriptionApp.loadDashboard();
@@ -49,6 +55,32 @@ export class SubscriptionPage implements OnInit {
 
   protected activateControlPlan(): void {
     this.subscriptionApp.activateControlPlan();
+  }
+
+  protected openRenewalModal(): void {
+    this.planActionModalMode.set('renew');
+  }
+
+  protected openCancellationModal(): void {
+    this.planActionModalMode.set('cancel');
+  }
+
+  protected openKeepPlanModal(): void {
+    this.planActionModalMode.set('keep');
+  }
+
+  protected closePlanActionModal(): void {
+    this.planActionModalMode.set(null);
+  }
+
+  protected confirmCancellation(): void {
+    this.subscriptionApp.scheduleCancellation();
+    this.planActionModalMode.set('cancel-success');
+  }
+
+  protected keepControlPlan(): void {
+    this.subscriptionApp.keepControlPlan();
+    this.closePlanActionModal();
   }
 
   protected addPaymentMethod(): void {

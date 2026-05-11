@@ -1,7 +1,7 @@
 <div class="sales-page">
   <header class="page-header">
-    <h1>Ventas</h1>
-    <p class="subtitle">Registra y procesa las ventas del día</p>
+    <h1>{{ 'sales.page.title' | translate }}</h1>
+    <p class="subtitle">{{ 'sales.page.subtitle' | translate }}</p>
   </header>
 
   <div class="main-layout">
@@ -25,16 +25,15 @@
           Resumen
         </h2>
         <div class="summary-row">
-          <span>Subtotal</span>
+          <span>{{ 'sales.summary.subtotal' | translate }}</span>
           <span>S/ {{ subtotal().toFixed(2) }}</span>
         </div>
         <div class="summary-row">
-          <span>Items</span>
-          <span>{{ itemCount() }} productos</span>
+          <span>{{ itemCount() }} {{ 'sales.summary.items' | translate }}</span>
         </div>
         <hr />
         <div class="summary-total">
-          <span>Total</span>
+          <span>{{ 'sales.summary.total' | translate }}</span>
           <span class="total-value">S/ {{ subtotal().toFixed(2) }}</span>
         </div>
       </section>
@@ -70,7 +69,7 @@
   <div class="modal-backdrop" (click)="onCloseSuccessModal()">
     <div class="success-modal" (click)="$event.stopPropagation()">
       <button class="close-btn" (click)="onCloseSuccessModal()">✕</button>
-      <h2 class="success-title">Venta Exitosa</h2>
+      <h2 class="success-title">{{ 'sales.success.title' | translate }}</h2>
       <div class="success-check">✅</div>
     </div>
   </div>

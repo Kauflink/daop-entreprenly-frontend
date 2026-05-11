@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="200" height="240" viewBox="0 0 200 240">
+  <rect width="200" height="70" rx="10" fill="#5B2D8E"/>
+  <rect y="65" width="200" height="175" fill="white"/>
+  <rect y="65" width="200" height="10" fill="#5B2D8E"/>
+  <text x="16" y="42" fill="white" font-family="sans-serif" font-size="20" font-weight="bold">yape</text>
+  <text x="16" y="100" fill="#444" font-family="sans-serif" font-size="12">¡Yapeaste!</text>
+  <text x="16" y="126" fill="#111" font-family="sans-serif" font-size="24" font-weight="bold">S/19.50</text>
+  <text x="16" y="150" fill="#888" font-family="sans-serif" font-size="10">15/04/2026  |  10:14:33</text>
+  <line x1="16" y1="162" x2="184" y2="162" stroke="#eee" stroke-width="1"/>
+  <text x="16" y="180" fill="#888" font-family="sans-serif" font-size="10">Nro. de celular</text>
+  <text x="16" y="198" fill="#888" font-family="sans-serif" font-size="10">Destino</text>
+  <text x="140" y="198" fill="#5B2D8E" font-family="sans-serif" font-size="10" font-weight="bold">Yape</text>
+  <text x="16" y="216" fill="#888" font-family="sans-serif" font-size="10">Nro. de operación: 7842910</text>
+</svg>

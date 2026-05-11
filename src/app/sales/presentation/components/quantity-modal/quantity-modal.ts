@@ -1,9 +1,11 @@
-import { Component, computed, EventEmitter, Input, Output, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, EventEmitter, Input, Output, signal } from '@angular/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { ProductSummary } from '../../../domain/model/product-summary.entity';
 
 @Component({
   selector: 'app-quantity-modal',
-  imports: [],
+  imports: [TranslatePipe],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './quantity-modal.html',
   styleUrl: './quantity-modal.css',
 })
