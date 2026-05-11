@@ -385,5 +385,60 @@
       },
       "saveAction": "Guardar preferencias"
     }
+  },
+  "chatbot": {
+    "page": {
+      "title": "Chatbot",
+      "loading": "Cargando...",
+      "connectPrompt": "Conecta tu WhatsApp Business para activar el chatbot",
+      "connectionStatus": "Estado de la conexión"
+    },
+    "conversations": {
+      "empty": "Aún no hay conversaciones.\nLos chats de tus clientes aparecerán aquí\ncuando el chatbot reciba mensajes.",
+      "placeholder": "Envía y recibe mensajes sin necesidad de tener tu teléfono conectado"
+    },
+    "payment": {
+      "pendingBar": "Pago pendiente — Pedido {{ orderNumber }}",
+      "pendingBarDetail": "{{ paymentMethod }} · S/{{ total }} · Valida el comprobante enviado",
+      "approve": "Aprobar pago",
+      "reject": "Rechazar",
+      "rejectTitle": "Motivo del rechazo",
+      "confirmReject": "Confirmar rechazo",
+      "cancelReject": "Cancelar"
+    },
+    "orders": {
+      "title": "Pedidos",
+      "subtitle": "Historial y validación de comprobantes",
+      "connectPrompt": "Conecta tu WhatsApp para ver los pedidos",
+      "goToConfig": "Ir a configuración →",
+      "empty": "No hay pedidos registrados aún",
+      "goToConversations": "Ver conversaciones →",
+      "receiptAlt": "Comprobante de pago",
+      "delivery": "Entrega:",
+      "total": "Total",
+      "traceability": "Trazabilidad",
+      "trace": {
+        "registered": "Pedido registrado — {{ date }}",
+        "paymentSent": "Instrucciones de pago enviadas al cliente",
+        "receiptReceived": "Comprobante recibido vía WhatsApp",
+        "receiptRejected": "Comprobante rechazado ({{ count }}x) — imagen ilegible",
+        "paymentApproved": "Pago validado por el comerciante",
+        "blocked": "Pedido bloqueado — múltiples rechazos",
+        "cancelled": "Pedido cancelado por inactividad — stock repuesto",
+        "pendingValidation": "Pendiente de validación por el comerciante",
+        "awaitingReceipt": "Esperando comprobante del cliente"
+      },
+      "approvePayment": "Aprobar Pago",
+      "rejectPayment": "Rechazar",
+      "willBlock": "(bloqueará al cliente)",
+      "blockedMessage": "Pedido bloqueado. El cliente debe contactar a la bodega directamente.",
+      "status": {
+        "approved": "Pago aprobado",
+        "blocked": "Pedido bloqueado",
+        "cancelled": "Pedido cancelado",
+        "receiptReceived": "Comprobante recibido",
+        "awaitingReceipt": "Esperando comprobante"
+      }
+    }
   }
 }
