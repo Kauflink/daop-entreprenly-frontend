@@ -707,7 +707,7 @@
     "notification_settings": {
       "id": 1,
       "stock_alerts": true,
-      "payment_alerts": false,
+      "payment_alerts": true,
       "chatbot_messages": false
     }
   },
