@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Observable, catchError, map, of, switchMap } from 'rxjs';
 import { environment } from '../../../environments/environment';
+import { BillingSetup } from '../domain/model/billing-setup.entity';
 import { SubscriptionDashboard } from '../domain/model/subscription-dashboard.entity';
 import { BillingCycle } from '../domain/model/subscription-plan.entity';
 import { SubscriptionAssembler } from './subscription-assembler';
@@ -37,15 +38,36 @@ export class SubscriptionApi {
       );
   }
 
-  activateControlPlan(billingCycle: BillingCycle): Observable<SubscriptionDashboard> {
+  activateControlPlan(
+    billingCycle: BillingCycle,
+    currentDashboard: SubscriptionDashboard,
+  ): Observable<SubscriptionDashboard> {
     return this.http
       .get<SubscriptionDashboardResponse>(`${this.baseUrl}${this.subscriptionActivationEndpoint}`)
       .pipe(
         catchError(() => of(ACTIVE_SUBSCRIPTION_DASHBOARD_RESPONSE)),
+        map((response) => ({
+          ...response,
+          billingSetup: this.toDashboardResponseFromEntity(currentDashboard).billingSetup,
+        })),
         map((response) => this.withNewSubscriptionPeriod(response, billingCycle)),
         switchMap((response) => this.saveSubscriptionDashboard(response)),
         map((response) => SubscriptionAssembler.toEntityFromResponse(response)),
       );
+  }
+
+  updateBillingSetup(
+    currentDashboard: SubscriptionDashboard,
+    billingSetup: BillingSetup,
+  ): Observable<SubscriptionDashboard> {
+    const response = {
+      ...this.toDashboardResponseFromEntity(currentDashboard),
+      billingSetup: this.toBillingSetupResponseFromEntity(billingSetup),
+    };
+
+    return this.saveSubscriptionDashboard(response).pipe(
+      map((savedResponse) => SubscriptionAssembler.toEntityFromResponse(savedResponse)),
+    );
   }
 
   scheduleCancellation(currentDashboard: SubscriptionDashboard): Observable<SubscriptionDashboard> {
@@ -170,14 +192,7 @@ export class SubscriptionApi {
         maxValue: limit.maxValue,
       })),
       billingSetup: {
-        paymentMethodTitle: dashboard.billingSetup.paymentMethodTitle,
-        paymentMethodDescription: dashboard.billingSetup.paymentMethodDescription,
-        paymentMethodActionLabel: dashboard.billingSetup.paymentMethodActionLabel,
-        fiscalDataTitle: dashboard.billingSetup.fiscalDataTitle,
-        fiscalDataDescription: dashboard.billingSetup.fiscalDataDescription,
-        fiscalDataActionLabel: dashboard.billingSetup.fiscalDataActionLabel,
-        hasPaymentMethod: dashboard.billingSetup.hasPaymentMethod,
-        hasFiscalData: dashboard.billingSetup.hasFiscalData,
+        ...this.toBillingSetupResponseFromEntity(dashboard.billingSetup),
       },
       activity: dashboard.activity.map((item) => ({
         id: item.id,
@@ -213,6 +228,39 @@ export class SubscriptionApi {
     }
 
     return response;
+  }
+
+  private toBillingSetupResponseFromEntity(
+    billingSetup: BillingSetup,
+  ): SubscriptionDashboardResponse['billingSetup'] {
+    return {
+      paymentMethodTitle: billingSetup.paymentMethodTitle,
+      paymentMethodDescription: billingSetup.paymentMethodDescription,
+      paymentMethodActionLabel: billingSetup.paymentMethodActionLabel,
+      fiscalDataTitle: billingSetup.fiscalDataTitle,
+      fiscalDataDescription: billingSetup.fiscalDataDescription,
+      fiscalDataActionLabel: billingSetup.fiscalDataActionLabel,
+      hasPaymentMethod: billingSetup.hasPaymentMethod,
+      hasFiscalData: billingSetup.hasFiscalData,
+      paymentMethods: billingSetup.paymentMethods.map((paymentMethod) => ({
+        id: paymentMethod.id,
+        cardBrand: paymentMethod.cardBrand,
+        lastFour: paymentMethod.lastFour,
+        holderName: paymentMethod.holderName,
+        expiryMonth: paymentMethod.expiryMonth,
+        expiryYear: paymentMethod.expiryYear,
+        isDefault: paymentMethod.isDefault,
+      })),
+      fiscalData: billingSetup.fiscalData
+        ? {
+            documentType: billingSetup.fiscalData.documentType,
+            documentNumber: billingSetup.fiscalData.documentNumber,
+            businessName: billingSetup.fiscalData.businessName,
+            receiptEmail: billingSetup.fiscalData.receiptEmail,
+            fiscalAddress: billingSetup.fiscalData.fiscalAddress,
+          }
+        : null,
+    };
   }
 
   private saveSubscriptionDashboard(

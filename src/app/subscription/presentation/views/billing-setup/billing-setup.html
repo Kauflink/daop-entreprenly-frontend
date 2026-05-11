@@ -5,7 +5,7 @@
   <div class="billing-grid">
     <article
       class="billing-card"
-      [class.billing-card--complete]="billingSetup().hasPaymentMethod"
+      [class.billing-card--complete]="hasPaymentMethod()"
     >
       <div class="billing-card__body">
         <span class="billing-card__icon" aria-hidden="true">
@@ -13,26 +13,47 @@
         </span>
         <div>
           <h3>{{ billingSetup().paymentMethodTitle }}</h3>
-          <p>{{ billingSetup().paymentMethodDescription }}</p>
+          @if (primaryPaymentMethod(); as paymentMethod) {
+            <p>
+              {{ paymentMethod.cardBrand }} terminada en {{ paymentMethod.lastFour }} · vence
+              {{ paymentMethod.expiryMonth }}/{{ paymentMethod.expiryYear }}
+            </p>
+            <strong class="billing-card__status">
+              Disponible para pagos y renovaciones
+            </strong>
+            @if (extraPaymentMethodCount() > 0) {
+              <span class="billing-card__meta">
+                +{{ extraPaymentMethodCount() }}
+                {{ extraPaymentMethodCount() === 1 ? 'método adicional' : 'métodos adicionales' }}
+              </span>
+            }
+          } @else {
+            <p>{{ billingSetup().paymentMethodDescription }}</p>
+          }
         </div>
       </div>
       <button type="button" (click)="requestPaymentMethod()">
-        {{ billingSetup().paymentMethodActionLabel }}
+        {{ paymentActionLabel() }}
       </button>
     </article>
 
-    <article class="billing-card" [class.billing-card--complete]="billingSetup().hasFiscalData">
+    <article class="billing-card" [class.billing-card--complete]="hasFiscalData()">
       <div class="billing-card__body">
         <span class="billing-card__icon" aria-hidden="true">
           <mat-icon>receipt_long</mat-icon>
         </span>
         <div>
           <h3>{{ billingSetup().fiscalDataTitle }}</h3>
-          <p>{{ billingSetup().fiscalDataDescription }}</p>
+          @if (fiscalData(); as data) {
+            <p>{{ data.documentType }} {{ data.documentNumber }} · {{ data.businessName }}</p>
+            <strong class="billing-card__status">Información fiscal completa</strong>
+          } @else {
+            <p>{{ billingSetup().fiscalDataDescription }}</p>
+          }
         </div>
       </div>
       <button type="button" (click)="requestFiscalData()">
-        {{ billingSetup().fiscalDataActionLabel }}
+        {{ fiscalActionLabel() }}
       </button>
     </article>
   </div>
