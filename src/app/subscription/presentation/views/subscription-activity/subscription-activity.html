@@ -1,0 +1,21 @@
+<section class="activity-panel" aria-labelledby="activity-title">
+  <div class="activity-panel__heading">
+    <div>
+      <p class="eyebrow">{{ 'subscription.activity.eyebrow' | translate }}</p>
+      <h2 id="activity-title">{{ 'subscription.activity.title' | translate }}</h2>
+    </div>
+    <button type="button" (click)="requestHistoryDownload()">
+      <mat-icon aria-hidden="true">download</mat-icon>
+      <span>{{ 'subscription.activity.downloadAction' | translate }}</span>
+    </button>
+  </div>
+
+  <div class="activity-list" role="table" [attr.aria-label]="'subscription.activity.title' | translate">
+    @for (item of activity(); track item.id) {
+      <div class="activity-row" role="row">
+        <strong role="cell">{{ item.title }}</strong>
+        <span role="cell">{{ item.detail }}</span>
+      </div>
+    }
+  </div>
+</section>
