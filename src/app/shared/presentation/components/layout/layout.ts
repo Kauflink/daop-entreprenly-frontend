@@ -25,7 +25,6 @@ import { LanguageSwitcher } from '../language-switcher/language-switcher';
 export class Layout {
   options = [
     { link: '/home', label: 'option.home' },
-    { link: '/chatbot', label: 'option.chatbot' },
     { link: '/help', label: 'option.help' },
   ];
 }

@@ -1,0 +1,59 @@
+@if (store.loading()) {
+  <mat-spinner />
+} @else {
+  <button mat-raised-button color="primary" (click)="router.navigate(['/dashboard/inventory/unit-products/new'])">
+    Add Unit Product
+  </button>
+
+  <mat-table [dataSource]="store.unitProducts()">
+
+    <ng-container matColumnDef="id">
+      <mat-header-cell *matHeaderCellDef>ID</mat-header-cell>
+      <mat-cell *matCellDef="let p">{{ p.id }}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="name">
+      <mat-header-cell *matHeaderCellDef>Name</mat-header-cell>
+      <mat-cell *matCellDef="let p">{{ p.name }}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="description">
+      <mat-header-cell *matHeaderCellDef>Description</mat-header-cell>
+      <mat-cell *matCellDef="let p">{{ p.description }}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="codeQR">
+      <mat-header-cell *matHeaderCellDef>QR Code</mat-header-cell>
+      <mat-cell *matCellDef="let p">{{ p.codeQR }}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="price">
+      <mat-header-cell *matHeaderCellDef>Price</mat-header-cell>
+      <mat-cell *matCellDef="let p">{{ p.price }}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="weightGrams">
+      <mat-header-cell *matHeaderCellDef>Weight (g)</mat-header-cell>
+      <mat-cell *matCellDef="let p">{{ p.weightGrams }}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="brand">
+      <mat-header-cell *matHeaderCellDef>Brand</mat-header-cell>
+      <mat-cell *matCellDef="let p">{{ p.brand }}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+      <mat-header-cell *matHeaderCellDef>Actions</mat-header-cell>
+      <mat-cell *matCellDef="let p">
+        <button mat-button color="primary" (click)="editUnitProduct(p.id)">Edit</button>
+        <button mat-button color="warn" (click)="deleteUnitProduct(p.id)">Delete</button>
+      </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns" />
+    <mat-row *matRowDef="let row; columns: displayedColumns;" />
+
+  </mat-table>
+  <router-outlet></router-outlet>
+}
+

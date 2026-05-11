@@ -1,0 +1,113 @@
+.lot-row-card {
+  display: flex;
+  align-items: center;
+  background: var(--color-card-bg);
+  border: 1.5px solid #e9ecef;
+  border-radius: 40px; /* Bordes muy redondeados según imagen */
+  padding: 20px 35px;
+  margin-bottom: 20px;
+  gap: 30px;
+  position: relative;
+  transition: transform 0.2s ease;
+}
+
+/* Badge de Vencido */
+.edit-action-container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.status-badge.expired {
+  position: absolute;
+  top: -12px;
+  background-color: #ff5252;
+  color: white;
+  font-size: 10px;
+  font-weight: 800;
+  padding: 2px 10px;
+  border-radius: 10px;
+  text-transform: capitalize;
+  z-index: 2;
+  box-shadow: 0 2px 4px rgba(255, 82, 82, 0.3);
+}
+
+/* Botón Editar Cuadrado con sombra */
+.btn-edit-card {
+  width: 50px;
+  height: 50px;
+  background: var(--color-card-bg);
+  border: 1px solid #dee2e6;
+  border-radius: 12px;
+  color: var(--color-text-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+
+/* Grilla de datos */
+.lot-data-table {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 0.6fr 1fr 1fr 1fr 1.5fr;
+  align-items: flex-start;
+  gap: 15px;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.label-with-icon {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #868e96;
+}
+
+.icon-small {
+  font-size: 20px !important;
+}
+
+.col-label {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.col-value {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--color-text-strong);
+  padding-left: 2px;
+}
+
+.col-subtext {
+  font-size: 11px;
+  color: var(--color-text-muted);
+  font-weight: 500;
+}
+
+/* Botón Eliminar Rojo */
+.btn-delete-card {
+  width: 42px;
+  height: 42px;
+  background: #ff5252;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(255, 82, 82, 0.4);
+}
+
+.btn-delete-card:hover {
+  transform: scale(1.1);
+  background: var(--color-danger);
+}

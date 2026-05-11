@@ -1,0 +1,267 @@
+:host {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+}
+
+.modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgb(0 0 0 / 30%);
+  backdrop-filter: blur(8px);
+}
+
+.upgrade-modal {
+  position: relative;
+  width: min(680px, 100%);
+  border-radius: 28px;
+  background: var(--color-card-bg);
+  box-shadow: 0 28px 64px rgb(45 39 34 / 22%);
+  padding: 30px;
+}
+
+.icon-button {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  display: grid;
+  width: 38px;
+  height: 38px;
+  place-items: center;
+  border: 1px solid var(--color-inner-bg);
+  border-radius: 50%;
+  background: var(--color-card-bg);
+  color: var(--color-label-accent);
+  cursor: pointer;
+  font: inherit;
+  font-size: 24px;
+  line-height: 1;
+}
+
+.eyebrow {
+  display: inline-flex;
+  border-radius: 999px;
+  background: var(--color-inner-bg);
+  color: var(--color-label-accent);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1.4px;
+  line-height: 1;
+  margin: 0 0 16px;
+  padding: 7px 14px;
+  text-transform: uppercase;
+}
+
+h2,
+h3,
+p {
+  margin: 0;
+}
+
+h2 {
+  color: #080604;
+  font-size: 28px;
+  font-weight: 850;
+  line-height: 1.16;
+  padding-right: 48px;
+}
+
+h3 {
+  font-size: 16px;
+  font-weight: 850;
+  line-height: 1.3;
+}
+
+.helper-text {
+  color: #6e645d;
+  font-size: 13px;
+  line-height: 1.6;
+  margin-top: 28px;
+}
+
+.step-tabs {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+  margin-top: 28px;
+}
+
+.step-tabs button {
+  min-height: 44px;
+  border: 1px solid var(--color-inner-bg);
+  border-radius: 12px;
+  background: #fffdfa;
+  color: #a17a66;
+  cursor: pointer;
+  font: inherit;
+  font-size: 11px;
+  font-weight: 850;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+}
+
+.step-tabs button:disabled {
+  cursor: default;
+}
+
+.step-tab--active {
+  border-color: #fedcac;
+  color: var(--color-label-accent);
+}
+
+.step-tab--complete {
+  border-color: #b9e2c8;
+  background: #f2fbf6;
+  color: #075f24;
+}
+
+.summary-card,
+.ready-card,
+.success-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  border: 1px solid var(--color-inner-bg);
+  border-radius: 18px;
+  margin-top: 18px;
+  padding: 22px;
+}
+
+.summary-card strong {
+  color: var(--color-label-accent);
+  font-size: 24px;
+  white-space: nowrap;
+}
+
+.summary-card p,
+.ready-card p,
+.success-card p {
+  color: #716861;
+  font-size: 14px;
+  line-height: 1.5;
+  margin-top: 7px;
+}
+
+.summary-card--plain {
+  margin-top: 0;
+}
+
+.ready-card {
+  display: block;
+  border-color: #b9e2c8;
+  background: #f2fbf6;
+  margin-top: 24px;
+  min-height: 118px;
+}
+
+.success-card {
+  margin-top: 24px;
+}
+
+.billing-form {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+  margin-top: 24px;
+}
+
+label {
+  display: grid;
+  gap: 8px;
+  color: var(--color-label-accent);
+  font-size: 12px;
+  font-weight: 850;
+}
+
+input {
+  min-height: 46px;
+  border: 1px solid var(--color-inner-bg);
+  border-radius: 12px;
+  background: #fffdfa;
+  color: #080604;
+  font: inherit;
+  padding: 0 14px;
+}
+
+input[aria-invalid='true'] {
+  border-color: #b3261e;
+}
+
+small {
+  color: #b3261e;
+  font-weight: 700;
+}
+
+.stack {
+  display: grid;
+  gap: 18px;
+  margin-top: 24px;
+}
+
+.modal-actions {
+  display: flex;
+  grid-column: 1 / -1;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.modal-actions--end {
+  margin-top: 24px;
+}
+
+.primary-button,
+.secondary-button {
+  min-height: 50px;
+  border-radius: 999px;
+  cursor: pointer;
+  font: inherit;
+  font-weight: 850;
+  padding: 0 26px;
+}
+
+.primary-button {
+  border: 0;
+  background: var(--color-primary);
+  color: #ffffff;
+  box-shadow: 0 14px 28px rgb(243 131 19 / 28%);
+}
+
+.secondary-button {
+  border: 1px solid var(--color-card-border);
+  background: var(--color-card-bg);
+  color: var(--color-label-accent);
+}
+
+button:focus-visible,
+input:focus-visible {
+  outline: 3px solid rgb(243 131 19 / 32%);
+  outline-offset: 3px;
+}
+
+@media (max-width: 640px) {
+  :host {
+    align-items: end;
+    padding: 12px;
+  }
+
+  .upgrade-modal {
+    padding: 24px 18px;
+  }
+
+  .step-tabs,
+  .billing-form {
+    grid-template-columns: 1fr;
+  }
+
+  .summary-card,
+  .success-card,
+  .modal-actions {
+    align-items: stretch;
+    flex-direction: column;
+  }
+}

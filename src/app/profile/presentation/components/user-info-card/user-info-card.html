@@ -1,0 +1,19 @@
+<div class="card">
+  <div class="inner">
+    <div class="avatar" aria-hidden="true">
+      @if (store.profile().avatarUrl) {
+        <img
+          [src]="store.profile().avatarUrl"
+          [alt]="'profile.userInfo.avatarAlt' | translate"
+          class="avatar__img"
+        />
+      } @else {
+        <mat-icon class="avatar__icon">person</mat-icon>
+      }
+    </div>
+    <div class="info">
+      <p class="info__name">{{ store.fullName() }}</p>
+      <p class="info__role">{{ store.roleAndPlan() }}</p>
+    </div>
+  </div>
+</div>

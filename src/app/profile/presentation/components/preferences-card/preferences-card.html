@@ -1,0 +1,63 @@
+<div class="card">
+  <h2 class="card__title">{{ 'profile.preferences.title' | translate }}</h2>
+
+  <form [formGroup]="form" novalidate>
+    <div class="field">
+      <label for="language" class="field__label">
+        {{ 'profile.preferences.fields.language.label' | translate }}
+      </label>
+      <select
+        id="language"
+        formControlName="language"
+        class="field__select"
+        (change)="onLanguageChange($any($event.target).value)"
+      >
+        @for (lang of languages; track lang.code) {
+          <option [value]="lang.code">{{ lang.label }}</option>
+        }
+      </select>
+    </div>
+
+    <div class="field">
+      <label for="timezone" class="field__label">
+        {{ 'profile.preferences.fields.timezone.label' | translate }}
+      </label>
+      <select
+        id="timezone"
+        formControlName="timezone"
+        class="field__select"
+        (change)="onTimezoneChange($any($event.target).value)"
+      >
+        @for (tz of timezones; track tz) {
+          <option [value]="tz">{{ tz }}</option>
+        }
+      </select>
+    </div>
+
+    <div class="field">
+      <span class="field__label" id="theme-label">
+        {{ 'profile.preferences.theme.label' | translate }}
+      </span>
+      <div class="theme-toggle" role="group" aria-labelledby="theme-label">
+        <button
+          type="button"
+          class="theme-btn"
+          [class.theme-btn--active]="form.get('theme')!.value === 'light'"
+          (click)="setTheme('light')"
+          [attr.aria-pressed]="form.get('theme')!.value === 'light'"
+        >
+          {{ 'profile.preferences.theme.light' | translate }}
+        </button>
+        <button
+          type="button"
+          class="theme-btn"
+          [class.theme-btn--inactive]="form.get('theme')!.value === 'light'"
+          (click)="setTheme('dark')"
+          [attr.aria-pressed]="form.get('theme')!.value === 'dark'"
+        >
+          {{ 'profile.preferences.theme.dark' | translate }}
+        </button>
+      </div>
+    </div>
+  </form>
+</div>

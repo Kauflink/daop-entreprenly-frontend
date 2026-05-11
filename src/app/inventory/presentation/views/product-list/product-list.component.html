@@ -1,0 +1,85 @@
+<div class="page">
+
+  <div class="page-header">
+
+    <div>
+
+      <h1 class="page-title">
+        {{ 'products.title' | translate }}
+      </h1>
+
+      <p class="page-subtitle">
+        {{ 'products.subtitle' | translate }}
+      </p>
+
+    </div>
+
+    <button
+      class="btn-add"
+      (click)="goToAdd()">
+
+      <span class="plus">+</span>
+
+      {{ 'products.add' | translate }}
+
+    </button>
+
+  </div>
+
+  <div class="table-card">
+
+    <div class="table-head">
+
+      <span class="col-type">
+        {{ 'products.col.type' | translate }}
+      </span>
+
+      <span class="col-name">
+        {{ 'products.col.name' | translate }}
+      </span>
+
+      <span class="col-description">
+        {{ 'products.col.description' | translate }}
+      </span>
+
+      <span class="col-qr">
+        {{ 'products.col.qrCode' | translate }}
+      </span>
+
+      <span class="col-stock">
+        {{ 'products.col.stock' | translate }}
+      </span>
+
+      <span class="col-price">
+        {{ 'products.col.price' | translate }}
+      </span>
+
+      <span class="col-edit">
+        {{ 'products.col.edit' | translate }}
+      </span>
+
+    </div>
+
+    <div class="table-body">
+
+      @for (product of allProducts(); track product.type + '-' + product.id) {
+
+        <app-product-item
+          [product]="product"
+          (edit)="onEdit($event)" />
+
+      } @empty {
+
+        <div class="empty-state">
+
+          {{ 'products.empty' | translate }}
+
+        </div>
+
+      }
+
+    </div>
+
+  </div>
+  <router-outlet></router-outlet>
+</div>
