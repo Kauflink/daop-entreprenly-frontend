@@ -404,7 +404,12 @@
       "reject": "Reject",
       "rejectTitle": "Rejection reason",
       "confirmReject": "Confirm rejection",
-      "cancelReject": "Cancel"
+      "cancelReject": "Cancel",
+      "reasons": {
+        "illegible": "Illegible image",
+        "wrongAmount": "Wrong amount",
+        "fake": "Fake receipt"
+      }
     },
     "orders": {
       "title": "Orders",

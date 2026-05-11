@@ -404,7 +404,12 @@
       "reject": "Rechazar",
       "rejectTitle": "Motivo del rechazo",
       "confirmReject": "Confirmar rechazo",
-      "cancelReject": "Cancelar"
+      "cancelReject": "Cancelar",
+      "reasons": {
+        "illegible": "Imagen ilegible",
+        "wrongAmount": "Monto incorrecto",
+        "fake": "Comprobante falso"
+      }
     },
     "orders": {
       "title": "Pedidos",

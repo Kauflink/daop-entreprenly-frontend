@@ -24,8 +24,12 @@ export class Conversations implements OnInit {
   );
 
   protected readonly showRejectForm = signal(false);
-  protected readonly selectedReason = signal('Imagen ilegible');
-  protected readonly rejectReasons = ['Imagen ilegible', 'Monto incorrecto', 'Comprobante falso'] as const;
+  protected readonly selectedReason = signal<string>('chatbot.payment.reasons.illegible');
+  protected readonly rejectReasons = [
+    'chatbot.payment.reasons.illegible',
+    'chatbot.payment.reasons.wrongAmount',
+    'chatbot.payment.reasons.fake',
+  ] as const;
 
   constructor() {
     effect(() => {
@@ -49,7 +53,7 @@ export class Conversations implements OnInit {
     effect(() => {
       this.store.selectedConversationId();
       this.showRejectForm.set(false);
-      this.selectedReason.set('Imagen ilegible');
+      this.selectedReason.set('chatbot.payment.reasons.illegible');
     });
   }
 
@@ -76,13 +80,13 @@ export class Conversations implements OnInit {
     if (order) {
       this.store.rejectOrder(order.id, this.selectedReason());
       this.showRejectForm.set(false);
-      this.selectedReason.set('Imagen ilegible');
+      this.selectedReason.set('chatbot.payment.reasons.illegible');
     }
   }
 
   protected onCancelReject(): void {
     this.showRejectForm.set(false);
-    this.selectedReason.set('Imagen ilegible');
+    this.selectedReason.set('chatbot.payment.reasons.illegible');
   }
 
   protected onConversationSelected(id: number): void {
