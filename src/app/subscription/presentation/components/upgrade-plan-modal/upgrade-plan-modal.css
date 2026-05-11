@@ -91,10 +91,10 @@ h3 {
 
 .step-tabs button {
   min-height: 44px;
-  border: 1px solid #eadbd0;
+  border: 1px solid #ece6e3;
   border-radius: 12px;
-  background: #fffdfa;
-  color: #a17a66;
+  background: #fbfaf8;
+  color: rgb(81 30 0 / 50%);
   cursor: pointer;
   font: inherit;
   font-size: 11px;
@@ -105,17 +105,19 @@ h3 {
 
 .step-tabs button:disabled {
   cursor: default;
+  opacity: 1;
 }
 
-.step-tab--active {
-  border-color: #fedcac;
-  color: #5a260f;
+.step-tabs .step-tab--active {
+  border-color: #FDEAD3;
+  background: #fffcf5;
+  color: #511e00;
 }
 
-.step-tab--complete {
-  border-color: #b9e2c8;
-  background: #f2fbf6;
-  color: #075f24;
+.step-tabs .step-tab--complete {
+  border-color: #bee3cb;
+  background: #f2fbf5;
+  color: #004e1d;
 }
 
 .summary-card,
