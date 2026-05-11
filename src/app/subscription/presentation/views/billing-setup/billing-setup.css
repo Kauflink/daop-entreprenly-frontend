@@ -94,6 +94,25 @@ h2 {
   margin-top: 6px;
 }
 
+.billing-card__status,
+.billing-card__meta {
+  display: block;
+  font-size: 11px;
+  font-weight: 850;
+  letter-spacing: 1.1px;
+  line-height: 1.35;
+  margin-top: 8px;
+  text-transform: uppercase;
+}
+
+.billing-card__status {
+  color: var(--color-primary);
+}
+
+.billing-card__meta {
+  color: var(--color-text-muted);
+}
+
 .billing-card button {
   align-self: end;
   min-height: 52px;
