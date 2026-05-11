@@ -1,0 +1,6 @@
+<div class="alerts-wrapper" *ngIf="filteredAlerts.length > 0">
+  <app-stock-alert-item
+    *ngFor="let alert of filteredAlerts; trackBy: trackById"
+    [alert]="alert">
+  </app-stock-alert-item>
+</div>

@@ -2,10 +2,12 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { BaseApi } from '../../shared/infrastructure/base-api';
+import { Sale } from '../domain/model/sale.entity';
 import { ProductSummary } from '../domain/model/product-summary.entity';
 import { CashRegister } from '../domain/model/cash-register.entity';
 import { CashRegistersApiEndpoint } from './cash-registers-api-endpoint';
 import { ProductsApiEndpoint } from './products-api-endpoint';
+import { SalesApiEndpoint } from './sales-api-endpoint';
 import { environment } from '../../../environments/environment';
 
 export interface ScaleStatus {
@@ -18,6 +20,7 @@ export interface ScaleStatus {
 export class SalesApi extends BaseApi {
   private readonly productsEndpoint: ProductsApiEndpoint;
   private readonly cashRegistersEndpoint: CashRegistersApiEndpoint;
+  private readonly salesEndpoint: SalesApiEndpoint;
   private readonly http: HttpClient;
 
   constructor(http: HttpClient) {
@@ -25,6 +28,7 @@ export class SalesApi extends BaseApi {
     this.http = http;
     this.productsEndpoint = new ProductsApiEndpoint(http);
     this.cashRegistersEndpoint = new CashRegistersApiEndpoint(http);
+    this.salesEndpoint = new SalesApiEndpoint(http);
   }
 
   getProducts(): Observable<ProductSummary[]> {
@@ -33,6 +37,14 @@ export class SalesApi extends BaseApi {
 
   getProduct(id: number): Observable<ProductSummary> {
     return this.productsEndpoint.getById(id);
+  }
+
+  getSales(): Observable<Sale[]> {
+    return this.salesEndpoint.getAll();
+  }
+
+  createSale(sale: Sale): Observable<Sale> {
+    return this.salesEndpoint.createSale(sale);
   }
 
   getScaleStatus(): Observable<ScaleStatus> {

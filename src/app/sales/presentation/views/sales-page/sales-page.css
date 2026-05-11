@@ -16,7 +16,7 @@
   font-size: 32px;
   margin: 0 0 4px 0;
   font-weight: bold;
-  color: #1e1e1e;
+  color: var(--color-text-strong);
 }
 
 .page-header .subtitle {
@@ -60,11 +60,11 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  color: #1e1e1e;
+  color: var(--color-text-strong);
 }
 
 .title-icon {
-  color: #f59e0b;
+  color: var(--color-primary);
   font-size: 16px;
 }
 
@@ -77,7 +77,7 @@
 .search-input {
   width: 100%;
   padding: 14px 24px;
-  background: #1e1e1e;
+  background: var(--color-text-strong);
   color: white;
   border: none;
   border-radius: 30px;
@@ -115,21 +115,21 @@
   padding: 10px 20px;
   cursor: pointer;
   font-size: 14px;
-  color: #1e1e1e;
+  color: var(--color-text-strong);
   transition: background 0.15s ease;
 }
 
 .suggestion-item:hover {
-  background: #fef3e7;
-  color: #ea7c0a;
+  background: var(--color-theme-btn-active-bg);
+  color: var(--color-primary-hover);
   font-weight: 500;
 }
 
 .not-found-message {
   margin-top: 8px;
   padding: 10px 20px;
-  background: #fde2e2;
-  color: #c93030;
+  background: var(--color-danger);
+  color: var(--color-danger);
   border-radius: 30px;
   font-size: 13px;
   font-weight: 500;
@@ -153,7 +153,7 @@
   text-align: left;
   padding: 12px 8px;
   font-weight: 500;
-  color: #1e1e1e;
+  color: var(--color-text-strong);
   border-bottom: 1px solid #eee;
   font-size: 14px;
 }
@@ -172,7 +172,7 @@
 /* ===== BADGES Y DELETE ===== */
 .product-cell {
   font-weight: 500;
-  color: #1e1e1e;
+  color: var(--color-text-strong);
 }
 
 .badge {
@@ -186,12 +186,12 @@
 }
 
 .badge-unit {
-  background: #f59e0b;
+  background: var(--color-primary);
   color: white;
 }
 
 .badge-weight {
-  background: #1e1e1e;
+  background: var(--color-text-strong);
   color: white;
 }
 
@@ -200,13 +200,13 @@
   border: none;
   cursor: pointer;
   font-size: 16px;
-  color: #c93030;
+  color: var(--color-danger);
   padding: 4px 8px;
   border-radius: 4px;
 }
 
 .delete-btn:not(:disabled):hover {
-  background: #fde2e2;
+  background: var(--color-danger);
 }
 
 .delete-btn:disabled {
@@ -235,11 +235,11 @@
   align-items: center;
   font-size: 18px;
   font-weight: bold;
-  color: #1e1e1e;
+  color: var(--color-text-strong);
 }
 
 .total-value {
-  color: #f59e0b;
+  color: var(--color-primary);
 }
 
 /* ===== MÉTODO DE PAGO ===== */
@@ -250,7 +250,7 @@
 }
 
 .payment-btn {
-  background: #e0e0e0;
+  background: var(--color-card-border);
   border: none;
   border-radius: 16px;
   padding: 20px 12px;
@@ -260,7 +260,7 @@
   gap: 8px;
   cursor: pointer;
   font-size: 14px;
-  color: #1e1e1e;
+  color: var(--color-text-strong);
   transition: all 0.2s ease;
 }
 
@@ -284,7 +284,7 @@
 
 /* ===== BOTONES ===== */
 .btn-finalize {
-  background: #f59e0b;
+  background: var(--color-primary);
   color: white;
   border: none;
   border-radius: 30px;
@@ -296,17 +296,17 @@
 }
 
 .btn-finalize:not(:disabled):hover {
-  background: #ea7c0a;
+  background: var(--color-primary-hover);
 }
 
 .btn-finalize-inactive {
-  background: #f5c478;
+  background: var(--color-primary);
   cursor: pointer;
   opacity: 0.7;
 }
 
 .btn-finalize-inactive:hover {
-  background: #f5c478;
+  background: var(--color-primary);
   opacity: 0.7;
 }
 
@@ -322,7 +322,7 @@
 }
 
 .btn-cancel:hover {
-  background: #f5f5f5;
+  background: var(--color-bg-page);
 }
 
 /* ===== RESUMEN DE CAJA ===== */
@@ -330,7 +330,7 @@
   font-size: 24px;
   font-weight: bold;
   margin: 0 0 4px 0;
-  color: #1e1e1e;
+  color: var(--color-text-strong);
 }
 
 .cash-subtitle {
@@ -353,7 +353,7 @@
 }
 
 .cash-widget.total-day {
-  background: linear-gradient(135deg, #f59e0b 0%, #ea7c0a 100%);
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-hover) 100%);
   color: white;
 }
 
@@ -379,7 +379,7 @@
   font-size: 28px;
   font-weight: bold;
   margin: 0;
-  color: #1e1e1e;
+  color: var(--color-text-strong);
 }
 
 @media (max-width: 1080px) {
@@ -390,9 +390,9 @@
 
 /* ===== MÉTODO DE PAGO SELECCIONADO ===== */
 .payment-btn.selected {
-  background: #fef3e7;
-  color: #ea7c0a;
-  outline: 2px solid #f59e0b;
+  background: var(--color-theme-btn-active-bg);
+  color: var(--color-primary-hover);
+  outline: 2px solid var(--color-primary);
 }
 
 .payment-error {
@@ -435,7 +435,7 @@
   position: absolute;
   top: 12px;
   right: 12px;
-  background: #f0f0f0;
+  background: var(--color-card-border);
   border: none;
   border-radius: 50%;
   width: 32px;
@@ -449,7 +449,7 @@
   font-size: 18px;
   font-weight: bold;
   margin: 0;
-  color: #1e1e1e;
+  color: var(--color-text-strong);
 }
 
 .success-check {

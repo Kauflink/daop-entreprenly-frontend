@@ -1,10 +1,11 @@
 import { ChangeDetectionStrategy, Component, effect, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { TranslateModule } from '@ngx-translate/core';
 import { ProfileStore } from '../../../application/profile-store';
 
 @Component({
   selector: 'app-update-profile-card',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, TranslateModule],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './update-profile-card.html',
   styleUrl: './update-profile-card.css',

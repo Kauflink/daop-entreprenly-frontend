@@ -1,0 +1,41 @@
+<div class="lot-row-card">
+  <button class="action-btn edit-square" (click)="onEdit.emit(lot.id)">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7M18.5 2.5a2.121 2.121 0 1 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+    </svg>
+  </button>
+
+  <div class="lot-data-grid">
+    <div class="data-group">
+      <span class="label">#ID</span>
+      <span class="value">lot-{{ lot.id }}</span>
+    </div>
+
+    <div class="data-group">
+      <span class="label">⚖️ {{ 'products.form.weight' | translate }}</span>
+      <span class="value">{{ lot.quantityKg }} Kg</span>
+    </div>
+
+    <div class="data-group">
+      <span class="label">📅 {{ 'lots.form.entryDate' | translate }}</span>
+      <span class="value">{{ lot.entryDate | date:'d/M/yyyy' }}</span>
+    </div>
+
+    <div class="data-group">
+      <span class="label">{{ 'products.col.type' | translate }}</span>
+      <span class="value">{{ 'lots.form.byWeight' | translate }}</span>
+    </div>
+
+    <div class="data-group qr-group">
+      <span class="label">🏁 {{ 'lots.form.qrCode' | translate }}</span>
+      <span class="value qr-code">{{ lot.codeQR }}</span>
+      <span class="sub-label">({{ 'products.form.qrHint' | translate }})</span>
+    </div>
+  </div>
+
+  <button class="action-btn delete-circle" (click)="onDelete.emit(lot.id)">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5">
+      <path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M10 11v6M14 11v6"/>
+    </svg>
+  </button>
+</div>

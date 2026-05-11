@@ -1,0 +1,133 @@
+@if (store.loading()) {
+  <div class="spinner-wrapper">
+    <div class="spinner"></div>
+  </div>
+} @else {
+  <div class="page-container">
+
+    <button class="btn-back-floating" (click)="goBack()">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+        <path d="M19 12H5M12 19l-7-7 7-7"/>
+      </svg>
+      {{ 'lots.back' | translate }}
+    </button>
+
+    @if (alertSummaries().length > 0) {
+      <div class="alerts-container">
+        @for (alert of alertSummaries(); track alert.alertType) {
+          <div
+            class="lot-alert"
+            [class.lot-alert--danger]="alert.tone === 'danger'"
+            [class.lot-alert--warning]="alert.tone === 'warning'"
+            [class.lot-alert--low]="alert.tone === 'low'">
+            @if (alert.tone === 'warning') {
+              <svg class="lot-alert-icon" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+                <line x1="12" y1="9" x2="12" y2="13"/>
+                <circle cx="12" cy="17" r="1" fill="currentColor" stroke="none"/>
+              </svg>
+            } @else if (alert.tone === 'low') {
+              <svg class="lot-alert-icon" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="23 18 13.5 8.5 8.5 13.5 1 6"/>
+                <polyline points="17 18 23 18 23 12"/>
+              </svg>
+            } @else {
+              <svg class="lot-alert-icon" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"/>
+                <line x1="12" y1="8" x2="12" y2="12"/>
+                <circle cx="12" cy="16.5" r="1" fill="currentColor" stroke="none"/>
+              </svg>
+            }
+            <div class="lot-alert-copy">
+              <strong>{{ alert.titleKey | translate: alert.titleParams }}</strong>
+              <span>{{ alert.detailKey | translate: alert.detailParams }}</span>
+            </div>
+          </div>
+        }
+      </div>
+    }
+
+    <div class="content-card">
+      <div class="product-info-header">
+        <span class="badge-unit">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 8l-9-4-9 4v8l9 4 9-4V8z"/><path d="M3 8l9 4 9-4"/><path d="M12 12v8"/></svg>
+          {{ 'products.form.byUnit' | translate }}
+        </span>
+        <div class="product-detail-row">
+          <div class="title-group">
+            <h2>{{ selectedProduct()?.name }}</h2>
+            <p>{{ selectedProduct()?.brand }}</p>
+          </div>
+          <div class="stats-group">
+            <div class="stat-item">
+              <span class="icon">📦</span>
+              <span class="value">{{ filteredLots().length }}</span>
+              <span class="label">{{ 'lots.totalLotCount' | translate }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="lots-table">
+        <div class="table-header-labels">
+          <span></span> <!-- Editar -->
+          <span>#ID</span>
+          <span>{{ 'lots.form.quantity' | translate }}</span>
+          <span>{{ 'lots.form.entryDate' | translate }}</span>
+          <span>{{ 'lots.form.expiryDate' | translate }}</span>
+          <span>{{ 'lots.form.qrCode' | translate }}</span>
+          <span></span> <!-- Eliminar -->
+        </div>
+
+        @for (lot of filteredLots(); track lot.id) {
+          <div class="lot-row">
+
+            <!-- Botón Editar -->
+            <div class="row-action-cell">
+              @if (isExpired(lot.expiryDate)) {
+                <span class="expired-pill">{{ 'lots.status.expired' | translate }}</span>
+              }
+              <button
+                type="button"
+                class="btn-edit-square"
+                (click)="$event.stopPropagation(); editUnitLot(lot.id)">
+                <mat-icon>edit</mat-icon>
+              </button>
+            </div>
+
+            <!-- Datos Directos -->
+            <span class="id-cell">{{ 'lots.prefix' | translate }}-{{ lot.id }}</span>
+            <span class="qty-cell">{{ lot.quantity }} uds.</span>
+            <span>{{ lot.entryDate | date:'dd/MM/yyyy' }}</span>
+            <span [class.warning-text]="isExpired(lot.expiryDate)">
+              {{ lot.expiryDate | date:'dd/MM/yyyy' }}
+            </span>
+            <div class="qr-cell">
+              <span class="qr-code">{{ lot.codeQR }}</span>
+              <span class="qr-sub">({{ 'lots.form.qrCode' | translate }})</span>
+            </div>
+
+            <!-- Botón Eliminar Mejorado -->
+            <button
+              type="button"
+              class="btn-delete-circle"
+              (click)="$event.stopPropagation(); deleteUnitLot(lot.id)"
+              aria-label="Delete lot">
+              <mat-icon>delete</mat-icon>
+            </button>
+
+          </div>
+        }
+      </div>
+    </div>
+
+    <div class="footer-actions">
+      <button class="btn-add-main" (click)="navigateToCreate()">
+        <span class="plus-icon">+</span>
+        {{ 'lots.add' | translate }}
+      </button>
+    </div>
+  </div>
+}
+
+<router-outlet></router-outlet>
