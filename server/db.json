@@ -155,7 +155,7 @@
       "currentPlan": {
         "id": "plan-control",
         "name": "Plan Control",
-        "shortDescription": "Tu plan sigue activo hasta el 31 de mayo 2026. No se renovará automáticamente.",
+        "shortDescription": "Tu plan sigue activo hasta el 10 de junio de 2026. Se renovará automáticamente.",
         "monthlyPrice": 89,
         "annualPrice": 890,
         "status": "active",
@@ -175,7 +175,9 @@
             "description": "Chatbot de WhatsApp y alertas operativas incluidas.",
             "available": true
           }
-        ]
+        ],
+        "currentPeriodStartDate": "2026-05-10",
+        "currentPeriodEndDate": "2026-06-10"
       },
       "recommendedPlan": {
         "id": "plan-control",
@@ -246,7 +248,7 @@
         {
           "id": "billing",
           "title": "Facturación",
-          "detail": "Próxima renovación: 31 mayo 2026 - pago mensual"
+          "detail": "Próxima renovación: 10 de junio de 2026 - pago mensual"
         }
       ]
     }
@@ -258,13 +260,15 @@
       "currentPlan": {
         "id": "plan-control",
         "name": "Plan Control",
-        "shortDescription": "Tu plan sigue activo hasta el 31 de mayo 2026. No se renovará automáticamente.",
+        "shortDescription": "Tu plan sigue activo hasta el 10 de junio de 2026. Se renovará automáticamente.",
         "monthlyPrice": 89,
         "annualPrice": 890,
         "status": "active",
         "statusLabel": "Plan Control activo",
         "badgeLabel": "Plan actual",
         "recommended": false,
+        "currentPeriodStartDate": "2026-05-10",
+        "currentPeriodEndDate": "2026-06-10",
         "features": [
           {
             "description": "Productos y lotes ilimitados",
@@ -349,7 +353,112 @@
         {
           "id": "billing",
           "title": "Facturación",
-          "detail": "Próxima renovación: 31 mayo 2026 - pago mensual"
+          "detail": "Próxima renovación: 10 de junio de 2026 - pago mensual"
+        }
+      ]
+    }
+  ],
+  "subscription-cancellation-confirmation": [
+    {
+      "id": 1,
+      "defaultBillingCycle": "monthly",
+      "currentPlan": {
+        "id": "plan-control",
+        "name": "Plan Control",
+        "shortDescription": "Tu plan sigue activo hasta el 10 de junio de 2026. No se renovará automáticamente.",
+        "monthlyPrice": 89,
+        "annualPrice": 890,
+        "status": "scheduled-cancellation",
+        "statusLabel": "Cancelación programada",
+        "badgeLabel": "Plan actual",
+        "recommended": false,
+        "currentPeriodStartDate": "2026-05-10",
+        "currentPeriodEndDate": "2026-06-10",
+        "features": [
+          {
+            "description": "Productos y lotes ilimitados",
+            "available": true
+          },
+          {
+            "description": "Ventas, pedidos, caja y trazabilidad en un solo flujo.",
+            "available": true
+          },
+          {
+            "description": "Chatbot de WhatsApp y alertas operativas incluidas.",
+            "available": true
+          }
+        ]
+      },
+      "recommendedPlan": {
+        "id": "plan-control",
+        "name": "Plan Control",
+        "shortDescription": "Opera sin restricciones con automatizaciones, alertas y trazabilidad completa.",
+        "monthlyPrice": 89,
+        "annualPrice": 890,
+        "status": "active",
+        "statusLabel": "Recomendado",
+        "badgeLabel": "Recomendado",
+        "recommended": true,
+        "features": [
+          {
+            "description": "Productos y lotes ilimitados",
+            "available": true
+          },
+          {
+            "description": "Ventas, pedidos, caja y trazabilidad en un solo flujo.",
+            "available": true
+          },
+          {
+            "description": "Chatbot de WhatsApp y alertas operativas incluidas.",
+            "available": true
+          }
+        ]
+      },
+      "limits": [
+        {
+          "id": "products",
+          "label": "Productos",
+          "usedValue": 18,
+          "maxValue": 0
+        },
+        {
+          "id": "active-batches",
+          "label": "Lotes activos",
+          "usedValue": 6,
+          "maxValue": 0
+        },
+        {
+          "id": "users",
+          "label": "Usuarios",
+          "usedValue": 1,
+          "maxValue": 5
+        }
+      ],
+      "billingSetup": {
+        "paymentMethodTitle": "Método de pago",
+        "paymentMethodDescription": "Aún no hay tarjeta o medio de pago registrado.",
+        "paymentMethodActionLabel": "Agregar métodos de pago",
+        "fiscalDataTitle": "Datos de facturación",
+        "fiscalDataDescription": "Completa RUC, razón social y correo de comprobantes.",
+        "fiscalDataActionLabel": "Completar datos",
+        "hasPaymentMethod": false,
+        "hasFiscalData": false
+      },
+      "activity": [
+        {
+          "id": "created-account",
+          "title": "Cuenta creada",
+          "detail": "16 abril 2026 - Plan Free asignado automáticamente"
+        },
+        {
+          "id": "current-status",
+          "title": "Estado actual",
+          "detail": "Cancelación programada - S/ 89/mes"
+        },
+        {
+          "id": "billing",
+          "title": "Facturación",
+          "detail": "Acceso vigente hasta el 10 de junio de 2026 - sin siguiente cobro"
         }
       ]
     }
