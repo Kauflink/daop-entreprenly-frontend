@@ -1,8 +1,10 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { SalesStore } from '../../../application/sales-store';
 
 @Component({
   selector: 'app-cash-summary',
+  imports: [TranslatePipe],
   templateUrl: './cash-summary.html',
   styleUrl: './cash-summary.css',
   changeDetection: ChangeDetectionStrategy.OnPush,

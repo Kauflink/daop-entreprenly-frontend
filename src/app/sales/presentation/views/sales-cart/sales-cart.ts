@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, computed, input, output, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { TranslatePipe } from '@ngx-translate/core';
 import { ProductSummary } from '../../../domain/model/product-summary.entity';
 
 export interface TicketItem {
@@ -14,7 +15,7 @@ export interface TicketItem {
 
 @Component({
   selector: 'app-sales-cart',
-  imports: [FormsModule],
+  imports: [FormsModule, TranslatePipe],
   templateUrl: './sales-cart.html',
   styleUrl: './sales-cart.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
