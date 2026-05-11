@@ -392,28 +392,11 @@
   "cash-registers": [
     {
       "id": 1,
-      "date": "2026-05-08",
-      "totalCash": 70,
-      "totalDigital": 23.5
-    },
-    {
-      "id": 2,
-      "date": "2026-05-09",
-      "totalCash": 56,
-      "totalDigital": 45.5
-    },
-    {
-      "id": 3,
-      "date": "2026-05-10",
+      "date": "2026-05-11",
       "totalCash": 0,
       "totalDigital": 0
-    },
-    {
-      "id": 4,
-      "date": "2026-05-11",
-      "totalCash": 157.5,
-      "totalDigital": 182
     }
+
   ],
   "iot-scale": {
     "id": 1,
