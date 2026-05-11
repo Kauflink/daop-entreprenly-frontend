@@ -493,7 +493,7 @@
       "currentPlan": {
         "id": "plan-control",
         "name": "Plan Control",
-        "shortDescription": "Tu plan sigue activo hasta el 10 de junio de 2026. Se renovará automáticamente.",
+        "shortDescription": "Tu plan sigue activo hasta el 11 de junio de 2026. Se renovará automáticamente.",
         "monthlyPrice": 89,
         "annualPrice": 890,
         "status": "active",
@@ -514,8 +514,8 @@
             "available": true
           }
         ],
-        "currentPeriodStartDate": "2026-05-10",
-        "currentPeriodEndDate": "2026-06-10"
+        "currentPeriodStartDate": "2026-05-11",
+        "currentPeriodEndDate": "2026-06-11"
       },
       "recommendedPlan": {
         "id": "plan-control",
@@ -546,13 +546,13 @@
         {
           "id": "products",
           "label": "Productos",
-          "usedValue": 18,
+          "usedValue": 10,
           "maxValue": 0
         },
         {
           "id": "active-batches",
           "label": "Lotes activos",
-          "usedValue": 6,
+          "usedValue": 18,
           "maxValue": 0
         },
         {
@@ -564,13 +564,40 @@
       ],
       "billingSetup": {
         "paymentMethodTitle": "Método de pago",
-        "paymentMethodDescription": "Aún no hay tarjeta o medio de pago registrado.",
+        "paymentMethodDescription": "Tarjeta terminada en 0123 - vence 11/30",
         "paymentMethodActionLabel": "Agregar métodos de pago",
         "fiscalDataTitle": "Datos de facturación",
-        "fiscalDataDescription": "Completa RUC, razón social y correo de comprobantes.",
-        "fiscalDataActionLabel": "Completar datos",
-        "hasPaymentMethod": false,
-        "hasFiscalData": false
+        "fiscalDataDescription": "DNI 60429922 - L.Studios",
+        "fiscalDataActionLabel": "Editar datos fiscales",
+        "hasPaymentMethod": true,
+        "hasFiscalData": true,
+        "paymentMethods": [
+          {
+            "id": "payment-method-1",
+            "cardBrand": "Tarjeta",
+            "lastFour": "3333",
+            "holderName": "Lionel Chavez",
+            "expiryMonth": "12",
+            "expiryYear": "29",
+            "isDefault": false
+          },
+          {
+            "id": "payment-method-2",
+            "cardBrand": "Tarjeta",
+            "lastFour": "0123",
+            "holderName": "Julius Camargo",
+            "expiryMonth": "11",
+            "expiryYear": "30",
+            "isDefault": true
+          }
+        ],
+        "fiscalData": {
+          "documentType": "DNI",
+          "documentNumber": "60429922",
+          "businessName": "L.Studios",
+          "receiptEmail": "nutellagamertv2000@gmail.com",
+          "fiscalAddress": "Calle Huasta"
+        }
       },
       "activity": [
         {
@@ -586,7 +613,7 @@
         {
           "id": "billing",
           "title": "Facturación",
-          "detail": "Próxima renovación: 10 de junio de 2026 - pago mensual"
+          "detail": "Próxima renovación: 11 de junio de 2026 - pago mensual"
         }
       ]
     }
@@ -675,7 +702,9 @@
         "fiscalDataDescription": "Completa RUC, razón social y correo de comprobantes.",
         "fiscalDataActionLabel": "Completar datos",
         "hasPaymentMethod": false,
-        "hasFiscalData": false
+        "hasFiscalData": false,
+        "paymentMethods": [],
+        "fiscalData": null
       },
       "activity": [
         {
@@ -780,7 +809,9 @@
         "fiscalDataDescription": "Completa RUC, razón social y correo de comprobantes.",
         "fiscalDataActionLabel": "Completar datos",
         "hasPaymentMethod": false,
-        "hasFiscalData": false
+        "hasFiscalData": false,
+        "paymentMethods": [],
+        "fiscalData": null
       },
       "activity": [
         {
