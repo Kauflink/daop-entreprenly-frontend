@@ -1,0 +1,158 @@
+:host {
+  display: block;
+}
+
+.card {
+  background: white;
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.card-title {
+  font-size: 18px;
+  font-weight: bold;
+  margin: 0 0 16px 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #0C0F12;
+}
+
+.title-icon {
+  color: #F38313;
+  font-size: 16px;
+}
+
+.search-container {
+  position: relative;
+  margin-bottom: 16px;
+}
+
+.search-input {
+  width: 100%;
+  padding: 14px 24px;
+  background: #0C0F12;
+  color: white;
+  border: none;
+  border-radius: 30px;
+  font-size: 14px;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.search-input:disabled {
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+.search-input::placeholder {
+  color: #999;
+}
+
+.suggestions-dropdown {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+  list-style: none;
+  margin: 0;
+  padding: 8px 0;
+  max-height: 280px;
+  overflow-y: auto;
+  z-index: 100;
+}
+
+.suggestion-item {
+  padding: 10px 20px;
+  cursor: pointer;
+  font-size: 14px;
+  color: #0C0F12;
+  transition: background 0.15s ease;
+}
+
+.suggestion-item:hover {
+  background: #fef3e7;
+  color: #F38313;
+  font-weight: 500;
+}
+
+.not-found-message {
+  margin-top: 8px;
+  padding: 10px 20px;
+  background: #fde2e2;
+  color: #c93030;
+  border-radius: 30px;
+  font-size: 13px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.ticket-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.ticket-table th {
+  text-align: left;
+  padding: 12px 8px;
+  font-weight: 500;
+  color: #0C0F12;
+  border-bottom: 1px solid #eee;
+  font-size: 14px;
+}
+
+.ticket-table td {
+  padding: 12px 8px;
+  font-size: 14px;
+}
+
+.empty-row td {
+  text-align: center;
+  color: #999;
+  padding: 40px 0;
+}
+
+.product-cell {
+  font-weight: 500;
+  color: #0C0F12;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 12px;
+  border-radius: 16px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.badge-unit {
+  background: #F38313;
+  color: white;
+}
+
+.badge-weight {
+  background: #0C0F12;
+  color: white;
+}
+
+.delete-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  color: #c93030;
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+
+.delete-btn:hover {
+  background: #fde2e2;
+}
