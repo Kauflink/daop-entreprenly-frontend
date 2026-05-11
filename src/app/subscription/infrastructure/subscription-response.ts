@@ -15,6 +15,8 @@ export interface SubscriptionPlanResponse {
   statusLabel: string;
   badgeLabel: string;
   recommended: boolean;
+  currentPeriodStartDate?: string;
+  currentPeriodEndDate?: string;
   features: PlanFeatureResponse[];
 }
 
