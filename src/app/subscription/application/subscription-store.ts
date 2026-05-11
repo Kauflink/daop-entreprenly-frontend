@@ -5,6 +5,7 @@ import {
   BillingPaymentMethod,
   BillingPaymentMethodInput,
   BillingSetup,
+  detectCardBrand,
 } from '../domain/model/billing-setup.entity';
 import { SubscriptionActivity } from '../domain/model/subscription-activity.entity';
 import { SubscriptionDashboard } from '../domain/model/subscription-dashboard.entity';
@@ -147,14 +148,14 @@ export class SubscriptionStore {
   }
 
   downloadActivityHistory(): void {
-    const activity = this.dashboardSignal().activity;
+    const activity = this.subscriptionActivityRows();
 
     if (activity.length === 0) {
       this.feedbackSignal.set('No hay actividad suficiente para descargar.');
       return;
     }
 
-    const csvContent = this.toSubscriptionActivityCsv(activity);
+    const csvContent = `\uFEFF${this.toSubscriptionActivityCsv(activity)}`;
     const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8' });
     const url = URL.createObjectURL(blob);
     const anchor = document.createElement('a');
@@ -171,11 +172,51 @@ export class SubscriptionStore {
       [item.title, item.detail].map((value) => this.toCsvValue(value)).join(','),
     );
 
-    return ['Evento,Detalle', ...rows].join('\n');
+    return ['sep=,', 'Evento,Detalle', ...rows].join('\r\n');
   }
 
   private toCsvValue(value: string): string {
     return `"${value.replaceAll('"', '""')}"`;
+  }
+
+  private subscriptionActivityRows(): SubscriptionActivity[] {
+    const dashboard = this.dashboard();
+
+    return [
+      ...dashboard.activity,
+      new SubscriptionActivity({
+        id: 'payment-method',
+        title: 'Método de pago',
+        detail: this.paymentMethodActivityDetail(dashboard.billingSetup),
+      }),
+      new SubscriptionActivity({
+        id: 'fiscal-data',
+        title: 'Datos fiscales',
+        detail: this.fiscalDataActivityDetail(dashboard.billingSetup),
+      }),
+    ];
+  }
+
+  private paymentMethodActivityDetail(billingSetup: BillingSetup): string {
+    const paymentMethod =
+      billingSetup.paymentMethods.find((method) => method.isDefault) ??
+      billingSetup.paymentMethods.at(-1);
+
+    if (!paymentMethod) {
+      return 'Sin método de pago registrado.';
+    }
+
+    return `${paymentMethod.cardBrand} terminada en ${paymentMethod.lastFour} registrada para pagos y renovaciones`;
+  }
+
+  private fiscalDataActivityDetail(billingSetup: BillingSetup): string {
+    const fiscalData = billingSetup.fiscalData;
+
+    if (fiscalData === null) {
+      return 'Datos fiscales pendientes de completar.';
+    }
+
+    return `${fiscalData.documentType} ${fiscalData.documentNumber} - ${fiscalData.businessName}`;
   }
 
   private withInventoryUsage(dashboard: SubscriptionDashboard): SubscriptionDashboard {
@@ -226,7 +267,7 @@ export class SubscriptionStore {
 
     return {
       id: this.nextPaymentMethodId(currentPaymentMethods),
-      cardBrand: this.detectCardBrand(sanitizedCardNumber),
+      cardBrand: detectCardBrand(sanitizedCardNumber).label,
       lastFour: sanitizedCardNumber.slice(-4),
       holderName: paymentMethodInput.holderName.trim(),
       expiryMonth: paymentMethodInput.expiryMonth.padStart(2, '0'),
@@ -237,22 +278,6 @@ export class SubscriptionStore {
 
   private nextPaymentMethodId(paymentMethods: BillingPaymentMethod[]): string {
     return `payment-method-${paymentMethods.length + 1}`;
-  }
-
-  private detectCardBrand(cardNumber: string): string {
-    if (cardNumber.startsWith('4')) {
-      return 'Visa';
-    }
-
-    if (/^5[1-5]/.test(cardNumber) || /^2[2-7]/.test(cardNumber)) {
-      return 'Mastercard';
-    }
-
-    if (/^3[47]/.test(cardNumber)) {
-      return 'American Express';
-    }
-
-    return 'Tarjeta';
   }
 
   private toPaymentMethodDescription(paymentMethod: BillingPaymentMethod): string {

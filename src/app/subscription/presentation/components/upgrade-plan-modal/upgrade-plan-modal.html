@@ -135,6 +135,7 @@
             @if (paymentMethods().length === 1 && selectedPaymentMethod(); as paymentMethod) {
               <article class="summary-card summary-card--plain">
                 <div>
+                  <app-card-brand-badge [brand]="paymentMethod.cardBrand" />
                   <h3>Tarjeta registrada</h3>
                   <p>
                     {{ paymentMethod.cardBrand }} terminada en {{ paymentMethod.lastFour }} · vence
@@ -159,6 +160,7 @@
                       [checked]="effectiveSelectedPaymentMethodId() === paymentMethod.id"
                       (change)="selectPaymentMethod(paymentMethod.id)"
                     />
+                    <app-card-brand-badge [brand]="paymentMethod.cardBrand" />
                     <span>
                       <strong>
                         {{ paymentMethod.cardBrand }} terminada en {{ paymentMethod.lastFour }}
@@ -187,14 +189,17 @@
           <form class="billing-form" [formGroup]="paymentForm" (ngSubmit)="continue()">
             <label>
               <span>Número de tarjeta</span>
-              <input
-                type="text"
-                inputmode="numeric"
-                autocomplete="cc-number"
-                formControlName="cardNumber"
-                placeholder="4242 4242 4242 4242"
-                [attr.aria-invalid]="hasPaymentFieldError('cardNumber')"
-              />
+              <div class="card-number-field">
+                <input
+                  type="text"
+                  inputmode="numeric"
+                  autocomplete="cc-number"
+                  formControlName="cardNumber"
+                  placeholder="4242 4242 4242 4242"
+                  [attr.aria-invalid]="hasPaymentFieldError('cardNumber')"
+                />
+                <app-card-brand-badge [brand]="detectedPaymentCardBrand()" />
+              </div>
               @if (hasPaymentFieldError('cardNumber')) {
                 <small>Ingresa un número de tarjeta válido.</small>
               }
