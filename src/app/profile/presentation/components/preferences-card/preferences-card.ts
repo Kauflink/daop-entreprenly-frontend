@@ -53,13 +53,13 @@ export class PreferencesCard {
     this.store.updatePreferences({ language: code });
   }
 
+  protected onTimezoneChange(timezone: string): void {
+    this.form.patchValue({ timezone });
+    this.store.updatePreferences({ timezone });
+  }
+
   protected setTheme(theme: Theme): void {
     this.form.patchValue({ theme });
     this.store.updatePreferences({ theme });
-  }
-
-  protected onSubmit(): void {
-    const { timezone } = this.form.getRawValue();
-    this.store.updatePreferences({ timezone });
   }
 }

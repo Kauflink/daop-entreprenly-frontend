@@ -5,11 +5,11 @@
   grid-template-columns: 110px 1fr 1fr 90px 100px 90px 60px;
   align-items: center;
   padding: 14px 24px;
-  border-bottom: 1px solid #f5f5f5;
+  border-bottom: 1px solid var(--color-bg-page);
   transition: background 0.15s;
 }
 
-.row:hover { background: #fafafa; }
+.row:hover { background: var(--color-bg-page); }
 :host:last-child .row { border-bottom: none; }
 
 .badge {
@@ -23,8 +23,8 @@
   white-space: nowrap;
 }
 
-.badge--unit   { background: #F38313; color: #fff; font-family: 'Reddit Sans', sans-serif; font-weight: 700; }
-.badge--weight { background: #0C0F12; color: #fff; font-family: 'Reddit Sans', sans-serif; font-weight: 700; }
+.badge--unit   { background: var(--color-primary); color: #fff; font-family: 'Reddit Sans', sans-serif; font-weight: 700; }
+.badge--weight { background: var(--color-text-strong); color: #fff; font-family: 'Reddit Sans', sans-serif; font-weight: 700; }
 
 .col-qr    { display: flex; justify-content: center; }
 .col-stock { text-align: center; }
@@ -34,7 +34,7 @@
 .name {
   font-size: 14px;
   font-weight: 500;
-  color: #1a1a1a;
+  color: var(--color-text-strong);
 }
 
 .description {
@@ -49,7 +49,7 @@
 .qr-box {
   width: 60px;
   height: 60px;
-  background: #fafafa;
+  background: var(--color-bg-page);
   border: 1px solid #efefef;
   border-radius: 8px;
   display: flex;
@@ -64,15 +64,15 @@
   image-rendering: crisp-edges;
 }
 
-.stock { font-size: 15px; font-weight: 500; color: #1a1a1a; }
-.price { font-size: 14px; font-weight: 600; color: #1a1a1a; }
+.stock { font-size: 15px; font-weight: 500; color: var(--color-text-strong); }
+.price { font-size: 14px; font-weight: 600; color: var(--color-text-strong); }
 
 .btn-edit {
   width: 36px;
   height: 36px;
   border-radius: 8px;
-  border: 1.5px solid #e5e5e5;
-  background: #fff;
+  border: 1.5px solid var(--color-card-border);
+  background: var(--color-card-bg);
   cursor: pointer;
   display: flex;
   align-items: center;

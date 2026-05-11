@@ -1,7 +1,7 @@
 <div class="card">
   <h2 class="card__title">{{ 'profile.preferences.title' | translate }}</h2>
 
-  <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
+  <form [formGroup]="form" novalidate>
     <div class="field">
       <label for="language" class="field__label">
         {{ 'profile.preferences.fields.language.label' | translate }}
@@ -22,16 +22,17 @@
       <label for="timezone" class="field__label">
         {{ 'profile.preferences.fields.timezone.label' | translate }}
       </label>
-      <select id="timezone" formControlName="timezone" class="field__select">
+      <select
+        id="timezone"
+        formControlName="timezone"
+        class="field__select"
+        (change)="onTimezoneChange($any($event.target).value)"
+      >
         @for (tz of timezones; track tz) {
           <option [value]="tz">{{ tz }}</option>
         }
       </select>
     </div>
-
-    <button type="submit" class="btn-primary">
-      {{ 'profile.preferences.saveAction' | translate }}
-    </button>
 
     <div class="field">
       <span class="field__label" id="theme-label">
