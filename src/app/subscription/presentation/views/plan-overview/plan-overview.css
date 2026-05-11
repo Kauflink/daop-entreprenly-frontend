@@ -193,7 +193,9 @@ h3 {
 }
 
 .billing-toggle button:focus-visible,
-.primary-action:focus-visible {
+.primary-action:focus-visible,
+.secondary-primary-action:focus-visible,
+.secondary-outline-action:focus-visible {
   outline: 3px solid rgb(243 131 19 / 38%);
   outline-offset: 3px;
 }
@@ -242,6 +244,36 @@ h3 {
   margin-top: 28px;
   padding: 0 24px;
   box-shadow: 0 14px 28px rgb(243 131 19 / 28%);
+}
+
+.plan-card__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 26px;
+}
+
+.secondary-primary-action,
+.secondary-outline-action {
+  min-height: 50px;
+  border-radius: 999px;
+  cursor: pointer;
+  font: inherit;
+  font-weight: 800;
+  padding: 0 24px;
+}
+
+.secondary-primary-action {
+  border: 0;
+  background: #f38313;
+  color: #ffffff;
+  box-shadow: 0 14px 28px rgb(243 131 19 / 28%);
+}
+
+.secondary-outline-action {
+  border: 1px solid #d8d2cb;
+  background: #ffffff;
+  color: #5a260f;
 }
 
 .primary-action:hover {
