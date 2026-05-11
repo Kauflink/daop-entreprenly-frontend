@@ -13,8 +13,8 @@
   position: absolute;
   top: 30px;
   right: 40px;
-  background: #000;
-  color: #fff;
+  background: var(--color-avatar-bg);
+  color: var(--color-avatar-fg);
   border: none;
   padding: 10px 25px;
   border-radius: 25px;
@@ -101,7 +101,7 @@
 .content-card {
   width: 100%;
   max-width: 900px;
-  background: white;
+  background: var(--color-card-bg);
   border-radius: 30px;
   padding: 40px;
   box-shadow: 0 4px 20px rgba(0,0,0,0.05);
@@ -115,8 +115,8 @@
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  background: var(--color-text-strong);
-  color: white;
+  background: var(--color-avatar-bg);
+  color: var(--color-avatar-fg);
   padding: 5px 14px;
   border-radius: 999px;
   font-family: 'Reddit Sans', sans-serif;
@@ -139,8 +139,8 @@
   gap: 8px;
 }
 
-.stat-item .value { font-size: 20px; font-weight: 800; }
-.stat-item .label { color: #888; font-size: 14px; }
+.stat-item .value { font-size: 20px; font-weight: 800; color: var(--color-text-strong); }
+.stat-item .label { color: var(--color-text-muted); font-size: 14px; }
 
 /* 6 columns: edit, ID, Qty(Kg), Entry Date, QR, delete */
 .table-header-labels {
@@ -158,7 +158,7 @@
   grid-template-columns: 50px 1fr 1fr 1fr 1.5fr 50px;
   align-items: center;
   background: var(--color-card-bg);
-  border: 1px solid #f1f3f5;
+  border: 1px solid var(--color-card-border);
   border-radius: 20px;
   padding: 18px 15px 12px;
   margin-bottom: 12px;
@@ -189,8 +189,8 @@
 }
 
 .btn-edit-square {
-  background: #f8f9fa;
-  border: 1px solid #dee2e6;
+  background: var(--color-inner-bg);
+  border: 1px solid var(--color-card-border);
   width: 40px;
   height: 40px;
   border-radius: 12px;
@@ -222,8 +222,8 @@
 }
 
 .btn-add-main {
-  background: var(--color-text-strong);
-  color: white;
+  background: var(--color-avatar-bg);
+  color: var(--color-avatar-fg);
   border: none;
   padding: 14px 35px;
   border-radius: 18px;
@@ -239,7 +239,8 @@
 
 .btn-add-main:hover {
   transform: translateY(-2px);
-  background: #333;
+  background: var(--color-avatar-bg);
+  opacity: 0.85;
 }
 
 .plus-icon { font-size: 22px; line-height: 1; }
