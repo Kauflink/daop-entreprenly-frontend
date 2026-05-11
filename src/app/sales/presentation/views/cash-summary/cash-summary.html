@@ -1,26 +1,26 @@
 <section class="cash-summary">
-  <h2 class="cash-title">Resumen de Caja</h2>
-  <p class="cash-subtitle">Ingresos acumulados por método de pago</p>
+  <h2 class="cash-title">{{ 'sales.register.title' | translate }}</h2>
+  <p class="cash-subtitle">{{ 'sales.register.subtitle' | translate }}</p>
 
   <div class="cash-widgets">
     <div class="cash-widget total-day">
       <p class="widget-label">
         <span class="material-icons widget-icon">receipt</span>
-        Total del Día
+        {{ 'sales.register.totalDay' | translate }}
       </p>
       <p class="widget-value">S/ {{ store.totalDay().toFixed(2) }}</p>
     </div>
     <div class="cash-widget">
       <p class="widget-label">
         <span class="material-icons widget-icon">payments</span>
-        Efectivo
+        {{ 'sales.register.cash' | translate }}
       </p>
       <p class="widget-value">S/ {{ store.totalCash().toFixed(2) }}</p>
     </div>
     <div class="cash-widget">
       <p class="widget-label">
         <span class="material-icons widget-icon">point_of_sale</span>
-        Tarjeta - Yape/Plin
+        {{ 'sales.register.digital' | translate }}
       </p>
       <p class="widget-value">S/ {{ store.totalDigital().toFixed(2) }}</p>
     </div>
