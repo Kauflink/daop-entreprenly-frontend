@@ -1,0 +1,88 @@
+<section class="card detail-card">
+  <h2 class="card-title">
+    <span class="title-icon">☀</span>
+    Detalle de venta
+  </h2>
+
+  <div class="search-container">
+    <input
+      type="text"
+      placeholder="Buscar producto por nombre..."
+      class="search-input"
+      [ngModel]="searchTerm()"
+      (ngModelChange)="onSearchInput($event)"
+      (focus)="onSearchFocus()"
+      (blur)="onSearchBlur()"
+      [disabled]="loading()"
+    />
+
+    @if (isDropdownOpen() && filteredProducts().length > 0) {
+    <ul class="suggestions-dropdown">
+      @for (product of filteredProducts(); track product.id) {
+      <li class="suggestion-item" (mousedown)="onSelectProduct(product)">
+        {{ product.name }}
+      </li>
+      }
+    </ul>
+    }
+
+    @if (showNotFound()) {
+    <div class="not-found-message">
+      <span class="error-icon">⊘</span>
+      Producto no encontrado
+    </div>
+    }
+
+    @if (showEmptyError()) {
+    <div class="not-found-message">
+      <span class="error-icon">⊘</span>
+      No hay productos en el ticket
+    </div>
+    }
+  </div>
+
+  <table class="ticket-table">
+    <thead>
+      <tr>
+        <th>Producto</th>
+        <th>Tipo</th>
+        <th>Cantidad/peso</th>
+        <th>P. Unit.</th>
+        <th>Subtotal</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      @if (ticketItems().length === 0) {
+      <tr class="empty-row">
+        <td colspan="6">Aún no se han añadido productos al ticket</td>
+      </tr>
+      } @else {
+      @for (item of ticketItems(); track $index; let i = $index) {
+      <tr>
+        <td class="product-cell">{{ item.productName }}</td>
+        <td>
+          @if (item.type === 'unit') {
+          <span class="badge badge-unit">📦 Unidad</span>
+          } @else {
+          <span class="badge badge-weight">⚖ Peso</span>
+          }
+        </td>
+        <td>
+          @if (item.type === 'unit') {
+          {{ item.quantity }} und
+          } @else {
+          {{ item.weightKg }} kg
+          }
+        </td>
+        <td>S/ {{ item.unitPrice.toFixed(2) }}</td>
+        <td>S/ {{ item.subtotal.toFixed(2) }}</td>
+        <td>
+          <button class="delete-btn" (click)="itemDeleted.emit(i)">🗑</button>
+        </td>
+      </tr>
+      }
+      }
+    </tbody>
+  </table>
+</section>
