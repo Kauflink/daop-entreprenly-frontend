@@ -1,0 +1,21 @@
+<span
+  class="card-brand-badge"
+  [class.card-brand-badge--visa]="isVisa()"
+  [class.card-brand-badge--mastercard]="isMastercard()"
+  [class.card-brand-badge--amex]="isAmericanExpress()"
+  [class.card-brand-badge--diners]="isDinersClub()"
+  [class.card-brand-badge--discover]="isDiscover()"
+  [class.card-brand-badge--jcb]="isJcb()"
+  [class.card-brand-badge--unionpay]="isUnionPay()"
+  [attr.aria-label]="brandInfo().ariaLabel"
+  [title]="brandInfo().label"
+>
+  @if (isMastercard()) {
+    <span class="mastercard-mark" aria-hidden="true">
+      <span></span>
+      <span></span>
+    </span>
+  } @else {
+    <span aria-hidden="true">{{ brandInfo().shortLabel }}</span>
+  }
+</span>
