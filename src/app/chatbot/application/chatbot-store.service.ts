@@ -5,6 +5,7 @@ import { Conversation, ConversationStatus } from '../domain/model/conversation.e
 import { ChatMessage } from '../domain/model/chat-message.entity';
 import { WhatsappSession } from '../domain/model/whatsapp-session.entity';
 import { ChatOrder, OrderStatus } from '../domain/model/chat-order.entity';
+import { InventoryProduct } from '../domain/model/inventory-product.entity';
 
 @Injectable({ providedIn: 'root' })
 export class ChatbotStoreService {
@@ -17,6 +18,7 @@ export class ChatbotStoreService {
   readonly messages = signal<ChatMessage[]>([]);
   readonly isBotTyping = signal(false);
   readonly orders = signal<ChatOrder[]>([]);
+  readonly inventoryProducts = signal<InventoryProduct[]>([]);
 
   readonly selectedConversation = computed(() =>
     this.conversations().find(c => c.id === this.selectedConversationId()) ?? null,
@@ -49,6 +51,12 @@ export class ChatbotStoreService {
   loadOrders(): void {
     this.api.chatOrders.getAll().subscribe(orders => {
       this.orders.set(orders);
+    });
+  }
+
+  loadInventoryProducts(): void {
+    this.api.inventoryProducts.getAll().subscribe(products => {
+      this.inventoryProducts.set(products);
     });
   }
 

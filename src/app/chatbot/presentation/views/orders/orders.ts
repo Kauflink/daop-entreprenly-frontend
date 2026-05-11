@@ -12,7 +12,18 @@ import { ChatOrder } from '../../../domain/model/chat-order.entity';
       <h1 class="text-2xl font-bold text-gray-900">Pedidos</h1>
       <p class="mb-6 mt-1 text-sm text-gray-500">Historial y validación de comprobantes</p>
 
-      @if (allOrders().length === 0) {
+      @if (!store.isConnected()) {
+        <div class="flex flex-col items-center justify-center rounded-2xl bg-white p-20 shadow-sm">
+          <svg class="h-12 w-12 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+              d="M8.111 16.404a5.5 5.5 0 017.778 0M12 20h.01m-7.08-7.071c3.904-3.905 10.236-3.905 14.14 0M1.394 9.393c5.857-5.857 15.355-5.857 21.213 0" />
+          </svg>
+          <p class="mt-3 text-sm text-gray-400">Conecta tu WhatsApp para ver los pedidos</p>
+          <a routerLink="/dashboard/chatbot" class="mt-4 text-sm text-orange-500 hover:underline">
+            Ir a configuración →
+          </a>
+        </div>
+      } @else if (allOrders().length === 0) {
         <div class="flex flex-col items-center justify-center rounded-2xl bg-white p-20 shadow-sm">
           <svg class="h-12 w-12 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
@@ -157,7 +168,7 @@ import { ChatOrder } from '../../../domain/model/chat-order.entity';
   `,
 })
 export class Orders implements OnInit {
-  private readonly store = inject(ChatbotStoreService);
+  protected readonly store = inject(ChatbotStoreService);
 
   protected readonly allOrders = computed(() =>
     [...this.store.orders()].sort(
@@ -166,8 +177,10 @@ export class Orders implements OnInit {
   );
 
   ngOnInit(): void {
+    this.store.loadSession();
     this.store.loadOrders();
     this.store.loadConversations();
+    this.store.loadInventoryProducts();
   }
 
   protected receiptUrl(total: number): string {
