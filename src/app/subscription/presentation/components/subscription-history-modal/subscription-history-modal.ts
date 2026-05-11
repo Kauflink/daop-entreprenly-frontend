@@ -1,35 +1,48 @@
+import { CdkTrapFocus } from '@angular/cdk/a11y';
 import { ChangeDetectionStrategy, Component, computed, input, output } from '@angular/core';
-import { MatIconModule } from '@angular/material/icon';
-import { TranslatePipe } from '@ngx-translate/core';
-import { BillingSetup as BillingSetupEntity } from '../../../domain/model/billing-setup.entity';
-import { SubscriptionActivity as SubscriptionActivityEntity } from '../../../domain/model/subscription-activity.entity';
+import { BillingSetup } from '../../../domain/model/billing-setup.entity';
+import { SubscriptionActivity } from '../../../domain/model/subscription-activity.entity';
 
 @Component({
-  selector: 'app-subscription-activity',
-  imports: [MatIconModule, TranslatePipe],
-  templateUrl: './subscription-activity.html',
-  styleUrl: './subscription-activity.css',
+  selector: 'app-subscription-history-modal',
+  imports: [CdkTrapFocus],
+  templateUrl: './subscription-history-modal.html',
+  styleUrl: './subscription-history-modal.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  host: {
+    '(document:keydown.escape)': 'closeFromKeyboard($event)',
+  },
 })
-export class SubscriptionActivity {
-  readonly activity = input.required<SubscriptionActivityEntity[]>();
-  readonly billingSetup = input.required<BillingSetupEntity>();
+export class SubscriptionHistoryModal {
+  readonly activity = input.required<SubscriptionActivity[]>();
+  readonly billingSetup = input.required<BillingSetup>();
+  readonly downloaded = input(false);
 
+  readonly closed = output<void>();
   readonly historyDownloadRequested = output<void>();
 
   protected readonly activityRows = computed(() => [
     ...this.activity(),
-    new SubscriptionActivityEntity({
+    new SubscriptionActivity({
       id: 'payment-method',
       title: 'Método de pago',
       detail: this.paymentMethodDetail(),
     }),
-    new SubscriptionActivityEntity({
+    new SubscriptionActivity({
       id: 'fiscal-data',
       title: 'Datos fiscales',
       detail: this.fiscalDataDetail(),
     }),
   ]);
+
+  protected close(): void {
+    this.closed.emit();
+  }
+
+  protected closeFromKeyboard(event: Event): void {
+    event.preventDefault();
+    this.close();
+  }
 
   protected requestHistoryDownload(): void {
     this.historyDownloadRequested.emit();

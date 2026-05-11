@@ -9,13 +9,17 @@ import {
   output,
   signal,
 } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { startWith } from 'rxjs';
 import {
   BillingFiscalData,
   BillingPaymentMethodInput,
   BillingSetup,
+  detectCardBrand,
 } from '../../../domain/model/billing-setup.entity';
 import { BillingCycle, SubscriptionPlan } from '../../../domain/model/subscription-plan.entity';
+import { CardBrandBadge } from '../card-brand-badge/card-brand-badge';
 
 type UpgradeStep = 'plan' | 'billing' | 'payment' | 'activation';
 
@@ -26,7 +30,7 @@ interface StepItem {
 
 @Component({
   selector: 'app-upgrade-plan-modal',
-  imports: [CdkTrapFocus, ReactiveFormsModule],
+  imports: [CdkTrapFocus, ReactiveFormsModule, CardBrandBadge],
   templateUrl: './upgrade-plan-modal.html',
   styleUrl: './upgrade-plan-modal.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -64,6 +68,15 @@ export class UpgradePlanModal implements OnInit {
     expiry: ['', [Validators.required, Validators.pattern(/^(0[1-9]|1[0-2])\/\d{2}$/)]],
     cvv: ['', [Validators.required, Validators.pattern(/^\d{3,4}$/)]],
   });
+  private readonly paymentCardNumberValue = toSignal(
+    this.paymentForm.controls.cardNumber.valueChanges.pipe(
+      startWith(this.paymentForm.controls.cardNumber.value),
+    ),
+    { initialValue: this.paymentForm.controls.cardNumber.value },
+  );
+  protected readonly detectedPaymentCardBrand = computed(
+    () => detectCardBrand(this.paymentCardNumberValue()).label,
+  );
 
   protected readonly steps: StepItem[] = [
     { id: 'plan', label: 'Plan' },

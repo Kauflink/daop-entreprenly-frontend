@@ -1,11 +1,14 @@
 import { CdkTrapFocus } from '@angular/cdk/a11y';
-import { ChangeDetectionStrategy, Component, inject, output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, output } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { BillingPaymentMethodInput } from '../../../domain/model/billing-setup.entity';
+import { startWith } from 'rxjs';
+import { BillingPaymentMethodInput, detectCardBrand } from '../../../domain/model/billing-setup.entity';
+import { CardBrandBadge } from '../card-brand-badge/card-brand-badge';
 
 @Component({
   selector: 'app-payment-method-modal',
-  imports: [CdkTrapFocus, ReactiveFormsModule],
+  imports: [CdkTrapFocus, ReactiveFormsModule, CardBrandBadge],
   templateUrl: './payment-method-modal.html',
   styleUrl: './payment-method-modal.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -25,6 +28,15 @@ export class PaymentMethodModal {
     expiry: ['', [Validators.required, Validators.pattern(/^(0[1-9]|1[0-2])\/\d{2}$/)]],
     cvv: ['', [Validators.required, Validators.pattern(/^\d{3,4}$/)]],
   });
+  private readonly cardNumberValue = toSignal(
+    this.paymentForm.controls.cardNumber.valueChanges.pipe(
+      startWith(this.paymentForm.controls.cardNumber.value),
+    ),
+    { initialValue: this.paymentForm.controls.cardNumber.value },
+  );
+  protected readonly detectedCardBrand = computed(
+    () => detectCardBrand(this.cardNumberValue()).label,
+  );
 
   protected close(): void {
     this.closed.emit();
