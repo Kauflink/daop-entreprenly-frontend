@@ -1,0 +1,238 @@
+/* Container covering the full screen - Creating the "Second Plane" effect */
+:host {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(4px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+  font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+}
+
+/* Modal Card */
+.modal-card {
+  background: #ffffff;
+  border-radius: 28px;
+  width: 90%;
+  max-width: 680px;
+  padding: 40px;
+  position: relative;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+  animation: fadeInScale 0.2s ease-out;
+}
+
+@keyframes fadeInScale {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+/* Close Button (X) */
+.btn-close {
+  position: absolute;
+  top: 25px;
+  right: 25px;
+  background: #f0f0f0;
+  border: none;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  cursor: pointer;
+  font-size: 20px;
+  color: #333;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+}
+
+/* Titles and Headers */
+.modal-title {
+  font-size: 24px;
+  font-weight: 700;
+  margin: 0;
+  color: #000;
+}
+
+.modal-subtitle {
+  font-size: 14px;
+  color: #888;
+  margin: 8px 0 25px 0;
+}
+
+/* Form Fields */
+.label-bold {
+  display: block;
+  font-weight: 600;
+  font-size: 14px;
+  margin-bottom: 8px;
+  color: #1a1a1a;
+}
+
+.input-gray, .input-gray-small {
+  width: 100%;
+  background-color: #f4f4f4;
+  border: 1px solid transparent;
+  border-radius: 12px;
+  padding: 12px 16px;
+  font-size: 15px;
+  color: #333;
+  box-sizing: border-box;
+}
+
+/* Dynamic No-Modifiable Tag */
+.input-lock-container {
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.no-mod-tag {
+  position: absolute;
+  top: -12px;
+  left: 15px;
+  background: #f9dada;
+  color: #d64545;
+  font-size: 11px;
+  font-weight: 800;
+  padding: 2px 10px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+/* Details Row (QR left, Numeric right) */
+.form-row-details {
+  display: flex;
+  gap: 35px;
+  margin-top: 15px;
+  align-items: flex-start;
+}
+
+.qr-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.qr-text-input {
+  font-size: 13px !important;
+  padding: 8px 12px !important;
+}
+
+.qr-card {
+  background: #f4f4f4;
+  padding: 15px;
+  border-radius: 20px;
+  width: 100%;
+  text-align: center;
+}
+
+.qr-card img {
+  max-width: 130px;
+  height: auto;
+}
+
+.qr-number {
+  display: block;
+  font-size: 12px;
+  color: #666;
+  margin-top: 8px;
+  font-family: monospace;
+}
+
+/* Numeric Inputs Column - Specific for Weight (Price/Kg) */
+.numeric-inputs {
+  flex: 1.2;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.input-group {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.input-group label {
+  font-size: 14px;
+  font-weight: 500;
+  color: #444;
+}
+
+.prefix-box {
+  display: flex;
+  align-items: center;
+  background: #f4f4f4;
+  border-radius: 10px;
+  padding-left: 12px;
+  width: 160px; /* Aligned with the mockup */
+}
+
+.prefix-box input {
+  background: transparent;
+  border: none;
+  padding: 10px;
+  width: 100%;
+  outline: none;
+}
+
+/* Errors */
+.input-error {
+  border: 1.5px solid #ff4d4d !important;
+  background-color: #fff9f9;
+}
+
+/* Submit Button */
+.btn-submit {
+  background: #F38313;
+  color: white;
+  border: none;
+  padding: 16px 85px;
+  border-radius: 50px;
+  font-size: 18px;
+  font-weight: 700;
+  cursor: pointer;
+  display: block;
+  margin: 35px auto 0;
+  transition: background 0.2s;
+}
+
+.btn-submit:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+
+.btn-submit--invalid {
+  background: #ffb3b3 !important;
+  cursor: not-allowed;
+}
+
+.form-footer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.form-incomplete {
+  margin-top: 6px;
+  font-size: 12px;
+  color: #ff6b6b;
+  font-weight: 500;
+}
+
+.field-row-valid {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.field-row-valid .input-gray { flex: 1; }
+
+.v-x { color: #ff6b6b; font-size: 15px; font-weight: 700; flex-shrink: 0; }
+.v-text { color: #ff6b6b; font-size: 12px; white-space: nowrap; flex-shrink: 0; }

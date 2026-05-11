@@ -1,0 +1,21 @@
+<div class="inventory-page">
+  <div class="header">
+    <h1>{{ 'products.weightTitle' | translate }}</h1>
+    <button class="btn-add" (click)="router.navigate(['/dashboard/inventory/weight-products/new'])">
+      + {{ 'products.add' | translate }}
+    </button>
+  </div>
+
+  <div class="table-container">
+    <table mat-table [dataSource]="store.weightProducts()" class="mat-elevation-z0">
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCell4="let element"> {{ 'products.table.actions' | translate }} </th>
+        <td mat-cell *matCell="let element">
+          <button (click)="editWeightProduct(element.id)">Edit</button>
+        </td>
+      </ng-container>
+    </table>
+  </div>
+</div>
+
+<router-outlet />

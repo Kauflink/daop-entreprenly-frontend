@@ -1,0 +1,140 @@
+<div class="modal-backdrop" aria-hidden="true"></div>
+
+<section
+  class="upgrade-modal"
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby="upgrade-modal-title"
+  cdkTrapFocus
+  cdkTrapFocusAutoCapture
+>
+  <button class="icon-button" type="button" aria-label="Cerrar modal" (click)="close()">×</button>
+  <p class="eyebrow">Suscripción</p>
+
+  @if (activated()) {
+    <h2 id="upgrade-modal-title">Suscripción activada</h2>
+    <div class="success-card">
+      <div>
+        <h3>Plan Control activado</h3>
+        <p>Tu suscripción ya está activa. Puedes cerrar este popup y continuar operando.</p>
+      </div>
+      <button class="primary-button" type="button" (click)="close()">Entendido</button>
+    </div>
+  } @else {
+    <h2 id="upgrade-modal-title">Actualizar a Plan Control</h2>
+
+    <nav class="step-tabs" aria-label="Pasos de actualización">
+      @for (step of steps; track step.id) {
+        <button
+          type="button"
+          [class.step-tab--active]="isStepActive(step.id)"
+          [class.step-tab--complete]="isStepComplete(step.id)"
+          [attr.aria-current]="isStepActive(step.id) ? 'step' : null"
+          [disabled]="!isStepActive(step.id) && !isStepComplete(step.id)"
+          (click)="goToStep(step.id)"
+        >
+          {{ step.label }}
+        </button>
+      }
+    </nav>
+
+    @switch (activeStep()) {
+      @case ('plan') {
+        <p class="helper-text">
+          Elegiste Plan Control. Revisa el ciclo de cobro antes de continuar con la suscripción.
+        </p>
+        <article class="summary-card">
+          <div>
+            <h3>{{ plan().name }}</h3>
+            <p>{{ billingLabel() }}</p>
+          </div>
+          <strong>{{ planPriceLabel() }}</strong>
+        </article>
+        <div class="modal-actions modal-actions--end">
+          <button class="primary-button" type="button" (click)="continue()">Continuar</button>
+        </div>
+      }
+
+      @case ('billing') {
+        <form class="billing-form" [formGroup]="fiscalForm" (ngSubmit)="continue()">
+          <label>
+            <span>RUC</span>
+            <input
+              type="text"
+              inputmode="numeric"
+              autocomplete="off"
+              formControlName="ruc"
+              [attr.aria-invalid]="hasFieldError('ruc')"
+            />
+            @if (hasFieldError('ruc')) {
+              <small>Ingresa un RUC válido de 11 dígitos.</small>
+            }
+          </label>
+
+          <label>
+            <span>Razón social</span>
+            <input type="text" autocomplete="organization" formControlName="businessName" />
+          </label>
+
+          <label>
+            <span>Correo de facturación</span>
+            <input
+              type="email"
+              autocomplete="email"
+              formControlName="billingEmail"
+              [attr.aria-invalid]="hasFieldError('billingEmail')"
+            />
+            @if (hasFieldError('billingEmail')) {
+              <small>Ingresa un correo válido.</small>
+            }
+          </label>
+
+          <label>
+            <span>Distrito</span>
+            <input type="text" autocomplete="address-level2" formControlName="district" />
+          </label>
+
+          <div class="modal-actions">
+            <button class="secondary-button" type="button" (click)="back()">Volver</button>
+            <button class="primary-button" type="submit">Continuar</button>
+          </div>
+        </form>
+      }
+
+      @case ('payment') {
+        <div class="stack">
+          <article class="summary-card summary-card--plain">
+            <div>
+              <h3>Tarjeta registrada</h3>
+              <p>Visa terminada en 4242 · Cobro seguro</p>
+            </div>
+          </article>
+          <article class="summary-card summary-card--plain">
+            <h3>Total a cobrar</h3>
+            <strong>S/ {{ planPrice() }}</strong>
+          </article>
+        </div>
+        <div class="modal-actions">
+          <button class="secondary-button" type="button" (click)="back()">Volver</button>
+          <button class="primary-button" type="button" (click)="continue()">Continuar</button>
+        </div>
+      }
+
+      @case ('activation') {
+        <article class="ready-card">
+          <h3>Listo para activar</h3>
+          <p>
+            Al confirmar, el Plan Control queda activo y se habilitan productos, lotes,
+            pedidos y caja sin límites del plan gratuito.
+          </p>
+        </article>
+        <div class="modal-actions">
+          <button class="secondary-button" type="button" (click)="back()">Volver</button>
+          <button class="primary-button" type="button" (click)="activateSubscription()">
+            Pagar y activar suscripción
+          </button>
+        </div>
+      }
+    }
+  }
+</section>
