@@ -14,4 +14,5 @@ export const environment = {
   entreprenlyProviderInventoryWeightProductsEndpointPath: '/inventory-weight-products',
   entreprenlyProviderInventoryWeightLotsEndpointPath: '/inventory-weight-lots',
   entreprenlyProviderInventoryStockAlertsEndpointPath: '/inventory-stock-alerts',
+  entreprenlyProviderSubscriptionActivationEndpointPath: '/subscription-payment-confirmation/1',
 };
