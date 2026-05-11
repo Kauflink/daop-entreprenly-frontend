@@ -274,5 +274,115 @@
         "badge": "Recomendado"
       }
     }
+  },
+  "profile": {
+    "userInfo": {
+      "avatarAlt": "Foto de perfil"
+    },
+    "uploadPhoto": {
+      "title": "Subir foto de perfil",
+      "previewAlt": "Vista previa de foto de perfil",
+      "fileInputLabel": "Seleccionar imagen de perfil",
+      "selectAction": "Seleccionar Imagen"
+    },
+    "updateProfile": {
+      "title": "Actualizar perfil",
+      "fields": {
+        "firstName": {
+          "label": "Nombre",
+          "placeholder": "Ingresa tu nombre"
+        },
+        "lastName": {
+          "label": "Apellidos",
+          "placeholder": "Ingresa tus apellidos"
+        }
+      },
+      "saveAction": "Guardar cambios del perfil"
+    },
+    "phoneVerify": {
+      "title": "Verificar o cambiar número de teléfono",
+      "fields": {
+        "phone": {
+          "label": "Número",
+          "placeholder": "+51 999 999 999"
+        }
+      },
+      "verifyAction": "Verificar"
+    },
+    "emailChange": {
+      "title": "Cambiar email con re-verificación",
+      "fields": {
+        "email": {
+          "label": "Nuevo email",
+          "placeholder": "nuevo-correo@entreprenly.online"
+        }
+      },
+      "verifyAction": "Verificar"
+    },
+    "changePassword": {
+      "title": "Cambiar contraseña",
+      "fields": {
+        "current": {
+          "label": "Contraseña actual",
+          "placeholder": "Contraseña actual",
+          "showLabel": "Mostrar contraseña actual",
+          "hideLabel": "Ocultar contraseña actual"
+        },
+        "new": {
+          "label": "Nueva contraseña",
+          "placeholder": "Nueva contraseña",
+          "showLabel": "Mostrar nueva contraseña",
+          "hideLabel": "Ocultar nueva contraseña"
+        },
+        "confirm": {
+          "label": "Confirmar nueva contraseña",
+          "placeholder": "Confirmar nueva contraseña",
+          "showLabel": "Mostrar confirmación",
+          "hideLabel": "Ocultar confirmación"
+        }
+      },
+      "errors": {
+        "mismatch": "Las contraseñas no coinciden."
+      },
+      "updateAction": "Actualizar contraseña"
+    },
+    "notifications": {
+      "title": "Configurar notificaciones",
+      "items": {
+        "stock": {
+          "name": "Alertas de Stock y Lotes",
+          "desc": "Avisos sobre stock bajo, lotes vencidos o próximos a vencer.",
+          "toggleLabel": "Activar alertas de stock y lotes"
+        },
+        "payment": {
+          "name": "Validaciones de pago",
+          "desc": "Notificaciones cuando llega un comprobante o queda un pago pendiente.",
+          "toggleLabel": "Activar validaciones de pago"
+        },
+        "chatbot": {
+          "name": "Mensajes del chatbot",
+          "desc": "Aviso de nuevas conversaciones y respuestas del chatbot.",
+          "toggleLabel": "Activar mensajes del chatbot"
+        }
+      },
+      "saveAction": "Guardar notificaciones"
+    },
+    "preferences": {
+      "title": "Preferencias de idioma, zona horaria y tema",
+      "fields": {
+        "language": {
+          "label": "Idioma"
+        },
+        "timezone": {
+          "label": "Zona horaria"
+        }
+      },
+      "theme": {
+        "label": "Tema visual",
+        "light": "Claro",
+        "dark": "Oscuro"
+      },
+      "saveAction": "Guardar preferencias"
+    }
   }
 }

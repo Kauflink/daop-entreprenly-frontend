@@ -1,10 +1,11 @@
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
+import { TranslateModule } from '@ngx-translate/core';
 import { ProfileStore } from '../../../application/profile-store';
 
 @Component({
   selector: 'app-upload-photo-card',
-  imports: [MatIconModule],
+  imports: [MatIconModule, TranslateModule],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './upload-photo-card.html',
   styleUrl: './upload-photo-card.css',
