@@ -16,5 +16,7 @@ export interface ChatOrder extends BaseEntity {
   deliveryAddress: string;
   paymentMethod: string;
   status: OrderStatus;
+  hasReceipt: boolean;
+  rejectionCount: number;
   createdAt: string;
 }
