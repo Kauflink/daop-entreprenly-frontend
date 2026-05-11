@@ -20,7 +20,7 @@
 .page-subtitle {
   margin-top: 6px;
   font-size: 14px;
-  color: #6b7280;
+  color: var(--color-text-muted);
 }
 
 .header-actions {
@@ -34,15 +34,15 @@
   height: 44px;
   border: none;
   border-radius: 999px;
-  background: var(--color-text-strong);
-  color: white;
+  background: var(--color-avatar-bg);
+  color: var(--color-avatar-fg);
   padding: 0 18px;
   outline: none;
   font-size: 14px;
 }
 
 .search-input::placeholder {
-  color: #d1d5db;
+  color: var(--color-text-muted);
 }
 
 .btn-create {
@@ -51,7 +51,7 @@
   border: none;
   border-radius: 999px;
   background: var(--color-primary);
-  color: white;
+  color: #fff;
   font-family: 'Reddit Sans', sans-serif;
   font-weight: 700;
   cursor: pointer;
@@ -66,7 +66,7 @@
 .stat-card {
   flex: 1;
   position: relative;
-  background: white;
+  background: var(--color-card-bg);
   border-radius: 18px;
   padding: 20px 20px 16px;
   box-shadow: 0 2px 10px rgba(0,0,0,0.08);
@@ -117,7 +117,7 @@
   height: 48px;
   border: none;
   border-radius: 12px;
-  background: #8f8f8f;
+  background: var(--color-text-muted);
   color: #fff;
   cursor: pointer;
   display: flex;
@@ -198,7 +198,7 @@
   width: calc((100% - 16px * 2) / 3);
   min-height: 220px;
 
-  background: white;
+  background: var(--color-card-bg);
   border-radius: 18px;
   padding: 18px;
   box-shadow: 0 4px 14px rgba(0,0,0,0.08);
@@ -223,7 +223,7 @@
 
 .product-brand {
   font-size: 13px;
-  color: #9ca3af;
+  color: var(--color-text-muted);
 }
 
 .badge {
@@ -238,7 +238,7 @@
   align-items: center;
   gap: 6px;
   background: var(--color-primary);
-  color: white;
+  color: #fff;
   font-family: 'Reddit Sans', sans-serif;
   font-weight: 700;
 }
@@ -247,8 +247,8 @@
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  background: var(--color-text-strong);
-  color: white;
+  background: var(--color-avatar-bg);
+  color: var(--color-avatar-fg);
   font-family: 'Reddit Sans', sans-serif;
   font-weight: 700;
 }
@@ -269,11 +269,12 @@
 .stock-number {
   font-size: 28px;
   font-weight: 700;
+  color: var(--color-text-strong);
 }
 
 .stock-label {
   font-size: 12px;
-  color: #9ca3af;
+  color: var(--color-text-muted);
 }
 
 .count-row {
@@ -286,12 +287,12 @@
 
 .count-label {
   font-size: 13px;
-  color: #6b7280;
+  color: var(--color-text-muted);
 }
 
 .lot-card-footer {
   margin-top: 12px;
-  border-top: 1px solid #f3f4f6;
+  border-top: 1px solid var(--color-card-border);
   padding-top: 10px;
 }
 
@@ -300,6 +301,7 @@
   height: 40px;
   border: none;
   background: transparent;
+  color: var(--color-text-primary);
   font-weight: 700;
   cursor: pointer;
 }
@@ -315,8 +317,8 @@
   border: none;
   border-radius: 14px;
 
-  background: #9a9a9a;
-  color: white;
+  background: var(--color-text-muted);
+  color: #fff;
 
   font-size: 28px;
   cursor: pointer;
@@ -334,7 +336,7 @@
 }
 
 .modal-card {
-  background: white;
+  background: var(--color-card-bg);
   border-radius: 28px;
   width: 90%;
   max-width: 480px;
@@ -354,7 +356,7 @@
   background: var(--color-card-border);
   border: none;
   border-radius: 50%;
-  color: #1f2937;
+  color: var(--color-text-strong);
   cursor: pointer;
   font-size: 20px;
   font-weight: 700;
@@ -369,16 +371,19 @@
 .modal-title-main {
   font-size: 24px;
   font-weight: 700;
+  color: var(--color-text-strong);
 }
 
 .modal-subtitle {
-  color: #6b7280;
+  color: var(--color-text-muted);
 }
 
 .product-select {
   width: 100%;
   height: 48px;
   border-radius: 14px;
-  border: 1px solid #d1d5db;
+  border: 1px solid var(--color-card-border);
+  background: var(--color-card-bg);
+  color: var(--color-text-primary);
   padding: 0 14px;
 }

@@ -119,6 +119,39 @@ body {
   color: var(--color-text-primary);
 }
 
+/* ── Dark theme overrides for Tailwind utility classes (chatbot BC) ── */
+:root[data-theme='dark'] .bg-white { background-color: var(--color-card-bg) !important; }
+:root[data-theme='dark'] .bg-gray-50 { background-color: var(--color-bg-page) !important; }
+:root[data-theme='dark'] .bg-gray-100 { background-color: var(--color-inner-bg) !important; }
+:root[data-theme='dark'] .bg-gray-200 { background-color: var(--color-card-border) !important; }
+
+:root[data-theme='dark'] .text-gray-900 { color: var(--color-text-strong) !important; }
+:root[data-theme='dark'] .text-gray-700 { color: var(--color-text-primary) !important; }
+:root[data-theme='dark'] .text-gray-600 { color: var(--color-text-secondary) !important; }
+:root[data-theme='dark'] .text-gray-500 { color: var(--color-text-muted) !important; }
+:root[data-theme='dark'] .text-gray-400 { color: var(--color-text-muted) !important; }
+:root[data-theme='dark'] .text-gray-300 { color: var(--color-text-muted) !important; }
+
+:root[data-theme='dark'] .border-gray-100,
+:root[data-theme='dark'] .border-gray-200,
+:root[data-theme='dark'] .border-gray-300 { border-color: var(--color-card-border) !important; }
+
+:root[data-theme='dark'] .hover\:bg-gray-50:hover { background-color: var(--color-inner-bg) !important; }
+:root[data-theme='dark'] .hover\:text-gray-600:hover { color: var(--color-text-primary) !important; }
+
+:root[data-theme='dark'] .bg-orange-50 { background-color: var(--color-theme-btn-active-bg) !important; }
+:root[data-theme='dark'] .hover\:bg-orange-50:hover { background-color: var(--color-theme-btn-active-bg) !important; }
+:root[data-theme='dark'] .bg-red-50 { background-color: rgba(239, 83, 80, 0.12) !important; }
+:root[data-theme='dark'] .hover\:bg-red-50:hover { background-color: rgba(239, 83, 80, 0.16) !important; }
+:root[data-theme='dark'] .bg-green-50 { background-color: rgba(102, 187, 106, 0.12) !important; }
+
+:root[data-theme='dark'] .border-red-100 { border-color: rgba(239, 83, 80, 0.3) !important; }
+:root[data-theme='dark'] .border-orange-100 { border-color: rgba(243, 131, 19, 0.3) !important; }
+:root[data-theme='dark'] .border-green-200 { border-color: rgba(102, 187, 106, 0.35) !important; }
+:root[data-theme='dark'] .border-red-200 { border-color: rgba(239, 83, 80, 0.35) !important; }
+
+:root[data-theme='dark'] .placeholder\:text-gray-400::placeholder { color: var(--color-text-muted) !important; }
+
 html,
 body,
 button,
