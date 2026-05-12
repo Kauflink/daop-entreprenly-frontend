@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject, output, signal } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, effect, inject, input, output, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 
@@ -13,10 +13,11 @@ import { TranslatePipe, TranslateService } from '@ngx-translate/core';
         [class]="isEmpty() ? 'bg-gray-100' : 'bg-orange-50'"
       >
         <input
-          class="flex-1 bg-transparent text-sm text-gray-700 outline-none placeholder:text-gray-400"
+          class="flex-1 bg-transparent text-sm text-gray-700 outline-none placeholder:text-gray-400 disabled:cursor-default"
           [placeholder]="isEmpty() ? translate.instant('chatbot.input.emptyError') : translate.instant('chatbot.input.placeholder')"
           [attr.aria-label]="'chatbot.input.ariaLabel' | translate"
           [(ngModel)]="text"
+          [disabled]="isAutoTyping()"
           (keyup.enter)="submit()"
           (input)="isEmpty.set(false)"
         />
@@ -54,10 +55,24 @@ import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 })
 export class ChatInput {
   readonly messageSent = output<string>();
+  /** Texto inyectado desde el store cuando el bot escribe palabra a palabra */
+  readonly draftText   = input<string>('');
+  /** Cuando es true el input queda bloqueado (bot escribiendo) */
+  readonly isAutoTyping = input<boolean>(false);
+
   protected readonly translate = inject(TranslateService);
+  private  readonly cdr        = inject(ChangeDetectorRef);
 
   protected text = '';
   protected readonly isEmpty = signal(false);
+
+  constructor() {
+    // Sincroniza el texto externo del bot con el campo del input
+    effect(() => {
+      this.text = this.draftText();
+      this.cdr.markForCheck();
+    });
+  }
 
   protected submit(): void {
     if (!this.text.trim()) {

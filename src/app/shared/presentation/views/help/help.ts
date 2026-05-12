@@ -147,14 +147,15 @@ const ARTICLES: HelpArticle[] = [
   },
 ];
 
-const CATEGORIES: HelpCategory[] = [
-  { id: 'inventario',    nameKey: 'dashboard-help.categoryNames.inventario',    articleCount: 6 },
-  { id: 'chatbot',       nameKey: 'dashboard-help.categoryNames.chatbot',        articleCount: 8 },
-  { id: 'pedidos',       nameKey: 'dashboard-help.categoryNames.pedidos',        articleCount: 10 },
-  { id: 'reportes',      nameKey: 'dashboard-help.categoryNames.reportes',       articleCount: 3 },
-  { id: 'suscripcion',   nameKey: 'dashboard-help.categoryNames.suscripcion',    articleCount: 5 },
-  { id: 'configuracion', nameKey: 'dashboard-help.categoryNames.configuracion',  articleCount: 2 },
-];
+/** Categorías calculadas dinámicamente desde los artículos reales */
+const CATEGORIES: HelpCategory[] = (() => {
+  const ids = [...new Set(ARTICLES.map(a => a.categoryId))];
+  return ids.map(id => ({
+    id,
+    nameKey: `dashboard-help.categoryNames.${id}`,
+    articleCount: ARTICLES.filter(a => a.categoryId === id).length,
+  }));
+})();
 
 // ── Component ─────────────────────────────────────────────────────────────────
 
