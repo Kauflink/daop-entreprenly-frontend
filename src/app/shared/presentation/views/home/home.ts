@@ -143,7 +143,7 @@ export class Home implements OnInit {
         subtextKey: '',
         subtextDynamic: `${productCount} ${lang === 'en' ? 'active' : 'activos'}`,
         icon: 'products',
-        route: '/dashboard/inventory',
+        route: '/dashboard/inventory/products',
       },
       {
         labelKey: 'dashboard-home.links.lots',
