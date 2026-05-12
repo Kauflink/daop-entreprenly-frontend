@@ -3,9 +3,9 @@
 }
 
 .panel {
-  border: 1px solid var(--color-card-border);
+  border: 1px solid #d8d2cb;
   border-radius: 18px;
-  background: var(--color-card-bg);
+  background: #ffffff;
   box-shadow: 0 18px 34px rgb(53 48 43 / 12%);
 }
 
@@ -26,8 +26,8 @@
   display: inline-flex;
   align-items: center;
   border-radius: 999px;
-  background: var(--color-inner-bg);
-  color: var(--color-label-accent);
+  background: #f0e8e3;
+  color: #5a260f;
   font-size: 11px;
   font-weight: 800;
   letter-spacing: 1.4px;
@@ -40,13 +40,13 @@
 .card-label {
   border-radius: 0;
   background: transparent;
-  color: var(--color-label-accent);
+  color: #a17a66;
   margin-bottom: 12px;
   padding: 0;
 }
 
 .card-label--accent {
-  color: var(--color-primary);
+  color: #f38313;
 }
 
 h2,
@@ -69,7 +69,7 @@ h3 {
 
 .panel__intro {
   max-width: 760px;
-  color: var(--color-text-muted);
+  color: #666666;
   line-height: 1.8;
   margin-top: 16px;
 }
@@ -77,18 +77,13 @@ h3 {
 .status-badge {
   flex: 0 0 auto;
   border-radius: 999px;
-  background: var(--color-inner-bg);
-  color: var(--color-success);
+  background: #e7f8ed;
+  color: #075f24;
   font-size: 12px;
   font-weight: 800;
   letter-spacing: 1.4px;
   padding: 8px 14px;
   text-transform: uppercase;
-}
-
-.status-badge--warning {
-  background: var(--color-theme-btn-active-bg);
-  color: var(--color-label-accent);
 }
 
 .plans-grid {
@@ -100,14 +95,14 @@ h3 {
 
 .plan-card {
   min-height: 330px;
-  border: 1px solid var(--color-card-border);
+  border: 1px solid #e8d8ce;
   border-radius: 18px;
   padding: 22px 20px;
 }
 
 .plan-card--recommended {
-  background: var(--color-theme-btn-active-bg);
-  border-color: var(--color-primary);
+  background: #fff8e9;
+  border-color: #fedcac;
 }
 
 .plan-card--selected {
@@ -124,7 +119,7 @@ h3 {
 
 .plan-card__heading p:not(.card-label),
 .feature-list {
-  color: var(--color-text-muted);
+  color: #5f5f5f;
   font-size: 14px;
 }
 
@@ -132,21 +127,21 @@ h3 {
   display: grid;
   min-width: 68px;
   justify-items: center;
-  border: 1px solid var(--color-card-border);
+  border: 1px solid #dcd5ce;
   border-radius: 14px;
   padding: 10px 12px;
 }
 
 .price-box strong,
 .recommended-price strong {
-  color: var(--color-text-strong);
+  color: #431500;
   font-size: 24px;
   line-height: 1.1;
 }
 
 .price-box span,
 .recommended-price span {
-  color: var(--color-text-muted);
+  color: #6a625b;
   font-size: 12px;
 }
 
@@ -160,9 +155,9 @@ h3 {
   position: relative;
   display: inline-flex;
   align-items: center;
-  border: 1px solid var(--color-card-border);
+  border: 1px solid #d6d2ce;
   border-radius: 999px;
-  background: var(--color-card-bg);
+  background: #ffffff;
   margin-top: 24px;
   padding: 4px;
 }
@@ -174,7 +169,7 @@ h3 {
   width: calc((100% - 8px) / 2);
   height: calc(100% - 8px);
   border-radius: 999px;
-  background: var(--color-theme-btn-active-bg);
+  background: #fff7e1;
   content: '';
   transition: transform 160ms ease;
 }
@@ -190,7 +185,7 @@ h3 {
   border: 0;
   border-radius: 999px;
   background: transparent;
-  color: var(--color-text-primary);
+  color: #3f2d20;
   cursor: pointer;
   font: inherit;
   font-weight: 700;
@@ -208,7 +203,7 @@ h3 {
 .billing-toggle__button--active {
   background: transparent;
   box-shadow: none;
-  color: var(--color-label-accent);
+  color: #6f2700;
 }
 
 .feature-list {
@@ -228,7 +223,7 @@ h3 {
 .feature-list mat-icon {
   width: 18px;
   height: 18px;
-  color: var(--color-primary);
+  color: #f38313;
   font-size: 18px;
 }
 
@@ -241,7 +236,7 @@ h3 {
   min-height: 50px;
   border: 0;
   border-radius: 999px;
-  background: var(--color-primary);
+  background: #f38313;
   color: #ffffff;
   cursor: pointer;
   font: inherit;
@@ -270,15 +265,15 @@ h3 {
 
 .secondary-primary-action {
   border: 0;
-  background: var(--color-primary);
+  background: #f38313;
   color: #ffffff;
   box-shadow: 0 14px 28px rgb(243 131 19 / 28%);
 }
 
 .secondary-outline-action {
-  border: 1px solid var(--color-card-border);
-  background: var(--color-card-bg);
-  color: var(--color-label-accent);
+  border: 1px solid #d8d2cb;
+  background: #ffffff;
+  color: #5a260f;
 }
 
 .primary-action:hover {

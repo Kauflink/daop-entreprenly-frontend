@@ -4,9 +4,9 @@
 
 .billing-panel {
   min-height: 360px;
-  border: 1px solid var(--color-card-border);
+  border: 1px solid #d8d2cb;
   border-radius: 18px;
-  background: var(--color-card-bg);
+  background: #ffffff;
   box-shadow: 0 18px 34px rgb(53 48 43 / 10%);
   padding: 22px 18px 18px;
 }
@@ -14,8 +14,8 @@
 .eyebrow {
   display: inline-flex;
   border-radius: 999px;
-  background: var(--color-inner-bg);
-  color: var(--color-label-accent);
+  background: #f0e8e3;
+  color: #5a260f;
   font-size: 11px;
   font-weight: 800;
   letter-spacing: 1.4px;
@@ -47,15 +47,15 @@ h2 {
 .billing-card {
   display: grid;
   min-height: 164px;
-  border: 1px solid var(--color-inner-bg);
+  border: 1px solid #eadbd0;
   border-radius: 14px;
   background: #fffdf9;
   padding: 18px 16px 14px;
 }
 
 .billing-card--complete {
-  border-color: var(--color-success);
-  background: var(--color-inner-bg);
+  border-color: #b9e2c8;
+  background: #f3fbf5;
 }
 
 .billing-card__body {
@@ -71,8 +71,8 @@ h2 {
   height: 36px;
   place-items: center;
   border-radius: 12px;
-  background: var(--color-theme-btn-active-bg);
-  color: var(--color-label-accent);
+  background: #fff2d8;
+  color: #6f2700;
 }
 
 .billing-card__icon mat-icon {
@@ -88,38 +88,19 @@ h2 {
 }
 
 .billing-card p {
-  color: var(--color-text-muted);
+  color: #666666;
   font-size: 14px;
   line-height: 1.6;
   margin-top: 6px;
 }
 
-.billing-card__status,
-.billing-card__meta {
-  display: block;
-  font-size: 11px;
-  font-weight: 850;
-  letter-spacing: 1.1px;
-  line-height: 1.35;
-  margin-top: 8px;
-  text-transform: uppercase;
-}
-
-.billing-card__status {
-  color: var(--color-primary);
-}
-
-.billing-card__meta {
-  color: var(--color-text-muted);
-}
-
 .billing-card button {
   align-self: end;
   min-height: 52px;
-  border: 1px solid var(--color-card-border);
+  border: 1px solid #d8d2cb;
   border-radius: 999px;
-  background: var(--color-card-bg);
-  color: var(--color-label-accent);
+  background: #ffffff;
+  color: #5a260f;
   cursor: pointer;
   font: inherit;
   font-weight: 800;
@@ -128,7 +109,7 @@ h2 {
 
 .billing-card button:hover,
 .billing-card button:focus-visible {
-  border-color: var(--color-primary);
+  border-color: #f38313;
   outline: 3px solid rgb(243 131 19 / 28%);
   outline-offset: 3px;
 }

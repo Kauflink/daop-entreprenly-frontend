@@ -1,33 +1,27 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Observable, catchError, map, of, switchMap } from 'rxjs';
+import { TranslateService } from '@ngx-translate/core';
 import { environment } from '../../../environments/environment';
-import { BillingSetup } from '../domain/model/billing-setup.entity';
 import { SubscriptionDashboard } from '../domain/model/subscription-dashboard.entity';
-import { BillingCycle } from '../domain/model/subscription-plan.entity';
 import { SubscriptionAssembler } from './subscription-assembler';
 import {
   ACTIVE_SUBSCRIPTION_DASHBOARD_RESPONSE,
   SUBSCRIPTION_DASHBOARD_RESPONSE,
 } from './subscription-dashboard.mock';
-import { SubscriptionDashboardResponse, SubscriptionPlanResponse } from './subscription-response';
+import { SubscriptionDashboardResponse } from './subscription-response';
 
 @Injectable({
   providedIn: 'root',
 })
 export class SubscriptionApi {
   private readonly http = inject(HttpClient);
+  private readonly translate = inject(TranslateService);
   private readonly baseUrl = environment.entreprenlyProviderApiBaseUrl;
   private readonly subscriptionDashboardEndpoint =
     environment.entreprenlyProviderSubscriptionDashboardEndpointPath;
   private readonly subscriptionActivationEndpoint =
     environment.entreprenlyProviderSubscriptionActivationEndpointPath;
-
-  private readonly longDateFormatter = new Intl.DateTimeFormat('es-PE', {
-    day: 'numeric',
-    month: 'long',
-    year: 'numeric',
-  });
 
   getSubscriptionDashboard(): Observable<SubscriptionDashboard> {
     return this.http
@@ -38,19 +32,11 @@ export class SubscriptionApi {
       );
   }
 
-  activateControlPlan(
-    billingCycle: BillingCycle,
-    currentDashboard: SubscriptionDashboard,
-  ): Observable<SubscriptionDashboard> {
+  activateControlPlan(): Observable<SubscriptionDashboard> {
     return this.http
       .get<SubscriptionDashboardResponse>(`${this.baseUrl}${this.subscriptionActivationEndpoint}`)
       .pipe(
         catchError(() => of(ACTIVE_SUBSCRIPTION_DASHBOARD_RESPONSE)),
-        map((response) => ({
-          ...response,
-          billingSetup: this.toDashboardResponseFromEntity(currentDashboard).billingSetup,
-        })),
-        map((response) => this.withNewSubscriptionPeriod(response, billingCycle)),
         switchMap((response) => this.saveSubscriptionDashboard(response)),
         map((response) => SubscriptionAssembler.toEntityFromResponse(response)),
       );
@@ -105,7 +91,7 @@ export class SubscriptionApi {
         ...response.currentPlan,
         currentPeriodStartDate: startDateText,
         currentPeriodEndDate: endDateText,
-        shortDescription: `Tu plan sigue activo hasta el ${endDateLabel}. Se renovará automáticamente.`,
+        shortDescription: 'subscription.plans.control.shortDescription.active',
       },
     });
   }
@@ -121,12 +107,14 @@ export class SubscriptionApi {
       currentPlan: {
         ...currentPlan,
         status: 'scheduled-cancellation',
-        statusLabel: 'Cancelación programada',
-        shortDescription: `Tu plan sigue activo hasta el ${endDateLabel}. No se renovará automáticamente.`,
+        statusLabel: 'subscription.plans.control.statusLabel.scheduled-cancellation',
+        shortDescription: 'subscription.plans.control.shortDescription.scheduled-cancellation',
       },
       activity: this.withSubscriptionActivity(response, {
-        statusDetail: `Cancelación programada - S/ ${currentPlan.monthlyPrice}/mes`,
-        billingDetail: `Acceso vigente hasta el ${endDateLabel} - sin siguiente cobro`,
+        statusDetail: 'subscription.activity.current-status.detail.scheduled-cancellation',
+        billingDetail: this.translate.instant('subscription.activity.billing.detail.accessUntil', {
+          date: endDateLabel,
+        }),
       }),
     };
   }
@@ -140,14 +128,15 @@ export class SubscriptionApi {
       currentPlan: {
         ...currentPlan,
         status: 'active',
-        statusLabel: 'Plan Control activo',
-        shortDescription: `Tu plan sigue activo hasta el ${endDateLabel}. Se renovará automáticamente.`,
+        statusLabel: 'subscription.plans.control.statusLabel.active',
+        shortDescription: 'subscription.plans.control.shortDescription.active',
       },
       activity: this.withSubscriptionActivity(response, {
-        statusDetail: `Plan Control activo - S/ ${currentPlan.monthlyPrice}/mes`,
-        billingDetail: `Próxima renovación: ${endDateLabel} - ${this.billingCycleLabel(
-          response.defaultBillingCycle,
-        )}`,
+        statusDetail: 'subscription.activity.current-status.detail.active',
+        billingDetail: this.translate.instant('subscription.activity.billing.detail.renewalWithDate', {
+          date: endDateLabel,
+          cycle: this.translate.instant(this.billingCycleKey(response.defaultBillingCycle)),
+        }),
       }),
     };
   }
@@ -161,17 +150,17 @@ export class SubscriptionApi {
     return [
       existingCreatedAccount ?? {
         id: 'created-account',
-        title: 'Cuenta creada',
-        detail: '16 abril 2026 - Plan Free asignado automáticamente',
+        title: 'subscription.activity.created-account.title',
+        detail: 'subscription.activity.created-account.detail',
       },
       {
         id: 'current-status',
-        title: 'Estado actual',
+        title: 'subscription.activity.current-status.title',
         detail: activity.statusDetail,
       },
       {
         id: 'billing',
-        title: 'Facturación',
+        title: 'subscription.activity.billing.title',
         detail: activity.billingDetail,
       },
     ];
@@ -267,10 +256,7 @@ export class SubscriptionApi {
     response: SubscriptionDashboardResponse,
   ): Observable<SubscriptionDashboardResponse> {
     return this.http
-      .put<SubscriptionDashboardResponse>(
-        `${this.baseUrl}${this.subscriptionDashboardEndpoint}`,
-        response,
-      )
+      .put<SubscriptionDashboardResponse>(`${this.baseUrl}${this.subscriptionDashboardEndpoint}`, response)
       .pipe(catchError(() => of(response)));
   }
 
@@ -326,11 +312,17 @@ export class SubscriptionApi {
 
   private formatDate(dateValue: string | undefined): string {
     const date = this.toLocalDate(dateValue);
+    if (date === null) {
+      return this.translate.instant('subscription.activity.billing.detail.unknownDate');
+    }
 
-    return date === null ? 'la fecha registrada en tu suscripción' : this.longDateFormatter.format(date);
+    const locale = this.translate.currentLang === 'en' ? 'en-US' : 'es-PE';
+    return new Intl.DateTimeFormat(locale, { day: 'numeric', month: 'long', year: 'numeric' }).format(date);
   }
 
-  private billingCycleLabel(billingCycle: BillingCycle): string {
-    return billingCycle === 'annual' ? 'pago anual' : 'pago mensual';
+  private billingCycleKey(billingCycle: BillingCycle): string {
+    return billingCycle === 'annual'
+      ? 'subscription.overview.priceLabel.annual'
+      : 'subscription.overview.priceLabel.monthly';
   }
 }
