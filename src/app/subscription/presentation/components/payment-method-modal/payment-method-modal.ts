@@ -3,13 +3,12 @@ import { ChangeDetectionStrategy, Component, computed, inject, output } from '@a
 import { toSignal } from '@angular/core/rxjs-interop';
 import { NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { startWith } from 'rxjs';
-import { TranslatePipe } from '@ngx-translate/core';
 import { BillingPaymentMethodInput, detectCardBrand } from '../../../domain/model/billing-setup.entity';
 import { CardBrandBadge } from '../card-brand-badge/card-brand-badge';
 
 @Component({
   selector: 'app-payment-method-modal',
-  imports: [CdkTrapFocus, ReactiveFormsModule, CardBrandBadge, TranslatePipe],
+  imports: [CdkTrapFocus, ReactiveFormsModule, CardBrandBadge],
   templateUrl: './payment-method-modal.html',
   styleUrl: './payment-method-modal.css',
   changeDetection: ChangeDetectionStrategy.OnPush,

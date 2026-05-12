@@ -11,7 +11,7 @@
     @for (limit of limits(); track limit.id) {
       <article class="limit-item">
         <div class="limit-item__header">
-          <h3>{{ limit.label | translate }}</h3>
+          <h3>{{ limit.label }}</h3>
           @if (controlPlanAccessEnabled()) {
             <p>{{ limitValueLabel(limit) }}</p>
           } @else {
@@ -26,7 +26,7 @@
         <div
           class="progress-track"
           role="progressbar"
-          [attr.aria-label]="'subscription.limits.' + limit.id + '.ariaLabel' | translate"
+          [attr.aria-label]="'Uso de ' + limit.label"
           [attr.aria-valuenow]="limit.usedValue"
           aria-valuemin="0"
           [attr.aria-valuemax]="limit.maxValue > 0 ? limit.maxValue : null"

@@ -1,6 +1,6 @@
-import { ChangeDetectionStrategy, Component, computed, inject, input, output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, input, output } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
-import { TranslatePipe, TranslateService } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { BillingCycle, SubscriptionPlan } from '../../../domain/model/subscription-plan.entity';
 
 @Component({
@@ -18,8 +18,9 @@ export class PlanOverview {
 
   readonly billingCycleSelected = output<BillingCycle>();
   readonly controlPlanRequested = output<void>();
-
-  private readonly translate = inject(TranslateService);
+  readonly renewalRequested = output<void>();
+  readonly cancellationRequested = output<void>();
+  readonly keepPlanRequested = output<void>();
 
   protected readonly selectedPrice = computed(() =>
     this.selectedCycle() === 'monthly'
@@ -27,20 +28,13 @@ export class PlanOverview {
       : this.recommendedPlan().annualPrice,
   );
   protected readonly selectedPriceLabel = computed(() =>
-    this.selectedCycle() === 'monthly'
-      ? 'subscription.overview.priceLabel.monthly'
-      : 'subscription.overview.priceLabel.annual',
+    this.selectedCycle() === 'monthly' ? 'pago mensual' : 'pago anual',
   );
   protected readonly currentPlanPriceLabel = computed(() =>
-    this.currentPlan().monthlyPrice === 0
-      ? 'subscription.overview.priceLabel.free'
-      : 'subscription.overview.priceLabel.monthly',
+    this.currentPlan().monthlyPrice === 0 ? 'por mes' : 'pago mensual',
   );
-  protected readonly currentPlanPriceAriaLabel = computed(() =>
-    this.translate.instant('subscription.overview.priceAriaLabel', {
-      price: this.currentPlan().monthlyPrice,
-      label: this.translate.instant(this.currentPlanPriceLabel()),
-    }),
+  protected readonly currentPlanPriceAriaLabel = computed(
+    () => `Costo actual ${this.currentPlan().monthlyPrice} soles ${this.currentPlanPriceLabel()}`,
   );
   protected readonly planControlCurrentPlan = computed(() =>
     ['active', 'scheduled-cancellation'].includes(this.currentPlan().status),
@@ -49,9 +43,7 @@ export class PlanOverview {
     () => this.currentPlan().status === 'scheduled-cancellation',
   );
   protected readonly cancellationActionLabel = computed(() =>
-    this.cancellationScheduled()
-      ? 'subscription.overview.keepPlanAction'
-      : 'subscription.overview.cancelAction',
+    this.cancellationScheduled() ? 'Mantener plan' : 'Solicitar cancelación',
   );
 
   protected selectBillingCycle(cycle: BillingCycle): void {
@@ -60,5 +52,18 @@ export class PlanOverview {
 
   protected requestControlPlan(): void {
     this.controlPlanRequested.emit();
+  }
+
+  protected requestRenewal(): void {
+    this.renewalRequested.emit();
+  }
+
+  protected requestCancellationAction(): void {
+    if (this.cancellationScheduled()) {
+      this.keepPlanRequested.emit();
+      return;
+    }
+
+    this.cancellationRequested.emit();
   }
 }

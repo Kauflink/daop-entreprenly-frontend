@@ -1,6 +1,6 @@
-import { ChangeDetectionStrategy, Component, computed, inject, input, output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, input, output } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
-import { TranslatePipe, TranslateService } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { BillingSetup as BillingSetupEntity } from '../../../domain/model/billing-setup.entity';
 import { SubscriptionActivity as SubscriptionActivityEntity } from '../../../domain/model/subscription-activity.entity';
 
@@ -13,21 +13,20 @@ import { SubscriptionActivity as SubscriptionActivityEntity } from '../../../dom
 })
 export class SubscriptionActivity {
   readonly activity = input.required<SubscriptionActivityEntity[]>();
+  readonly billingSetup = input.required<BillingSetupEntity>();
 
   readonly historyDownloadRequested = output<void>();
-
-  private readonly translate = inject(TranslateService);
 
   protected readonly activityRows = computed(() => [
     ...this.activity(),
     new SubscriptionActivityEntity({
       id: 'payment-method',
-      title: 'subscription.history.paymentMethod.title',
+      title: 'Método de pago',
       detail: this.paymentMethodDetail(),
     }),
     new SubscriptionActivityEntity({
       id: 'fiscal-data',
-      title: 'subscription.history.fiscalData.title',
+      title: 'Datos fiscales',
       detail: this.fiscalDataDetail(),
     }),
   ]);
@@ -42,26 +41,19 @@ export class SubscriptionActivity {
       this.billingSetup().paymentMethods.at(-1);
 
     if (!paymentMethod) {
-      return this.translate.instant('subscription.history.paymentMethod.empty');
+      return 'Sin método de pago registrado.';
     }
 
-    return this.translate.instant('subscription.history.paymentMethod.detail', {
-      brand: paymentMethod.cardBrand,
-      lastFour: paymentMethod.lastFour,
-    });
+    return `${paymentMethod.cardBrand} terminada en ${paymentMethod.lastFour} registrada para pagos y renovaciones`;
   }
 
   private fiscalDataDetail(): string {
     const fiscalData = this.billingSetup().fiscalData;
 
     if (fiscalData === null) {
-      return this.translate.instant('subscription.history.fiscalData.empty');
+      return 'Datos fiscales pendientes de completar.';
     }
 
-    return this.translate.instant('subscription.history.fiscalData.detail', {
-      documentType: fiscalData.documentType,
-      documentNumber: fiscalData.documentNumber,
-      businessName: fiscalData.businessName,
-    });
+    return `${fiscalData.documentType} ${fiscalData.documentNumber} - ${fiscalData.businessName}`;
   }
 }
