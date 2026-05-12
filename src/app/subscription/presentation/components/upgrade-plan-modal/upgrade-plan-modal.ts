@@ -13,6 +13,7 @@ import { toSignal } from '@angular/core/rxjs-interop';
 import { NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { startWith } from 'rxjs';
+import { CurrencyService } from '../../../../shared/infrastructure/currency-service';
 import {
   BillingFiscalData,
   BillingPaymentMethodInput,
@@ -52,6 +53,7 @@ export class UpgradePlanModal implements OnInit {
 
   private readonly formBuilder = inject(NonNullableFormBuilder);
   private readonly translate = inject(TranslateService);
+  private readonly currencyAssembler = inject(CurrencyService);
   protected readonly activeStep = signal<UpgradeStep>('plan');
   protected readonly activated = signal(false);
   protected readonly selectedPaymentMethodId = signal('');
@@ -93,7 +95,8 @@ export class UpgradePlanModal implements OnInit {
   protected readonly planPrice = computed(() =>
     this.billingCycle() === 'monthly' ? this.plan().monthlyPrice : this.plan().annualPrice,
   );
-  protected readonly planPriceLabelKey = computed(() =>
+  protected readonly formattedPlanPrice = computed(() => this.currencyAssembler.format(this.planPrice()));
+  protected readonly planPriceSuffixKey = computed(() =>
     this.billingCycle() === 'monthly'
       ? 'subscription.upgrade.plan.priceLabel.monthly'
       : 'subscription.upgrade.plan.priceLabel.annual',

@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { CurrencyStore } from '../../../../shared/application/currency.store';
+import { CurrencyService } from '../../../../shared/infrastructure/currency-service';
 import { InventoryStoreService } from '../../../application/inventory-store.service';
 import { Router } from '@angular/router';
 import { RouterOutlet } from '@angular/router';
@@ -20,7 +20,7 @@ import { MatProgressSpinner } from '@angular/material/progress-spinner';
 export class UnitProductListComponent {
   readonly store         = inject(InventoryStoreService);
   readonly router        = inject(Router);
-  readonly currencyStore = inject(CurrencyStore);
+  readonly currencyAssembler = inject(CurrencyService);
 
   displayedColumns: string[] = ['id', 'name', 'description', 'codeQR', 'price', 'weightGrams', 'brand', 'actions'];
 
