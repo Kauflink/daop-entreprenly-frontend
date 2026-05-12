@@ -617,6 +617,113 @@
       "subtitle": "Hubo un problema al enviar tu reporte. Por favor intenta nuevamente o contáctanos directamente.",
       "retry": "Intentar de nuevo",
       "backToHome": "Volver al inicio"
+    },
+    "categoryNames": {
+      "inventario": "Inventario",
+      "chatbot": "Chatbot",
+      "pedidos": "Pedidos y Pagos",
+      "reportes": "Reportes",
+      "suscripcion": "Suscripción",
+      "configuracion": "Configuración",
+      "ventas": "Ventas · Caja",
+      "lotes": "Lotes"
+    },
+    "problemCategories": [
+      "-- Selecciona una categoría --",
+      "Inventario / Productos",
+      "Chatbot / WhatsApp",
+      "Pedidos y Pagos",
+      "Ventas y Caja",
+      "Suscripción",
+      "Reportes",
+      "Configuración",
+      "Otro"
+    ],
+    "modules": [
+      "Inventario", "Chatbot", "Pedidos", "Ventas",
+      "Suscripción", "Reportes", "Configuración", "General"
+    ],
+    "articles": {
+      "1": {
+        "title": "¿Cómo agregar un producto al inventario?",
+        "category": "Inventario",
+        "steps": [
+          "Ve al módulo <strong>Inventario</strong> en el panel lateral.",
+          "Selecciona \"Productos\" y luego haz clic en <strong>Agregar producto</strong>.",
+          "Completa el formulario: nombre, precio y stock inicial.",
+          "Guarda los cambios — el producto aparecerá en el catálogo de inmediato."
+        ]
+      },
+      "2": {
+        "title": "¿Cómo conectar el chatbot de WhatsApp?",
+        "category": "Chatbot",
+        "steps": [
+          "Ve al módulo <strong>Chatbot</strong> en el panel de configuración.",
+          "Pulsa <strong>\"Conectar WhatsApp\"</strong> para mostrar el código QR.",
+          "Escanea el código QR desde tu app de <strong>WhatsApp Business</strong> en tu teléfono.",
+          "¡Listo! El chatbot ya está activo y puede recibir y responder mensajes."
+        ]
+      },
+      "3": {
+        "title": "¿Cómo validar un pago desde el dashboard?",
+        "category": "Pedidos y Pago",
+        "steps": [
+          "Accede al módulo <strong>Pedidos</strong> desde el panel lateral.",
+          "Filtra los pedidos con estado \"Esperando comprobante\".",
+          "Abre el pedido y revisa la imagen del comprobante enviado.",
+          "Pulsa <strong>Aprobar pago</strong> si es válido, o <strong>Rechazar</strong> con un motivo."
+        ]
+      },
+      "4": {
+        "title": "¿Cómo gestionar fechas de caducidad en lotes?",
+        "category": "Lotes",
+        "steps": [
+          "Ve al módulo <strong>Inventario</strong> y selecciona la pestaña <strong>Lotes</strong>.",
+          "Revisa la columna \"Fecha de vencimiento\" — los próximos a vencer están resaltados.",
+          "Los lotes críticos generan <strong>alertas de stock</strong> automáticamente en el home.",
+          "Edita un lote para ajustar la fecha o la cantidad disponible."
+        ]
+      },
+      "5": {
+        "title": "¿Cómo consultar el resumen de caja diario?",
+        "category": "Ventas · Caja",
+        "steps": [
+          "Ve al módulo <strong>Ventas</strong> desde el panel lateral.",
+          "El resumen de caja aparece en el panel lateral derecho.",
+          "Muestra el <strong>Total del día</strong>, Efectivo y Yape/Plin por separado.",
+          "Se actualiza automáticamente con cada venta finalizada."
+        ]
+      },
+      "6": {
+        "title": "¿Qué hacer si el chatbot se desconecta?",
+        "category": "Chatbot",
+        "steps": [
+          "Ve al módulo <strong>Chatbot</strong> — verás un aviso de \"Sesión expirada\" en rojo.",
+          "Pulsa <strong>\"Volver a vincular\"</strong> para iniciar la reconexión.",
+          "Escanea el nuevo código QR desde tu WhatsApp Business.",
+          "El chatbot retomará su actividad con normalidad."
+        ]
+      },
+      "7": {
+        "title": "¿El chatbot puede enviar comprobantes automáticamente?",
+        "category": "Chatbot",
+        "steps": [
+          "El chatbot <strong>recibe</strong> comprobantes enviados por los clientes vía WhatsApp.",
+          "Los muestra automáticamente en el módulo <strong>Pedidos</strong> del dashboard.",
+          "El comerciante debe <strong>validarlos manualmente</strong> — el sistema no los aprueba solo.",
+          "Tras la validación, el cliente recibe una confirmación automática por WhatsApp."
+        ]
+      },
+      "8": {
+        "title": "¿Cómo validar un pago?",
+        "category": "Pedidos y Pagos",
+        "steps": [
+          "Accede al módulo <strong>Pedidos</strong>.",
+          "Selecciona el pedido pendiente de validación.",
+          "Revisa el comprobante adjunto por el cliente.",
+          "Aprueba o rechaza el pago según corresponda."
+        ]
+      }
     }
   }
 }
