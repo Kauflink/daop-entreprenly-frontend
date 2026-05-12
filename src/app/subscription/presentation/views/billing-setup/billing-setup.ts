@@ -1,6 +1,6 @@
-import { ChangeDetectionStrategy, Component, computed, input, output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, input, output } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
-import { TranslatePipe } from '@ngx-translate/core';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { BillingSetup as BillingSetupEntity } from '../../../domain/model/billing-setup.entity';
 
 @Component({
@@ -16,6 +16,8 @@ export class BillingSetup {
   readonly paymentMethodRequested = output<void>();
   readonly fiscalDataRequested = output<void>();
 
+  private readonly translate = inject(TranslateService);
+
   protected readonly primaryPaymentMethod = computed(
     () =>
       this.billingSetup().paymentMethods.find((paymentMethod) => paymentMethod.isDefault) ??
@@ -26,14 +28,21 @@ export class BillingSetup {
 
   protected readonly hasPaymentMethod = computed(() => this.primaryPaymentMethod() !== null);
   protected readonly hasFiscalData = computed(() => this.fiscalData() !== null);
-  protected readonly paymentActionLabel = computed(() =>
-    this.hasPaymentMethod() ? 'Agregar métodos de pago' : this.billingSetup().paymentMethodActionLabel,
+  protected readonly paymentActionLabelKey = computed(
+    () => 'subscription.billing.paymentMethod.addAction',
   );
-  protected readonly fiscalActionLabel = computed(() =>
-    this.hasFiscalData() ? 'Editar datos' : this.billingSetup().fiscalDataActionLabel,
+  protected readonly fiscalActionLabelKey = computed(() =>
+    this.hasFiscalData()
+      ? 'subscription.billing.fiscalData.editAction'
+      : 'subscription.billing.fiscalData.addAction',
   );
   protected readonly extraPaymentMethodCount = computed(() =>
     Math.max(this.billingSetup().paymentMethods.length - 1, 0),
+  );
+  protected readonly extraPaymentMethodLabelKey = computed(() =>
+    this.extraPaymentMethodCount() === 1
+      ? 'subscription.billing.paymentMethod.additionalMethod'
+      : 'subscription.billing.paymentMethod.additionalMethods',
   );
 
   protected requestPaymentMethod(): void {
@@ -42,5 +51,13 @@ export class BillingSetup {
 
   protected requestFiscalData(): void {
     this.fiscalDataRequested.emit();
+  }
+
+  protected cardBrandLabel(cardBrand: string): string {
+    const normalizedBrand = cardBrand.trim().toLowerCase();
+
+    return ['tarjeta', 'card'].includes(normalizedBrand)
+      ? this.translate.instant('subscription.cardBrand.generic')
+      : cardBrand;
   }
 }
