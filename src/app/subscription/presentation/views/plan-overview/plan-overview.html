@@ -8,7 +8,7 @@
       </p>
     </div>
     <span class="status-badge" [class.status-badge--warning]="cancellationScheduled()">
-      {{ currentPlan().statusLabel }}
+      {{ statusLabelKey(currentPlan()) | translate }}
     </span>
   </div>
 
@@ -16,21 +16,31 @@
     <article class="plan-card" aria-labelledby="current-plan-title">
       <div class="plan-card__heading">
         <div>
-          <p class="card-label">{{ currentPlan().badgeLabel }}</p>
-          <h3 id="current-plan-title">{{ currentPlan().name }}</h3>
-          <p>{{ currentPlan().shortDescription }}</p>
+          <p class="card-label">{{ currentPlanBadgeLabelKey(currentPlan()) | translate }}</p>
+          <h3 id="current-plan-title">{{ planNameKey(currentPlan()) | translate }}</h3>
+          <p>{{ shortDescriptionKey(currentPlan()) | translate: currentPlanDescriptionParams() }}</p>
         </div>
-        <div class="price-box" [attr.aria-label]="currentPlanPriceAriaLabel()">
+        <div
+          class="price-box"
+          [attr.aria-label]="
+            'subscription.overview.priceAriaLabel'
+              | translate
+                : {
+                    price: currentPlan().monthlyPrice,
+                    label: (currentPlanPriceLabelKey() | translate)
+                  }
+          "
+        >
           <strong>S/ {{ currentPlan().monthlyPrice }}</strong>
-          <span>{{ currentPlanPriceLabel() }}</span>
+          <span>{{ currentPlanPriceLabelKey() | translate }}</span>
         </div>
       </div>
 
       <ul class="feature-list">
-        @for (feature of currentPlan().features; track feature.description) {
+        @for (feature of currentPlan().features; track feature.description; let index = $index) {
           <li>
             <mat-icon aria-hidden="true">check</mat-icon>
-            <span>{{ feature.description }}</span>
+            <span>{{ featureKey(currentPlan(), index) | translate }}</span>
           </li>
         }
       </ul>
@@ -38,14 +48,14 @@
       @if (planControlCurrentPlan()) {
         <div class="plan-card__actions">
           <button class="secondary-primary-action" type="button" (click)="requestRenewal()">
-            Renovar suscripción
+            {{ 'subscription.overview.renewAction' | translate }}
           </button>
           <button
             class="secondary-outline-action"
             type="button"
             (click)="requestCancellationAction()"
           >
-            {{ cancellationActionLabel() }}
+            {{ cancellationActionLabelKey() | translate }}
           </button>
         </div>
       }
@@ -58,12 +68,12 @@
     >
       <div class="plan-card__heading">
         <div>
-          <p class="card-label card-label--accent">{{ recommendedPlan().badgeLabel }}</p>
-          <h3 id="recommended-plan-title">{{ recommendedPlan().name }}</h3>
+          <p class="card-label card-label--accent">{{ recommendedPlanBadgeLabelKey() | translate }}</p>
+          <h3 id="recommended-plan-title">{{ planNameKey(recommendedPlan()) | translate }}</h3>
         </div>
         <div class="recommended-price">
           <strong>S/ {{ selectedPrice() }}</strong>
-          <span>{{ selectedPriceLabel() }}</span>
+          <span>{{ selectedPriceLabelKey() | translate }}</span>
         </div>
       </div>
 
@@ -92,10 +102,10 @@
       </div>
 
       <ul class="feature-list feature-list--recommended">
-        @for (feature of recommendedPlan().features; track feature.description) {
+        @for (feature of recommendedPlan().features; track feature.description; let index = $index) {
           <li>
             <mat-icon aria-hidden="true">check</mat-icon>
-            <span>{{ feature.description }}</span>
+            <span>{{ featureKey(recommendedPlan(), index) | translate }}</span>
           </li>
         }
       </ul>
