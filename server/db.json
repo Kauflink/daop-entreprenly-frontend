@@ -336,6 +336,12 @@
       "date": "2026-05-11",
       "totalCash": 0,
       "totalDigital": 0
+    },
+    {
+      "id": 2,
+      "date": "2026-05-12",
+      "totalCash": 5,
+      "totalDigital": 0
     }
   ],
   "iot-scale": {
@@ -700,7 +706,7 @@
     },
     "preferences": {
       "id": 1,
-      "language": "es",
+      "language": "en",
       "timezone": "America/Bogota (UTC-05:00)",
       "theme": "light"
     },
@@ -718,7 +724,7 @@
       "phone": "+51 999 888 777",
       "businessName": "Bodega El Huerto",
       "status": "connected",
-      "connectedAt": "11/5/2026, 2:06:36 p. m."
+      "connectedAt": "11/5/2026, 9:55:04 p. m."
     }
   ],
   "conversations": [
@@ -844,7 +850,7 @@
       "sender": "system",
       "type": "text",
       "sentAt": "2026-04-15T10:04:10.000Z",
-      "content": "Sistema: direccion de entrega no registrada - bot solicita al cliente"
+      "content": "chatbot.sys.deliveryNotRegistered"
     },
     {
       "id": 10,
@@ -868,7 +874,7 @@
       "sender": "system",
       "type": "text",
       "sentAt": "2026-04-15T10:05:10.000Z",
-      "content": "Sistema: pedido #0042 registrado - estado: pendiente - 10:05"
+      "content": "chatbot.sys.orderRegistered|#0042|10:05"
     },
     {
       "id": 13,
@@ -892,7 +898,7 @@
       "sender": "system",
       "type": "text",
       "sentAt": "2026-04-15T10:18:10.000Z",
-      "content": "Sistema: comprobante recibido - pendiente de validacion - 10:18"
+      "content": "chatbot.sys.receiptReceived|10:18"
     },
     {
       "id": 16,
@@ -1004,7 +1010,7 @@
       "sender": "system",
       "type": "text",
       "sentAt": "2026-04-15T09:36:10.000Z",
-      "content": "Sistema: direccion de entrega no registrada - bot solicita al cliente"
+      "content": "chatbot.sys.deliveryNotRegistered"
     },
     {
       "id": 30,
@@ -1028,7 +1034,7 @@
       "sender": "system",
       "type": "text",
       "sentAt": "2026-04-15T09:37:10.000Z",
-      "content": "Sistema: pedido #0044 registrado - estado: pendiente - 09:37"
+      "content": "chatbot.sys.orderRegistered|#0044|09:37"
     },
     {
       "id": 33,
@@ -1052,7 +1058,7 @@
       "sender": "system",
       "type": "text",
       "sentAt": "2026-04-15T10:05:10.000Z",
-      "content": "Sistema: comprobante recibido - pendiente de validacion - 10:05"
+      "content": "chatbot.sys.receiptReceived|10:05"
     },
     {
       "id": 36,
@@ -1068,7 +1074,7 @@
       "sender": "system",
       "type": "text",
       "sentAt": "2026-04-15T10:20:00.000Z",
-      "content": "Sistema: pago validado por el comerciante - 10:20"
+      "content": "chatbot.sys.paymentApproved|10:20"
     },
     {
       "id": 38,
@@ -1164,7 +1170,7 @@
       "sender": "system",
       "type": "text",
       "sentAt": "2026-04-14T11:05:10.000Z",
-      "content": "Sistema: pedido #0043 registrado - estado: pendiente - 11:05"
+      "content": "chatbot.sys.orderRegistered|#0043|11:05"
     },
     {
       "id": 50,
@@ -1180,7 +1186,7 @@
       "sender": "system",
       "type": "text",
       "sentAt": "2026-04-14T11:35:00.000Z",
-      "content": "Sistema: sin comprobante recibido - recordatorio automatico enviado - 11:35"
+      "content": "chatbot.sys.noReceiptReminder|11:35"
     },
     {
       "id": 52,
@@ -1196,7 +1202,7 @@
       "sender": "system",
       "type": "text",
       "sentAt": "2026-04-14T12:05:00.000Z",
-      "content": "Sistema: conversacion cerrada por inactividad - sin respuesta del cliente - 12:05"
+      "content": "chatbot.sys.conversationClosed|12:05"
     },
     {
       "id": 54,
@@ -1364,7 +1370,7 @@
       "sender": "system",
       "type": "text",
       "sentAt": "2026-04-15T10:35:10.000Z",
-      "content": "Sistema: pedido #0045 registrado - estado: pendiente - 10:35"
+      "content": "chatbot.sys.orderRegistered|#0045|10:35"
     },
     {
       "id": 75,
@@ -1388,7 +1394,7 @@
       "sender": "system",
       "type": "text",
       "sentAt": "2026-04-15T10:42:10.000Z",
-      "content": "Sistema: comprobante recibido - pendiente de validacion - 10:42"
+      "content": "chatbot.sys.receiptReceived|10:42"
     },
     {
       "id": 78,
@@ -1396,7 +1402,7 @@
       "sender": "system",
       "type": "text",
       "sentAt": "2026-04-15T10:45:00.000Z",
-      "content": "Sistema: comprobante rechazado - imagen ilegible - 10:45"
+      "content": "chatbot.sys.receiptRejected|10:45"
     },
     {
       "id": 79,
@@ -1420,7 +1426,7 @@
       "sender": "system",
       "type": "text",
       "sentAt": "2026-04-15T10:50:00.000Z",
-      "content": "Sistema: pedido bloqueado por multiples rechazos - 10:50"
+      "content": "chatbot.sys.orderBlocked|10:50"
     },
     {
       "id": 82,

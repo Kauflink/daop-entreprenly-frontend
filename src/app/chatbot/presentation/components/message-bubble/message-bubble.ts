@@ -1,5 +1,5 @@
-import { ChangeDetectionStrategy, Component, input } from '@angular/core';
-import { TranslatePipe } from '@ngx-translate/core';
+import { ChangeDetectionStrategy, Component, computed, inject, input } from '@angular/core';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { ChatMessage } from '../../../domain/model/chat-message.entity';
 
 @Component({
@@ -10,7 +10,7 @@ import { ChatMessage } from '../../../domain/model/chat-message.entity';
     @if (message().sender === 'system') {
       <div class="flex justify-center py-1">
         <span class="rounded-full bg-gray-200 px-3 py-0.5 text-xs text-gray-500">
-          {{ message().content }}
+          {{ systemText() }}
         </span>
       </div>
     } @else if (message().sender === 'client') {
@@ -43,6 +43,27 @@ import { ChatMessage } from '../../../domain/model/chat-message.entity';
   `,
 })
 export class MessageBubble {
-  readonly message = input.required<ChatMessage>();
+  readonly message        = input.required<ChatMessage>();
   readonly clientInitials = input<string>('AT');
+
+  private readonly translate = inject(TranslateService);
+
+  /** Traduce mensajes de sistema que usan formato 'chatbot.sys.CLAVE|param1|param2' */
+  protected readonly systemText = computed(() => {
+    const content = this.message().content;
+    if (!content.startsWith('chatbot.sys.')) return content;
+
+    const [key, ...params] = content.split('|');
+    const paramMap: Record<string, string> = {};
+
+    // Mapea los parámetros según la clave
+    if (key === 'chatbot.sys.orderRegistered') {
+      paramMap['orderNumber'] = params[0] ?? '';
+      paramMap['time']        = params[1] ?? '';
+    } else if (params[0]) {
+      paramMap['time'] = params[0];
+    }
+
+    return this.translate.instant(key, paramMap);
+  });
 }
