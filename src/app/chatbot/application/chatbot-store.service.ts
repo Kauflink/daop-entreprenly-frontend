@@ -1,22 +1,35 @@
 import { Injectable, inject, signal, computed } from '@angular/core';
 import { timer } from 'rxjs';
+import { TranslateService } from '@ngx-translate/core';
 import { ChatbotApiService } from '../infrastructure/chatbot-api.service';
 import { Conversation, ConversationStatus } from '../domain/model/conversation.entity';
 import { ChatMessage } from '../domain/model/chat-message.entity';
 import { WhatsappSession } from '../domain/model/whatsapp-session.entity';
 import { ChatOrder, OrderStatus } from '../domain/model/chat-order.entity';
+import { InventoryProduct } from '../domain/model/inventory-product.entity';
 
 @Injectable({ providedIn: 'root' })
 export class ChatbotStoreService {
-  private api = inject(ChatbotApiService);
+  private api       = inject(ChatbotApiService);
+  private translate = inject(TranslateService);
+
+  /** Locale del idioma activo para formatear fechas */
+  private get locale(): string {
+    const lang = this.translate.currentLang ?? this.translate.defaultLang ?? 'es';
+    return lang === 'en' ? 'en-US' : 'es-PE';
+  }
 
   readonly session = signal<WhatsappSession | null>(null);
   readonly isSessionLoaded = signal(false);
   readonly conversations = signal<Conversation[]>([]);
   readonly selectedConversationId = signal<number | null>(null);
   readonly messages = signal<ChatMessage[]>([]);
-  readonly isBotTyping = signal(false);
+  /** CF ●●● — aparece cuando el cliente está "escribiendo" */
+  readonly isClientTyping = signal(false);
+  /** Texto que el bot va escribiendo letra a letra en la barra de input */
+  readonly botInputText = signal('');
   readonly orders = signal<ChatOrder[]>([]);
+  readonly inventoryProducts = signal<InventoryProduct[]>([]);
 
   readonly selectedConversation = computed(() =>
     this.conversations().find(c => c.id === this.selectedConversationId()) ?? null,
@@ -52,6 +65,12 @@ export class ChatbotStoreService {
     });
   }
 
+  loadInventoryProducts(): void {
+    this.api.inventoryProducts.getAll().subscribe(products => {
+      this.inventoryProducts.set(products);
+    });
+  }
+
   private _playId = 0;
 
   selectConversation(id: number): void {
@@ -60,7 +79,8 @@ export class ChatbotStoreService {
 
     this.selectedConversationId.set(id);
     this.messages.set([]);
-    this.isBotTyping.set(false);
+    this.isClientTyping.set(false);
+    this.botInputText.set('');
 
     this.api.chatMessages.getAll().subscribe(all => {
       if (this._playId !== playId) return;
@@ -80,35 +100,71 @@ export class ChatbotStoreService {
 
     for (const msg of msgs) {
       if (msg.sender === 'bot') {
-        const typingAt = t;
-        const msgAt = t + 1200;
+        // Escribe palabra a palabra en la barra de input, luego auto-envía
+        const words = msg.content.split(' ');
+        const msPerWord = 70;
+        const startAt = t;
 
-        timer(typingAt).subscribe(() => {
-          if (this._playId !== playId) return;
-          this.isBotTyping.set(true);
-        });
+        for (let i = 0; i < words.length; i++) {
+          const partial = words.slice(0, i + 1).join(' ');
+          timer(startAt + i * msPerWord).subscribe(() => {
+            if (this._playId !== playId) return;
+            this.botInputText.set(partial);
+          });
+        }
 
-        timer(msgAt).subscribe(() => {
+        const sendAt = startAt + words.length * msPerWord + 250;
+        timer(sendAt).subscribe(() => {
           if (this._playId !== playId) return;
-          this.isBotTyping.set(false);
+          this.botInputText.set('');
           this.messages.update(m => [...m, msg]);
         });
 
-        t = msgAt + 400;
-      } else if (msg.sender === 'system') {
+        t = sendAt + 400;
+
+      } else if (msg.sender === 'client') {
+        // Muestra ●●● en el lado del cliente (CF), luego aparece el mensaje
+        timer(t).subscribe(() => {
+          if (this._playId !== playId) return;
+          this.isClientTyping.set(true);
+        });
+
+        const showAt = t + 900;
+        timer(showAt).subscribe(() => {
+          if (this._playId !== playId) return;
+          this.isClientTyping.set(false);
+          this.messages.update(m => [...m, msg]);
+        });
+
+        t = showAt + 400;
+
+      } else {
+        // system
         timer(t).subscribe(() => {
           if (this._playId !== playId) return;
           this.messages.update(m => [...m, msg]);
         });
         t += 400;
-      } else {
-        timer(t).subscribe(() => {
-          if (this._playId !== playId) return;
-          this.messages.update(m => [...m, msg]);
-        });
-        t += 800;
       }
     }
+  }
+
+  /** Escribe el mensaje del bot palabra a palabra en la barra y lo envía al terminar */
+  private _typewriteAndSend(msg: ChatMessage): void {
+    const words = msg.content.split(' ');
+    const msPerWord = 70;
+
+    for (let i = 0; i < words.length; i++) {
+      const partial = words.slice(0, i + 1).join(' ');
+      timer(i * msPerWord).subscribe(() => this.botInputText.set(partial));
+    }
+
+    timer(words.length * msPerWord + 250).subscribe(() => {
+      this.botInputText.set('');
+      this.api.chatMessages.create(msg).subscribe(created => {
+        this.messages.update(m => [...m, created]);
+      });
+    });
   }
 
   sendMessage(content: string): void {
@@ -135,7 +191,7 @@ export class ChatbotStoreService {
     const updated: WhatsappSession = {
       ...current,
       status: 'connected',
-      connectedAt: new Date().toLocaleString('es-PE'),
+      connectedAt: new Date().toLocaleString(this.locale),
     };
     this.api.whatsappSessions.update(updated, current.id).subscribe(session => {
       this.session.set(session);
@@ -160,29 +216,21 @@ export class ChatbotStoreService {
       this.orders.update(list => list.map(o => o.id === orderId ? confirmed : o));
       this._updateConversationStatus(order.conversationId, 'COMPLETED');
 
-      const time = new Date().toLocaleTimeString('es-PE', { hour: '2-digit', minute: '2-digit' });
+      const time = new Date().toLocaleTimeString(this.locale, { hour: '2-digit', minute: '2-digit' });
       const sysMsg: ChatMessage = {
         id: 0, conversationId: order.conversationId,
-        content: `Sistema: pago validado por el comerciante — ${time}`,
+        content: this.translate.instant('chatbot.messages.sysPaymentApproved', { time }),
         sender: 'system', type: 'text', sentAt: new Date().toISOString(),
       };
       const botMsg: ChatMessage = {
         id: 0, conversationId: order.conversationId,
-        content: `Tu pago fue recibido y verificado correctamente.\nEl pedido ${order.orderNumber} está confirmado y en preparación. ¡Gracias por tu compra!`,
+        content: this.translate.instant('chatbot.messages.botPaymentApproved', { orderNumber: order.orderNumber }),
         sender: 'bot', type: 'text', sentAt: new Date().toISOString(),
       };
 
       this.api.chatMessages.create(sysMsg).subscribe(created => {
         this.messages.update(m => [...m, created]);
-        timer(400).subscribe(() => {
-          this.isBotTyping.set(true);
-          timer(1200).subscribe(() => {
-            this.isBotTyping.set(false);
-            this.api.chatMessages.create(botMsg).subscribe(botCreated => {
-              this.messages.update(m => [...m, botCreated]);
-            });
-          });
-        });
+        timer(400).subscribe(() => this._typewriteAndSend(botMsg));
       });
     });
   }
@@ -209,15 +257,15 @@ export class ChatbotStoreService {
         this._updateConversationStatus(order.conversationId, 'CLOSED');
       }
 
-      const time = new Date().toLocaleTimeString('es-PE', { hour: '2-digit', minute: '2-digit' });
+      const time = new Date().toLocaleTimeString(this.locale, { hour: '2-digit', minute: '2-digit' });
 
       const sysContent = isBlocked
-        ? `Sistema: pedido bloqueado por múltiples rechazos — ${time}`
-        : `Sistema: comprobante rechazado — imagen ilegible — ${time}`;
+        ? this.translate.instant('chatbot.messages.sysBlocked',         { time })
+        : this.translate.instant('chatbot.messages.sysReceiptRejected',  { time });
 
       const botContent = isBlocked
-        ? `Tu pedido ${order.orderNumber} ha sido bloqueado debido a múltiples rechazos de pago.\n\nPara resolver esta situación, comunícate directamente con la bodega:\nTeléfono: 999 888 777`
-        : `Tu comprobante no pudo ser validado.\nMotivo: ${reason}.\n\nEl pedido ${order.orderNumber} ha vuelto al estado Esperando pago.\nPor favor envía un nuevo comprobante.`;
+        ? this.translate.instant('chatbot.messages.botBlocked',         { orderNumber: order.orderNumber })
+        : this.translate.instant('chatbot.messages.botReceiptRejected', { orderNumber: order.orderNumber, reason });
 
       const sysMsg: ChatMessage = {
         id: 0, conversationId: order.conversationId,
@@ -230,15 +278,7 @@ export class ChatbotStoreService {
 
       this.api.chatMessages.create(sysMsg).subscribe(created => {
         this.messages.update(m => [...m, created]);
-        timer(400).subscribe(() => {
-          this.isBotTyping.set(true);
-          timer(1200).subscribe(() => {
-            this.isBotTyping.set(false);
-            this.api.chatMessages.create(botMsg).subscribe(botCreated => {
-              this.messages.update(m => [...m, botCreated]);
-            });
-          });
-        });
+        timer(400).subscribe(() => this._typewriteAndSend(botMsg));
       });
     });
   }

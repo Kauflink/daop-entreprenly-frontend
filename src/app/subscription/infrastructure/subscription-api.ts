@@ -125,7 +125,7 @@ export class SubscriptionApi {
         shortDescription: `Tu plan sigue activo hasta el ${endDateLabel}. No se renovará automáticamente.`,
       },
       activity: this.withSubscriptionActivity(response, {
-        statusDetail: `Cancelación programada - S/ ${currentPlan.monthlyPrice}/mes`,
+        statusDetail: 'Cancelacion programada',
         billingDetail: `Acceso vigente hasta el ${endDateLabel} - sin siguiente cobro`,
       }),
     };
@@ -144,7 +144,7 @@ export class SubscriptionApi {
         shortDescription: `Tu plan sigue activo hasta el ${endDateLabel}. Se renovará automáticamente.`,
       },
       activity: this.withSubscriptionActivity(response, {
-        statusDetail: `Plan Control activo - S/ ${currentPlan.monthlyPrice}/mes`,
+        statusDetail: 'Plan Control activo',
         billingDetail: `Próxima renovación: ${endDateLabel} - ${this.billingCycleLabel(
           response.defaultBillingCycle,
         )}`,

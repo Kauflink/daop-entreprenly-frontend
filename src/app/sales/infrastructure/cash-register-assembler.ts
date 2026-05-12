@@ -18,6 +18,7 @@ export class CashRegisterAssembler implements BaseAssembler<
       date: resource.date,
       totalCash: resource.totalCash,
       totalDigital: resource.totalDigital,
+      saleCount: resource.saleCount ?? 0,
     });
   }
 
@@ -27,6 +28,7 @@ export class CashRegisterAssembler implements BaseAssembler<
       date: entity.date,
       totalCash: entity.totalCash,
       totalDigital: entity.totalDigital,
+      saleCount: entity.saleCount,
     } as CashRegisterResource;
   }
 }

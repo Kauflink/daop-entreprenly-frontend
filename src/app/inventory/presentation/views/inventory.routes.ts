@@ -61,10 +61,11 @@ export const inventoryRoutes: Routes = [
   {
     path: 'products',
     loadComponent: ProductListComponent,
+    title: 'pageTitle.inventory',
     children: [
-      { path: 'new',             loadComponent: ProductForm       },
-      { path: 'edit/:id',        loadComponent: unitProductForm   },
-      { path: 'weight-edit/:id', loadComponent: weightProductForm },
+      { path: 'new',             loadComponent: ProductForm,       title: 'pageTitle.newProduct'  },
+      { path: 'edit/:id',        loadComponent: unitProductForm,   title: 'pageTitle.editProduct' },
+      { path: 'weight-edit/:id', loadComponent: weightProductForm, title: 'pageTitle.editProduct' },
     ]
   },
 
@@ -72,9 +73,10 @@ export const inventoryRoutes: Routes = [
   {
     path: 'unit-products',
     loadComponent: unitProductList,
+    title: 'pageTitle.unitProducts',
     children: [
-      { path: 'new',      loadComponent: unitProductForm },
-      { path: 'edit/:id', loadComponent: unitProductForm },
+      { path: 'new',      loadComponent: unitProductForm, title: 'pageTitle.newProduct'  },
+      { path: 'edit/:id', loadComponent: unitProductForm, title: 'pageTitle.editProduct' },
     ]
   },
 
@@ -82,9 +84,10 @@ export const inventoryRoutes: Routes = [
   {
     path: 'weight-products',
     loadComponent: weightProductList,
+    title: 'pageTitle.weightProducts',
     children: [
-      { path: 'new',      loadComponent: weightProductForm },
-      { path: 'edit/:id', loadComponent: weightProductForm },
+      { path: 'new',      loadComponent: weightProductForm, title: 'pageTitle.newProduct'  },
+      { path: 'edit/:id', loadComponent: weightProductForm, title: 'pageTitle.editProduct' },
     ]
   },
 
@@ -92,9 +95,10 @@ export const inventoryRoutes: Routes = [
   {
     path: 'lots',
     loadComponent: LotListComponent,
+    title: 'pageTitle.lots',
     children: [
-      { path: 'unit-lots/new',   loadComponent: unitLotForm   },
-      { path: 'weight-lots/new', loadComponent: weightLotForm },
+      { path: 'unit-lots/new',   loadComponent: unitLotForm,   title: 'pageTitle.newLot' },
+      { path: 'weight-lots/new', loadComponent: weightLotForm, title: 'pageTitle.newLot' },
     ]
   },
 
@@ -102,9 +106,10 @@ export const inventoryRoutes: Routes = [
   {
     path: 'unit-lots',
     loadComponent: unitLotList,
+    title: 'pageTitle.unitLots',
     children: [
-      { path: 'new',      loadComponent: unitLotForm },
-      { path: 'edit/:id', loadComponent: unitLotForm },
+      { path: 'new',      loadComponent: unitLotForm, title: 'pageTitle.newLot'  },
+      { path: 'edit/:id', loadComponent: unitLotForm, title: 'pageTitle.editLot' },
     ]
   },
 
@@ -112,12 +117,13 @@ export const inventoryRoutes: Routes = [
   {
     path: 'weight-lots',
     loadComponent: weightLotList,
+    title: 'pageTitle.weightLots',
     children: [
-      { path: 'new',      loadComponent: weightLotForm },
-      { path: 'edit/:id', loadComponent: weightLotForm },
+      { path: 'new',      loadComponent: weightLotForm, title: 'pageTitle.newLot'  },
+      { path: 'edit/:id', loadComponent: weightLotForm, title: 'pageTitle.editLot' },
     ]
   },
 
   // ALERTS
-  { path: 'stock-alerts',            loadComponent: stockAlertList },
+  { path: 'stock-alerts', loadComponent: stockAlertList, title: 'pageTitle.stockAlerts' },
 ];

@@ -22,11 +22,11 @@
       <section class="card summary-card">
         <h2 class="card-title">
           <span class="title-icon">☀</span>
-          Resumen
+          {{ 'sales.summary.title' | translate }}
         </h2>
         <div class="summary-row">
           <span>{{ 'sales.summary.subtotal' | translate }}</span>
-          <span>S/ {{ subtotal().toFixed(2) }}</span>
+          <span>{{ currencyAssembler.format(subtotal()) }}</span>
         </div>
         <div class="summary-row">
           <span>{{ itemCount() }} {{ 'sales.summary.items' | translate }}</span>
@@ -34,7 +34,7 @@
         <hr />
         <div class="summary-total">
           <span>{{ 'sales.summary.total' | translate }}</span>
-          <span class="total-value">S/ {{ subtotal().toFixed(2) }}</span>
+          <span class="total-value">{{ currencyAssembler.format(subtotal()) }}</span>
         </div>
       </section>
 

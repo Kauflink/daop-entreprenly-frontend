@@ -248,33 +248,286 @@
       "billingFrequencyLabel": "Billing frequency",
       "monthly": "Monthly",
       "annual": "Annual",
-      "upgradeAction": "Upgrade to Plan Control"
+      "upgradeAction": "Upgrade to Plan Control",
+      "renewAction": "Renew subscription",
+      "keepPlanAction": "Keep plan",
+      "cancelAction": "Request cancellation",
+      "priceLabel": {
+        "monthly": "monthly payment",
+        "annual": "annual payment",
+        "free": "per month"
+      },
+      "priceAriaLabel": "Current cost {{ price }} {{ label }}"
     },
     "usage": {
       "eyebrow": "Plan usage",
       "title": "Available limits",
-      "counter": "{{ used }} of {{ max }}"
+      "status": {
+        "control": "Control",
+        "free": "Free"
+      },
+      "counter": "{{ used }} of {{ max }}",
+      "usageOf": "Usage of {{ label }}",
+      "limitValue": {
+        "products": "{{ count }} products",
+        "active-batches": "{{ count }} lots",
+        "users-singular": "1 user",
+        "users-plural": "{{ count }} users",
+        "generic": "{{ count }}"
+      }
+    },
+    "limits": {
+      "products": { "label": "Products", "ariaLabel": "Usage of Products" },
+      "active-batches": { "label": "Active lots", "ariaLabel": "Usage of Active lots" },
+      "users": { "label": "Users", "ariaLabel": "Usage of Users" }
     },
     "billing": {
       "eyebrow": "Billing",
-      "title": "Payment method and tax data"
+      "title": "Payment method and tax data",
+      "paymentMethod": {
+        "title": "Payment method",
+        "emptyDescription": "No payment method registered yet.",
+        "addAction": "Add payment methods",
+        "manageAction": "Manage payment methods",
+        "available": "Available for payments and renewals",
+        "additionalMethod": "+{{ count }} additional method",
+        "additionalMethods": "+{{ count }} additional methods",
+        "cardEnding": "{{ brand }} ending in {{ lastFour }} · expires {{ month }}/{{ year }}"
+      },
+      "fiscalData": {
+        "title": "Billing information",
+        "emptyDescription": "Complete your tax ID, business name, and receipt email.",
+        "addAction": "Complete information",
+        "editAction": "Edit fiscal data",
+        "complete": "Fiscal information complete"
+      }
     },
     "activity": {
       "eyebrow": "History",
       "title": "Subscription activity",
-      "downloadAction": "Download history"
+      "downloadAction": "Download history",
+      "created-account": {
+        "title": "Account created",
+        "detail": "April 16, 2026 - Plan Free automatically assigned"
+      },
+      "current-status": {
+        "title": "Current status",
+        "detail": {
+          "free": "Free Plan active - No charges recorded",
+          "active": "Control Plan active - {{ price }}/month",
+          "scheduled-cancellation": "Cancellation scheduled - {{ price }}/month"
+        }
+      },
+      "billing": {
+        "title": "Billing",
+        "detail": {
+          "free": "Pending completion to upgrade to Plan Control",
+          "dashboard": "Next renewal: June 11, 2026 - monthly payment",
+          "active-renewal": "Next renewal: June 10, 2026 - monthly payment",
+          "cancelled": "Access valid until June 10, 2026 - no next charge",
+          "renewalWithDate": "Next renewal: {{ date }} - {{ cycle }}",
+          "accessUntil": "Access valid until {{ date }} - no next charge",
+          "unknownDate": "Access valid until the registered subscription date"
+        }
+      }
     },
     "plans": {
       "free": {
-        "name": "Plan Free",
-        "status": "Plan Free active",
-        "badge": "Current plan"
+        "name": "Free Plan",
+        "status": "Free Plan active",
+        "badge": "Current plan",
+        "shortDescription": "Automatically included when creating your account. No card required and no charges generated.",
+        "features": {
+          "basicInventory": "Basic inventory with limited products and lots.",
+          "manualMovements": "Manual recording of main movements.",
+          "noChatbot": "No WhatsApp chatbot or advanced automations."
+        }
+      },
+      "current": {
+        "badgeLabel": "Current plan"
       },
       "control": {
-        "name": "Plan Control",
-        "badge": "Recommended"
+        "name": "Control Plan",
+        "badge": "Recommended",
+        "badgeLabel": "Recommended",
+        "statusLabel": {
+          "active": "Control Plan active",
+          "recommended": "Recommended",
+          "scheduled-cancellation": "Cancellation scheduled"
+        },
+        "shortDescription": {
+          "active": "Your plan remains active until {{ date }}. It will renew automatically.",
+          "recommended": "Operate without restrictions with automations, alerts, and full traceability.",
+          "scheduled-cancellation": "Your plan remains active until {{ date }}. It will not renew automatically."
+        },
+        "features": {
+          "unlimitedProducts": "Unlimited products and lots",
+          "salesOperations": "Sales, orders, cash register, and traceability in one flow.",
+          "chatbot": "WhatsApp chatbot and operational alerts included."
+        }
       }
+    },
+    "modal": {
+      "close": "Close modal",
+      "eyebrow": "Subscription"
+    },
+    "cardBrand": {
+      "generic": "Card"
+    },
+    "planAction": {
+      "renew": {
+        "title": "Renew subscription",
+        "cardTitle": "Renewal ready",
+        "cardDescription": "The new period will extend until {{ date }}."
+      },
+      "cancel": {
+        "title": "Request cancellation",
+        "cardTitle": "Confirm cancellation",
+        "cardDescription": "Your access to Control Plan will remain until {{ date }}. The next charge will not be made."
+      },
+      "cancelSuccess": {
+        "title": "Cancellation scheduled",
+        "cardTitle": "Cancellation scheduled",
+        "cardDescription": "Your request was recorded. Your premium access continues until {{ date }}."
+      },
+      "keep": {
+        "title": "Keep Control Plan",
+        "cardTitle": "Keep renewal active",
+        "cardDescription": "The cancellation request will be cancelled and the plan will continue renewing at the end of the current period: {{ date }}."
+      },
+      "understood": "Understood",
+      "confirmCancellation": "Confirm cancellation",
+      "keepPlan": "Keep Control Plan",
+      "fallbackDate": "the registered date in your subscription"
+    },
+    "upgrade": {
+      "title": "Upgrade to Control Plan",
+      "navAriaLabel": "Upgrade steps",
+      "steps": {
+        "plan": "Plan",
+        "billing": "Billing",
+        "payment": "Payment",
+        "activation": "Activation"
+      },
+      "activated": {
+        "title": "Subscription activated",
+        "cardTitle": "Control Plan activated",
+        "cardDescription": "Your subscription is now active. You can close this popup and continue operating.",
+        "understood": "Understood"
+      },
+      "plan": {
+        "helper": "You chose Control Plan. Review the billing cycle before continuing with the subscription.",
+        "billingLabel": {
+          "monthly": "Monthly billing",
+          "annual": "Annual billing"
+        },
+        "priceLabel": {
+          "monthly": "/month",
+          "annual": "/year"
+        }
+      },
+      "billing": {
+        "documentType": "Document type",
+        "documentNumber": "Document number",
+        "documentNumberError": "Enter a valid document.",
+        "businessName": "Business name",
+        "businessNameError": "Enter the business name.",
+        "receiptEmail": "Receipt email",
+        "receiptEmailError": "Enter a valid email.",
+        "fiscalAddress": "Fiscal address",
+        "fiscalAddressError": "Enter the fiscal address."
+      },
+      "payment": {
+        "registeredCard": "Registered card",
+        "cardEnding": "{{ brand }} ending in {{ lastFour }} · expires {{ month }}/{{ year }}",
+        "selectMethod": "Select a payment method",
+        "cardEndingShort": "{{ brand }} ending in {{ lastFour }}",
+        "holderExpiry": "{{ holder }} · expires {{ month }}/{{ year }}",
+        "totalCharge": "Total to charge",
+        "cardNumber": "Card number",
+        "cardNumberError": "Enter a valid card number.",
+        "holder": "Cardholder",
+        "holderError": "Enter the cardholder name.",
+        "expiry": "Expiry",
+        "expiryError": "Use MM/YY format.",
+        "cvvError": "Enter 3 or 4 digits."
+      },
+      "activation": {
+        "readyTitle": "Ready to activate",
+        "readyDescription": "When confirmed, Control Plan becomes active and products, lots, orders, and cash register are enabled without free plan limits.",
+        "payAndActivate": "Pay and activate subscription"
+      },
+      "continue": "Continue",
+      "back": "Back"
+    },
+    "billingData": {
+      "title": "Complete billing information",
+      "cancel": "Cancel",
+      "save": "Save data"
+    },
+    "paymentMethod": {
+      "addTitle": "Add payment method",
+      "holderPlaceholder": "Cardholder name",
+      "save": "Save changes"
+    },
+    "history": {
+      "title": "Subscription history",
+      "ariaLabel": "Subscription history",
+      "downloaded": "History downloaded successfully with the visible subscription activity.",
+      "downloadAction": "Download history",
+      "paymentMethod": {
+        "title": "Payment method",
+        "empty": "No payment method registered.",
+        "detail": "{{ brand }} ending in {{ lastFour }} registered for payments and renewals"
+      },
+      "fiscalData": {
+        "title": "Fiscal data",
+        "empty": "Fiscal data pending completion.",
+        "detail": "{{ documentType }} {{ documentNumber }} - {{ businessName }}"
+      }
+    },
+    "store": {
+      "feedback": {
+        "planSelected": "Control Plan selected. Complete billing to continue.",
+        "activated": "Subscription updated to Control Plan.",
+        "cancelled": "Cancellation scheduled.",
+        "kept": "Control Plan will remain active.",
+        "paymentAdded": "Payment method registered for subscription.",
+        "paymentSelected": "Payment method selected for subscription.",
+        "fiscalCompleted": "Fiscal data completed for billing.",
+        "emptyHistory": "Not enough activity to download.",
+        "historyDownloaded": "Subscription history downloaded."
+      },
+      "csv": {
+        "filename": "subscription-history-entreprenly.csv",
+        "header": "Event,Detail"
+      },
+      "paymentMethodActionLabel": "Add payment methods",
+      "fiscalDataActionLabel": "Edit fiscal data",
+      "paymentMethodDescription": "{{ brand }} ending in {{ lastFour }} - expires {{ month }}/{{ year }}",
+      "fiscalDataDescription": "{{ documentType }} {{ documentNumber }} - {{ businessName }}"
     }
+  },
+  "pageTitle": {
+    "home": "Home",
+    "profile": "Profile",
+    "sales": "Sales",
+    "subscription": "Subscription",
+    "inventory": "Inventory",
+    "unitProducts": "Unit Products",
+    "weightProducts": "Weight Products",
+    "newProduct": "New Product",
+    "editProduct": "Edit Product",
+    "lots": "Lots",
+    "unitLots": "Unit Lots",
+    "weightLots": "Weight Lots",
+    "newLot": "New Lot",
+    "editLot": "Edit Lot",
+    "stockAlerts": "Stock Alerts",
+    "chatbot": "Chatbot",
+    "conversations": "Conversations",
+    "orders": "Orders",
+    "help": "Help"
   },
   "profile": {
     "userInfo": {
@@ -376,6 +629,9 @@
         },
         "timezone": {
           "label": "Timezone"
+        },
+        "currency": {
+          "label": "Currency"
         }
       },
       "theme": {
@@ -384,6 +640,506 @@
         "dark": "Dark"
       },
       "saveAction": "Save preferences"
+    }
+  },
+  "chatbot": {
+    "page": {
+      "title": "Chatbot",
+      "loading": "Loading...",
+      "connectPrompt": "Connect your WhatsApp Business to activate the chatbot",
+      "connectionStatus": "Connection status"
+    },
+    "conversations": {
+      "empty": "No conversations yet.\nYour clients' chats will appear here\nwhen the chatbot receives messages.",
+      "placeholder": "Send and receive messages without needing your phone connected"
+    },
+    "payment": {
+      "pendingBar": "Pending payment — Order {{ orderNumber }}",
+      "pendingBarDetail": "{{ paymentMethod }} · S/{{ total }} · Validate the receipt sent",
+      "approve": "Approve payment",
+      "reject": "Reject",
+      "rejectTitle": "Rejection reason",
+      "confirmReject": "Confirm rejection",
+      "cancelReject": "Cancel",
+      "reasons": {
+        "illegible": "Illegible image",
+        "wrongAmount": "Wrong amount",
+        "fake": "Fake receipt"
+      }
+    },
+    "orders": {
+      "title": "Orders",
+      "subtitle": "History and receipt validation",
+      "connectPrompt": "Connect your WhatsApp to view orders",
+      "goToConfig": "Go to settings →",
+      "empty": "No orders registered yet",
+      "goToConversations": "View conversations →",
+      "receiptAlt": "Payment receipt",
+      "delivery": "Delivery:",
+      "total": "Total",
+      "traceability": "Traceability",
+      "trace": {
+        "registered": "Order registered — {{ date }}",
+        "paymentSent": "Payment instructions sent to client",
+        "receiptReceived": "Receipt received via WhatsApp",
+        "receiptRejected": "Receipt rejected ({{ count }}x) — illegible image",
+        "paymentApproved": "Payment validated by merchant",
+        "blocked": "Order blocked — multiple rejections",
+        "cancelled": "Order cancelled due to inactivity — stock restored",
+        "pendingValidation": "Pending validation by merchant",
+        "awaitingReceipt": "Awaiting client's receipt"
+      },
+      "approvePayment": "Approve Payment",
+      "rejectPayment": "Reject",
+      "willBlock": "(will block client)",
+      "blockedMessage": "Order blocked. Client must contact the store directly.",
+      "status": {
+        "approved": "Payment approved",
+        "blocked": "Order blocked",
+        "cancelled": "Order cancelled",
+        "receiptReceived": "Receipt received",
+        "awaitingReceipt": "Awaiting receipt"
+      }
+    },
+    "qr": {
+      "expiredTitle": "QR code expired — linking not completed",
+      "expiredDetail": "The QR code was not scanned within the time limit. The previous code was automatically discarded and a new one was generated. Scan the new code to complete the linking.",
+      "newCode": "New code generated",
+      "linkTitle": "Link WhatsApp Business",
+      "scanInstruction": "Scan the QR code from your app",
+      "alt": "QR code to link WhatsApp Business",
+      "generating": "Generating new code...",
+      "expiresIn": "Code expires in {{ seconds }} seconds",
+      "expiresInOne": "Code expires in {{ seconds }} second",
+      "simulateScan": "Simulate scan"
+    },
+    "statusCard": {
+      "connectedTitle": "Account linked successfully",
+      "connectedDetail": "WhatsApp Business connected successfully. The chatbot can now receive and reply to your clients' messages automatically.",
+      "expiredTitle": "Session expired",
+      "expiredDetail": "The WhatsApp Business session was closed externally. The chatbot cannot receive messages until the connection is restored.",
+      "cardTitle": "WhatsApp Business",
+      "activeSince": "active since",
+      "lastConnection": "last connection:",
+      "operative": "The chatbot is operational and processing messages automatically.",
+      "viewConversations": "View conversations →",
+      "disconnect": "Disconnect",
+      "reconnect": "Link again",
+      "connected": "● Connected",
+      "disconnected": "● Disconnected"
+    },
+    "conversationList": {
+      "title": "Conversations"
+    },
+    "header": {
+      "online": "Online"
+    },
+    "message": {
+      "receiptAlt": "Payment receipt"
+    },
+    "input": {
+      "placeholder": "Write a message...",
+      "emptyError": "Message cannot be empty",
+      "ariaLabel": "Write a message",
+      "voiceNote": "Voice note",
+      "attach": "Attach file",
+      "send": "Send message"
+    },
+    "messages": {
+      "sysPaymentApproved": "System: payment validated by merchant — {{ time }}",
+      "botPaymentApproved": "Your payment was received and verified correctly.\nOrder {{ orderNumber }} is confirmed and being prepared. Thank you for your purchase!",
+      "sysBlocked": "System: order blocked due to multiple rejections — {{ time }}",
+      "sysReceiptRejected": "System: receipt rejected — illegible image — {{ time }}",
+      "botBlocked": "Your order {{ orderNumber }} has been blocked due to multiple payment rejections.\n\nTo resolve this, please contact the store directly:\nPhone: 999 888 777",
+      "botReceiptRejected": "Your receipt could not be validated.\nReason: {{ reason }}.\n\nOrder {{ orderNumber }} has returned to Awaiting Payment status.\nPlease send a new receipt."
+    },
+    "sys": {
+      "deliveryNotRegistered": "System: delivery address not registered — bot requested from client",
+      "orderRegistered": "System: order {{ orderNumber }} registered — status: pending — {{ time }}",
+      "receiptReceived": "System: receipt received — pending validation — {{ time }}",
+      "paymentApproved": "System: payment validated by merchant — {{ time }}",
+      "noReceiptReminder": "System: no receipt received — automatic reminder sent — {{ time }}",
+      "conversationClosed": "System: conversation closed due to inactivity — no client response — {{ time }}",
+      "receiptRejected": "System: receipt rejected — illegible image — {{ time }}",
+      "orderBlocked": "System: order blocked due to multiple rejections — {{ time }}"
+    }
+  },
+  "dashboard-home": {
+    "title": "Home Dashboard",
+    "welcomeBack": "Welcome back",
+    "welcome": "Hi! Here's your summary for today.",
+    "alertBannerTitle": "Inventory alerts that need attention",
+    "alertBanner": "There are out-of-stock products or lots expiring soon. Check the alerts to take action.",
+    "alertBannerLink": "View lots →",
+    "quickLinksLabel": "Quick access to modules",
+    "quickLinksHint": "Quick access — tap to go to the module",
+    "stats": {
+      "salesToday": "Sales today",
+      "revenueToday": "Revenue today",
+      "botOrders": "Bot orders",
+      "alerts": "Alerts"
+    },
+    "links": {
+      "products": "Products",
+      "productsSub": "View catalog",
+      "lots": "Lots",
+      "lotsSub": "Manage lots",
+      "chatbot": "Chatbot",
+      "chatbotSub": "WhatsApp bot",
+      "orders": "Orders",
+      "ordersSub": "View orders",
+      "reports": "Reports",
+      "reportsSub": "View summary",
+      "goTo": "Go to {{label}}"
+    },
+    "cash": {
+      "title": "Revenue today",
+      "total": "Total accumulated today",
+      "cash": "Cash",
+      "digital": "Digital",
+      "ventas": "Sales",
+      "goToSales": "Go to Sales →"
+    },
+    "chatbot": {
+      "title": "Chatbot",
+      "connected": "Active",
+      "connectedSub": "The chatbot is active and receiving messages.",
+      "disconnected": "Disconnected",
+      "disconnectedSub": "The chatbot is not active. Reconnect the QR with WhatsApp to reactivate the service.",
+      "connectNow": "Reconnect now →",
+      "chatsToday": "Chats today",
+      "botOrders": "Bot orders",
+      "number": "Number",
+      "pendingOrders_one": "{{count}} order awaiting payment validation.",
+      "pendingOrders_other": "{{count}} orders awaiting payment validation."
+    },
+    "orders": {
+      "title": "Recent orders",
+      "viewAll": "View all →",
+      "empty": "No orders for today yet",
+      "emptySub": "WhatsApp or in-person orders will appear here in real time.",
+      "colClient": "Client",
+      "colTime": "Time",
+      "colStatus": "Status",
+      "colTotal": "Total",
+      "clientFallback": "Client",
+      "botActive": "Chatbot active on",
+      "botActiveSub": "New orders will appear here in real time.",
+      "pendingBadge": "pending orders",
+      "approved": "Completed",
+      "approvedDetail": "completed today",
+      "pending": "Pending",
+      "pendingDetail": "with pending receipt",
+      "status": {
+        "confirmed": "Completed",
+        "blocked": "Blocked",
+        "cancelled": "Cancelled",
+        "receiptReceived": "Validating",
+        "awaitingReceipt": "Awaiting"
+      }
+    },
+    "inventory": {
+      "title": "Inventory status",
+      "viewAll": "View Products →",
+      "empty": "No products in inventory."
+    },
+    "alerts": {
+      "title": "Inventory alerts",
+      "viewInventory": "View inventory →",
+      "viewMore": "+{{count}} more alerts",
+      "loadingLabel": "Loading inventory alerts",
+      "empty": "No inventory alerts",
+      "emptySub": "All good.",
+      "types": {
+        "out_of_stock": "Out of stock",
+        "expiring_soon": "Expiring soon",
+        "expired": "Expired",
+        "low_stock": "Low stock ({{count}})"
+      }
+    }
+  },
+  "dashboard-help": {
+    "title": "Help",
+    "subtitle": "Search for articles, guides and quick answers for your business.",
+    "searchPlaceholder": "Search an article, problem or feature…",
+    "searchBtn": "Search",
+    "backBtn": "Cancel",
+    "popular": "View all",
+    "allArticles": "All articles",
+    "readTime": "min read",
+    "mostConsulted": "Most consulted",
+    "categories": "Categories",
+    "articlesLabel": "articles",
+    "frequentArticles": "Frequent articles",
+    "exploreByCategory": "Explore by category",
+    "ctaTitle": "Didn't find what you were looking for?",
+    "ctaSub": "Report your problem directly and our team will get back to you shortly.",
+    "ctaBtn": "Report a problem",
+    "openArticle": "Open article: {{title}}",
+    "emptyTitle": "Help content is not available yet",
+    "emptySub": "We are preparing the support articles. For now you can report your problem directly and we will attend to you.",
+    "emptyContact": "In the meantime, you can contact us directly",
+    "emptyContactSub": "Write to us at support@entreprenly.com or via WhatsApp at +51 900 000 000. We respond in less than 24 hours.",
+    "contactSupport": {
+      "title": "Support contact",
+      "emailLabel": "Email",
+      "email": "support@entreprenly.com",
+      "whatsapp": "+51 900 000 000",
+      "hoursLabel": "Hours",
+      "hours": "Mon–Fri · 9:00–18:00"
+    },
+    "results": {
+      "count_one": "result for",
+      "count_other": "results for",
+      "resultsTitle": "Search results",
+      "articlesFound": "articles found",
+      "clearSearch": "Clear search",
+      "relatedCategories": "Related categories",
+      "noResults": "No results found",
+      "noResultsSub": "No articles match your search. Try different words or report your problem directly.",
+      "suggestions": "Suggestions to improve your search:",
+      "suggestion1": "Use shorter terms like \"scale\" or \"IoT\"",
+      "suggestion2": "Check the spelling of the term entered",
+      "suggestion3": "Browse the available categories",
+      "report": "Report problem"
+    },
+    "article": {
+      "help": "Help",
+      "openArticle": "Open article: {{title}}",
+      "stepsTitle": "Steps to complete the action",
+      "useful": "Was this article helpful?",
+      "yes": "Yes, it helped",
+      "no": "No, I need more help",
+      "thanks": "Thanks for your feedback!",
+      "notUsefulBanner": "You marked this article as \"Not helpful\"",
+      "notUsefulBannerSub": "We're sorry it didn't resolve your question. Tell us what problem you have and we'll help you directly.",
+      "notUsefulTitle": "We're sorry it wasn't helpful",
+      "notUsefulSub": "You can report the problem and our team will contact you.",
+      "stillProblems": "Still having problems?",
+      "stillProblemsSub": "Our team can help you directly.",
+      "report": "Report problem",
+      "cancel": "Cancel",
+      "related": "Related articles",
+      "backToHome": "Back to home",
+      "quickReport": {
+        "title": "What exactly is your problem?",
+        "sub": "Briefly describe the problem",
+        "placeholder": "E.g.: The QR appears but I can't scan it from WhatsApp…",
+        "submit": "Send quick report",
+        "required": "Please describe the problem before submitting."
+      }
+    },
+    "report": {
+      "title": "Report a problem",
+      "subtitle": "Our team will review your report and contact you soon.",
+      "supportCenter": "Support center",
+      "step": "Step 1 of 1",
+      "formTitle": "Report form",
+      "formSubtitle": "All fields marked with * are required",
+      "errorBannerTitle": "There are required fields not completed",
+      "errorBannerSub": "Please complete all fields marked with * before submitting the report.",
+      "errorsCount_one": "error",
+      "errorsCount_other": "errors",
+      "errorFieldsTitle": "Fields with errors",
+      "urgentTitle": "Need immediate help?",
+      "urgentSub": "If it's urgent you can contact us directly:",
+      "beforeTitle": "Before reporting",
+      "before1": "Did you check the help articles?",
+      "before2": "Did you try reloading the page?",
+      "before3": "Does the problem persist on another device?",
+      "responseTimeTitle": "Response time",
+      "priorityNormal": "Normal priority",
+      "priorityNormalVal": "Less than 24h",
+      "priorityHigh": "High priority",
+      "priorityHighVal": "Less than 4h",
+      "hoursLabel": "Support hours",
+      "hoursVal": "Mon–Fri 9–18h",
+      "category": "Problem category",
+      "categoryRequired": "Problem category — required",
+      "module": "Affected module",
+      "moduleDefault": "-- Select a module --",
+      "moduleRequired": "Select the affected module.",
+      "description": "Problem description",
+      "descriptionPlaceholder": "Describe the problem in detail…",
+      "descriptionRequired": "Description cannot be empty",
+      "when": "When did it first occur?",
+      "whenOptional": "(optional)",
+      "whenPlaceholder": "E.g.: Today at 10:30 AM",
+      "submit": "Submit report"
+    },
+    "success": {
+      "pageTitle": "Report submitted",
+      "title": "Your report was received successfully!",
+      "subtitle": "Our team will review your case and get back to you shortly through the channel you indicated.",
+      "ticketLabel": "Ticket",
+      "ticketHint": "Save this number to track your case",
+      "summaryTitle": "Submitted report summary",
+      "categoryLabel": "Category",
+      "moduleLabel": "Affected module",
+      "dateLabel": "Submission date",
+      "statusLabel": "Status",
+      "statusValue": "Under review",
+      "estimatedLabel": "Estimated time",
+      "estimatedValue": "Less than 24 hours",
+      "descriptionLabel": "Description",
+      "backToHome": "Back to support center",
+      "viewReports": "View my reports",
+      "emailNotice": "You will receive updates by email",
+      "emailNoticeSub": "We will notify you at your registered email when there are updates about your ticket.",
+      "nextTitle": "What happens next?",
+      "step1": "Your report is reviewed by our team",
+      "step2": "You receive a response in less than 24h",
+      "step3": "You confirm whether the problem was resolved"
+    },
+    "error": {
+      "pageTitle": "Error submitting report",
+      "title": "There was an error submitting your report",
+      "subtitle": "Your request could not be processed at this time. Your information was not lost.",
+      "noTicket": "No support ticket was generated",
+      "noTicketSub": "A connection error occurred while processing the submission. Please try again or contact us directly if the problem persists.",
+      "dataSaved": "Your information was preserved",
+      "descriptionLabel": "Description",
+      "contactTitle": "Does the error persist?",
+      "contactSub": "Contact us directly and we'll help you right away.",
+      "causesTitle": "Possible causes of the error",
+      "cause1": "Unstable internet connection",
+      "cause2": "Server temporarily unavailable",
+      "cause3": "Session expired — try reloading",
+      "retry": "Try again",
+      "backToHome": "Back to support"
+    },
+    "categoryNames": {
+      "inventario": "Inventory",
+      "chatbot": "Chatbot",
+      "pedidos": "Orders & Payments",
+      "reportes": "Reports",
+      "suscripcion": "Subscription",
+      "configuracion": "Configuration",
+      "ventas": "Sales · Cash",
+      "lotes": "Lots"
+    },
+    "problemCategories": [
+      "-- Select a category --",
+      "Inventory / Products",
+      "Chatbot / WhatsApp",
+      "Orders & Payments",
+      "Sales & Cash",
+      "Subscription",
+      "Reports",
+      "Configuration",
+      "Other"
+    ],
+    "modules": [
+      "Inventory",
+      "Chatbot",
+      "Orders",
+      "Sales",
+      "Subscription",
+      "Reports",
+      "Configuration",
+      "General"
+    ],
+    "articles": {
+      "1": {
+        "title": "How to add a product to the inventory?",
+        "category": "Inventory",
+        "steps": [
+          "Go to the <strong>Inventory</strong> module in the side panel.",
+          "Select \"Products\" and click <strong>Add product</strong>.",
+          "Fill in the form: name, price and initial stock.",
+          "Save the changes — the product will appear in the catalog immediately."
+        ]
+      },
+      "2": {
+        "title": "How to connect the WhatsApp chatbot?",
+        "category": "Chatbot",
+        "steps": [
+          "Go to the <strong>Chatbot</strong> module in the configuration panel.",
+          "Press <strong>\"Connect WhatsApp\"</strong> to display the QR code.",
+          "Scan the QR code from your <strong>WhatsApp Business</strong> app on your phone.",
+          "Done! The chatbot is now active and can receive and respond to messages."
+        ]
+      },
+      "3": {
+        "title": "How to validate a payment from the dashboard?",
+        "category": "Orders & Payment",
+        "steps": [
+          "Access the <strong>Orders</strong> module from the side panel.",
+          "Filter orders with status \"Awaiting receipt\".",
+          "Open the order and review the receipt image sent by the client.",
+          "Press <strong>Approve payment</strong> if valid, or <strong>Reject</strong> with a reason."
+        ]
+      },
+      "4": {
+        "title": "How to manage expiry dates in lots?",
+        "category": "Lots",
+        "steps": [
+          "Go to the <strong>Inventory</strong> module and select the <strong>Lots</strong> tab.",
+          "Review the \"Expiry date\" column — lots expiring soon are highlighted.",
+          "Critical lots generate <strong>stock alerts</strong> automatically on the home page.",
+          "Edit a lot to adjust the date or available quantity."
+        ]
+      },
+      "5": {
+        "title": "How to check the daily cash summary?",
+        "category": "Sales · Cash",
+        "steps": [
+          "Go to the <strong>Sales</strong> module from the side panel.",
+          "The cash summary appears in the right side panel.",
+          "It shows the <strong>Day total</strong>, Cash and Yape/Plin separately.",
+          "It updates automatically with each completed sale."
+        ]
+      },
+      "6": {
+        "title": "What to do if the chatbot disconnects?",
+        "category": "Chatbot",
+        "steps": [
+          "Go to the <strong>Chatbot</strong> module — you will see a \"Session expired\" notice in red.",
+          "Press <strong>\"Reconnect\"</strong> to start the reconnection.",
+          "Scan the new QR code from your WhatsApp Business app.",
+          "The chatbot will resume its activity normally."
+        ]
+      },
+      "7": {
+        "title": "Can the chatbot send receipts automatically?",
+        "category": "Chatbot",
+        "steps": [
+          "The chatbot <strong>receives</strong> receipts sent by clients via WhatsApp.",
+          "It displays them automatically in the <strong>Orders</strong> module of the dashboard.",
+          "The merchant must <strong>validate them manually</strong> — the system does not approve them automatically.",
+          "After validation, the client receives an automatic confirmation via WhatsApp."
+        ]
+      },
+      "8": {
+        "title": "How to validate a payment?",
+        "category": "Orders & Payments",
+        "steps": [
+          "Access the <strong>Orders</strong> module.",
+          "Select the order pending validation.",
+          "Review the receipt attached by the client.",
+          "Approve or reject the payment accordingly."
+        ]
+      },
+      "9": {
+        "title": "How to view the daily sales report?",
+        "category": "Reports",
+        "steps": [
+          "Go to the <strong>Sales</strong> module from the sidebar.",
+          "The daily summary appears in the Cash widget: total, cash and digital.",
+          "You can check the sales history in the <strong>History</strong> section.",
+          "Data updates in real time with each completed sale."
+        ]
+      },
+      "10": {
+        "title": "How to manage my subscription plan?",
+        "category": "Subscription",
+        "steps": [
+          "Go to the <strong>Subscription</strong> module from the sidebar.",
+          "Review your active plan, included features and renewal date.",
+          "To change your plan, click <strong>Manage plan</strong> and choose the new one.",
+          "You will receive a confirmation email when the change is complete."
+        ]
+      }
     }
   }
 }

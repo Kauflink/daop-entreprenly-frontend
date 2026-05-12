@@ -13,8 +13,20 @@
   <div class="activity-list" role="table" [attr.aria-label]="'subscription.activity.title' | translate">
     @for (item of activityRows(); track item.id) {
       <div class="activity-row" role="row">
-        <strong role="cell">{{ item.title }}</strong>
-        <span role="cell">{{ item.detail }}</span>
+        <strong role="cell">
+          @if (item.titleKey; as titleKey) {
+            {{ titleKey | translate }}
+          } @else {
+            {{ item.title }}
+          }
+        </strong>
+        <span role="cell">
+          @if (item.detailKey; as detailKey) {
+            {{ detailKey | translate: item.detailParams }}
+          } @else {
+            {{ item.detail }}
+          }
+        </span>
       </div>
     }
   </div>

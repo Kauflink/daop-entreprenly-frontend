@@ -8,4 +8,5 @@ export interface CashRegisterResource extends BaseResource {
   date: string;
   totalCash: number;
   totalDigital: number;
+  saleCount: number;
 }

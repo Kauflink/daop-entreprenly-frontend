@@ -2,7 +2,6 @@ import { Routes } from '@angular/router';
 
 import { DashboardLayout } from './shared/presentation/components/dashboard-layout/dashboard-layout';
 
-const baseTitle = 'Entreprenly';
 
 export const routes: Routes = [
   {
@@ -12,12 +11,12 @@ export const routes: Routes = [
       {
         path: 'home',
         loadComponent: () => import('./shared/presentation/views/home/home').then((m) => m.Home),
-        title: `${baseTitle} - Home`,
+        title: 'pageTitle.home',
       },
       {
         path: 'help',
         loadComponent: () => import('./shared/presentation/views/help/help').then((m) => m.Help),
-        title: `${baseTitle} - Help`,
+        title: 'pageTitle.help',
       },
       {
         path: 'profile',
@@ -52,7 +51,7 @@ export const routes: Routes = [
         path: 'orders',
         loadComponent: () =>
           import('./chatbot/presentation/views/orders/orders').then(m => m.Orders),
-        title: 'Entreprenly - Pedidos',
+        title: 'pageTitle.orders',
       },
       {
         path: '',

@@ -56,7 +56,7 @@
   height: 36px;
   cursor: pointer;
   font-size: 20px;
-  color: #333;
+  color: var(--color-text-primary);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -71,12 +71,12 @@
   font-size: 24px;
   font-weight: 700;
   margin: 0;
-  color: #000;
+  color: var(--color-text-strong);
 }
 
 .modal-subtitle {
   font-size: 14px;
-  color: #888;
+  color: var(--color-text-muted);
   margin: 8px 0 25px 0;
 }
 
@@ -95,14 +95,14 @@
   border-radius: 12px;
   padding: 12px 16px;
   font-size: 15px;
-  color: #333;
+  color: var(--color-text-primary);
   box-sizing: border-box;
   transition: border 0.2s;
 }
 
 .input-gray:focus, .input-gray-small:focus {
   outline: none;
-  border: 1px solid #F38313;
+  border: 1px solid var(--color-primary);
 }
 
 .input-error {
@@ -168,7 +168,7 @@
 .qr-number {
   display: block;
   font-size: 12px;
-  color: #666;
+  color: var(--color-text-muted);
   margin-top: 8px;
   font-family: monospace;
 }
@@ -189,7 +189,7 @@
 .input-group label {
   font-size: 14px;
   font-weight: 500;
-  color: #444;
+  color: var(--color-text-primary);
 }
 
 .prefix-box {
@@ -229,12 +229,12 @@
 }
 
 .btn-submit:hover:not(:disabled) {
-  background: #e07216;
+  background: var(--color-primary-hover);
   transform: translateY(-1px);
 }
 
 .btn-submit:disabled {
-  background: #ccc;
+  background: var(--color-card-border);
   cursor: not-allowed;
 }
 
