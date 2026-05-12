@@ -336,12 +336,6 @@
       "date": "2026-05-11",
       "totalCash": 0,
       "totalDigital": 0
-    },
-    {
-      "date": "2026-05-12",
-      "totalCash": 0,
-      "totalDigital": 0,
-      "id": 2
     }
   ],
   "iot-scale": {
