@@ -1,6 +1,6 @@
 import { DestroyRef, Injectable, computed, inject, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { of, retry, switchMap } from 'rxjs';
+import { of, retry, switchMap, tap } from 'rxjs';
 import { CashRegister } from '../domain/model/cash-register.entity';
 import { PaymentMethod } from '../domain/model/payment-method.enum';
 import { ProductSummary } from '../domain/model/product-summary.entity';
@@ -112,9 +112,13 @@ export class SalesStore {
 
     this.salesApi
       .createSale(sale)
-      .pipe(takeUntilDestroyed(this.destroyRef))
+      .pipe(
+        switchMap(() => this.salesApi.decrementStock(items)),
+        tap(() => this.loadProducts()),
+        takeUntilDestroyed(this.destroyRef),
+      )
       .subscribe({
-        error: (err) => console.error('❌ Error persisting sale:', err),
+        error: (err) => console.error('❌ Error persisting sale or updating stock:', err),
       });
   }
 
