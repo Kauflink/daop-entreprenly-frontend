@@ -16,11 +16,11 @@
   font-size: 40px;
   margin: 0 0 4px 0;
   font-weight: 600;
-  color: #0C0F12;
+  color: var(--color-text-strong);
 }
 
 .page-header .subtitle {
-  color: #666666;
+  color: var(--color-text-muted);
   margin: 0;
   font-size: 15px;
 }
@@ -46,7 +46,7 @@
 
 /* ===== CARD RESUMEN (queda en sales-page) ===== */
 .card {
-  background: white;
+  background: var(--color-card-bg);
   border-radius: 16px;
   padding: 24px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
@@ -59,11 +59,11 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  color: #0C0F12;
+  color: var(--color-text-strong);
 }
 
 .title-icon {
-  color: #F38313;
+  color: var(--color-primary);
   font-size: 16px;
 }
 
@@ -72,12 +72,12 @@
   justify-content: space-between;
   padding: 6px 0;
   font-size: 14px;
-  color: #666666;
+  color: var(--color-text-muted);
 }
 
 .summary-card hr {
   border: none;
-  border-top: 1px solid #eee;
+  border-top: 1px solid var(--color-card-border);
   margin: 12px 0;
 }
 
@@ -87,11 +87,11 @@
   align-items: center;
   font-size: 18px;
   font-weight: bold;
-  color: #0C0F12;
+  color: var(--color-text-strong);
 }
 
 .total-value {
-  color: #F38313;
+  color: var(--color-primary);
 }
 
 /* ===== MODAL VENTA EXITOSA ===== */
@@ -106,7 +106,7 @@
 }
 
 .success-modal {
-  background: white;
+  background: var(--color-card-bg);
   border-radius: 20px;
   padding: 40px 60px;
   position: relative;
@@ -128,14 +128,14 @@
   height: 32px;
   cursor: pointer;
   font-size: 14px;
-  color: #666666;
+  color: var(--color-text-secondary);
 }
 
 .success-title {
   font-size: 18px;
   font-weight: bold;
   margin: 0;
-  color: #0C0F12;
+  color: var(--color-text-strong);
 }
 
 .success-check {

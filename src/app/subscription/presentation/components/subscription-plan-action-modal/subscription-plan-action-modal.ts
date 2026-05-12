@@ -1,5 +1,6 @@
 import { CdkTrapFocus } from '@angular/cdk/a11y';
-import { ChangeDetectionStrategy, Component, computed, input, output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, input, output } from '@angular/core';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { BillingCycle, SubscriptionPlan } from '../../../domain/model/subscription-plan.entity';
 
 export type SubscriptionPlanActionModalMode =
@@ -10,7 +11,7 @@ export type SubscriptionPlanActionModalMode =
 
 @Component({
   selector: 'app-subscription-plan-action-modal',
-  imports: [CdkTrapFocus],
+  imports: [CdkTrapFocus, TranslatePipe],
   templateUrl: './subscription-plan-action-modal.html',
   styleUrl: './subscription-plan-action-modal.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -27,61 +28,61 @@ export class SubscriptionPlanActionModal {
   readonly cancellationConfirmed = output<void>();
   readonly keepPlanConfirmed = output<void>();
 
-  protected readonly title = computed(() => {
+  private readonly translate = inject(TranslateService);
+
+  protected readonly titleKey = computed(() => {
     switch (this.mode()) {
       case 'renew':
-        return 'Renovar suscripción';
+        return 'subscription.planAction.renew.title';
       case 'cancel':
-        return 'Solicitar cancelación';
+        return 'subscription.planAction.cancel.title';
       case 'cancel-success':
-        return 'Cancelación programada';
+        return 'subscription.planAction.cancelSuccess.title';
       case 'keep':
-        return 'Mantener Plan Control';
+        return 'subscription.planAction.keep.title';
     }
   });
 
-  protected readonly cardTitle = computed(() => {
+  protected readonly cardTitleKey = computed(() => {
     switch (this.mode()) {
       case 'renew':
-        return 'Renovación preparada';
+        return 'subscription.planAction.renew.cardTitle';
       case 'cancel':
-        return 'Confirma la cancelación';
+        return 'subscription.planAction.cancel.cardTitle';
       case 'cancel-success':
-        return 'Cancelación programada';
+        return 'subscription.planAction.cancelSuccess.cardTitle';
       case 'keep':
-        return 'Mantener renovación activa';
+        return 'subscription.planAction.keep.cardTitle';
     }
   });
 
-  protected readonly cardDescription = computed(() => {
+  protected readonly cardDescriptionKey = computed(() => {
     switch (this.mode()) {
       case 'renew':
-        return `La nueva vigencia se extenderá hasta el ${this.renewedPeriodEndLabel()}.`;
+        return 'subscription.planAction.renew.cardDescription';
       case 'cancel':
-        return `Tu acceso al Plan Control se mantendrá hasta el ${this.currentPeriodEndLabel()}. No se realizará el siguiente cobro.`;
+        return 'subscription.planAction.cancel.cardDescription';
       case 'cancel-success':
-        return `La solicitud fue registrada. Tu acceso premium continúa hasta el ${this.currentPeriodEndLabel()}.`;
+        return 'subscription.planAction.cancelSuccess.cardDescription';
       case 'keep':
-        return `Se cancelará la solicitud de baja y el plan seguirá renovándose al finalizar la vigencia actual: ${this.currentPeriodEndLabel()}.`;
+        return 'subscription.planAction.keep.cardDescription';
     }
   });
 
-  protected readonly primaryLabel = computed(() => {
+  protected readonly cardDescriptionParams = computed(() => ({
+    date: this.mode() === 'renew' ? this.renewedPeriodEndLabel() : this.currentPeriodEndLabel(),
+  }));
+
+  protected readonly primaryLabelKey = computed(() => {
     switch (this.mode()) {
       case 'renew':
       case 'cancel-success':
-        return 'Entendido';
+        return 'subscription.planAction.understood';
       case 'cancel':
-        return 'Confirmar cancelación';
+        return 'subscription.planAction.confirmCancellation';
       case 'keep':
-        return 'Mantener Plan Control';
+        return 'subscription.planAction.keepPlan';
     }
-  });
-
-  private readonly dateFormatter = new Intl.DateTimeFormat('es-PE', {
-    day: 'numeric',
-    month: 'long',
-    year: 'numeric',
   });
 
   private readonly currentPeriodEndLabel = computed(() =>
@@ -132,10 +133,20 @@ export class SubscriptionPlanActionModal {
     const parsedDate = typeof date === 'string' ? this.toLocalDate(date) : date;
 
     if (parsedDate === null) {
-      return 'la fecha registrada en tu suscripción';
+      return this.translate.instant('subscription.planAction.fallbackDate');
     }
 
-    return this.dateFormatter.format(parsedDate);
+    return new Intl.DateTimeFormat(this.currentDateLocale(), {
+      day: 'numeric',
+      month: 'long',
+      year: 'numeric',
+    }).format(parsedDate);
+  }
+
+  private currentDateLocale(): string {
+    return (this.translate.currentLang ?? this.translate.defaultLang ?? 'en').startsWith('es')
+      ? 'es-PE'
+      : 'en-US';
   }
 
   private toLocalDate(dateValue: string): Date | null {

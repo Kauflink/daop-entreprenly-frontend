@@ -1,4 +1,5 @@
 import { BaseResource, BaseResponse } from '../../shared/infrastructure/base-response';
+import { Currency } from '../../shared/infrastructure/currency-service';
 
 export interface UserProfileResource extends BaseResource {
   first_name: string;
@@ -12,6 +13,7 @@ export interface UserPreferencesResource extends BaseResource {
   language: string;
   timezone: string;
   theme: 'light' | 'dark';
+  currency?: Currency;
 }
 
 export interface NotificationSettingsResource extends BaseResource {

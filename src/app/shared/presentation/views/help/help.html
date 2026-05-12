@@ -1,1 +1,1052 @@
-<p>help works!</p>
+<div class="min-h-screen bg-gray-50 p-6">
+
+  <!-- ══════════════════════════════════════════════════════════════ HOME ══ -->
+  @if (view() === 'home') {
+    <div class="mx-auto max-w-5xl flex flex-col gap-5">
+
+      <h1 class="text-2xl font-bold text-gray-900">{{ 'dashboard-help.title' | translate }}</h1>
+
+      <!-- Search bar -->
+      <div class="flex gap-2">
+        <div class="relative flex-1">
+          <svg class="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-4.35-4.35M17 11A6 6 0 115 11a6 6 0 0112 0z" />
+          </svg>
+          <input
+            type="search"
+            [value]="searchInput()"
+            (input)="searchInput.set($any($event.target).value)"
+            (keydown.enter)="onSearch()"
+            [placeholder]="'dashboard-help.searchPlaceholder' | translate"
+            class="w-full rounded-xl border border-gray-200 bg-white py-3 pl-11 pr-4 text-sm shadow-sm outline-none focus:border-orange-400 focus:ring-2 focus:ring-orange-100"
+            [attr.aria-label]="'dashboard-help.searchPlaceholder' | translate"
+          />
+        </div>
+        <button
+          type="button"
+          (click)="onSearch()"
+          class="rounded-xl bg-orange-500 px-6 py-3 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-orange-600"
+        >
+          {{ 'dashboard-help.searchBtn' | translate }}
+        </button>
+      </div>
+
+      <!-- Main grid -->
+      <div class="grid grid-cols-1 gap-5 lg:grid-cols-3">
+
+        <!-- Left + Center: articles + categories -->
+        <div class="lg:col-span-2 flex flex-col gap-5">
+
+          <!-- Artículos frecuentes -->
+          <section class="rounded-2xl bg-white p-5 shadow-sm" aria-labelledby="frequent-heading">
+            <div class="mb-4 flex items-center justify-between">
+              <h2 id="frequent-heading" class="text-sm font-semibold text-gray-800">
+                {{ 'dashboard-help.frequentArticles' | translate }}
+              </h2>
+              <button type="button" class="text-xs text-orange-500 hover:underline">
+                {{ 'dashboard-help.popular' | translate }}
+              </button>
+            </div>
+
+            @if (frequentArticles.length === 0) {
+              <div class="flex flex-col items-center rounded-xl bg-gray-50 py-10 text-center" role="status">
+                <svg class="h-10 w-10 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                    d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                </svg>
+                <p class="mt-3 text-sm font-medium text-gray-600">{{ 'dashboard-help.emptyTitle' | translate }}</p>
+                <p class="mt-1 text-xs text-gray-400">{{ 'dashboard-help.emptySub' | translate }}</p>
+              </div>
+              <div class="mt-4 flex items-start gap-2 rounded-xl bg-blue-50 px-4 py-3">
+                <span class="text-blue-400" aria-hidden="true">💡</span>
+                <div>
+                  <p class="text-xs font-semibold text-blue-800">{{ 'dashboard-help.emptyContact' | translate }}</p>
+                  <p class="mt-0.5 text-xs text-blue-600">{{ 'dashboard-help.emptyContactSub' | translate }}</p>
+                </div>
+              </div>
+            } @else {
+              <ul class="flex flex-col divide-y divide-gray-50" role="list">
+                @for (article of frequentArticles; track article.id) {
+                  <li>
+                    <button
+                      type="button"
+                      (click)="onOpenArticle(article.id)"
+                      class="flex w-full items-center justify-between py-3 text-left transition-colors hover:text-orange-600 first:pt-0"
+                      [attr.aria-label]="'dashboard-help.article.openArticle' | translate: { title: (article.titleKey | translate) }"
+                    >
+                      <div class="min-w-0">
+                        <p class="text-sm text-gray-800">{{ article.titleKey | translate }}</p>
+                        <p class="mt-0.5 text-xs text-gray-400">
+                          {{ article.categoryKey | translate }} · {{ article.readTime }} {{ 'dashboard-help.readTime' | translate }}
+                          @if (article.mostConsulted) {
+                            <span class="ml-1 text-orange-400">· {{ 'dashboard-help.mostConsulted' | translate }}</span>
+                          }
+                        </p>
+                      </div>
+                      <svg class="ml-4 h-4 w-4 shrink-0 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                      </svg>
+                    </button>
+                  </li>
+                }
+              </ul>
+            }
+          </section>
+
+          <!-- Explorar por categoría -->
+          <section aria-labelledby="categories-heading">
+            <h2 id="categories-heading" class="mb-3 text-sm font-semibold text-gray-700">
+              {{ 'dashboard-help.exploreByCategory' | translate }}
+            </h2>
+            <div class="grid grid-cols-3 gap-3">
+              @for (cat of categories; track cat.id) {
+                <button
+                  type="button"
+                  class="flex items-center gap-3 rounded-xl border border-gray-100 bg-white px-4 py-3 text-left shadow-sm transition-shadow hover:shadow-md"
+                >
+                  <span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl" [class]="categoryBg(cat.id)" aria-hidden="true">
+                    @if (cat.id === 'inventario') {
+                      <svg class="h-4 w-4 text-orange-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10" />
+                      </svg>
+                    }
+                    @if (cat.id === 'chatbot') {
+                      <svg class="h-4 w-4 text-blue-600" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M20 2H4C2.9 2 2 2.9 2 4v13c0 1.1.9 2 2 2h3l3 3 3-3h7c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM9 11H7V9h2v2zm4 0h-2V9h2v2zm4 0h-2V9h2v2z"/>
+                      </svg>
+                    }
+                    @if (cat.id === 'pedidos') {
+                      <svg class="h-4 w-4 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                          d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                      </svg>
+                    }
+                    @if (cat.id === 'ventas') {
+                      <svg class="h-4 w-4 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                          d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                      </svg>
+                    }
+                    @if (cat.id === 'reportes') {
+                      <svg class="h-4 w-4 text-purple-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                          d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                      </svg>
+                    }
+                    @if (cat.id === 'suscripcion') {
+                      <svg class="h-4 w-4 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                          d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
+                      </svg>
+                    }
+                  </span>
+                  <div class="min-w-0">
+                    <p class="text-xs font-semibold text-gray-800">{{ cat.nameKey | translate }}</p>
+                    <p class="text-[10px] text-gray-400">{{ cat.articleCount }} {{ 'dashboard-help.articlesLabel' | translate }}</p>
+                  </div>
+                </button>
+              }
+            </div>
+          </section>
+        </div>
+
+        <!-- Right sidebar -->
+        <aside class="flex flex-col gap-4">
+
+          <!-- CTA: No encontraste -->
+          <div class="rounded-2xl border border-orange-100 bg-orange-50 p-5">
+            <p class="text-sm font-semibold text-orange-800">{{ 'dashboard-help.ctaTitle' | translate }}</p>
+            <p class="mt-1 text-xs text-orange-600">{{ 'dashboard-help.ctaSub' | translate }}</p>
+            <button
+              type="button"
+              (click)="onGoReport()"
+              class="mt-4 flex items-center gap-1.5 rounded-full bg-orange-500 px-4 py-2 text-xs font-semibold text-white transition-colors hover:bg-orange-600"
+            >
+              <svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M12 9v2m0 4h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z" />
+              </svg>
+              {{ 'dashboard-help.ctaBtn' | translate }}
+            </button>
+          </div>
+
+          <!-- Contacto de soporte -->
+          <div class="rounded-2xl border border-gray-100 bg-white p-5 shadow-sm">
+            <h2 class="mb-4 text-sm font-semibold text-gray-800">{{ 'dashboard-help.contactSupport.title' | translate }}</h2>
+            <dl class="flex flex-col gap-3 text-sm">
+              <div class="flex items-start justify-between gap-2">
+                <dt class="text-gray-400">{{ 'dashboard-help.contactSupport.emailLabel' | translate }}</dt>
+                <dd class="text-right font-medium text-orange-500 break-all">{{ 'dashboard-help.contactSupport.email' | translate }}</dd>
+              </div>
+              <div class="flex items-start justify-between gap-2">
+                <dt class="text-gray-400">WhatsApp</dt>
+                <dd class="font-medium text-gray-800">{{ 'dashboard-help.contactSupport.whatsapp' | translate }}</dd>
+              </div>
+              <div class="flex items-start justify-between gap-2">
+                <dt class="text-gray-400">{{ 'dashboard-help.contactSupport.hoursLabel' | translate }}</dt>
+                <dd class="font-medium text-gray-800">{{ 'dashboard-help.contactSupport.hours' | translate }}</dd>
+              </div>
+            </dl>
+          </div>
+
+        </aside>
+      </div>
+    </div>
+  }
+
+  <!-- ═══════════════════════════════════════════════════════════ RESULTS ══ -->
+  @if (view() === 'results') {
+    <div class="mx-auto max-w-5xl flex flex-col gap-4">
+
+      <h1 class="text-2xl font-bold text-gray-900">{{ 'dashboard-help.title' | translate }}</h1>
+
+      <!-- Search bar -->
+      <div class="flex gap-2">
+        <div class="relative flex-1">
+          <svg class="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-4.35-4.35M17 11A6 6 0 115 11a6 6 0 0112 0z" />
+          </svg>
+          <input
+            type="search"
+            [value]="searchInput()"
+            (input)="searchInput.set($any($event.target).value)"
+            (keydown.enter)="onSearch()"
+            [placeholder]="'dashboard-help.searchPlaceholder' | translate"
+            class="w-full rounded-xl border border-gray-200 bg-white py-3 pl-11 pr-4 text-sm shadow-sm outline-none focus:border-orange-400 focus:ring-2 focus:ring-orange-100"
+          />
+        </div>
+        <button type="button" (click)="onSearch()"
+          class="rounded-xl bg-orange-500 px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-orange-600">
+          {{ 'dashboard-help.searchBtn' | translate }}
+        </button>
+      </div>
+
+      <!-- Result count -->
+      <p class="text-sm text-gray-500" aria-live="polite">
+        <strong class="text-gray-800">{{ searchResults().length }}</strong>
+        {{ 'dashboard-help.results.count_other' | translate: { count: searchResults().length } }}
+        "<strong class="text-orange-500">{{ searchQuery() }}</strong>"
+      </p>
+
+      @if (searchResults().length > 0) {
+        <div class="grid grid-cols-1 gap-5 lg:grid-cols-3">
+
+          <!-- Results list -->
+          <div class="lg:col-span-2">
+            <div class="rounded-2xl bg-white p-5 shadow-sm">
+              <div class="mb-4 flex items-center justify-between">
+                <div>
+                  <h2 class="text-sm font-semibold text-gray-800">{{ 'dashboard-help.results.resultsTitle' | translate }}</h2>
+                  <p class="text-xs text-gray-400">
+                    {{ searchResults().length }} {{ 'dashboard-help.results.articlesFound' | translate }}
+                  </p>
+                </div>
+                <button type="button" (click)="onClearSearch()" class="text-xs font-medium text-orange-500 hover:underline">
+                  {{ 'dashboard-help.results.clearSearch' | translate }}
+                </button>
+              </div>
+
+              <ul class="flex flex-col divide-y divide-gray-50" role="list">
+                @for (article of searchResults(); track article.id) {
+                  <li>
+                    <button
+                      type="button"
+                      (click)="onOpenArticle(article.id)"
+                      class="flex w-full items-center gap-3 py-3.5 text-left transition-colors hover:text-orange-600 first:pt-0"
+                    >
+                      <span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl" [class]="categoryBg(article.categoryId)" aria-hidden="true">
+                        @if (article.categoryId === 'inventario') {
+                          <svg class="h-4 w-4 text-orange-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10" />
+                          </svg>
+                        }
+                        @if (article.categoryId === 'chatbot') {
+                          <svg class="h-4 w-4 text-blue-600" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M20 2H4C2.9 2 2 2.9 2 4v13c0 1.1.9 2 2 2h3l3 3 3-3h7c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/>
+                          </svg>
+                        }
+                        @if (article.categoryId === 'pedidos') {
+                          <svg class="h-4 w-4 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                              d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                          </svg>
+                        }
+                        @if (article.categoryId === 'ventas') {
+                          <svg class="h-4 w-4 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                              d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                          </svg>
+                        }
+                      </span>
+                      <div class="min-w-0 flex-1">
+                        <p class="text-sm font-medium text-gray-900" [innerHTML]="highlightQuery(article.titleKey)"></p>
+                        <div class="mt-0.5 flex items-center gap-2 flex-wrap">
+                          <span class="text-xs text-gray-400">
+                            {{ article.categoryKey | translate }} · {{ article.readTime }} {{ 'dashboard-help.readTime' | translate }}
+                          </span>
+                          @if (article.mostConsulted) {
+                            <span class="text-xs text-orange-500">· {{ 'dashboard-help.mostConsulted' | translate }}</span>
+                          }
+                          <span class="rounded-full border border-gray-200 px-2 py-0.5 text-[10px] font-medium text-gray-500">
+                            {{ article.categoryKey | translate }}
+                          </span>
+                        </div>
+                      </div>
+                      <svg class="ml-2 h-4 w-4 shrink-0 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                      </svg>
+                    </button>
+                  </li>
+                }
+              </ul>
+            </div>
+          </div>
+
+          <!-- Right: categories + CTA -->
+          <aside class="flex flex-col gap-4">
+            @if (relatedCategories().length > 0) {
+              <div class="rounded-2xl bg-white p-5 shadow-sm">
+                <h3 class="mb-3 text-sm font-semibold text-gray-800">{{ 'dashboard-help.results.relatedCategories' | translate }}</h3>
+                <ul class="flex flex-col gap-2" role="list">
+                  @for (cat of relatedCategories(); track cat.id) {
+                    <li>
+                      <div class="flex items-center gap-3 rounded-lg border border-gray-100 px-3 py-2.5">
+                        <span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg" [class]="categoryBg(cat.id)" aria-hidden="true">
+                          <svg class="h-3.5 w-3.5 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                              d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                          </svg>
+                        </span>
+                        <div>
+                          <p class="text-xs font-medium text-gray-800">{{ cat.nameKey | translate }}</p>
+                          <p class="text-[10px] text-gray-400">{{ cat.articleCount }} {{ 'dashboard-help.articlesLabel' | translate }}</p>
+                        </div>
+                      </div>
+                    </li>
+                  }
+                </ul>
+              </div>
+            }
+            <div class="rounded-2xl border border-orange-100 bg-orange-50 p-5">
+              <p class="text-sm font-semibold text-orange-800">{{ 'dashboard-help.ctaTitle' | translate }}</p>
+              <p class="mt-1 text-xs text-orange-600">{{ 'dashboard-help.ctaSub' | translate }}</p>
+              <button type="button" (click)="onGoReport()"
+                class="mt-3 flex items-center gap-1.5 rounded-full bg-orange-500 px-4 py-2 text-xs font-semibold text-white transition-colors hover:bg-orange-600">
+                <svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M12 9v2m0 4h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z" />
+                </svg>
+                {{ 'dashboard-help.results.report' | translate }}
+              </button>
+            </div>
+          </aside>
+        </div>
+
+      } @else {
+        <!-- Sin resultados -->
+        <div class="grid grid-cols-1 gap-5 lg:grid-cols-3">
+          <div class="lg:col-span-2">
+            <div class="rounded-2xl bg-white p-6 shadow-sm">
+              <h2 class="mb-4 text-sm font-semibold text-gray-800">{{ 'dashboard-help.results.resultsTitle' | translate }}</h2>
+              <div class="flex flex-col items-center py-8 text-center" role="status">
+                <svg class="h-12 w-12 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 21l-4.35-4.35M17 11A6 6 0 115 11a6 6 0 0112 0z" />
+                </svg>
+                <p class="mt-4 font-semibold text-gray-700">{{ 'dashboard-help.results.noResults' | translate: { q: searchQuery() } }}</p>
+                <p class="mt-1 text-sm text-gray-400">{{ 'dashboard-help.results.noResultsSub' | translate }}</p>
+              </div>
+              <div class="mt-4 border-t border-gray-100 pt-4">
+                <p class="mb-2 text-xs font-medium text-gray-500">{{ 'dashboard-help.results.suggestions' | translate }}</p>
+                <ul class="flex flex-col gap-1 text-xs text-gray-400">
+                  <li>• {{ 'dashboard-help.results.suggestion1' | translate }}</li>
+                  <li>• {{ 'dashboard-help.results.suggestion2' | translate }}</li>
+                  <li>• {{ 'dashboard-help.results.suggestion3' | translate }}</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <aside class="flex flex-col gap-4">
+            <div class="rounded-2xl border border-orange-100 bg-orange-50 p-5">
+              <p class="text-sm font-semibold text-orange-800">{{ 'dashboard-help.ctaTitle' | translate }}</p>
+              <p class="mt-1 text-xs text-orange-600">{{ 'dashboard-help.ctaSub' | translate }}</p>
+              <button type="button" (click)="onGoReport()"
+                class="mt-3 flex items-center gap-1.5 rounded-full bg-orange-500 px-4 py-2 text-xs font-semibold text-white transition-colors hover:bg-orange-600">
+                <svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M12 9v2m0 4h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z" />
+                </svg>
+                {{ 'dashboard-help.results.report' | translate }}
+              </button>
+            </div>
+            <div class="rounded-2xl bg-white p-5 shadow-sm">
+              <h3 class="mb-3 text-sm font-semibold text-gray-800">{{ 'dashboard-help.popular' | translate }}</h3>
+              <ul class="flex flex-col gap-2" role="list">
+                @for (article of popularArticles; track article.id) {
+                  <li>
+                    <button type="button" (click)="onOpenArticle(article.id)"
+                      class="flex w-full items-center justify-between gap-2 rounded-lg border border-gray-100 px-3 py-2.5 text-left transition-colors hover:bg-gray-50">
+                      <span class="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg" [class]="categoryBg(article.categoryId)" aria-hidden="true">
+                        <svg class="h-3 w-3 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                        </svg>
+                      </span>
+                      <div class="min-w-0 flex-1">
+                        <p class="truncate text-xs font-medium text-gray-800">{{ article.titleKey | translate }}</p>
+                        <p class="text-[10px] text-gray-400">{{ article.categoryKey | translate }} · {{ article.readTime }} {{ 'dashboard-help.readTime' | translate }}</p>
+                      </div>
+                      <svg class="h-3.5 w-3.5 shrink-0 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                      </svg>
+                    </button>
+                  </li>
+                }
+              </ul>
+            </div>
+          </aside>
+        </div>
+      }
+    </div>
+  }
+
+  <!-- ══════════════════════════════════════════════════════════ ARTICLE ══ -->
+  @if (view() === 'article') {
+    @if (selectedArticle(); as article) {
+      <div class="mx-auto max-w-5xl flex flex-col gap-4">
+
+        <!-- Breadcrumb -->
+        <nav aria-label="breadcrumb">
+          <ol class="flex items-center gap-1.5 text-sm" role="list">
+            <li>
+              <button type="button" (click)="onBackToHome()" class="text-orange-500 hover:underline">
+                ← {{ article.categoryKey | translate }}
+              </button>
+            </li>
+            <li aria-hidden="true"><span class="text-gray-300">›</span></li>
+            <li class="truncate text-gray-500">{{ article.titleKey | translate }}</li>
+          </ol>
+        </nav>
+
+        <!-- Title row -->
+        <div class="flex items-start justify-between gap-4">
+          <div>
+            <h1 class="text-xl font-bold text-gray-900">{{ article.titleKey | translate }}</h1>
+            <p class="mt-1 text-xs text-gray-400">
+              {{ article.categoryKey | translate }} · {{ article.readTime }} {{ 'dashboard-help.readTime' | translate }}
+            </p>
+          </div>
+          <span class="shrink-0 rounded-full border border-orange-200 px-3 py-1 text-xs font-medium text-orange-600">
+            {{ article.categoryKey | translate }}
+          </span>
+        </div>
+
+        <!-- Two-column -->
+        <div class="grid grid-cols-1 gap-5 lg:grid-cols-3">
+
+          <!-- Left: article content + feedback -->
+          <div class="lg:col-span-2 flex flex-col gap-4">
+
+            <!-- Steps card -->
+            <article class="rounded-2xl bg-white p-6 shadow-sm" [attr.aria-labelledby]="'art-title-' + article.id">
+              <h2 [id]="'art-title-' + article.id" class="mb-5 text-sm font-semibold text-gray-800">
+                {{ 'dashboard-help.article.stepsTitle' | translate }}
+              </h2>
+              <ol class="flex flex-col gap-5" role="list">
+                @for (stepKey of article.stepKeys; track $index) {
+                  <li class="flex gap-4">
+                    <span
+                      class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-xs font-bold text-white"
+                      [class]="$last ? 'bg-green-500' : 'bg-orange-500'"
+                      aria-hidden="true"
+                    >{{ $index + 1 }}</span>
+                    <div class="pt-0.5">
+                      <p class="text-sm leading-relaxed text-gray-700" [innerHTML]="stepKey | translate"></p>
+                    </div>
+                  </li>
+                }
+              </ol>
+
+              <!-- Feedback -->
+              <div class="mt-7 border-t border-gray-100 pt-5">
+                @if (articleFeedback() === null) {
+                  <p class="mb-3 text-sm font-medium text-gray-700">{{ 'dashboard-help.article.useful' | translate }}</p>
+                  <div class="flex gap-3">
+                    <button
+                      type="button"
+                      (click)="onArticleFeedback(true)"
+                      class="flex items-center gap-2 rounded-full border border-gray-200 bg-orange-50 px-4 py-1.5 text-sm font-medium text-orange-600 transition-colors hover:bg-orange-100"
+                    >
+                      👍 {{ 'dashboard-help.article.yes' | translate }}
+                    </button>
+                    <button
+                      type="button"
+                      (click)="onArticleFeedback(false)"
+                      class="flex items-center gap-2 rounded-full border border-orange-200 bg-white px-4 py-1.5 text-sm font-medium text-orange-500 transition-colors hover:bg-orange-50"
+                    >
+                      👎 {{ 'dashboard-help.article.no' | translate }}
+                    </button>
+                  </div>
+                } @else if (articleFeedback() === 'useful') {
+                  <div class="flex items-center gap-2 text-green-700" role="status">
+                    <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    <span class="text-sm font-medium">{{ 'dashboard-help.article.thanks' | translate }}</span>
+                  </div>
+                } @else {
+                  <!-- Not useful: yellow banner + inline form -->
+                  <div class="flex items-start gap-2 rounded-xl border border-yellow-200 bg-yellow-50 px-4 py-3" role="status">
+                    <span class="text-yellow-500" aria-hidden="true">👎</span>
+                    <div>
+                      <p class="text-sm font-semibold text-yellow-800">{{ 'dashboard-help.article.notUsefulBanner' | translate }}</p>
+                      <p class="mt-0.5 text-xs text-yellow-700">{{ 'dashboard-help.article.notUsefulBannerSub' | translate }}</p>
+                    </div>
+                  </div>
+
+                  <div class="mt-4 rounded-xl border border-orange-100 bg-orange-50 p-4">
+                    <p class="text-sm font-semibold text-gray-800">{{ 'dashboard-help.article.quickReport.title' | translate }}</p>
+                    <p class="mt-0.5 text-xs text-gray-500">{{ 'dashboard-help.article.quickReport.sub' | translate }}</p>
+                    <textarea
+                      rows="3"
+                      [value]="quickReportText()"
+                      (input)="quickReportText.set($any($event.target).value); quickReportInvalid.set(false)"
+                      [placeholder]="'dashboard-help.article.quickReport.placeholder' | translate"
+                      class="mt-3 w-full resize-none rounded-lg border bg-white px-3 py-2.5 text-sm outline-none focus:ring-2 focus:ring-orange-200"
+                      [class]="quickReportInvalid() ? 'border-red-300' : 'border-gray-200'"
+                      [attr.aria-invalid]="quickReportInvalid() ? 'true' : 'false'"
+                    ></textarea>
+                    @if (quickReportInvalid()) {
+                      <p class="mt-1 text-xs text-red-600" role="alert">
+                        {{ 'dashboard-help.article.quickReport.required' | translate }}
+                      </p>
+                    }
+                    <div class="mt-3 flex gap-2">
+                      <button
+                        type="button"
+                        (click)="onSubmitQuickReport()"
+                        class="flex items-center gap-1.5 rounded-full bg-orange-500 px-4 py-1.5 text-xs font-semibold text-white transition-colors hover:bg-orange-600"
+                      >
+                        <svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M12 9v2m0 4h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z" />
+                        </svg>
+                        {{ 'dashboard-help.article.quickReport.submit' | translate }}
+                      </button>
+                      <button
+                        type="button"
+                        (click)="onBackToArticle()"
+                        class="rounded-full border border-gray-300 bg-white px-4 py-1.5 text-xs font-semibold text-gray-500 transition-colors hover:bg-gray-50"
+                      >
+                        {{ 'dashboard-help.article.cancel' | translate }}
+                      </button>
+                    </div>
+                  </div>
+                }
+              </div>
+            </article>
+          </div>
+
+          <!-- Right sidebar -->
+          <aside class="flex flex-col gap-4">
+            <!-- Artículos relacionados -->
+            @if (relatedArticles().length > 0) {
+              <div class="rounded-2xl bg-white p-5 shadow-sm">
+                <h2 class="mb-3 text-sm font-semibold text-gray-800">{{ 'dashboard-help.article.related' | translate }}</h2>
+                <ul class="flex flex-col gap-2" role="list">
+                  @for (related of relatedArticles(); track related.id) {
+                    <li>
+                      <button
+                        type="button"
+                        (click)="onOpenArticle(related.id)"
+                        class="flex w-full items-center gap-3 rounded-lg border border-gray-100 px-3 py-2.5 text-left transition-colors hover:bg-gray-50"
+                      >
+                        <span class="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg" [class]="categoryBg(related.categoryId)" aria-hidden="true">
+                          <svg class="h-3 w-3 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                              d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                          </svg>
+                        </span>
+                        <div class="min-w-0 flex-1">
+                          <p class="truncate text-xs font-medium text-gray-800">{{ related.titleKey | translate }}</p>
+                          <p class="text-[10px] text-gray-400">{{ related.categoryKey | translate }} · {{ related.readTime }} {{ 'dashboard-help.readTime' | translate }}</p>
+                        </div>
+                        <svg class="h-3.5 w-3.5 shrink-0 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                        </svg>
+                      </button>
+                    </li>
+                  }
+                </ul>
+              </div>
+            }
+
+            <!-- CTA o Contacto directo según feedback -->
+            @if (articleFeedback() !== 'not-useful') {
+              <div class="rounded-2xl border border-orange-100 bg-orange-50 p-5">
+                <p class="text-sm font-semibold text-orange-800">{{ 'dashboard-help.article.stillProblems' | translate }}</p>
+                <p class="mt-1 text-xs text-orange-600">{{ 'dashboard-help.article.stillProblemsSub' | translate }}</p>
+                <button type="button" (click)="onGoReport(article.categoryKey)"
+                  class="mt-3 flex items-center gap-1.5 rounded-full bg-orange-500 px-4 py-2 text-xs font-semibold text-white transition-colors hover:bg-orange-600">
+                  <svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M12 9v2m0 4h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z" />
+                  </svg>
+                  {{ 'dashboard-help.article.report' | translate }}
+                </button>
+              </div>
+            } @else {
+              <div class="rounded-2xl bg-white p-5 shadow-sm">
+                <h3 class="mb-3 text-sm font-semibold text-gray-800">{{ 'dashboard-help.contactSupport.title' | translate }}</h3>
+                <dl class="flex flex-col gap-2 text-sm">
+                  <div class="flex justify-between">
+                    <dt class="text-gray-400">Email</dt>
+                    <dd class="font-medium text-orange-500">{{ 'dashboard-help.contactSupport.email' | translate }}</dd>
+                  </div>
+                  <div class="flex justify-between">
+                    <dt class="text-gray-400">WhatsApp</dt>
+                    <dd class="font-medium text-gray-800">{{ 'dashboard-help.contactSupport.whatsapp' | translate }}</dd>
+                  </div>
+                </dl>
+              </div>
+            }
+          </aside>
+        </div>
+      </div>
+    }
+  }
+
+  <!-- ═══════════════════════════════════════════════════════════ REPORT ══ -->
+  @if (view() === 'report') {
+    <div class="mx-auto max-w-5xl flex flex-col gap-4">
+
+      <!-- Header -->
+      <div class="flex items-start justify-between">
+        <div>
+          <h1 class="text-xl font-bold text-gray-900">{{ 'dashboard-help.report.title' | translate }}</h1>
+          <p class="mt-0.5 text-xs text-gray-400">{{ 'dashboard-help.title' | translate }} · {{ 'dashboard-help.report.supportCenter' | translate }}</p>
+        </div>
+        @if (formSubmitted() && errorCount > 0) {
+          <span class="rounded-full bg-red-100 px-3 py-1 text-xs font-semibold text-red-600">
+            {{ errorCount }} {{ 'dashboard-help.report.errorsCount_other' | translate: { count: errorCount } }}
+          </span>
+        } @else {
+          <span class="text-xs text-gray-400">{{ 'dashboard-help.report.step' | translate }}</span>
+        }
+      </div>
+
+      <!-- Error banner -->
+      @if (formSubmitted() && errorCount > 0) {
+        <div class="flex items-start gap-3 rounded-xl border border-red-200 bg-red-50 px-4 py-3" role="alert" aria-live="assertive">
+          <svg class="mt-0.5 h-4 w-4 shrink-0 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M12 9v2m0 4h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z" />
+          </svg>
+          <div>
+            <p class="text-sm font-semibold text-red-700">{{ 'dashboard-help.report.errorBannerTitle' | translate }}</p>
+            <p class="text-xs text-red-600">{{ 'dashboard-help.report.errorBannerSub' | translate }}</p>
+          </div>
+        </div>
+      }
+
+      <!-- Two-column -->
+      <div class="grid grid-cols-1 gap-5 lg:grid-cols-3">
+
+        <!-- Left: form -->
+        <div class="lg:col-span-2">
+          <div class="rounded-2xl bg-white p-6 shadow-sm">
+            <h2 class="text-sm font-semibold text-gray-800">{{ 'dashboard-help.report.formTitle' | translate }}</h2>
+            <p class="mt-0.5 text-xs text-gray-400">{{ 'dashboard-help.report.formSubtitle' | translate }}</p>
+
+            <form [formGroup]="reportForm" (ngSubmit)="onSubmitReport()" class="mt-5 flex flex-col gap-4" novalidate>
+
+              <div class="grid grid-cols-2 gap-4">
+                <!-- Categoría -->
+                <div class="flex flex-col gap-1.5">
+                  <label for="rep-category" class="text-sm font-medium text-gray-700">
+                    {{ 'dashboard-help.report.category' | translate }}
+                    <span class="text-red-500" aria-hidden="true"> *</span>
+                  </label>
+                  <select id="rep-category" formControlName="category"
+                    class="rounded-lg border px-3 py-2.5 text-sm outline-none focus:ring-2 focus:ring-orange-200"
+                    [class]="isCategoryError() ? 'border-red-400 bg-red-50 text-red-600' : 'border-gray-200 bg-white'"
+                    [attr.aria-invalid]="isCategoryError() ? 'true' : 'false'"
+                    aria-describedby="cat-error">
+                    @for (cat of problemCategories; track $index) {
+                      <option [value]="$index === 0 ? '' : cat">{{ cat }}</option>
+                    }
+                  </select>
+                  @if (isCategoryError()) {
+                    <p id="cat-error" class="text-xs text-orange-600" role="alert">
+                      ⚠ {{ 'dashboard-help.report.categoryRequired' | translate }}
+                    </p>
+                  }
+                </div>
+
+                <!-- Módulo -->
+                <div class="flex flex-col gap-1.5">
+                  <label for="rep-module" class="text-sm font-medium text-gray-700">
+                    {{ 'dashboard-help.report.module' | translate }}
+                    <span class="text-red-500" aria-hidden="true"> *</span>
+                  </label>
+                  <select id="rep-module" formControlName="module"
+                    class="rounded-lg border px-3 py-2.5 text-sm outline-none focus:ring-2 focus:ring-orange-200"
+                    [class]="isModuleError() ? 'border-red-400 bg-red-50' : 'border-gray-200 bg-white'"
+                    [attr.aria-invalid]="isModuleError() ? 'true' : 'false'"
+                    aria-describedby="mod-error">
+                    <option value="">{{ 'dashboard-help.report.moduleDefault' | translate }}</option>
+                    @for (mod of modules; track mod) {
+                      <option [value]="mod">{{ mod }}</option>
+                    }
+                  </select>
+                  @if (isModuleError()) {
+                    <p id="mod-error" class="text-xs text-red-600" role="alert">
+                      {{ 'dashboard-help.report.moduleRequired' | translate }}
+                    </p>
+                  }
+                </div>
+              </div>
+
+              <!-- Descripción -->
+              <div class="flex flex-col gap-1.5">
+                <label for="rep-description" class="text-sm font-medium text-gray-700">
+                  {{ 'dashboard-help.report.description' | translate }}
+                  <span class="text-red-500" aria-hidden="true"> *</span>
+                </label>
+                <textarea id="rep-description" formControlName="description" rows="5"
+                  [placeholder]="'dashboard-help.report.descriptionPlaceholder' | translate"
+                  class="resize-none rounded-lg border px-3 py-2.5 text-sm outline-none focus:ring-2 focus:ring-orange-200"
+                  [class]="isDescriptionError() ? 'border-red-400 bg-red-50' : 'border-gray-200 bg-white'"
+                  [attr.aria-invalid]="isDescriptionError() ? 'true' : 'false'"
+                  aria-describedby="desc-error">
+                </textarea>
+                @if (isDescriptionError()) {
+                  <p id="desc-error" class="text-xs text-orange-600" role="alert">
+                    ⚠ {{ 'dashboard-help.report.descriptionRequired' | translate }}
+                  </p>
+                }
+              </div>
+
+              <!-- Cuándo (opcional) -->
+              <div class="flex flex-col gap-1.5">
+                <label for="rep-when" class="text-sm font-medium text-gray-700">
+                  {{ 'dashboard-help.report.when' | translate }}
+                  <span class="ml-1 text-xs text-gray-400">{{ 'dashboard-help.report.whenOptional' | translate }}</span>
+                </label>
+                <input id="rep-when" type="text" formControlName="when"
+                  [placeholder]="'dashboard-help.report.whenPlaceholder' | translate"
+                  class="rounded-lg border border-gray-200 px-3 py-2.5 text-sm outline-none focus:ring-2 focus:ring-orange-200" />
+              </div>
+
+              <div class="flex gap-3 pt-1">
+                <button type="submit"
+                  class="rounded-full bg-orange-500 px-6 py-2.5 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-orange-600 focus:outline-none focus:ring-2 focus:ring-orange-300">
+                  {{ 'dashboard-help.report.submit' | translate }}
+                </button>
+                <button type="button" (click)="onBackToHome()"
+                  class="rounded-full border border-gray-300 px-6 py-2.5 text-sm font-semibold text-gray-500 transition-colors hover:bg-gray-50">
+                  {{ 'dashboard-help.backBtn' | translate }}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <!-- Right sidebar -->
+        <aside class="flex flex-col gap-4">
+          @if (formSubmitted() && errorCount > 0) {
+            <!-- Campos con errores -->
+            <div class="rounded-2xl border border-red-200 bg-red-50 p-5">
+              <p class="text-sm font-semibold text-red-700">⚠ {{ 'dashboard-help.report.errorFieldsTitle' | translate }}</p>
+              <ul class="mt-3 flex flex-col gap-1">
+                @for (err of formErrors; track $index) {
+                  <li class="text-xs text-red-600">• {{ err }}</li>
+                }
+              </ul>
+            </div>
+            <!-- Ayuda urgente -->
+            <div class="rounded-2xl bg-white p-5 shadow-sm">
+              <p class="text-sm font-semibold text-gray-800">{{ 'dashboard-help.report.urgentTitle' | translate }}</p>
+              <p class="mt-1 text-xs text-gray-500">{{ 'dashboard-help.report.urgentSub' | translate }}</p>
+              <dl class="mt-3 flex flex-col gap-2 text-sm">
+                <div class="flex justify-between">
+                  <dt class="text-gray-400">WhatsApp</dt>
+                  <dd class="font-medium text-orange-500">{{ 'dashboard-help.contactSupport.whatsapp' | translate }}</dd>
+                </div>
+                <div class="flex justify-between">
+                  <dt class="text-gray-400">Email</dt>
+                  <dd class="font-medium text-orange-500 break-all text-right">{{ 'dashboard-help.contactSupport.email' | translate }}</dd>
+                </div>
+              </dl>
+            </div>
+          } @else {
+            <!-- Antes de reportar -->
+            <div class="rounded-2xl border border-yellow-200 bg-yellow-50 p-5">
+              <p class="text-sm font-semibold text-yellow-800">
+                💡 {{ 'dashboard-help.report.beforeTitle' | translate }}
+              </p>
+              <ul class="mt-3 flex flex-col gap-2">
+                <li class="flex items-start gap-2 text-xs text-yellow-700">
+                  <span class="text-green-500 shrink-0">✓</span>
+                  {{ 'dashboard-help.report.before1' | translate }}
+                </li>
+                <li class="flex items-start gap-2 text-xs text-yellow-700">
+                  <span class="text-green-500 shrink-0">✓</span>
+                  {{ 'dashboard-help.report.before2' | translate }}
+                </li>
+                <li class="flex items-start gap-2 text-xs text-yellow-700">
+                  <span class="text-green-500 shrink-0">✓</span>
+                  {{ 'dashboard-help.report.before3' | translate }}
+                </li>
+              </ul>
+            </div>
+            <!-- Tiempo de respuesta -->
+            <div class="rounded-2xl bg-white p-5 shadow-sm">
+              <h3 class="mb-3 text-sm font-semibold text-gray-800">{{ 'dashboard-help.report.responseTimeTitle' | translate }}</h3>
+              <dl class="flex flex-col gap-2.5 text-sm">
+                <div class="flex justify-between">
+                  <dt class="text-gray-500">{{ 'dashboard-help.report.priorityNormal' | translate }}</dt>
+                  <dd class="font-medium text-gray-800">{{ 'dashboard-help.report.priorityNormalVal' | translate }}</dd>
+                </div>
+                <div class="flex justify-between">
+                  <dt class="text-gray-500">{{ 'dashboard-help.report.priorityHigh' | translate }}</dt>
+                  <dd class="font-semibold text-orange-500">{{ 'dashboard-help.report.priorityHighVal' | translate }}</dd>
+                </div>
+                <div class="flex justify-between">
+                  <dt class="text-gray-500">{{ 'dashboard-help.report.hoursLabel' | translate }}</dt>
+                  <dd class="font-medium text-gray-800">{{ 'dashboard-help.report.hoursVal' | translate }}</dd>
+                </div>
+              </dl>
+            </div>
+          }
+        </aside>
+      </div>
+    </div>
+  }
+
+  <!-- ══════════════════════════════════════════════════════════ SUCCESS ══ -->
+  @if (view() === 'success') {
+    <div class="mx-auto max-w-5xl flex flex-col gap-4" role="main" aria-live="polite">
+
+      <div>
+        <h1 class="text-xl font-bold text-gray-900">{{ 'dashboard-help.success.pageTitle' | translate }}</h1>
+        <p class="mt-0.5 text-xs text-gray-400">{{ 'dashboard-help.title' | translate }} · {{ 'dashboard-help.report.supportCenter' | translate }}</p>
+      </div>
+
+      <div class="grid grid-cols-1 gap-5 lg:grid-cols-3">
+
+        <!-- Left: success card + summary + buttons -->
+        <div class="lg:col-span-2 flex flex-col gap-4">
+
+          <!-- Success card -->
+          <div class="rounded-2xl bg-orange-50 px-8 py-10 text-center">
+            <div class="flex justify-center" aria-hidden="true">
+              <span class="text-5xl">✅</span>
+            </div>
+            <h2 class="mt-4 text-lg font-bold text-gray-900">{{ 'dashboard-help.success.title' | translate }}</h2>
+            <p class="mt-1 text-sm text-gray-600">{{ 'dashboard-help.success.subtitle' | translate }}</p>
+            <button
+              type="button"
+              class="mt-5 rounded-full bg-orange-500 px-6 py-2 text-sm font-bold text-white"
+              [attr.aria-label]="'dashboard-help.success.ticketLabel' | translate"
+            >
+              {{ 'dashboard-help.success.ticketLabel' | translate }} {{ ticketNumber() }}
+            </button>
+            <p class="mt-2 text-xs text-gray-400">{{ 'dashboard-help.success.ticketHint' | translate }}</p>
+          </div>
+
+          <!-- Summary table -->
+          @if (savedData(); as data) {
+            <div class="rounded-2xl bg-white p-6 shadow-sm">
+              <h3 class="mb-4 text-sm font-semibold text-gray-800">{{ 'dashboard-help.success.summaryTitle' | translate }}</h3>
+              <dl class="flex flex-col divide-y divide-gray-50">
+                <div class="flex justify-between py-2.5">
+                  <dt class="text-sm text-gray-500">{{ 'dashboard-help.success.ticketLabel' | translate }}</dt>
+                  <dd class="text-sm font-semibold text-orange-500">{{ ticketNumber() }}</dd>
+                </div>
+                <div class="flex justify-between py-2.5">
+                  <dt class="text-sm text-gray-500">{{ 'dashboard-help.success.categoryLabel' | translate }}</dt>
+                  <dd class="text-sm font-medium text-gray-800">{{ data.category }}</dd>
+                </div>
+                <div class="flex justify-between py-2.5">
+                  <dt class="text-sm text-gray-500">{{ 'dashboard-help.success.moduleLabel' | translate }}</dt>
+                  <dd class="text-sm font-medium text-gray-800">{{ data.module }}</dd>
+                </div>
+                <div class="flex justify-between py-2.5">
+                  <dt class="text-sm text-gray-500">{{ 'dashboard-help.success.dateLabel' | translate }}</dt>
+                  <dd class="text-sm font-medium text-gray-800">{{ nowString }}</dd>
+                </div>
+                <div class="flex justify-between py-2.5">
+                  <dt class="text-sm text-gray-500">{{ 'dashboard-help.success.statusLabel' | translate }}</dt>
+                  <dd>
+                    <span class="rounded-full bg-orange-100 px-2 py-0.5 text-xs font-semibold text-orange-600">
+                      {{ 'dashboard-help.success.statusValue' | translate }}
+                    </span>
+                  </dd>
+                </div>
+                <div class="flex justify-between py-2.5">
+                  <dt class="text-sm text-gray-500">{{ 'dashboard-help.success.estimatedLabel' | translate }}</dt>
+                  <dd class="text-sm font-semibold text-green-600">{{ 'dashboard-help.success.estimatedValue' | translate }}</dd>
+                </div>
+              </dl>
+            </div>
+          }
+
+          <!-- Buttons -->
+          <div class="flex gap-3">
+            <button type="button" (click)="onBackToHome()"
+              class="rounded-full bg-orange-500 px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-orange-600">
+              ← {{ 'dashboard-help.success.backToHome' | translate }}
+            </button>
+            <button type="button"
+              class="rounded-full border border-orange-400 px-5 py-2.5 text-sm font-semibold text-orange-500 transition-colors hover:bg-orange-50">
+              {{ 'dashboard-help.success.viewReports' | translate }} →
+            </button>
+          </div>
+        </div>
+
+        <!-- Right sidebar -->
+        <aside class="flex flex-col gap-4">
+          <!-- Email notice -->
+          <div class="rounded-2xl bg-blue-50 border border-blue-100 p-4">
+            <div class="flex items-start gap-2">
+              <svg class="mt-0.5 h-4 w-4 shrink-0 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              <div>
+                <p class="text-xs font-semibold text-blue-800">{{ 'dashboard-help.success.emailNotice' | translate }}</p>
+                <p class="mt-0.5 text-xs text-blue-600">{{ 'dashboard-help.success.emailNoticeSub' | translate }}</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Next steps -->
+          <div class="rounded-2xl bg-white p-5 shadow-sm">
+            <h3 class="mb-4 text-sm font-semibold text-gray-800">{{ 'dashboard-help.success.nextTitle' | translate }}</h3>
+            <ol class="flex flex-col gap-3">
+              @for (step of [1, 2, 3]; track step) {
+                <li class="flex items-start gap-3">
+                  <span class="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-orange-500 text-xs font-bold text-white" aria-hidden="true">
+                    {{ step }}
+                  </span>
+                  <p class="pt-0.5 text-xs text-gray-600">
+                    {{ 'dashboard-help.success.step' + step | translate }}
+                  </p>
+                </li>
+              }
+            </ol>
+          </div>
+        </aside>
+      </div>
+    </div>
+  }
+
+  <!-- ════════════════════════════════════════════════════════════ ERROR ══ -->
+  @if (view() === 'error') {
+    <div class="mx-auto max-w-5xl flex flex-col gap-4" role="main" aria-live="assertive">
+
+      <div>
+        <h1 class="text-xl font-bold text-gray-900">{{ 'dashboard-help.error.pageTitle' | translate }}</h1>
+        <p class="mt-0.5 text-xs text-gray-400">{{ 'dashboard-help.title' | translate }} · {{ 'dashboard-help.report.supportCenter' | translate }}</p>
+      </div>
+
+      <div class="grid grid-cols-1 gap-5 lg:grid-cols-3">
+
+        <!-- Left -->
+        <div class="lg:col-span-2 flex flex-col gap-4">
+
+          <!-- Big error card -->
+          <div class="rounded-2xl bg-white px-8 py-10 text-center shadow-sm">
+            <div class="flex justify-center" aria-hidden="true">
+              <div class="flex h-16 w-16 items-center justify-center rounded-full bg-red-100">
+                <svg class="h-8 w-8 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </div>
+            </div>
+            <h2 class="mt-4 text-lg font-bold text-red-600">{{ 'dashboard-help.error.title' | translate }}</h2>
+            <p class="mt-1 text-sm text-gray-500">{{ 'dashboard-help.error.subtitle' | translate }}</p>
+          </div>
+
+          <!-- Yellow warning -->
+          <div class="flex items-start gap-3 rounded-xl border border-yellow-200 bg-yellow-50 px-4 py-3">
+            <svg class="mt-0.5 h-4 w-4 shrink-0 text-yellow-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M12 9v2m0 4h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z" />
+            </svg>
+            <div>
+              <p class="text-sm font-semibold text-yellow-800">{{ 'dashboard-help.error.noTicket' | translate }}</p>
+              <p class="mt-0.5 text-xs text-yellow-700">{{ 'dashboard-help.error.noTicketSub' | translate }}</p>
+            </div>
+          </div>
+
+          <!-- Data preserved -->
+          @if (savedData(); as data) {
+            <div class="rounded-2xl bg-white p-5 shadow-sm">
+              <h3 class="mb-3 text-sm font-semibold text-gray-800">{{ 'dashboard-help.error.dataSaved' | translate }}</h3>
+              <dl class="flex flex-col divide-y divide-gray-50 text-sm">
+                <div class="flex justify-between py-2">
+                  <dt class="text-gray-500">{{ 'dashboard-help.success.categoryLabel' | translate }}</dt>
+                  <dd class="font-medium text-gray-800">{{ data.category }}</dd>
+                </div>
+                <div class="flex justify-between py-2">
+                  <dt class="text-gray-500">{{ 'dashboard-help.success.moduleLabel' | translate }}</dt>
+                  <dd class="font-medium text-gray-800">{{ data.module }}</dd>
+                </div>
+                <div class="py-2">
+                  <dt class="text-gray-500">{{ 'dashboard-help.error.descriptionLabel' | translate }}</dt>
+                  <dd class="mt-1 text-gray-800">{{ data.description }}</dd>
+                </div>
+              </dl>
+            </div>
+          }
+
+          <!-- Buttons -->
+          <div class="flex gap-3">
+            <button type="button" (click)="onRetry()"
+              class="flex items-center gap-1.5 rounded-full bg-orange-500 px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-orange-600">
+              <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+              </svg>
+              {{ 'dashboard-help.error.retry' | translate }}
+            </button>
+            <button type="button" (click)="onBackToHome()"
+              class="rounded-full border border-gray-300 px-5 py-2.5 text-sm font-semibold text-gray-500 transition-colors hover:bg-gray-50">
+              ← {{ 'dashboard-help.error.backToHome' | translate }}
+            </button>
+          </div>
+        </div>
+
+        <!-- Right sidebar -->
+        <aside class="flex flex-col gap-4">
+          <!-- Contact -->
+          <div class="rounded-2xl border border-orange-100 bg-orange-50 p-5">
+            <p class="text-sm font-semibold text-orange-800">{{ 'dashboard-help.error.contactTitle' | translate }}</p>
+            <p class="mt-1 text-xs text-orange-600">{{ 'dashboard-help.error.contactSub' | translate }}</p>
+            <dl class="mt-3 flex flex-col gap-2 text-sm">
+              <div class="flex justify-between">
+                <dt class="text-gray-500">WhatsApp</dt>
+                <dd class="font-semibold text-gray-800">{{ 'dashboard-help.contactSupport.whatsapp' | translate }}</dd>
+              </div>
+              <div class="flex flex-col gap-0.5">
+                <dt class="text-gray-500">Email</dt>
+                <dd class="font-semibold text-orange-500 break-all">{{ 'dashboard-help.contactSupport.email' | translate }}</dd>
+              </div>
+            </dl>
+          </div>
+
+          <!-- Causes -->
+          <div class="rounded-2xl bg-white p-5 shadow-sm">
+            <h3 class="mb-3 text-sm font-semibold text-gray-800">{{ 'dashboard-help.error.causesTitle' | translate }}</h3>
+            <ul class="flex flex-col gap-2 text-xs text-gray-600">
+              <li>• {{ 'dashboard-help.error.cause1' | translate }}</li>
+              <li>• {{ 'dashboard-help.error.cause2' | translate }}</li>
+              <li>• {{ 'dashboard-help.error.cause3' | translate }}</li>
+            </ul>
+          </div>
+        </aside>
+      </div>
+    </div>
+  }
+
+</div>

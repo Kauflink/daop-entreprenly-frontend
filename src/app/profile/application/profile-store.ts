@@ -11,6 +11,11 @@ import {
   UserPreferencesResource,
   UserProfileResource,
 } from '../infrastructure/profile-response';
+import {
+  Currency,
+  CurrencyService,
+  isSupportedCurrency,
+} from '../../shared/infrastructure/currency-service';
 
 interface ProfileResponse {
   user: UserProfileResource;
@@ -20,8 +25,16 @@ interface ProfileResponse {
 
 @Injectable({ providedIn: 'root' })
 export class ProfileStore {
+  private static readStorage(key: string): string | null {
+    try {
+      return localStorage.getItem(key);
+    } catch {
+      return null;
+    }
+  }
   private readonly http = inject(HttpClient);
   private readonly translate = inject(TranslateService);
+  private readonly currencyAssembler = inject(CurrencyService);
   private readonly profileUrl =
     environment.entreprenlyProviderApiBaseUrl + environment.entreprenlyProviderProfileEndpointPath;
 
@@ -36,9 +49,10 @@ export class ProfileStore {
 
   readonly preferences = signal<UserPreferences>({
     id: 0,
-    language: '',
+    language: ProfileStore.readStorage('entreprenly-lang') ?? '',
     timezone: '',
-    theme: 'light',
+    theme: (ProfileStore.readStorage('entreprenly-theme') as UserPreferences['theme']) ?? 'light',
+    currency: this.readStoredCurrency(),
   });
 
   readonly notificationSettings = signal<NotificationSettings>({
@@ -55,14 +69,28 @@ export class ProfileStore {
   constructor() {
     effect(() => {
       const lang = this.preferences().language;
-      if (lang && lang !== this.translate.currentLang) {
-        this.translate.use(lang);
+      if (lang) {
+        if (lang !== this.translate.currentLang) {
+          this.translate.use(lang);
+        }
+        try {
+          localStorage.setItem('entreprenly-lang', lang);
+        } catch {}
       }
     });
     effect(() => {
       const theme = this.preferences().theme;
       if (theme) {
         document.documentElement.dataset['theme'] = theme;
+        try {
+          localStorage.setItem('entreprenly-theme', theme);
+        } catch {}
+      }
+    });
+    effect(() => {
+      const currency = this.preferences().currency;
+      if (currency) {
+        this.currencyAssembler.setCurrency(currency);
       }
     });
     this.load();
@@ -127,11 +155,14 @@ export class ProfileStore {
   }
 
   private toPreferences(r: UserPreferencesResource): UserPreferences {
+    const currency = r.currency ?? null;
+
     return {
       id: r.id,
       language: r.language,
       timezone: r.timezone,
       theme: r.theme,
+      currency: isSupportedCurrency(currency) ? currency : 'PEN',
     };
   }
 
@@ -161,6 +192,7 @@ export class ProfileStore {
       language: e.language,
       timezone: e.timezone,
       theme: e.theme,
+      currency: e.currency,
     };
   }
 
@@ -171,5 +203,10 @@ export class ProfileStore {
       payment_alerts: e.paymentAlerts,
       chatbot_messages: e.chatbotMessages,
     };
+  }
+
+  private readStoredCurrency(): Currency {
+    const storedCurrency = ProfileStore.readStorage('entreprenly-currency');
+    return isSupportedCurrency(storedCurrency) ? storedCurrency : 'PEN';
   }
 }
