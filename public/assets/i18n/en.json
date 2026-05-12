@@ -257,7 +257,7 @@
         "annual": "annual payment",
         "free": "per month"
       },
-      "priceAriaLabel": "Current cost {{ price }} soles {{ label }}"
+      "priceAriaLabel": "Current cost {{ price }} {{ label }}"
     },
     "usage": {
       "eyebrow": "Plan usage",
@@ -314,8 +314,8 @@
         "title": "Current status",
         "detail": {
           "free": "Free Plan active - No charges recorded",
-          "active": "Control Plan active - S/ 89/month",
-          "scheduled-cancellation": "Cancellation scheduled - S/ 89/month"
+          "active": "Control Plan active - {{ price }}/month",
+          "scheduled-cancellation": "Cancellation scheduled - {{ price }}/month"
         }
       },
       "billing": {
@@ -422,8 +422,8 @@
           "annual": "Annual billing"
         },
         "priceLabel": {
-          "monthly": "S/ 89/month",
-          "annual": "S/ 890/year"
+          "monthly": "/month",
+          "annual": "/year"
         }
       },
       "billing": {
