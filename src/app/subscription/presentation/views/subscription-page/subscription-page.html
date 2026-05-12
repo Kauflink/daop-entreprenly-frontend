@@ -37,6 +37,8 @@
     <app-subscription-activity
       [activity]="dashboard().activity"
       [billingSetup]="dashboard().billingSetup"
+      [currentPlan]="dashboard().currentPlan"
+      [billingCycle]="dashboard().defaultBillingCycle"
       (historyDownloadRequested)="openHistoryModal()"
     />
 
@@ -83,6 +85,8 @@
       <app-subscription-history-modal
         [activity]="dashboard().activity"
         [billingSetup]="dashboard().billingSetup"
+        [currentPlan]="dashboard().currentPlan"
+        [billingCycle]="dashboard().defaultBillingCycle"
         [downloaded]="historyDownloaded()"
         (closed)="closeHistoryModal()"
         (historyDownloadRequested)="downloadActivityHistory()"

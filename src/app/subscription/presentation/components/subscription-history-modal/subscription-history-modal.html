@@ -8,26 +8,38 @@
   cdkTrapFocus
   cdkTrapFocusAutoCapture
 >
-  <button class="icon-button" type="button" aria-label="Cerrar modal" (click)="close()">×</button>
-  <p class="eyebrow">Suscripción</p>
-  <h2 id="history-modal-title">Historial de suscripción</h2>
+  <button class="icon-button" type="button" [attr.aria-label]="'subscription.modal.close' | translate" (click)="close()">×</button>
+  <p class="eyebrow">{{ 'subscription.modal.eyebrow' | translate }}</p>
+  <h2 id="history-modal-title">{{ 'subscription.history.title' | translate }}</h2>
 
-  <div class="history-list" role="table" aria-label="Historial de suscripción">
+  <div class="history-list" role="table" [attr.aria-label]="'subscription.history.ariaLabel' | translate">
     @for (item of activityRows(); track item.id) {
       <div class="activity-row" role="row">
-        <strong role="cell">{{ item.title }}</strong>
-        <span role="cell">{{ item.detail }}</span>
+        <strong role="cell">
+          @if (item.titleKey; as titleKey) {
+            {{ titleKey | translate }}
+          } @else {
+            {{ item.title }}
+          }
+        </strong>
+        <span role="cell">
+          @if (item.detailKey; as detailKey) {
+            {{ detailKey | translate: item.detailParams }}
+          } @else {
+            {{ item.detail }}
+          }
+        </span>
       </div>
     }
   </div>
 
   @if (downloaded()) {
     <p class="success-message" role="status" aria-live="polite">
-      Historial descargado correctamente con la actividad visible de la suscripción.
+      {{ 'subscription.history.downloaded' | translate }}
     </p>
   }
 
   <button class="primary-button" type="button" (click)="requestHistoryDownload()">
-    Descargar historial
+    {{ 'subscription.history.downloadAction' | translate }}
   </button>
 </section>

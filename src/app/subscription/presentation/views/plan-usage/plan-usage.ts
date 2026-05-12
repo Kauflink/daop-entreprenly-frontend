@@ -13,32 +13,44 @@ export class PlanUsage {
   readonly limits = input.required<SubscriptionLimit[]>();
   readonly planStatus = input.required<string>();
 
-  protected readonly statusLabel = computed(() =>
-    this.controlPlanAccessEnabled() ? 'Control' : 'Free',
+  protected readonly statusLabelKey = computed(() =>
+    this.controlPlanAccessEnabled()
+      ? 'subscription.usage.status.control'
+      : 'subscription.usage.status.free',
   );
 
   protected readonly controlPlanAccessEnabled = computed(() =>
     ['active', 'scheduled-cancellation'].includes(this.planStatus()),
   );
 
-  protected limitValueLabel(limit: SubscriptionLimit): string {
-    if (!this.controlPlanAccessEnabled()) {
-      return '';
-    }
+  protected limitLabelKey(limit: SubscriptionLimit): string {
+    return `subscription.limits.${limit.id}.label`;
+  }
 
+  protected limitAriaLabelKey(limit: SubscriptionLimit): string {
+    return `subscription.limits.${limit.id}.ariaLabel`;
+  }
+
+  protected limitValueLabelKey(limit: SubscriptionLimit): string {
     if (limit.id === 'products') {
-      return `${limit.usedValue} productos`;
+      return 'subscription.usage.limitValue.products';
     }
 
     if (limit.id === 'active-batches') {
-      return `${limit.usedValue} lotes`;
+      return 'subscription.usage.limitValue.active-batches';
     }
 
     if (limit.id === 'users') {
-      return limit.usedValue === 1 ? '1 usuario' : `${limit.usedValue} usuarios`;
+      return limit.usedValue === 1
+        ? 'subscription.usage.limitValue.users-singular'
+        : 'subscription.usage.limitValue.users-plural';
     }
 
-    return `${limit.usedValue}`;
+    return 'subscription.usage.limitValue.generic';
+  }
+
+  protected limitValueParams(limit: SubscriptionLimit): Record<string, number> {
+    return { count: limit.usedValue };
   }
 
   protected progressValue(limit: SubscriptionLimit): number {

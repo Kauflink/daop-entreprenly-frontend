@@ -262,13 +262,18 @@
     "usage": {
       "eyebrow": "Plan usage",
       "title": "Available limits",
+      "status": {
+        "control": "Control",
+        "free": "Free"
+      },
       "counter": "{{ used }} of {{ max }}",
       "usageOf": "Usage of {{ label }}",
       "limitValue": {
         "products": "{{ count }} products",
         "active-batches": "{{ count }} lots",
         "users-singular": "1 user",
-        "users-plural": "{{ count }} users"
+        "users-plural": "{{ count }} users",
+        "generic": "{{ count }}"
       }
     },
     "limits": {
@@ -351,9 +356,9 @@
           "scheduled-cancellation": "Cancellation scheduled"
         },
         "shortDescription": {
-          "active": "Your plan is active and will renew automatically.",
+          "active": "Your plan remains active until {{ date }}. It will renew automatically.",
           "recommended": "Operate without restrictions with automations, alerts, and full traceability.",
-          "scheduled-cancellation": "Your plan will end on its expiration date. It will not renew automatically."
+          "scheduled-cancellation": "Your plan remains active until {{ date }}. It will not renew automatically."
         },
         "features": {
           "unlimitedProducts": "Unlimited products and lots",
@@ -365,6 +370,9 @@
     "modal": {
       "close": "Close modal",
       "eyebrow": "Subscription"
+    },
+    "cardBrand": {
+      "generic": "Card"
     },
     "planAction": {
       "renew": {
@@ -389,7 +397,8 @@
       },
       "understood": "Understood",
       "confirmCancellation": "Confirm cancellation",
-      "keepPlan": "Keep Control Plan"
+      "keepPlan": "Keep Control Plan",
+      "fallbackDate": "the registered date in your subscription"
     },
     "upgrade": {
       "title": "Upgrade to Control Plan",
