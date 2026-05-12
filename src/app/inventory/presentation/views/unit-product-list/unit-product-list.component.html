@@ -29,7 +29,7 @@
 
     <ng-container matColumnDef="price">
       <mat-header-cell *matHeaderCellDef>Price</mat-header-cell>
-      <mat-cell *matCellDef="let p">{{ p.price }}</mat-cell>
+      <mat-cell *matCellDef="let p">{{ currencyStore.format(p.price) }}</mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="weightGrams">
