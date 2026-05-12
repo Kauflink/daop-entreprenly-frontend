@@ -34,8 +34,8 @@
 }
 
 .mini-badge {
-  background: var(--color-inner-bg);
-  color: var(--color-success);
+  background: #eaf7ef;
+  color: #004e1d;
 }
 
 h2,
@@ -75,7 +75,7 @@ h2 {
 }
 
 .limit-item p {
-  color: var(--color-text-primary);
+  color: #3f342e;
   font-size: 14px;
 }
 
@@ -83,7 +83,7 @@ h2 {
   height: 8px;
   overflow: hidden;
   border-radius: 999px;
-  background: var(--color-inner-bg);
+  background: #f4efea;
   margin-top: 12px;
 }
 
