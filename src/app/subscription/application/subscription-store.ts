@@ -1,5 +1,6 @@
 import { Injectable, Signal, WritableSignal, computed, inject, signal } from '@angular/core';
 import { InventoryStoreService } from '../../inventory/application/inventory-store.service';
+import { CurrencyService } from '../../shared/infrastructure/currency-service';
 import {
   BillingFiscalData,
   BillingPaymentMethod,
@@ -19,6 +20,7 @@ import { SubscriptionApi } from '../infrastructure/subscription-api';
 export class SubscriptionStore {
   private readonly subscriptionApi = inject(SubscriptionApi);
   private readonly inventoryStore = inject(InventoryStoreService);
+  private readonly currencyAssembler = inject(CurrencyService);
   private readonly dashboardSignal: WritableSignal<SubscriptionDashboard> = signal(
     new SubscriptionDashboard(),
   );
@@ -183,7 +185,7 @@ export class SubscriptionStore {
     const dashboard = this.dashboard();
 
     return [
-      ...dashboard.activity,
+      ...dashboard.activity.map((item) => this.withCurrentCurrencyActivityDetail(item, dashboard)),
       new SubscriptionActivity({
         id: 'payment-method',
         title: 'Método de pago',
@@ -195,6 +197,34 @@ export class SubscriptionStore {
         detail: this.fiscalDataActivityDetail(dashboard.billingSetup),
       }),
     ];
+  }
+
+  private withCurrentCurrencyActivityDetail(
+    activity: SubscriptionActivity,
+    dashboard: SubscriptionDashboard,
+  ): SubscriptionActivity {
+    if (activity.id !== 'current-status') {
+      return activity;
+    }
+
+    return new SubscriptionActivity({
+      ...activity,
+      detail: this.currentStatusActivityDetail(dashboard),
+    });
+  }
+
+  private currentStatusActivityDetail(dashboard: SubscriptionDashboard): string {
+    if (dashboard.currentPlan.status === 'free') {
+      return 'Plan Free activo - Sin cargos registrados';
+    }
+
+    const price = this.currencyAssembler.format(dashboard.currentPlan.monthlyPrice);
+
+    if (dashboard.currentPlan.status === 'scheduled-cancellation') {
+      return `Cancelacion programada - ${price}/mes`;
+    }
+
+    return `Plan Control activo - ${price}/mes`;
   }
 
   private paymentMethodActivityDetail(billingSetup: BillingSetup): string {

@@ -257,18 +257,23 @@
         "annual": "annual payment",
         "free": "per month"
       },
-      "priceAriaLabel": "Current cost {{ price }} soles {{ label }}"
+      "priceAriaLabel": "Current cost {{ price }} {{ label }}"
     },
     "usage": {
       "eyebrow": "Plan usage",
       "title": "Available limits",
+      "status": {
+        "control": "Control",
+        "free": "Free"
+      },
       "counter": "{{ used }} of {{ max }}",
       "usageOf": "Usage of {{ label }}",
       "limitValue": {
         "products": "{{ count }} products",
         "active-batches": "{{ count }} lots",
         "users-singular": "1 user",
-        "users-plural": "{{ count }} users"
+        "users-plural": "{{ count }} users",
+        "generic": "{{ count }}"
       }
     },
     "limits": {
@@ -309,8 +314,8 @@
         "title": "Current status",
         "detail": {
           "free": "Free Plan active - No charges recorded",
-          "active": "Control Plan active - S/ 89/month",
-          "scheduled-cancellation": "Cancellation scheduled - S/ 89/month"
+          "active": "Control Plan active - {{ price }}/month",
+          "scheduled-cancellation": "Cancellation scheduled - {{ price }}/month"
         }
       },
       "billing": {
@@ -351,9 +356,9 @@
           "scheduled-cancellation": "Cancellation scheduled"
         },
         "shortDescription": {
-          "active": "Your plan is active and will renew automatically.",
+          "active": "Your plan remains active until {{ date }}. It will renew automatically.",
           "recommended": "Operate without restrictions with automations, alerts, and full traceability.",
-          "scheduled-cancellation": "Your plan will end on its expiration date. It will not renew automatically."
+          "scheduled-cancellation": "Your plan remains active until {{ date }}. It will not renew automatically."
         },
         "features": {
           "unlimitedProducts": "Unlimited products and lots",
@@ -365,6 +370,9 @@
     "modal": {
       "close": "Close modal",
       "eyebrow": "Subscription"
+    },
+    "cardBrand": {
+      "generic": "Card"
     },
     "planAction": {
       "renew": {
@@ -389,7 +397,8 @@
       },
       "understood": "Understood",
       "confirmCancellation": "Confirm cancellation",
-      "keepPlan": "Keep Control Plan"
+      "keepPlan": "Keep Control Plan",
+      "fallbackDate": "the registered date in your subscription"
     },
     "upgrade": {
       "title": "Upgrade to Control Plan",
@@ -413,8 +422,8 @@
           "annual": "Annual billing"
         },
         "priceLabel": {
-          "monthly": "S/ 89/month",
-          "annual": "S/ 890/year"
+          "monthly": "/month",
+          "annual": "/year"
         }
       },
       "billing": {
