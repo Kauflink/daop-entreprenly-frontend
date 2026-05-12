@@ -5,6 +5,7 @@ import { SalesStore } from '../../../application/sales-store';
 import { ProductSummary } from '../../../domain/model/product-summary.entity';
 import { QuantityModal } from '../../components/quantity-modal/quantity-modal';
 import { WeightModal } from '../../components/weight-modal/weight-modal';
+<<<<<<< Updated upstream
 
 export interface TicketItem {
   productId: number;
@@ -17,6 +18,13 @@ export interface TicketItem {
 }
 
 type PaymentMethod = 'CASH' | 'DIGITAL' | null;
+=======
+import { CashSummary } from '../cash-summary/cash-summary';
+import { PaymentSelection, PaymentMethodComponent } from '../payment-method/payment-method';
+import { SalesCart, TicketItem } from '../sales-cart/sales-cart';
+import { TranslatePipe } from '@ngx-translate/core';
+import { CurrencyStore } from '../../../../shared/application/currency.store';
+>>>>>>> Stashed changes
 
 @Component({
   selector: 'app-sales-page',
@@ -27,6 +35,7 @@ type PaymentMethod = 'CASH' | 'DIGITAL' | null;
 })
 export class SalesPage {
   protected readonly store = inject(SalesStore);
+  protected readonly currencyStore = inject(CurrencyStore);
 
   // === Buscador ===
   protected readonly searchTerm = signal<string>('');

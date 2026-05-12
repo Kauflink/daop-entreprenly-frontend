@@ -16,6 +16,33 @@ export class BillingSetup {
   readonly paymentMethodRequested = output<void>();
   readonly fiscalDataRequested = output<void>();
 
+<<<<<<< Updated upstream
+=======
+  protected readonly primaryPaymentMethod = computed(
+    () =>
+      this.billingSetup().paymentMethods.find((paymentMethod) => paymentMethod.isDefault) ??
+      this.billingSetup().paymentMethods.at(-1) ??
+      null,
+  );
+  protected readonly fiscalData = computed(() => this.billingSetup().fiscalData);
+
+  protected readonly hasPaymentMethod = computed(() => this.primaryPaymentMethod() !== null);
+  protected readonly hasFiscalData = computed(() => this.fiscalData() !== null);
+  protected readonly paymentActionLabel = computed(() =>
+    this.hasPaymentMethod()
+      ? 'subscription.billing.paymentMethod.manageAction'
+      : this.billingSetup().paymentMethodActionLabel,
+  );
+  protected readonly fiscalActionLabel = computed(() =>
+    this.hasFiscalData()
+      ? 'subscription.billing.fiscalData.editAction'
+      : this.billingSetup().fiscalDataActionLabel,
+  );
+  protected readonly extraPaymentMethodCount = computed(() =>
+    Math.max(this.billingSetup().paymentMethods.length - 1, 0),
+  );
+
+>>>>>>> Stashed changes
   protected requestPaymentMethod(): void {
     this.paymentMethodRequested.emit();
   }

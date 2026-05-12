@@ -1,6 +1,17 @@
 import { CdkTrapFocus } from '@angular/cdk/a11y';
 import { ChangeDetectionStrategy, Component, computed, inject, input, output, signal } from '@angular/core';
 import { NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+<<<<<<< Updated upstream
+=======
+import { TranslatePipe } from '@ngx-translate/core';
+import { startWith } from 'rxjs';
+import {
+  BillingFiscalData,
+  BillingPaymentMethodInput,
+  BillingSetup,
+  detectCardBrand,
+} from '../../../domain/model/billing-setup.entity';
+>>>>>>> Stashed changes
 import { BillingCycle, SubscriptionPlan } from '../../../domain/model/subscription-plan.entity';
 
 type UpgradeStep = 'plan' | 'billing' | 'payment' | 'activation';
@@ -12,7 +23,11 @@ interface StepItem {
 
 @Component({
   selector: 'app-upgrade-plan-modal',
+<<<<<<< Updated upstream
   imports: [CdkTrapFocus, ReactiveFormsModule],
+=======
+  imports: [CdkTrapFocus, ReactiveFormsModule, CardBrandBadge, TranslatePipe],
+>>>>>>> Stashed changes
   templateUrl: './upgrade-plan-modal.html',
   styleUrl: './upgrade-plan-modal.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -39,10 +54,10 @@ export class UpgradePlanModal {
   });
 
   protected readonly steps: StepItem[] = [
-    { id: 'plan', label: 'Plan' },
-    { id: 'billing', label: 'Facturación' },
-    { id: 'payment', label: 'Pago' },
-    { id: 'activation', label: 'Activación' },
+    { id: 'plan', label: 'subscription.upgrade.steps.plan' },
+    { id: 'billing', label: 'subscription.upgrade.steps.billing' },
+    { id: 'payment', label: 'subscription.upgrade.steps.payment' },
+    { id: 'activation', label: 'subscription.upgrade.steps.activation' },
   ];
 
   protected readonly activeIndex = computed(() =>
@@ -52,10 +67,14 @@ export class UpgradePlanModal {
     this.billingCycle() === 'monthly' ? this.plan().monthlyPrice : this.plan().annualPrice,
   );
   protected readonly planPriceLabel = computed(() =>
-    this.billingCycle() === 'monthly' ? 'S/ 89/mes' : 'S/ 890/año',
+    this.billingCycle() === 'monthly'
+      ? 'subscription.upgrade.plan.priceLabel.monthly'
+      : 'subscription.upgrade.plan.priceLabel.annual',
   );
   protected readonly billingLabel = computed(() =>
-    this.billingCycle() === 'monthly' ? 'Facturación mensual' : 'Facturación anual',
+    this.billingCycle() === 'monthly'
+      ? 'subscription.upgrade.plan.billingLabel.monthly'
+      : 'subscription.upgrade.plan.billingLabel.annual',
   );
 
   protected close(): void {

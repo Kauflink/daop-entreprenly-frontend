@@ -2,6 +2,7 @@ import { computed, inject, Injectable, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { catchError, of, tap } from 'rxjs';
 import { environment } from '../../../environments/environment';
+import { CurrencyStore } from '../../shared/application/currency.store';
 import { UserProfile } from '../domain/model/user-profile.entity';
 import { UserPreferences } from '../domain/model/user-preferences.entity';
 import { NotificationSettings } from '../domain/model/notification-settings.entity';
@@ -20,6 +21,11 @@ interface ProfileResponse {
 @Injectable({ providedIn: 'root' })
 export class ProfileStore {
   private readonly http = inject(HttpClient);
+<<<<<<< Updated upstream
+=======
+  private readonly translate = inject(TranslateService);
+  private readonly currencyStore = inject(CurrencyStore);
+>>>>>>> Stashed changes
   private readonly profileUrl =
     environment.entreprenlyProviderApiBaseUrl + environment.entreprenlyProviderProfileEndpointPath;
 
@@ -37,6 +43,7 @@ export class ProfileStore {
     language: '',
     timezone: '',
     theme: 'light',
+    currency: 'PEN',
   });
 
   readonly notificationSettings = signal<NotificationSettings>({
@@ -51,6 +58,35 @@ export class ProfileStore {
   readonly roleAndPlan = computed(() => `${this.profile().role} - ${this.profile().plan}`);
 
   constructor() {
+<<<<<<< Updated upstream
+=======
+    effect(() => {
+      const lang = this.preferences().language;
+      if (lang) {
+        if (lang !== this.translate.currentLang) {
+          this.translate.use(lang);
+        }
+        try {
+          localStorage.setItem('entreprenly-lang', lang);
+        } catch {}
+      }
+    });
+    effect(() => {
+      const theme = this.preferences().theme;
+      if (theme) {
+        document.documentElement.dataset['theme'] = theme;
+        try {
+          localStorage.setItem('entreprenly-theme', theme);
+        } catch {}
+      }
+    });
+    effect(() => {
+      const currency = this.preferences().currency;
+      if (currency) {
+        this.currencyStore.setCurrency(currency);
+      }
+    });
+>>>>>>> Stashed changes
     this.load();
   }
 
@@ -118,6 +154,7 @@ export class ProfileStore {
       language: r.language,
       timezone: r.timezone,
       theme: r.theme,
+      currency: r.currency ?? 'PEN',
     };
   }
 
@@ -147,6 +184,7 @@ export class ProfileStore {
       language: e.language,
       timezone: e.timezone,
       theme: e.theme,
+      currency: e.currency,
     };
   }
 

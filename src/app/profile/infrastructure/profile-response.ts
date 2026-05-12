@@ -12,6 +12,7 @@ export interface UserPreferencesResource extends BaseResource {
   language: string;
   timezone: string;
   theme: 'light' | 'dark';
+  currency?: 'PEN' | 'USD';
 }
 
 export interface NotificationSettingsResource extends BaseResource {

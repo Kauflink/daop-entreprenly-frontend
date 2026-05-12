@@ -12,12 +12,49 @@
           <mat-icon>credit_card</mat-icon>
         </span>
         <div>
+<<<<<<< Updated upstream
           <h3>{{ billingSetup().paymentMethodTitle }}</h3>
           <p>{{ billingSetup().paymentMethodDescription }}</p>
         </div>
       </div>
       <button type="button" (click)="requestPaymentMethod()">
         {{ billingSetup().paymentMethodActionLabel }}
+=======
+          <h3>{{ billingSetup().paymentMethodTitle | translate }}</h3>
+          @if (primaryPaymentMethod(); as paymentMethod) {
+            <p>
+              {{
+                'subscription.billing.paymentMethod.cardEnding'
+                  | translate
+                    : {
+                        brand: paymentMethod.cardBrand,
+                        lastFour: paymentMethod.lastFour,
+                        month: paymentMethod.expiryMonth,
+                        year: paymentMethod.expiryYear
+                      }
+              }}
+            </p>
+            <strong class="billing-card__status">
+              {{ 'subscription.billing.paymentMethod.available' | translate }}
+            </strong>
+            @if (extraPaymentMethodCount() > 0) {
+              <span class="billing-card__meta">
+                {{
+                  (extraPaymentMethodCount() === 1
+                    ? 'subscription.billing.paymentMethod.additionalMethod'
+                    : 'subscription.billing.paymentMethod.additionalMethods'
+                  ) | translate: { count: extraPaymentMethodCount() }
+                }}
+              </span>
+            }
+          } @else {
+            <p>{{ billingSetup().paymentMethodDescription | translate }}</p>
+          }
+        </div>
+      </div>
+      <button type="button" (click)="requestPaymentMethod()">
+        {{ paymentActionLabel() | translate }}
+>>>>>>> Stashed changes
       </button>
     </article>
 
@@ -27,12 +64,26 @@
           <mat-icon>receipt_long</mat-icon>
         </span>
         <div>
+<<<<<<< Updated upstream
           <h3>{{ billingSetup().fiscalDataTitle }}</h3>
           <p>{{ billingSetup().fiscalDataDescription }}</p>
         </div>
       </div>
       <button type="button" (click)="requestFiscalData()">
         {{ billingSetup().fiscalDataActionLabel }}
+=======
+          <h3>{{ billingSetup().fiscalDataTitle | translate }}</h3>
+          @if (fiscalData(); as data) {
+            <p>{{ data.documentType }} {{ data.documentNumber }} · {{ data.businessName }}</p>
+            <strong class="billing-card__status">{{ 'subscription.billing.fiscalData.complete' | translate }}</strong>
+          } @else {
+            <p>{{ billingSetup().fiscalDataDescription | translate }}</p>
+          }
+        </div>
+      </div>
+      <button type="button" (click)="requestFiscalData()">
+        {{ fiscalActionLabel() | translate }}
+>>>>>>> Stashed changes
       </button>
     </article>
   </div>

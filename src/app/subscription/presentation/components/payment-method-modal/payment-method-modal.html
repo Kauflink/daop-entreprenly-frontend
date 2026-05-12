@@ -1,0 +1,87 @@
+<div class="modal-backdrop" aria-hidden="true"></div>
+
+<section
+  class="billing-modal"
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby="payment-method-modal-title"
+  cdkTrapFocus
+  cdkTrapFocusAutoCapture
+>
+  <button
+    class="icon-button"
+    type="button"
+    [attr.aria-label]="'subscription.modal.close' | translate"
+    (click)="close()"
+  >×</button>
+  <p class="eyebrow">{{ 'subscription.modal.eyebrow' | translate }}</p>
+  <h2 id="payment-method-modal-title">{{ 'subscription.paymentMethod.addTitle' | translate }}</h2>
+
+  <form class="modal-form" [formGroup]="paymentForm" (ngSubmit)="save()">
+    <label>
+      <span>{{ 'subscription.upgrade.payment.cardNumber' | translate }}</span>
+      <div class="card-number-field">
+        <input
+          type="text"
+          inputmode="numeric"
+          autocomplete="cc-number"
+          formControlName="cardNumber"
+          placeholder="4242 4242 4242 4242"
+          [attr.aria-invalid]="hasFieldError('cardNumber')"
+        />
+        <app-card-brand-badge [brand]="detectedCardBrand()" />
+      </div>
+      @if (hasFieldError('cardNumber')) {
+        <small>{{ 'subscription.upgrade.payment.cardNumberError' | translate }}</small>
+      }
+    </label>
+
+    <label>
+      <span>{{ 'subscription.upgrade.payment.holder' | translate }}</span>
+      <input
+        type="text"
+        autocomplete="cc-name"
+        formControlName="holderName"
+        [attr.placeholder]="'subscription.paymentMethod.holderPlaceholder' | translate"
+        [attr.aria-invalid]="hasFieldError('holderName')"
+      />
+      @if (hasFieldError('holderName')) {
+        <small>{{ 'subscription.upgrade.payment.holderError' | translate }}</small>
+      }
+    </label>
+
+    <label>
+      <span>{{ 'subscription.upgrade.payment.expiry' | translate }}</span>
+      <input
+        type="text"
+        inputmode="numeric"
+        autocomplete="cc-exp"
+        formControlName="expiry"
+        placeholder="12/29"
+        [attr.aria-invalid]="hasFieldError('expiry')"
+      />
+      @if (hasFieldError('expiry')) {
+        <small>{{ 'subscription.upgrade.payment.expiryError' | translate }}</small>
+      }
+    </label>
+
+    <label>
+      <span>CVV</span>
+      <input
+        type="password"
+        inputmode="numeric"
+        autocomplete="cc-csc"
+        formControlName="cvv"
+        placeholder="123"
+        [attr.aria-invalid]="hasFieldError('cvv')"
+      />
+      @if (hasFieldError('cvv')) {
+        <small>{{ 'subscription.upgrade.payment.cvvError' | translate }}</small>
+      }
+    </label>
+
+    <button class="primary-button" type="submit">
+      {{ 'subscription.paymentMethod.save' | translate }}
+    </button>
+  </form>
+</section>
