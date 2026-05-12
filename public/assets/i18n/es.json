@@ -276,6 +276,27 @@
       }
     }
   },
+  "pageTitle": {
+    "home": "Home",
+    "profile": "Perfil",
+    "sales": "Ventas",
+    "subscription": "Suscripción",
+    "inventory": "Inventario",
+    "unitProducts": "Productos por Unidad",
+    "weightProducts": "Productos por Peso",
+    "newProduct": "Nuevo Producto",
+    "editProduct": "Editar Producto",
+    "lots": "Lotes",
+    "unitLots": "Lotes por Unidad",
+    "weightLots": "Lotes por Peso",
+    "newLot": "Nuevo Lote",
+    "editLot": "Editar Lote",
+    "stockAlerts": "Alertas de Stock",
+    "chatbot": "Chatbot",
+    "conversations": "Conversaciones",
+    "orders": "Pedidos",
+    "help": "Ayuda"
+  },
   "profile": {
     "userInfo": {
       "avatarAlt": "Foto de perfil"
