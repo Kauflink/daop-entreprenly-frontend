@@ -336,6 +336,12 @@
       "date": "2026-05-11",
       "totalCash": 0,
       "totalDigital": 0
+    },
+    {
+      "date": "2026-05-12",
+      "totalCash": 0,
+      "totalDigital": 0,
+      "id": 2
     }
   ],
   "iot-scale": {
@@ -700,9 +706,9 @@
     },
     "preferences": {
       "id": 1,
-      "language": "en",
+      "language": "es",
       "timezone": "America/Bogota (UTC-05:00)",
-      "theme": "dark"
+      "theme": "light"
     },
     "notification_settings": {
       "id": 1,

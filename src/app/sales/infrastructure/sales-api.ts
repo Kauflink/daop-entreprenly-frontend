@@ -1,14 +1,18 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, forkJoin, of } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { BaseApi } from '../../shared/infrastructure/base-api';
 import { Sale } from '../domain/model/sale.entity';
+import { SaleItem } from '../domain/model/sale-item.entity';
 import { ProductSummary } from '../domain/model/product-summary.entity';
 import { CashRegister } from '../domain/model/cash-register.entity';
 import { CashRegistersApiEndpoint } from './cash-registers-api-endpoint';
 import { ProductsApiEndpoint } from './products-api-endpoint';
 import { SalesApiEndpoint } from './sales-api-endpoint';
 import { environment } from '../../../environments/environment';
+
+const WEIGHT_ID_OFFSET = 1000;
 
 export interface ScaleStatus {
   id: number;
@@ -57,5 +61,21 @@ getSales(): Observable<Sale[]> {
 
   updateCashRegister(register: CashRegister): Observable<CashRegister> {
     return this.cashRegistersEndpoint.update(register, register.id);
+  }
+
+  decrementStock(items: SaleItem[]): Observable<void> {
+    const decrements = items.map((item) => {
+      if (item.quantity !== null) {
+        return this.productsEndpoint.decrementUnitStock(item.productId, item.quantity);
+      }
+      if (item.weightKg !== null) {
+        const inventoryId = item.productId - WEIGHT_ID_OFFSET;
+        return this.productsEndpoint.decrementWeightStock(inventoryId, item.weightKg);
+      }
+      return of(void 0);
+    });
+
+    if (decrements.length === 0) return of(void 0);
+    return forkJoin(decrements).pipe(map(() => void 0));
   }
 }
