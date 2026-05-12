@@ -276,6 +276,27 @@
       }
     }
   },
+  "pageTitle": {
+    "home": "Home",
+    "profile": "Profile",
+    "sales": "Sales",
+    "subscription": "Subscription",
+    "inventory": "Inventory",
+    "unitProducts": "Unit Products",
+    "weightProducts": "Weight Products",
+    "newProduct": "New Product",
+    "editProduct": "Edit Product",
+    "lots": "Lots",
+    "unitLots": "Unit Lots",
+    "weightLots": "Weight Lots",
+    "newLot": "New Lot",
+    "editLot": "Edit Lot",
+    "stockAlerts": "Stock Alerts",
+    "chatbot": "Chatbot",
+    "conversations": "Conversations",
+    "orders": "Orders",
+    "help": "Help"
+  },
   "profile": {
     "userInfo": {
       "avatarAlt": "Profile picture"
