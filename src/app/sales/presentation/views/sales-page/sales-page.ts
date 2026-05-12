@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 import { SalesStore } from '../../../application/sales-store';
+import { CurrencyStore } from '../../../../shared/application/currency.store';
 import { PaymentMethod } from '../../../domain/model/payment-method.enum';
 import { ProductSummary } from '../../../domain/model/product-summary.entity';
 import { SaleItem } from '../../../domain/model/sale-item.entity';
@@ -26,6 +27,7 @@ import { TranslatePipe } from '@ngx-translate/core';
 })
 export class SalesPage {
   protected readonly store = inject(SalesStore);
+  protected readonly currencyStore = inject(CurrencyStore);
 
   // === Modales ===
   protected readonly selectedProduct = signal<ProductSummary | null>(null);

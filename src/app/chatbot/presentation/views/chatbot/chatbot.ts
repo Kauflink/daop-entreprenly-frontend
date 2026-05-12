@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, inject, OnInit, signal } from '@angular/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { ChatbotStoreService } from '../../../application/chatbot-store.service';
 import { QrConnectionCard } from '../../components/qr-connection-card/qr-connection-card';
 import { WhatsappStatusCard } from '../../components/whatsapp-status-card/whatsapp-status-card';
@@ -6,7 +7,7 @@ import { WhatsappStatusCard } from '../../components/whatsapp-status-card/whatsa
 @Component({
   selector: 'app-chatbot',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [QrConnectionCard, WhatsappStatusCard],
+  imports: [QrConnectionCard, WhatsappStatusCard, TranslatePipe],
   templateUrl: './chatbot.html',
 })
 export class Chatbot implements OnInit {
