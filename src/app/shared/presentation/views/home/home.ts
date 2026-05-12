@@ -6,23 +6,21 @@ import { ChatbotStoreService } from '../../../../chatbot/application/chatbot-sto
 import { InventoryStoreService } from '../../../../inventory/application/inventory-store.service';
 import { StockAlert } from '../../../../inventory/domain/model/stock-alert.entity';
 
-// ── Static data ───────────────────────────────────────────────────────────────
+export interface InventoryDisplayItem {
+  name: string;
+  quantity: number;
+  unit: string;
+  stockLevel: number; // 0–100
+  color: 'green' | 'yellow' | 'red';
+}
 
 interface QuickLink {
   labelKey: string;
-  icon: string;
+  subtextKey: string;
+  icon: 'products' | 'lots' | 'chat' | 'orders' | 'reports';
   route: string;
+  alertBadge?: boolean;
 }
-
-const QUICK_LINKS: QuickLink[] = [
-  { labelKey: 'dashboard-home.links.sales',     icon: 'cart',      route: '/dashboard/sales' },
-  { labelKey: 'dashboard-home.links.chatbot',   icon: 'chat',      route: '/dashboard/chatbot' },
-  { labelKey: 'dashboard-home.links.orders',    icon: 'orders',    route: '/dashboard/chatbot/orders' },
-  { labelKey: 'dashboard-home.links.inventory', icon: 'inventory', route: '/dashboard/inventory/lots' },
-  { labelKey: 'dashboard-home.links.help',      icon: 'help',      route: '/dashboard/help' },
-];
-
-// ── Component ─────────────────────────────────────────────────────────────────
 
 @Component({
   selector: 'app-home',
@@ -32,24 +30,24 @@ const QUICK_LINKS: QuickLink[] = [
   styleUrl: './home.css',
 })
 export class Home implements OnInit {
-  // ── Injected services ───────────────────────────────────────────────────────
   protected readonly salesStore     = inject(SalesStore);
   protected readonly chatbotStore   = inject(ChatbotStoreService);
   protected readonly inventoryStore = inject(InventoryStoreService);
   private   readonly translate      = inject(TranslateService);
 
-  // ── Static data ─────────────────────────────────────────────────────────────
-  protected readonly quickLinks = QUICK_LINKS;
-
-  // ── Computed: ingresos ──────────────────────────────────────────────────────
+  // ── Computed: ventas ────────────────────────────────────────────────────────
   protected readonly totalDay     = computed(() => this.salesStore.totalDay());
   protected readonly totalCash    = computed(() => this.salesStore.totalCash());
   protected readonly totalDigital = computed(() => this.salesStore.totalDigital());
+  protected readonly saleCount    = computed(() => this.salesStore.saleCount());
 
   // ── Computed: chatbot ───────────────────────────────────────────────────────
-  protected readonly isChatbotConnected = computed(() => this.chatbotStore.isConnected());
+  protected readonly isChatbotConnected  = computed(() => this.chatbotStore.isConnected());
+  protected readonly chatbotPhone        = computed(() => this.chatbotStore.session()?.phone ?? '');
+  protected readonly chatbotChatsCount   = computed(() => this.chatbotStore.conversations().length);
+  protected readonly chatbotOrdersCount  = computed(() => this.chatbotStore.orders().length);
 
-  // ── Computed: pedidos (todos del store, ordenados desc) ─────────────────────
+  // ── Computed: pedidos ───────────────────────────────────────────────────────
   protected readonly recentOrders = computed(() =>
     [...this.chatbotStore.orders()]
       .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
@@ -64,9 +62,7 @@ export class Home implements OnInit {
     this.chatbotStore.orders().filter(o => o.status === 'CONFIRMED').length,
   );
 
-  // ── Computed: alertas derivadas de los lotes reales ─────────────────────────
-  // Usa StockAlert.buildFromLots() con los datos del InventoryStoreService.
-  // Cuando cambia cualquier lote o producto, este computed se recalcula solo.
+  // ── Computed: alertas ───────────────────────────────────────────────────────
   protected readonly stockAlerts = computed(() =>
     StockAlert.buildFromLots(
       this.inventoryStore.unitProducts(),
@@ -76,10 +72,87 @@ export class Home implements OnInit {
     ),
   );
 
-  protected readonly hasAlerts    = computed(() => this.stockAlerts().length > 0);
+  protected readonly hasAlerts     = computed(() => this.stockAlerts().length > 0);
   protected readonly alertsLoading = computed(() => this.inventoryStore.loading());
 
-  // ── Today label (idioma reactivo al TranslateService) ────────────────────────
+  // ── Computed: inventario para mostrar en panel ──────────────────────────────
+  protected readonly inventoryDisplay = computed<InventoryDisplayItem[]>(() => {
+    const unitProducts = this.inventoryStore.unitProducts();
+    const unitLots     = this.inventoryStore.unitLots();
+    const weightProducts = this.inventoryStore.weightProducts();
+    const weightLots   = this.inventoryStore.weightLots();
+
+    const items: InventoryDisplayItem[] = [];
+
+    for (const p of unitProducts.slice(0, 4)) {
+      const stock = unitLots
+        .filter(l => l.productId === p.id)
+        .reduce((sum, l) => sum + (l.quantity ?? 0), 0);
+      const maxStock = 20;
+      const level = Math.min(100, Math.round((stock / maxStock) * 100));
+      items.push({
+        name: p.name,
+        quantity: stock,
+        unit: 'und',
+        stockLevel: level,
+        color: level === 0 ? 'red' : level < 30 ? 'yellow' : 'green',
+      });
+    }
+
+    for (const p of weightProducts.slice(0, Math.max(0, 4 - unitProducts.length))) {
+      const stock = weightLots
+        .filter(l => l.productId === p.id)
+        .reduce((sum, l) => sum + (l.quantityKg ?? 0), 0);
+      const maxStock = 20;
+      const level = Math.min(100, Math.round((stock / maxStock) * 100));
+      items.push({
+        name: p.name,
+        quantity: stock,
+        unit: 'kg',
+        stockLevel: level,
+        color: level === 0 ? 'red' : level < 30 ? 'yellow' : 'green',
+      });
+    }
+
+    return items;
+  });
+
+  // ── Quick links reactivos (badge en Lotes si hay alertas) ───────────────────
+  protected readonly quickLinks = computed<QuickLink[]>(() => [
+    {
+      labelKey: 'dashboard-home.links.products',
+      subtextKey: 'dashboard-home.links.productsSub',
+      icon: 'products',
+      route: '/dashboard/inventory',
+    },
+    {
+      labelKey: 'dashboard-home.links.lots',
+      subtextKey: 'dashboard-home.links.lotsSub',
+      icon: 'lots',
+      route: '/dashboard/inventory/lots',
+      alertBadge: this.hasAlerts(),
+    },
+    {
+      labelKey: 'dashboard-home.links.chatbot',
+      subtextKey: 'dashboard-home.links.chatbotSub',
+      icon: 'chat',
+      route: '/dashboard/chatbot',
+    },
+    {
+      labelKey: 'dashboard-home.links.orders',
+      subtextKey: 'dashboard-home.links.ordersSub',
+      icon: 'orders',
+      route: '/dashboard/chatbot/orders',
+    },
+    {
+      labelKey: 'dashboard-home.links.reports',
+      subtextKey: 'dashboard-home.links.reportsSub',
+      icon: 'reports',
+      route: '/dashboard/sales',
+    },
+  ]);
+
+  // ── Today label ─────────────────────────────────────────────────────────────
   protected get todayLabel(): string {
     const lang = this.translate.currentLang ?? this.translate.defaultLang ?? 'es';
     const locale = lang === 'en' ? 'en-US' : 'es-PE';
@@ -92,17 +165,10 @@ export class Home implements OnInit {
   ngOnInit(): void {
     this.chatbotStore.loadSession();
     this.chatbotStore.loadOrders();
-    // InventoryStoreService carga todo en su constructor (providedIn: 'root')
+    this.chatbotStore.loadConversations();
   }
 
   // ── Helpers ──────────────────────────────────────────────────────────────────
-  protected formatDate(dateStr: string): string {
-    return new Date(dateStr).toLocaleString('es-PE', {
-      day: '2-digit', month: '2-digit', year: 'numeric',
-      hour: '2-digit', minute: '2-digit',
-    });
-  }
-
   protected orderStatusLabel(status: string, hasReceipt: boolean): string {
     const k = status === 'CONFIRMED'       ? 'confirmed'
             : status === 'BLOCKED'         ? 'blocked'
@@ -113,14 +179,13 @@ export class Home implements OnInit {
   }
 
   protected orderStatusClass(status: string, hasReceipt: boolean): string {
-    if (status === 'CONFIRMED') return 'bg-green-100 text-green-700';
-    if (status === 'BLOCKED')   return 'bg-red-100 text-red-700';
-    if (status === 'CANCELLED') return 'bg-gray-100 text-gray-500';
-    if (status === 'WAITING_PAYMENT' && hasReceipt) return 'bg-orange-100 text-orange-600';
+    if (status === 'CONFIRMED')                              return 'bg-green-100 text-green-700';
+    if (status === 'BLOCKED')                               return 'bg-red-100 text-red-700';
+    if (status === 'CANCELLED')                             return 'bg-gray-100 text-gray-500';
+    if (status === 'WAITING_PAYMENT' && hasReceipt)         return 'bg-orange-100 text-orange-600';
     return 'bg-gray-100 text-gray-500';
   }
 
-  /** Etiqueta traducida de una alerta de stock */
   protected alertLabel(alert: StockAlert): string {
     const type = alert.alertType;
     if (type === 'low_stock') {
@@ -132,7 +197,6 @@ export class Home implements OnInit {
     return this.translate.instant(`dashboard-home.alerts.types.${type}`);
   }
 
-  /** Clases de la tarjeta de alerta según tipo */
   protected alertCardClass(alert: StockAlert): string {
     if (alert.alertType === 'expired' || alert.alertType === 'out_of_stock')
       return 'border-red-100 bg-red-50';
@@ -147,5 +211,17 @@ export class Home implements OnInit {
     if (alert.alertType === 'expiring_soon')
       return 'text-yellow-600';
     return 'text-orange-600';
+  }
+
+  protected stockBarColor(item: InventoryDisplayItem): string {
+    if (item.color === 'red')    return 'bg-red-400';
+    if (item.color === 'yellow') return 'bg-yellow-400';
+    return 'bg-green-400';
+  }
+
+  protected stockDotColor(item: InventoryDisplayItem): string {
+    if (item.color === 'red')    return 'bg-red-400';
+    if (item.color === 'yellow') return 'bg-yellow-400';
+    return 'bg-green-400';
   }
 }
