@@ -496,6 +496,16 @@
       "sysReceiptRejected": "System: receipt rejected — illegible image — {{ time }}",
       "botBlocked": "Your order {{ orderNumber }} has been blocked due to multiple payment rejections.\n\nTo resolve this, please contact the store directly:\nPhone: 999 888 777",
       "botReceiptRejected": "Your receipt could not be validated.\nReason: {{ reason }}.\n\nOrder {{ orderNumber }} has returned to Awaiting Payment status.\nPlease send a new receipt."
+    },
+    "sys": {
+      "deliveryNotRegistered": "System: delivery address not registered — bot requested from client",
+      "orderRegistered": "System: order {{ orderNumber }} registered — status: pending — {{ time }}",
+      "receiptReceived": "System: receipt received — pending validation — {{ time }}",
+      "paymentApproved": "System: payment validated by merchant — {{ time }}",
+      "noReceiptReminder": "System: no receipt received — automatic reminder sent — {{ time }}",
+      "conversationClosed": "System: conversation closed due to inactivity — no client response — {{ time }}",
+      "receiptRejected": "System: receipt rejected — illegible image — {{ time }}",
+      "orderBlocked": "System: order blocked due to multiple rejections — {{ time }}"
     }
   },
   "dashboard-home": {

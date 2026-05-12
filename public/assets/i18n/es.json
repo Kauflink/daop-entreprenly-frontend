@@ -496,6 +496,16 @@
       "sysReceiptRejected": "Sistema: comprobante rechazado — imagen ilegible — {{ time }}",
       "botBlocked": "Tu pedido {{ orderNumber }} ha sido bloqueado debido a múltiples rechazos de pago.\n\nPara resolver esta situación, comunícate directamente con la bodega:\nTeléfono: 999 888 777",
       "botReceiptRejected": "Tu comprobante no pudo ser validado.\nMotivo: {{ reason }}.\n\nEl pedido {{ orderNumber }} ha vuelto al estado Esperando pago.\nPor favor envía un nuevo comprobante."
+    },
+    "sys": {
+      "deliveryNotRegistered": "Sistema: dirección de entrega no registrada — bot solicita al cliente",
+      "orderRegistered": "Sistema: pedido {{ orderNumber }} registrado — estado: pendiente — {{ time }}",
+      "receiptReceived": "Sistema: comprobante recibido — pendiente de validación — {{ time }}",
+      "paymentApproved": "Sistema: pago validado por el comerciante — {{ time }}",
+      "noReceiptReminder": "Sistema: sin comprobante recibido — recordatorio automático enviado — {{ time }}",
+      "conversationClosed": "Sistema: conversación cerrada por inactividad — sin respuesta del cliente — {{ time }}",
+      "receiptRejected": "Sistema: comprobante rechazado — imagen ilegible — {{ time }}",
+      "orderBlocked": "Sistema: pedido bloqueado por múltiples rechazos — {{ time }}"
     }
   },
   "dashboard-home": {
