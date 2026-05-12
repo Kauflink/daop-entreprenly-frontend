@@ -39,7 +39,7 @@
 }
 .col--right {
   grid-area: right;
-  gap: 10px;
+  gap: 20px;
 }
 
 .col--left > app-user-info-card {

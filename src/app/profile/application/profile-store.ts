@@ -20,6 +20,13 @@ interface ProfileResponse {
 
 @Injectable({ providedIn: 'root' })
 export class ProfileStore {
+  private static readStorage(key: string): string | null {
+    try {
+      return localStorage.getItem(key);
+    } catch {
+      return null;
+    }
+  }
   private readonly http = inject(HttpClient);
   private readonly translate = inject(TranslateService);
   private readonly profileUrl =
@@ -36,9 +43,9 @@ export class ProfileStore {
 
   readonly preferences = signal<UserPreferences>({
     id: 0,
-    language: '',
+    language: ProfileStore.readStorage('entreprenly-lang') ?? '',
     timezone: '',
-    theme: 'light',
+    theme: (ProfileStore.readStorage('entreprenly-theme') as UserPreferences['theme']) ?? 'light',
   });
 
   readonly notificationSettings = signal<NotificationSettings>({
