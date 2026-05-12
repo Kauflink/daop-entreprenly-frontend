@@ -16,7 +16,10 @@ export class ChatbotStoreService {
   readonly conversations = signal<Conversation[]>([]);
   readonly selectedConversationId = signal<number | null>(null);
   readonly messages = signal<ChatMessage[]>([]);
-  readonly isBotTyping = signal(false);
+  /** CF ●●● — aparece cuando el cliente está "escribiendo" */
+  readonly isClientTyping = signal(false);
+  /** Texto que el bot va escribiendo letra a letra en la barra de input */
+  readonly botInputText = signal('');
   readonly orders = signal<ChatOrder[]>([]);
   readonly inventoryProducts = signal<InventoryProduct[]>([]);
 
@@ -68,7 +71,8 @@ export class ChatbotStoreService {
 
     this.selectedConversationId.set(id);
     this.messages.set([]);
-    this.isBotTyping.set(false);
+    this.isClientTyping.set(false);
+    this.botInputText.set('');
 
     this.api.chatMessages.getAll().subscribe(all => {
       if (this._playId !== playId) return;
@@ -88,35 +92,71 @@ export class ChatbotStoreService {
 
     for (const msg of msgs) {
       if (msg.sender === 'bot') {
-        const typingAt = t;
-        const msgAt = t + 1200;
+        // Escribe palabra a palabra en la barra de input, luego auto-envía
+        const words = msg.content.split(' ');
+        const msPerWord = 70;
+        const startAt = t;
 
-        timer(typingAt).subscribe(() => {
-          if (this._playId !== playId) return;
-          this.isBotTyping.set(true);
-        });
+        for (let i = 0; i < words.length; i++) {
+          const partial = words.slice(0, i + 1).join(' ');
+          timer(startAt + i * msPerWord).subscribe(() => {
+            if (this._playId !== playId) return;
+            this.botInputText.set(partial);
+          });
+        }
 
-        timer(msgAt).subscribe(() => {
+        const sendAt = startAt + words.length * msPerWord + 250;
+        timer(sendAt).subscribe(() => {
           if (this._playId !== playId) return;
-          this.isBotTyping.set(false);
+          this.botInputText.set('');
           this.messages.update(m => [...m, msg]);
         });
 
-        t = msgAt + 400;
-      } else if (msg.sender === 'system') {
+        t = sendAt + 400;
+
+      } else if (msg.sender === 'client') {
+        // Muestra ●●● en el lado del cliente (CF), luego aparece el mensaje
+        timer(t).subscribe(() => {
+          if (this._playId !== playId) return;
+          this.isClientTyping.set(true);
+        });
+
+        const showAt = t + 900;
+        timer(showAt).subscribe(() => {
+          if (this._playId !== playId) return;
+          this.isClientTyping.set(false);
+          this.messages.update(m => [...m, msg]);
+        });
+
+        t = showAt + 400;
+
+      } else {
+        // system
         timer(t).subscribe(() => {
           if (this._playId !== playId) return;
           this.messages.update(m => [...m, msg]);
         });
         t += 400;
-      } else {
-        timer(t).subscribe(() => {
-          if (this._playId !== playId) return;
-          this.messages.update(m => [...m, msg]);
-        });
-        t += 800;
       }
     }
+  }
+
+  /** Escribe el mensaje del bot palabra a palabra en la barra y lo envía al terminar */
+  private _typewriteAndSend(msg: ChatMessage): void {
+    const words = msg.content.split(' ');
+    const msPerWord = 70;
+
+    for (let i = 0; i < words.length; i++) {
+      const partial = words.slice(0, i + 1).join(' ');
+      timer(i * msPerWord).subscribe(() => this.botInputText.set(partial));
+    }
+
+    timer(words.length * msPerWord + 250).subscribe(() => {
+      this.botInputText.set('');
+      this.api.chatMessages.create(msg).subscribe(created => {
+        this.messages.update(m => [...m, created]);
+      });
+    });
   }
 
   sendMessage(content: string): void {
@@ -182,15 +222,7 @@ export class ChatbotStoreService {
 
       this.api.chatMessages.create(sysMsg).subscribe(created => {
         this.messages.update(m => [...m, created]);
-        timer(400).subscribe(() => {
-          this.isBotTyping.set(true);
-          timer(1200).subscribe(() => {
-            this.isBotTyping.set(false);
-            this.api.chatMessages.create(botMsg).subscribe(botCreated => {
-              this.messages.update(m => [...m, botCreated]);
-            });
-          });
-        });
+        timer(400).subscribe(() => this._typewriteAndSend(botMsg));
       });
     });
   }
@@ -238,15 +270,7 @@ export class ChatbotStoreService {
 
       this.api.chatMessages.create(sysMsg).subscribe(created => {
         this.messages.update(m => [...m, created]);
-        timer(400).subscribe(() => {
-          this.isBotTyping.set(true);
-          timer(1200).subscribe(() => {
-            this.isBotTyping.set(false);
-            this.api.chatMessages.create(botMsg).subscribe(botCreated => {
-              this.messages.update(m => [...m, botCreated]);
-            });
-          });
-        });
+        timer(400).subscribe(() => this._typewriteAndSend(botMsg));
       });
     });
   }

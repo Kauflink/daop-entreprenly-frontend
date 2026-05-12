@@ -22,15 +22,15 @@
               />
             </div>
           }
-          @if (store.isBotTyping()) {
-            <div class="msg-animate flex items-end gap-2">
-              <div class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-green-400 text-xs font-bold text-white">
-                BH
+          @if (store.isClientTyping()) {
+            <div class="msg-animate flex items-end gap-2" aria-live="polite" aria-label="Cliente escribiendo">
+              <div class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-orange-400 text-xs font-bold text-white">
+                {{ conversation.clientName.split(' ')[0][0] }}{{ conversation.clientName.split(' ')[1]?.[0] ?? '' }}
               </div>
-              <div class="flex items-center gap-1 rounded-2xl rounded-bl-sm border border-gray-200 bg-white px-4 py-3">
-                <span class="h-2 w-2 animate-bounce rounded-full bg-gray-400" style="animation-delay:0ms"></span>
-                <span class="h-2 w-2 animate-bounce rounded-full bg-gray-400" style="animation-delay:150ms"></span>
-                <span class="h-2 w-2 animate-bounce rounded-full bg-gray-400" style="animation-delay:300ms"></span>
+              <div class="flex items-center gap-1 rounded-2xl rounded-bl-sm bg-orange-100 px-4 py-3">
+                <span class="h-2 w-2 animate-bounce rounded-full bg-orange-400" style="animation-delay:0ms"></span>
+                <span class="h-2 w-2 animate-bounce rounded-full bg-orange-400" style="animation-delay:150ms"></span>
+                <span class="h-2 w-2 animate-bounce rounded-full bg-orange-400" style="animation-delay:300ms"></span>
               </div>
             </div>
           }
@@ -102,7 +102,11 @@
             }
           }
         }
-        <app-chat-input (messageSent)="onMessageSent($event)" />
+        <app-chat-input
+          [draftText]="store.botInputText()"
+          [isAutoTyping]="store.botInputText().length > 0"
+          (messageSent)="onMessageSent($event)"
+        />
       } @else if (store.conversations().length === 0) {
         <div class="flex flex-1 flex-col items-center justify-center gap-3 bg-gray-50">
           <svg class="h-16 w-16 text-orange-400" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
