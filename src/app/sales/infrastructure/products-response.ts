@@ -39,6 +39,7 @@ export interface UnitLotResource {
   productId: number;
   lotType: 'unit';
   quantity: number;
+  entryDate?: string;
 }
 
 export interface WeightLotResource {
@@ -46,4 +47,5 @@ export interface WeightLotResource {
   productId: number;
   lotType: 'weight';
   quantityKg: number;
+  entryDate?: string;
 }
