@@ -489,5 +489,134 @@
       "attach": "Attach file",
       "send": "Send message"
     }
+  },
+  "dashboard-home": {
+    "welcome": "Welcome to Entreprenly! 👋",
+    "welcomeSub": "Here is a summary of your business today.",
+    "alertBanner": "You have <strong>{{count}}</strong> inventory alert(s) that need attention.",
+    "alertBannerLink": "View inventory →",
+    "quickLinksLabel": "Quick access to modules",
+    "links": {
+      "sales": "Sales",
+      "chatbot": "Chatbot",
+      "orders": "Orders",
+      "inventory": "Inventory",
+      "help": "Help",
+      "goTo": "Go to {{label}}"
+    },
+    "cash": {
+      "title": "Today's revenue",
+      "total": "Total accumulated today",
+      "cash": "Cash",
+      "digital": "Yape / Plin / Card",
+      "goToSales": "Go to Sales →"
+    },
+    "chatbot": {
+      "title": "Chatbot Status",
+      "connected": "WhatsApp Connected",
+      "connectedSub": "The chatbot is active and receiving messages.",
+      "disconnected": "WhatsApp Disconnected",
+      "disconnectedSub": "The chatbot is not active.",
+      "connectNow": "Connect now →",
+      "pendingOrders_one": "{{count}} order awaiting payment validation.",
+      "pendingOrders_other": "{{count}} orders awaiting payment validation."
+    },
+    "orders": {
+      "title": "Recent orders",
+      "viewAll": "View all →",
+      "empty": "No orders yet.",
+      "approved": "Approved",
+      "pending": "Pending",
+      "status": {
+        "confirmed": "Approved",
+        "blocked": "Blocked",
+        "cancelled": "Cancelled",
+        "receiptReceived": "Receipt received",
+        "awaitingReceipt": "Awaiting receipt"
+      }
+    },
+    "alerts": {
+      "title": "Inventory alerts",
+      "viewInventory": "View inventory →",
+      "loadingLabel": "Loading inventory alerts",
+      "empty": "All good!",
+      "emptySub": "No inventory alerts.",
+      "types": {
+        "out_of_stock": "Out of stock",
+        "expiring_soon": "Expiring soon",
+        "expired": "Expired",
+        "low_stock": "Low stock ({{count}})"
+      }
+    }
+  },
+  "dashboard-help": {
+    "title": "How can we help you?",
+    "subtitle": "Search for articles, guides and quick answers for your business.",
+    "searchPlaceholder": "Type your question here…",
+    "searchBtn": "Search",
+    "backBtn": "Back",
+    "popular": "Most consulted articles",
+    "allArticles": "All articles",
+    "readTime": "min read",
+    "categories": "Categories",
+    "articlesLabel": "articles",
+    "ctaTitle": "Didn't find what you were looking for?",
+    "ctaSub": "Tell us your problem and we'll help you solve it.",
+    "ctaBtn": "Report a problem",
+    "openArticle": "Open article: {{title}}",
+    "results": {
+      "count_one": "{{count}} result for",
+      "count_other": "{{count}} results for",
+      "relatedCategories": "Related categories",
+      "noResults": "No results found for \"{{q}}\"",
+      "noResultsSub": "Try a different keyword or browse the categories.",
+      "report": "Report a problem"
+    },
+    "article": {
+      "help": "Help",
+      "useful": "Was this article helpful?",
+      "yes": "Yes, it helped",
+      "no": "Not helpful",
+      "thanks": "Thanks for your feedback!",
+      "notUsefulTitle": "Sorry it wasn't helpful",
+      "notUsefulSub": "You can report the problem and our team will contact you.",
+      "report": "Report problem",
+      "cancel": "Cancel",
+      "related": "Related articles",
+      "backToHome": "Back to home"
+    },
+    "report": {
+      "title": "Report a problem",
+      "subtitle": "Our team will review your report and contact you soon.",
+      "errorsCount_one": "Please fix <strong>{{count}}</strong> field to continue.",
+      "errorsCount_other": "Please fix <strong>{{count}}</strong> fields to continue.",
+      "category": "Problem category",
+      "categoryRequired": "Select a valid category.",
+      "module": "Affected module",
+      "moduleDefault": "-- Select a module --",
+      "moduleRequired": "Select the affected module.",
+      "description": "Problem description",
+      "descriptionPlaceholder": "Describe in detail what happened and when…",
+      "descriptionRequired": "Describe the problem (minimum 5 characters).",
+      "when": "When did it happen?",
+      "whenOptional": "(optional)",
+      "submit": "Submit report"
+    },
+    "success": {
+      "title": "Report submitted!",
+      "subtitle": "Your report was successfully received. Our team will review it soon.",
+      "ticketLabel": "Ticket number",
+      "summaryTitle": "Report summary",
+      "categoryLabel": "Category",
+      "moduleLabel": "Module",
+      "descriptionLabel": "Description",
+      "backToHome": "Back to home"
+    },
+    "error": {
+      "title": "We couldn't submit the report",
+      "subtitle": "There was a problem submitting your report. Please try again or contact us directly.",
+      "retry": "Try again",
+      "backToHome": "Back to home"
+    }
   }
 }

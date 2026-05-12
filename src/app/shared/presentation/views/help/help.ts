@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, computed, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
+import { TranslatePipe } from '@ngx-translate/core';
 
 // ── Domain types ──────────────────────────────────────────────────────────────
 
@@ -170,7 +171,7 @@ const MODULES = ['Inventario', 'Chatbot', 'Pedidos', 'Ventas', 'Suscripción', '
 @Component({
   selector: 'app-help',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [ReactiveFormsModule, RouterLink],
+  imports: [ReactiveFormsModule, RouterLink, TranslatePipe],
   templateUrl: './help.html',
   styleUrl: './help.css',
 })

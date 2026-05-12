@@ -1,20 +1,19 @@
 <div class="min-h-screen bg-gray-50 p-6">
   <div class="mx-auto max-w-6xl flex flex-col gap-6">
 
-    <!-- ══════════════════════════════════ WELCOME BANNER (US-64) ══════════ -->
+    <!-- ══════════════════════════════ WELCOME BANNER (US-64) ══════════ -->
     <header class="relative overflow-hidden rounded-2xl bg-gradient-to-r from-orange-500 to-orange-400 px-8 py-7 text-white shadow-sm">
       <div class="relative z-10">
         <p class="text-sm font-medium opacity-80">{{ todayLabel }}</p>
-        <h1 class="mt-1 text-2xl font-bold">¡Bienvenido a Entreprenly! 👋</h1>
-        <p class="mt-1 text-sm opacity-80">Aquí tienes un resumen de tu negocio hoy.</p>
+        <h1 class="mt-1 text-2xl font-bold">{{ 'dashboard-home.welcome' | translate }}</h1>
+        <p class="mt-1 text-sm opacity-80">{{ 'dashboard-home.welcomeSub' | translate }}</p>
       </div>
-      <!-- Decorative circles -->
       <div class="absolute -right-8 -top-8 h-40 w-40 rounded-full bg-white/10" aria-hidden="true"></div>
       <div class="absolute -bottom-10 -right-4 h-32 w-32 rounded-full bg-white/10" aria-hidden="true"></div>
     </header>
 
-    <!-- ══════════════════════════════ STOCK ALERT BANNER (US-68 escenario: hay alertas) ══ -->
-    @if (hasAlerts()) {
+    <!-- ══════════════════ ALERT BANNER (US-68: hay alertas de lotes) ══ -->
+    @if (!alertsLoading() && hasAlerts()) {
       <div
         class="flex items-center gap-3 rounded-xl border border-red-200 bg-red-50 px-5 py-3"
         role="alert"
@@ -25,26 +24,24 @@
             d="M12 9v2m0 4h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z" />
         </svg>
         <p class="text-sm text-red-700">
-          Tienes <strong>{{ stockAlerts().length }}</strong>
-          alerta{{ stockAlerts().length !== 1 ? 's' : '' }} de inventario que requieren atención.
+          {{ 'dashboard-home.alertBanner' | translate: { count: stockAlerts().length } }}
         </p>
         <a routerLink="/dashboard/inventory" class="ml-auto shrink-0 text-xs font-semibold text-red-600 hover:underline">
-          Ver inventario →
+          {{ 'dashboard-home.alertBannerLink' | translate }}
         </a>
       </div>
     }
 
-    <!-- ════════════════════════════════════ QUICK LINKS (US-65 atajos) ══ -->
-    <nav aria-label="Accesos rápidos a módulos">
+    <!-- ══════════════════════════ QUICK LINKS (US-65 atajos) ══════════ -->
+    <nav [attr.aria-label]="'dashboard-home.quickLinksLabel' | translate">
       <ul class="grid grid-cols-5 gap-3" role="list">
         @for (link of quickLinks; track link.route) {
           <li>
             <a
               [routerLink]="link.route"
               class="flex flex-col items-center gap-2 rounded-xl border border-gray-100 bg-white px-3 py-4 text-center shadow-sm transition-shadow hover:shadow-md focus:outline-none focus:ring-2 focus:ring-orange-300"
-              [attr.aria-label]="'Ir a ' + link.label"
+              [attr.aria-label]="'dashboard-home.links.goTo' | translate: { label: (link.labelKey | translate) }"
             >
-              <!-- Icon -->
               <span class="flex h-10 w-10 items-center justify-center rounded-full bg-orange-100" aria-hidden="true">
                 @if (link.icon === 'cart') {
                   <svg class="h-5 w-5 text-orange-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -76,61 +73,59 @@
                   </svg>
                 }
               </span>
-              <span class="text-xs font-medium text-gray-700">{{ link.label }}</span>
+              <span class="text-xs font-medium text-gray-700">{{ link.labelKey | translate }}</span>
             </a>
           </li>
         }
       </ul>
     </nav>
 
-    <!-- ══════════════════════════════════════════════════ MAIN GRID ════ -->
+    <!-- ════════════════════════════════════ MAIN GRID ══════════════════ -->
     <div class="grid grid-cols-1 gap-6 lg:grid-cols-3">
 
-      <!-- ────────────────────────── LEFT COLUMN (ingresos + chatbot) ── -->
+      <!-- ──────────────────── LEFT COLUMN (ingresos + chatbot) ──────── -->
       <div class="flex flex-col gap-6">
 
-        <!-- Resumen de Caja del Día (US-65) -->
+        <!-- Resumen de Caja (US-65) -->
         <section class="rounded-2xl bg-white p-6 shadow-sm" aria-labelledby="caja-heading">
-          <h2 id="caja-heading" class="mb-4 text-sm font-semibold text-gray-700">Ingresos del día</h2>
-
-          <!-- Total grande -->
+          <h2 id="caja-heading" class="mb-4 text-sm font-semibold text-gray-700">
+            {{ 'dashboard-home.cash.title' | translate }}
+          </h2>
           <div class="mb-4 text-center">
             <p class="text-3xl font-bold text-orange-500">S/{{ totalDay().toFixed(2) }}</p>
-            <p class="mt-0.5 text-xs text-gray-400">Total acumulado hoy</p>
+            <p class="mt-0.5 text-xs text-gray-400">{{ 'dashboard-home.cash.total' | translate }}</p>
           </div>
-
-          <!-- Desglose -->
           <div class="flex flex-col gap-2">
             <div class="flex items-center justify-between rounded-lg bg-gray-50 px-4 py-2.5">
               <div class="flex items-center gap-2">
                 <span class="h-2.5 w-2.5 rounded-full bg-green-400" aria-hidden="true"></span>
-                <span class="text-sm text-gray-600">Efectivo</span>
+                <span class="text-sm text-gray-600">{{ 'dashboard-home.cash.cash' | translate }}</span>
               </div>
               <span class="text-sm font-semibold text-gray-900">S/{{ totalCash().toFixed(2) }}</span>
             </div>
             <div class="flex items-center justify-between rounded-lg bg-gray-50 px-4 py-2.5">
               <div class="flex items-center gap-2">
                 <span class="h-2.5 w-2.5 rounded-full bg-blue-400" aria-hidden="true"></span>
-                <span class="text-sm text-gray-600">Yape / Plin / Tarjeta</span>
+                <span class="text-sm text-gray-600">{{ 'dashboard-home.cash.digital' | translate }}</span>
               </div>
               <span class="text-sm font-semibold text-gray-900">S/{{ totalDigital().toFixed(2) }}</span>
             </div>
           </div>
-
           <a
             routerLink="/dashboard/sales"
             class="mt-4 block w-full rounded-full border border-orange-300 py-2 text-center text-xs font-semibold text-orange-500 transition-colors hover:bg-orange-50"
           >
-            Ir a Ventas →
+            {{ 'dashboard-home.cash.goToSales' | translate }}
           </a>
         </section>
 
         <!-- Estado del Chatbot (US-66) -->
         <section class="rounded-2xl bg-white p-6 shadow-sm" aria-labelledby="chatbot-heading">
-          <h2 id="chatbot-heading" class="mb-4 text-sm font-semibold text-gray-700">Estado del Chatbot</h2>
+          <h2 id="chatbot-heading" class="mb-4 text-sm font-semibold text-gray-700">
+            {{ 'dashboard-home.chatbot.title' | translate }}
+          </h2>
 
           @if (isChatbotConnected()) {
-            <!-- Conectado (US-66 escenario: chatbot conectado) -->
             <div class="flex items-center gap-3">
               <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-green-100" aria-hidden="true">
                 <svg class="h-5 w-5 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -139,12 +134,11 @@
                 </svg>
               </span>
               <div>
-                <p class="text-sm font-semibold text-green-700">WhatsApp Conectado</p>
-                <p class="text-xs text-gray-400">El chatbot está activo y recibiendo mensajes.</p>
+                <p class="text-sm font-semibold text-green-700">{{ 'dashboard-home.chatbot.connected' | translate }}</p>
+                <p class="text-xs text-gray-400">{{ 'dashboard-home.chatbot.connectedSub' | translate }}</p>
               </div>
             </div>
           } @else {
-            <!-- Desconectado (US-66 escenario: chatbot desconectado) -->
             <div class="flex items-center gap-3">
               <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-red-100" aria-hidden="true">
                 <svg class="h-5 w-5 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -153,15 +147,15 @@
                 </svg>
               </span>
               <div>
-                <p class="text-sm font-semibold text-red-600">WhatsApp Desconectado</p>
-                <p class="text-xs text-gray-400">El chatbot no está activo.</p>
+                <p class="text-sm font-semibold text-red-600">{{ 'dashboard-home.chatbot.disconnected' | translate }}</p>
+                <p class="text-xs text-gray-400">{{ 'dashboard-home.chatbot.disconnectedSub' | translate }}</p>
               </div>
             </div>
             <a
               routerLink="/dashboard/chatbot"
               class="mt-4 block w-full rounded-full bg-orange-500 py-2 text-center text-xs font-semibold text-white transition-colors hover:bg-orange-600"
             >
-              Conectar ahora →
+              {{ 'dashboard-home.chatbot.connectNow' | translate }}
             </a>
           }
 
@@ -173,38 +167,37 @@
             >
               <span class="h-2 w-2 animate-pulse rounded-full bg-orange-400" aria-hidden="true"></span>
               <p class="text-xs text-orange-700">
-                <strong>{{ pendingOrderCount() }}</strong>
-                pedido{{ pendingOrderCount() !== 1 ? 's' : '' }} esperando validación de pago.
+                {{ 'dashboard-home.chatbot.pendingOrders_other' | translate: { count: pendingOrderCount() } }}
               </p>
             </div>
           }
         </section>
       </div>
 
-      <!-- ────────────────────────── CENTER COLUMN (pedidos recientes) ── -->
+      <!-- ──────────────────── CENTER COLUMN (pedidos recientes) ──────── -->
       <section class="rounded-2xl bg-white p-6 shadow-sm lg:col-span-1" aria-labelledby="orders-heading">
         <div class="mb-4 flex items-center justify-between">
-          <h2 id="orders-heading" class="text-sm font-semibold text-gray-700">Pedidos recientes</h2>
+          <h2 id="orders-heading" class="text-sm font-semibold text-gray-700">
+            {{ 'dashboard-home.orders.title' | translate }}
+          </h2>
           <a
             routerLink="/dashboard/chatbot/orders"
             class="text-xs text-orange-500 hover:underline"
-            aria-label="Ver todos los pedidos"
+            [attr.aria-label]="'dashboard-home.orders.viewAll' | translate"
           >
-            Ver todos →
+            {{ 'dashboard-home.orders.viewAll' | translate }}
           </a>
         </div>
 
         @if (recentOrders().length === 0) {
-          <!-- Sin pedidos (US-67 escenario: sin pedidos) -->
           <div class="flex flex-col items-center justify-center py-10 text-center">
             <svg class="h-10 w-10 text-gray-200" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
                 d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
             </svg>
-            <p class="mt-3 text-xs text-gray-400">Sin pedidos todavía.</p>
+            <p class="mt-3 text-xs text-gray-400">{{ 'dashboard-home.orders.empty' | translate }}</p>
           </div>
         } @else {
-          <!-- Lista de pedidos recientes (US-67) -->
           <ol class="flex flex-col divide-y divide-gray-50" role="list">
             @for (order of recentOrders(); track order.id) {
               <li class="py-3 first:pt-0 last:pb-0">
@@ -217,7 +210,6 @@
                   <span
                     class="mt-0.5 shrink-0 rounded-full px-2 py-0.5 text-xs font-medium"
                     [class]="orderStatusClass(order.status, order.hasReceipt)"
-                    [attr.aria-label]="'Estado: ' + orderStatusLabel(order.status, order.hasReceipt)"
                   >
                     {{ orderStatusLabel(order.status, order.hasReceipt) }}
                   </span>
@@ -226,72 +218,67 @@
             }
           </ol>
 
-          <!-- Stats row -->
           <div class="mt-4 grid grid-cols-2 gap-2 border-t border-gray-100 pt-4">
             <div class="rounded-lg bg-green-50 px-3 py-2 text-center">
               <p class="text-base font-bold text-green-600">{{ confirmedOrderCount() }}</p>
-              <p class="text-xs text-green-500">Aprobados</p>
+              <p class="text-xs text-green-500">{{ 'dashboard-home.orders.approved' | translate }}</p>
             </div>
             <div class="rounded-lg bg-orange-50 px-3 py-2 text-center">
               <p class="text-base font-bold text-orange-600">{{ pendingOrderCount() }}</p>
-              <p class="text-xs text-orange-500">Pendientes</p>
+              <p class="text-xs text-orange-500">{{ 'dashboard-home.orders.pending' | translate }}</p>
             </div>
           </div>
         }
       </section>
 
-      <!-- ────────────────────────── RIGHT COLUMN (inventario + alertas) ── -->
+      <!-- ──────────────── RIGHT COLUMN (alertas de inventario/lotes) ── -->
       <section class="rounded-2xl bg-white p-6 shadow-sm" aria-labelledby="alerts-heading">
         <div class="mb-4 flex items-center justify-between">
-          <h2 id="alerts-heading" class="text-sm font-semibold text-gray-700">Alertas de inventario</h2>
+          <h2 id="alerts-heading" class="text-sm font-semibold text-gray-700">
+            {{ 'dashboard-home.alerts.title' | translate }}
+          </h2>
           <a
             routerLink="/dashboard/inventory"
             class="text-xs text-orange-500 hover:underline"
-            aria-label="Ir al módulo de inventario"
+            [attr.aria-label]="'dashboard-home.alerts.viewInventory' | translate"
           >
-            Ver inventario →
+            {{ 'dashboard-home.alerts.viewInventory' | translate }}
           </a>
         </div>
 
         @if (alertsLoading()) {
-          <!-- Skeleton mientras carga -->
-          <div class="flex flex-col gap-3" aria-label="Cargando alertas de inventario" aria-busy="true">
+          <div
+            class="flex flex-col gap-3"
+            [attr.aria-label]="'dashboard-home.alerts.loadingLabel' | translate"
+            aria-busy="true"
+          >
             @for (i of [1, 2, 3]; track i) {
               <div class="h-10 animate-pulse rounded-lg bg-gray-100"></div>
             }
           </div>
         } @else if (!hasAlerts()) {
-          <!-- Sin alertas (US-68 escenario: todo en orden) -->
+          <!-- Sin alertas: todo OK (US-68 escenario sin alertas) -->
           <div class="flex flex-col items-center justify-center py-10 text-center" role="status">
             <svg class="h-10 w-10 text-green-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
                 d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
-            <p class="mt-3 text-xs font-medium text-green-600">¡Todo en orden!</p>
-            <p class="mt-0.5 text-xs text-gray-400">No hay alertas de inventario.</p>
+            <p class="mt-3 text-xs font-medium text-green-600">{{ 'dashboard-home.alerts.empty' | translate }}</p>
+            <p class="mt-0.5 text-xs text-gray-400">{{ 'dashboard-home.alerts.emptySub' | translate }}</p>
           </div>
         } @else {
-          <!-- Lista de alertas (US-68 escenario: hay alertas) -->
+          <!-- Lista de alertas calculadas de los lotes reales (US-68) -->
           <ul class="flex flex-col gap-2" role="list">
-            @for (alert of stockAlerts(); track alert.id) {
+            @for (alert of stockAlerts(); track $index) {
               <li
                 class="flex items-start gap-3 rounded-lg border px-3 py-2.5"
-                [class]="alert.alertType === 'out_of_stock'
-                  ? 'border-red-100 bg-red-50'
-                  : alert.alertType === 'expiring_soon'
-                    ? 'border-yellow-100 bg-yellow-50'
-                    : 'border-orange-100 bg-orange-50'"
+                [class]="alertCardClass(alert)"
               >
-                <!-- Alert icon -->
-                <span
-                  class="mt-0.5 shrink-0"
-                  [attr.aria-label]="alertLabel(alert)"
-                  aria-hidden="true"
-                >
-                  @if (alert.alertType === 'out_of_stock') {
+                <!-- Icono según tipo -->
+                <span class="mt-0.5 shrink-0" aria-hidden="true">
+                  @if (alert.alertType === 'expired' || alert.alertType === 'out_of_stock') {
                     <svg class="h-4 w-4 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M6 18L18 6M6 6l12 12" />
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                     </svg>
                   } @else if (alert.alertType === 'expiring_soon') {
                     <svg class="h-4 w-4 text-yellow-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -305,18 +292,10 @@
                     </svg>
                   }
                 </span>
+
                 <div class="min-w-0">
                   <p class="truncate text-xs font-semibold text-gray-800">{{ alert.productName }}</p>
-                  <p
-                    class="text-xs"
-                    [class]="alert.alertType === 'out_of_stock'
-                      ? 'text-red-600'
-                      : alert.alertType === 'expiring_soon'
-                        ? 'text-yellow-600'
-                        : 'text-orange-600'"
-                  >
-                    {{ alertLabel(alert) }}
-                  </p>
+                  <p class="text-xs" [class]="alertTextClass(alert)">{{ alertLabel(alert) }}</p>
                 </div>
               </li>
             }
