@@ -167,7 +167,7 @@ export class Home implements OnInit {
         subtextKey: '',
         subtextDynamic: `${ordersCount} ${lang === 'en' ? 'today' : 'hoy'}`,
         icon: 'orders',
-        route: '/dashboard/chatbot/orders',
+        route: '/dashboard/orders',
       },
       {
         labelKey: 'dashboard-home.links.reports',
