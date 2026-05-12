@@ -262,13 +262,18 @@
     "usage": {
       "eyebrow": "Uso del plan",
       "title": "Límites disponibles",
+      "status": {
+        "control": "Control",
+        "free": "Free"
+      },
       "counter": "{{ used }} de {{ max }}",
       "usageOf": "Uso de {{ label }}",
       "limitValue": {
         "products": "{{ count }} productos",
         "active-batches": "{{ count }} lotes",
         "users-singular": "1 usuario",
-        "users-plural": "{{ count }} usuarios"
+        "users-plural": "{{ count }} usuarios",
+        "generic": "{{ count }}"
       }
     },
     "billing": {
@@ -343,9 +348,9 @@
           "scheduled-cancellation": "Cancelación programada"
         },
         "shortDescription": {
-          "active": "Tu plan está activo y se renovará automáticamente.",
+          "active": "Tu plan sigue activo hasta el {{ date }}. Se renovará automáticamente.",
           "recommended": "Opera sin restricciones con automatizaciones, alertas y trazabilidad completa.",
-          "scheduled-cancellation": "Tu plan finalizará en su fecha de vencimiento. No se renovará automáticamente."
+          "scheduled-cancellation": "Tu plan sigue activo hasta el {{ date }}. No se renovará automáticamente."
         },
         "features": {
           "unlimitedProducts": "Productos y lotes ilimitados",
@@ -375,6 +380,9 @@
       "close": "Cerrar modal",
       "eyebrow": "Suscripción"
     },
+    "cardBrand": {
+      "generic": "Tarjeta"
+    },
     "planAction": {
       "renew": {
         "title": "Renovar suscripción",
@@ -398,7 +406,8 @@
       },
       "understood": "Entendido",
       "confirmCancellation": "Confirmar cancelación",
-      "keepPlan": "Mantener Plan Control"
+      "keepPlan": "Mantener Plan Control",
+      "fallbackDate": "la fecha registrada en tu suscripción"
     },
     "upgrade": {
       "title": "Actualizar a Plan Control",

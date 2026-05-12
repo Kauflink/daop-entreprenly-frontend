@@ -8,17 +8,17 @@
   cdkTrapFocus
   cdkTrapFocusAutoCapture
 >
-  <button class="icon-button" type="button" aria-label="Cerrar modal" (click)="close()">×</button>
-  <p class="eyebrow">Suscripción</p>
-  <h2 id="plan-action-modal-title">{{ title() }}</h2>
+  <button class="icon-button" type="button" [attr.aria-label]="'subscription.modal.close' | translate" (click)="close()">×</button>
+  <p class="eyebrow">{{ 'subscription.modal.eyebrow' | translate }}</p>
+  <h2 id="plan-action-modal-title">{{ titleKey() | translate }}</h2>
 
   <article class="message-card">
     <div>
-      <h3>{{ cardTitle() }}</h3>
-      <p>{{ cardDescription() }}</p>
+      <h3>{{ cardTitleKey() | translate }}</h3>
+      <p>{{ cardDescriptionKey() | translate: cardDescriptionParams() }}</p>
     </div>
     <button class="primary-button" type="button" (click)="confirmPrimaryAction()">
-      {{ primaryLabel() }}
+      {{ primaryLabelKey() | translate }}
     </button>
   </article>
 </section>

@@ -1,6 +1,6 @@
-import { ChangeDetectionStrategy, Component, computed, input, output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, input, output } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
-import { TranslatePipe } from '@ngx-translate/core';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { BillingCycle, SubscriptionPlan } from '../../../domain/model/subscription-plan.entity';
 
 @Component({
@@ -22,19 +22,22 @@ export class PlanOverview {
   readonly cancellationRequested = output<void>();
   readonly keepPlanRequested = output<void>();
 
+  private readonly translate = inject(TranslateService);
+
   protected readonly selectedPrice = computed(() =>
     this.selectedCycle() === 'monthly'
       ? this.recommendedPlan().monthlyPrice
       : this.recommendedPlan().annualPrice,
   );
-  protected readonly selectedPriceLabel = computed(() =>
-    this.selectedCycle() === 'monthly' ? 'pago mensual' : 'pago anual',
+  protected readonly selectedPriceLabelKey = computed(() =>
+    this.selectedCycle() === 'monthly'
+      ? 'subscription.overview.priceLabel.monthly'
+      : 'subscription.overview.priceLabel.annual',
   );
-  protected readonly currentPlanPriceLabel = computed(() =>
-    this.currentPlan().monthlyPrice === 0 ? 'por mes' : 'pago mensual',
-  );
-  protected readonly currentPlanPriceAriaLabel = computed(
-    () => `Costo actual ${this.currentPlan().monthlyPrice} soles ${this.currentPlanPriceLabel()}`,
+  protected readonly currentPlanPriceLabelKey = computed(() =>
+    this.currentPlan().monthlyPrice === 0
+      ? 'subscription.overview.priceLabel.free'
+      : 'subscription.overview.priceLabel.monthly',
   );
   protected readonly planControlCurrentPlan = computed(() =>
     ['active', 'scheduled-cancellation'].includes(this.currentPlan().status),
@@ -42,9 +45,60 @@ export class PlanOverview {
   protected readonly cancellationScheduled = computed(
     () => this.currentPlan().status === 'scheduled-cancellation',
   );
-  protected readonly cancellationActionLabel = computed(() =>
-    this.cancellationScheduled() ? 'Mantener plan' : 'Solicitar cancelación',
+  protected readonly cancellationActionLabelKey = computed(() =>
+    this.cancellationScheduled()
+      ? 'subscription.overview.keepPlanAction'
+      : 'subscription.overview.cancelAction',
   );
+  protected readonly currentPlanDescriptionParams = computed(() => ({
+    date: this.formatPlanDate(this.currentPlan().currentPeriodEndDate),
+  }));
+
+  protected planNameKey(plan: SubscriptionPlan): string {
+    return plan.id === 'plan-free' ? 'subscription.plans.free.name' : 'subscription.plans.control.name';
+  }
+
+  protected currentPlanBadgeLabelKey(plan: SubscriptionPlan): string {
+    return plan.id === 'plan-free'
+      ? 'subscription.plans.free.badge'
+      : 'subscription.plans.current.badgeLabel';
+  }
+
+  protected recommendedPlanBadgeLabelKey(): string {
+    return 'subscription.plans.control.badgeLabel';
+  }
+
+  protected statusLabelKey(plan: SubscriptionPlan): string {
+    if (plan.status === 'free') {
+      return 'subscription.plans.free.status';
+    }
+
+    return `subscription.plans.control.statusLabel.${plan.status}`;
+  }
+
+  protected shortDescriptionKey(plan: SubscriptionPlan): string {
+    if (plan.id === 'plan-free') {
+      return 'subscription.plans.free.shortDescription';
+    }
+
+    return `subscription.plans.control.shortDescription.${plan.status}`;
+  }
+
+  protected featureKey(plan: SubscriptionPlan, index: number): string {
+    if (plan.id === 'plan-free') {
+      return [
+        'subscription.plans.free.features.basicInventory',
+        'subscription.plans.free.features.manualMovements',
+        'subscription.plans.free.features.noChatbot',
+      ][index] ?? plan.features[index]?.description ?? '';
+    }
+
+    return [
+      'subscription.plans.control.features.unlimitedProducts',
+      'subscription.plans.control.features.salesOperations',
+      'subscription.plans.control.features.chatbot',
+    ][index] ?? plan.features[index]?.description ?? '';
+  }
 
   protected selectBillingCycle(cycle: BillingCycle): void {
     this.billingCycleSelected.emit(cycle);
@@ -65,5 +119,35 @@ export class PlanOverview {
     }
 
     this.cancellationRequested.emit();
+  }
+
+  private formatPlanDate(dateValue: string): string {
+    const date = this.toLocalDate(dateValue);
+
+    if (date === null) {
+      return this.translate.instant('subscription.planAction.fallbackDate');
+    }
+
+    return new Intl.DateTimeFormat(this.currentDateLocale(), {
+      day: 'numeric',
+      month: 'long',
+      year: 'numeric',
+    }).format(date);
+  }
+
+  private currentDateLocale(): string {
+    return (this.translate.currentLang ?? this.translate.defaultLang ?? 'en').startsWith('es')
+      ? 'es-PE'
+      : 'en-US';
+  }
+
+  private toLocalDate(dateValue: string): Date | null {
+    const [year, month, day] = dateValue.split('-').map((value) => Number(value));
+
+    if (!year || !month || !day) {
+      return null;
+    }
+
+    return new Date(year, month - 1, day);
   }
 }

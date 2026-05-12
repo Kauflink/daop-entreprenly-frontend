@@ -1,11 +1,22 @@
 import { CdkTrapFocus } from '@angular/cdk/a11y';
-import { ChangeDetectionStrategy, Component, computed, input, output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, input, output } from '@angular/core';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { BillingSetup } from '../../../domain/model/billing-setup.entity';
 import { SubscriptionActivity } from '../../../domain/model/subscription-activity.entity';
+import { BillingCycle, SubscriptionPlan } from '../../../domain/model/subscription-plan.entity';
+
+interface ActivityRow {
+  id: string;
+  title?: string;
+  detail?: string;
+  titleKey?: string;
+  detailKey?: string;
+  detailParams?: Record<string, string>;
+}
 
 @Component({
   selector: 'app-subscription-history-modal',
-  imports: [CdkTrapFocus],
+  imports: [CdkTrapFocus, TranslatePipe],
   templateUrl: './subscription-history-modal.html',
   styleUrl: './subscription-history-modal.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -16,23 +27,29 @@ import { SubscriptionActivity } from '../../../domain/model/subscription-activit
 export class SubscriptionHistoryModal {
   readonly activity = input.required<SubscriptionActivity[]>();
   readonly billingSetup = input.required<BillingSetup>();
+  readonly currentPlan = input.required<SubscriptionPlan>();
+  readonly billingCycle = input.required<BillingCycle>();
   readonly downloaded = input(false);
 
   readonly closed = output<void>();
   readonly historyDownloadRequested = output<void>();
 
-  protected readonly activityRows = computed(() => [
-    ...this.activity(),
-    new SubscriptionActivity({
+  private readonly translate = inject(TranslateService);
+
+  protected readonly activityRows = computed<ActivityRow[]>(() => [
+    ...this.activity().map((item) => this.toActivityRow(item)),
+    {
       id: 'payment-method',
-      title: 'Método de pago',
-      detail: this.paymentMethodDetail(),
-    }),
-    new SubscriptionActivity({
+      titleKey: 'subscription.history.paymentMethod.title',
+      detailKey: this.paymentMethodDetailKey(),
+      detailParams: this.paymentMethodDetailParams(),
+    },
+    {
       id: 'fiscal-data',
-      title: 'Datos fiscales',
-      detail: this.fiscalDataDetail(),
-    }),
+      titleKey: 'subscription.history.fiscalData.title',
+      detailKey: this.fiscalDataDetailKey(),
+      detailParams: this.fiscalDataDetailParams(),
+    },
   ]);
 
   protected close(): void {
@@ -48,25 +65,144 @@ export class SubscriptionHistoryModal {
     this.historyDownloadRequested.emit();
   }
 
-  private paymentMethodDetail(): string {
-    const paymentMethod =
-      this.billingSetup().paymentMethods.find((method) => method.isDefault) ??
-      this.billingSetup().paymentMethods.at(-1);
-
-    if (!paymentMethod) {
-      return 'Sin método de pago registrado.';
+  private toActivityRow(item: SubscriptionActivity): ActivityRow {
+    if (item.id === 'created-account') {
+      return {
+        id: item.id,
+        titleKey: 'subscription.activity.created-account.title',
+        detailKey: 'subscription.activity.created-account.detail',
+      };
     }
 
-    return `${paymentMethod.cardBrand} terminada en ${paymentMethod.lastFour} registrada para pagos y renovaciones`;
+    if (item.id === 'current-status') {
+      return {
+        id: item.id,
+        titleKey: 'subscription.activity.current-status.title',
+        detailKey: `subscription.activity.current-status.detail.${this.currentPlan().status}`,
+      };
+    }
+
+    if (item.id === 'billing') {
+      return this.toBillingActivityRow(item);
+    }
+
+    return item;
   }
 
-  private fiscalDataDetail(): string {
+  private toBillingActivityRow(item: SubscriptionActivity): ActivityRow {
+    if (this.currentPlan().status === 'free') {
+      return {
+        id: item.id,
+        titleKey: 'subscription.activity.billing.title',
+        detailKey: 'subscription.activity.billing.detail.free',
+      };
+    }
+
+    const cancellationScheduled = this.currentPlan().status === 'scheduled-cancellation';
+
+    return {
+      id: item.id,
+      titleKey: 'subscription.activity.billing.title',
+      detailKey: cancellationScheduled
+        ? 'subscription.activity.billing.detail.accessUntil'
+        : 'subscription.activity.billing.detail.renewalWithDate',
+      detailParams: {
+        date: this.formatPlanDate(this.currentPlan().currentPeriodEndDate),
+        cycle: this.billingCycleLabel(),
+      },
+    };
+  }
+
+  private paymentMethodDetailKey(): string {
+    return this.selectedPaymentMethod()
+      ? 'subscription.history.paymentMethod.detail'
+      : 'subscription.history.paymentMethod.empty';
+  }
+
+  private paymentMethodDetailParams(): Record<string, string> {
+    const paymentMethod = this.selectedPaymentMethod();
+
+    if (!paymentMethod) {
+      return {};
+    }
+
+    return {
+      brand: this.cardBrandLabel(paymentMethod.cardBrand),
+      lastFour: paymentMethod.lastFour,
+    };
+  }
+
+  private fiscalDataDetailKey(): string {
+    return this.billingSetup().fiscalData
+      ? 'subscription.history.fiscalData.detail'
+      : 'subscription.history.fiscalData.empty';
+  }
+
+  private fiscalDataDetailParams(): Record<string, string> {
     const fiscalData = this.billingSetup().fiscalData;
 
     if (fiscalData === null) {
-      return 'Datos fiscales pendientes de completar.';
+      return {};
     }
 
-    return `${fiscalData.documentType} ${fiscalData.documentNumber} - ${fiscalData.businessName}`;
+    return {
+      documentType: fiscalData.documentType,
+      documentNumber: fiscalData.documentNumber,
+      businessName: fiscalData.businessName,
+    };
+  }
+
+  private selectedPaymentMethod() {
+    return (
+      this.billingSetup().paymentMethods.find((method) => method.isDefault) ??
+      this.billingSetup().paymentMethods.at(-1)
+    );
+  }
+
+  private cardBrandLabel(cardBrand: string): string {
+    const normalizedBrand = cardBrand.trim().toLowerCase();
+
+    return ['tarjeta', 'card'].includes(normalizedBrand)
+      ? this.translate.instant('subscription.cardBrand.generic')
+      : cardBrand;
+  }
+
+  private billingCycleLabel(): string {
+    const key =
+      this.billingCycle() === 'annual'
+        ? 'subscription.overview.priceLabel.annual'
+        : 'subscription.overview.priceLabel.monthly';
+
+    return this.translate.instant(key);
+  }
+
+  private formatPlanDate(dateValue: string): string {
+    const date = this.toLocalDate(dateValue);
+
+    if (date === null) {
+      return this.translate.instant('subscription.planAction.fallbackDate');
+    }
+
+    return new Intl.DateTimeFormat(this.currentDateLocale(), {
+      day: 'numeric',
+      month: 'long',
+      year: 'numeric',
+    }).format(date);
+  }
+
+  private currentDateLocale(): string {
+    return (this.translate.currentLang ?? this.translate.defaultLang ?? 'en').startsWith('es')
+      ? 'es-PE'
+      : 'en-US';
+  }
+
+  private toLocalDate(dateValue: string): Date | null {
+    const [year, month, day] = dateValue.split('-').map((value) => Number(value));
+
+    if (!year || !month || !day) {
+      return null;
+    }
+
+    return new Date(year, month - 1, day);
   }
 }
