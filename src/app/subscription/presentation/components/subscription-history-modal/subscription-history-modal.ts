@@ -1,11 +1,12 @@
 import { CdkTrapFocus } from '@angular/cdk/a11y';
-import { ChangeDetectionStrategy, Component, computed, input, output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, input, output } from '@angular/core';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { BillingSetup } from '../../../domain/model/billing-setup.entity';
 import { SubscriptionActivity } from '../../../domain/model/subscription-activity.entity';
 
 @Component({
   selector: 'app-subscription-history-modal',
-  imports: [CdkTrapFocus],
+  imports: [CdkTrapFocus, TranslatePipe],
   templateUrl: './subscription-history-modal.html',
   styleUrl: './subscription-history-modal.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -21,16 +22,18 @@ export class SubscriptionHistoryModal {
   readonly closed = output<void>();
   readonly historyDownloadRequested = output<void>();
 
+  private readonly translate = inject(TranslateService);
+
   protected readonly activityRows = computed(() => [
     ...this.activity(),
     new SubscriptionActivity({
       id: 'payment-method',
-      title: 'Método de pago',
+      title: 'subscription.history.paymentMethod.title',
       detail: this.paymentMethodDetail(),
     }),
     new SubscriptionActivity({
       id: 'fiscal-data',
-      title: 'Datos fiscales',
+      title: 'subscription.history.fiscalData.title',
       detail: this.fiscalDataDetail(),
     }),
   ]);
@@ -54,19 +57,26 @@ export class SubscriptionHistoryModal {
       this.billingSetup().paymentMethods.at(-1);
 
     if (!paymentMethod) {
-      return 'Sin método de pago registrado.';
+      return this.translate.instant('subscription.history.paymentMethod.empty');
     }
 
-    return `${paymentMethod.cardBrand} terminada en ${paymentMethod.lastFour} registrada para pagos y renovaciones`;
+    return this.translate.instant('subscription.history.paymentMethod.detail', {
+      brand: paymentMethod.cardBrand,
+      lastFour: paymentMethod.lastFour,
+    });
   }
 
   private fiscalDataDetail(): string {
     const fiscalData = this.billingSetup().fiscalData;
 
     if (fiscalData === null) {
-      return 'Datos fiscales pendientes de completar.';
+      return this.translate.instant('subscription.history.fiscalData.empty');
     }
 
-    return `${fiscalData.documentType} ${fiscalData.documentNumber} - ${fiscalData.businessName}`;
+    return this.translate.instant('subscription.history.fiscalData.detail', {
+      documentType: fiscalData.documentType,
+      documentNumber: fiscalData.documentNumber,
+      businessName: fiscalData.businessName,
+    });
   }
 }

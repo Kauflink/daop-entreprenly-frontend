@@ -1,5 +1,6 @@
 import { CdkTrapFocus } from '@angular/cdk/a11y';
-import { ChangeDetectionStrategy, Component, computed, input, output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, input, output } from '@angular/core';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { BillingCycle, SubscriptionPlan } from '../../../domain/model/subscription-plan.entity';
 
 export type SubscriptionPlanActionModalMode =
@@ -10,7 +11,7 @@ export type SubscriptionPlanActionModalMode =
 
 @Component({
   selector: 'app-subscription-plan-action-modal',
-  imports: [CdkTrapFocus],
+  imports: [CdkTrapFocus, TranslatePipe],
   templateUrl: './subscription-plan-action-modal.html',
   styleUrl: './subscription-plan-action-modal.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -27,61 +28,48 @@ export class SubscriptionPlanActionModal {
   readonly cancellationConfirmed = output<void>();
   readonly keepPlanConfirmed = output<void>();
 
+  private readonly translate = inject(TranslateService);
+
   protected readonly title = computed(() => {
     switch (this.mode()) {
-      case 'renew':
-        return 'Renovar suscripción';
-      case 'cancel':
-        return 'Solicitar cancelación';
-      case 'cancel-success':
-        return 'Cancelación programada';
-      case 'keep':
-        return 'Mantener Plan Control';
+      case 'renew': return 'subscription.planAction.renew.title';
+      case 'cancel': return 'subscription.planAction.cancel.title';
+      case 'cancel-success': return 'subscription.planAction.cancelSuccess.title';
+      case 'keep': return 'subscription.planAction.keep.title';
     }
   });
 
   protected readonly cardTitle = computed(() => {
     switch (this.mode()) {
-      case 'renew':
-        return 'Renovación preparada';
-      case 'cancel':
-        return 'Confirma la cancelación';
-      case 'cancel-success':
-        return 'Cancelación programada';
-      case 'keep':
-        return 'Mantener renovación activa';
+      case 'renew': return 'subscription.planAction.renew.cardTitle';
+      case 'cancel': return 'subscription.planAction.cancel.cardTitle';
+      case 'cancel-success': return 'subscription.planAction.cancelSuccess.cardTitle';
+      case 'keep': return 'subscription.planAction.keep.cardTitle';
     }
   });
 
   protected readonly cardDescription = computed(() => {
-    switch (this.mode()) {
-      case 'renew':
-        return `La nueva vigencia se extenderá hasta el ${this.renewedPeriodEndLabel()}.`;
-      case 'cancel':
-        return `Tu acceso al Plan Control se mantendrá hasta el ${this.currentPeriodEndLabel()}. No se realizará el siguiente cobro.`;
-      case 'cancel-success':
-        return `La solicitud fue registrada. Tu acceso premium continúa hasta el ${this.currentPeriodEndLabel()}.`;
-      case 'keep':
-        return `Se cancelará la solicitud de baja y el plan seguirá renovándose al finalizar la vigencia actual: ${this.currentPeriodEndLabel()}.`;
-    }
+    const mode = this.mode();
+    const keyMap: Record<SubscriptionPlanActionModalMode, string> = {
+      'renew': 'subscription.planAction.renew.cardDescription',
+      'cancel': 'subscription.planAction.cancel.cardDescription',
+      'cancel-success': 'subscription.planAction.cancelSuccess.cardDescription',
+      'keep': 'subscription.planAction.keep.cardDescription',
+    };
+    const dateLabel = mode === 'renew' ? this.renewedPeriodEndLabel() : this.currentPeriodEndLabel();
+    return this.translate.instant(keyMap[mode], { date: dateLabel });
   });
 
   protected readonly primaryLabel = computed(() => {
     switch (this.mode()) {
       case 'renew':
       case 'cancel-success':
-        return 'Entendido';
+        return 'subscription.planAction.understood';
       case 'cancel':
-        return 'Confirmar cancelación';
+        return 'subscription.planAction.confirmCancellation';
       case 'keep':
-        return 'Mantener Plan Control';
+        return 'subscription.planAction.keepPlan';
     }
-  });
-
-  private readonly dateFormatter = new Intl.DateTimeFormat('es-PE', {
-    day: 'numeric',
-    month: 'long',
-    year: 'numeric',
   });
 
   private readonly currentPeriodEndLabel = computed(() =>
@@ -128,17 +116,23 @@ export class SubscriptionPlanActionModal {
     }
   }
 
-  private formatDate(date: Date | string | null): string {
+  private formatDate(date: Date | string | null | undefined): string {
     const parsedDate = typeof date === 'string' ? this.toLocalDate(date) : date;
 
-    if (parsedDate === null) {
-      return 'la fecha registrada en tu suscripción';
+    if (parsedDate === null || parsedDate === undefined) {
+      return this.translate.instant('subscription.activity.billing.detail.unknownDate');
     }
 
-    return this.dateFormatter.format(parsedDate);
+    const locale = this.translate.currentLang === 'en' ? 'en-US' : 'es-PE';
+    return new Intl.DateTimeFormat(locale, {
+      day: 'numeric',
+      month: 'long',
+      year: 'numeric',
+    }).format(parsedDate);
   }
 
-  private toLocalDate(dateValue: string): Date | null {
+  private toLocalDate(dateValue: string | undefined): Date | null {
+    if (!dateValue) return null;
     const [year, month, day] = dateValue.split('-').map((value) => Number(value));
 
     if (!year || !month || !day) {
