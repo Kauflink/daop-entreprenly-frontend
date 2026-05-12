@@ -54,8 +54,8 @@ h2 {
 }
 
 .billing-card--complete {
-  border-color: #b9e2c8;
-  background: #f3fbf5;
+  border-color: var(--color-success);
+  background: var(--color-inner-bg);
 }
 
 .billing-card__body {
@@ -71,8 +71,8 @@ h2 {
   height: 36px;
   place-items: center;
   border-radius: 12px;
-  background: #fff2d8;
-  color: #6f2700;
+  background: var(--color-theme-btn-active-bg);
+  color: var(--color-label-accent);
 }
 
 .billing-card__icon mat-icon {

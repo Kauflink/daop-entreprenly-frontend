@@ -55,14 +55,22 @@ export class ProfileStore {
   constructor() {
     effect(() => {
       const lang = this.preferences().language;
-      if (lang && lang !== this.translate.currentLang) {
-        this.translate.use(lang);
+      if (lang) {
+        if (lang !== this.translate.currentLang) {
+          this.translate.use(lang);
+        }
+        try {
+          localStorage.setItem('entreprenly-lang', lang);
+        } catch {}
       }
     });
     effect(() => {
       const theme = this.preferences().theme;
       if (theme) {
         document.documentElement.dataset['theme'] = theme;
+        try {
+          localStorage.setItem('entreprenly-theme', theme);
+        } catch {}
       }
     });
     this.load();

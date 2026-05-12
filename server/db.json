@@ -329,156 +329,13 @@
       "createdAt": "2026-05-10T08:00:00Z"
     }
   ],
-  "sales-products": [
-    {
-      "id": 1,
-      "name": "Arroz Costeño 1kg",
-      "description": "Premium coastal rice 1kg bag",
-      "isWeighted": false,
-      "unitPrice": 5.5,
-      "availableStock": 120
-    },
-    {
-      "id": 2,
-      "name": "Pollo entero",
-      "description": "Fresh whole chicken per kg",
-      "isWeighted": true,
-      "unitPrice": 9.9,
-      "availableStock": 50
-    },
-    {
-      "id": 3,
-      "name": "Coca Cola 500ml",
-      "description": "Coca-Cola 500ml bottle",
-      "isWeighted": false,
-      "unitPrice": 3.5,
-      "availableStock": 80
-    },
-    {
-      "id": 4,
-      "name": "Pan francés",
-      "description": "Traditional French bread roll",
-      "isWeighted": false,
-      "unitPrice": 0.5,
-      "availableStock": 200
-    },
-    {
-      "id": 5,
-      "name": "Inca Kola 500ml",
-      "description": "Inca Kola 500ml bottle",
-      "isWeighted": false,
-      "unitPrice": 3.5,
-      "availableStock": 75
-    },
-    {
-      "id": 6,
-      "name": "Queso fresco",
-      "description": "Fresh cheese per kg",
-      "isWeighted": true,
-      "unitPrice": 18,
-      "availableStock": 30
-    },
-    {
-      "id": 7,
-      "name": "Galleta Oreo",
-      "description": "Oreo cookies pack",
-      "isWeighted": false,
-      "unitPrice": 2,
-      "availableStock": 60
-    },
-    {
-      "id": 8,
-      "name": "Aceite Primor 1L",
-      "description": "Primor vegetable oil 1L bottle",
-      "isWeighted": false,
-      "unitPrice": 8.5,
-      "availableStock": 40
-    }
-  ],
-  "sales": [
-    {
-      "id": 1,
-      "sellerId": 1,
-      "items": [
-        {
-          "productId": 3,
-          "productName": "Coca Cola 500ml",
-          "quantity": 2,
-          "weightKg": null,
-          "unitPrice": 3.5,
-          "subtotal": 7
-        },
-        {
-          "productId": 4,
-          "productName": "Pan francés",
-          "quantity": 6,
-          "weightKg": null,
-          "unitPrice": 0.5,
-          "subtotal": 3
-        }
-      ],
-      "total": 10,
-      "paymentMethod": "CASH",
-      "paymentReceipt": {
-        "method": "CASH",
-        "transactionCode": "CASH-001",
-        "amount": 10,
-        "confirmedAt": "2026-05-08T10:30:00"
-      },
-      "status": "COMPLETED",
-      "createdAt": "2026-05-08T10:25:00",
-      "completedAt": "2026-05-08T10:30:00"
-    },
-    {
-      "id": 2,
-      "sellerId": 1,
-      "items": [
-        {
-          "productId": 1,
-          "productName": "Arroz Costeño 1kg",
-          "quantity": null,
-          "weightKg": 2.5,
-          "unitPrice": 5.5,
-          "subtotal": 13.75
-        }
-      ],
-      "total": 13.75,
-      "paymentMethod": "YAPE",
-      "paymentReceipt": {
-        "method": "YAPE",
-        "transactionCode": "YAPE-987654",
-        "amount": 13.75,
-        "confirmedAt": "2026-05-08T11:15:00"
-      },
-      "status": "COMPLETED",
-      "createdAt": "2026-05-08T11:10:00",
-      "completedAt": "2026-05-08T11:15:00"
-    }
-  ],
+  "sales": [],
   "cash-registers": [
     {
       "id": 1,
-      "date": "2026-05-08",
-      "totalCash": 70,
-      "totalDigital": 23.5
-    },
-    {
-      "id": 2,
-      "date": "2026-05-09",
-      "totalCash": 56,
-      "totalDigital": 45.5
-    },
-    {
-      "id": 3,
-      "date": "2026-05-10",
+      "date": "2026-05-11",
       "totalCash": 0,
       "totalDigital": 0
-    },
-    {
-      "id": 4,
-      "date": "2026-05-11",
-      "totalCash": 157.5,
-      "totalDigital": 182
     }
   ],
   "iot-scale": {
@@ -850,7 +707,7 @@
     "notification_settings": {
       "id": 1,
       "stock_alerts": true,
-      "payment_alerts": false,
+      "payment_alerts": true,
       "chatbot_messages": false
     }
   },
@@ -860,8 +717,7 @@
       "sellerId": 1,
       "phone": "+51 999 888 777",
       "businessName": "Bodega El Huerto",
-      "status": "connected",
-      "connectedAt": "10/5/2026, 11:03:29 p. m."
+      "status": "disconnected"
     }
   ],
   "conversations": [
@@ -872,7 +728,7 @@
       "clientName": "Andrea Torres",
       "lastMessage": "Comprobante enviado",
       "lastMessageTime": "10:18",
-      "status": "WAITING_PAYMENT",
+      "status": "COMPLETED",
       "createdAt": "2026-04-15T10:00:00.000Z"
     },
     {
@@ -1556,6 +1412,22 @@
       "sender": "bot",
       "type": "text",
       "sentAt": "2026-04-15T11:00:05.000Z"
+    },
+    {
+      "id": 81,
+      "conversationId": 1,
+      "content": "Sistema: pago validado por el comerciante — 01:43 p. m.",
+      "sender": "system",
+      "type": "text",
+      "sentAt": "2026-05-11T18:43:30.319Z"
+    },
+    {
+      "id": 82,
+      "conversationId": 1,
+      "content": "Tu pago fue recibido y verificado correctamente.\nEl pedido #0042 está confirmado y en preparación. ¡Gracias por tu compra!",
+      "sender": "bot",
+      "type": "text",
+      "sentAt": "2026-05-11T18:43:30.319Z"
     }
   ],
   "chat-orders": [
@@ -1573,7 +1445,7 @@
       "total": 18,
       "deliveryAddress": "Av. Los Álamos 234, Miraflores",
       "paymentMethod": "Yape",
-      "status": "WAITING_PAYMENT",
+      "status": "CONFIRMED",
       "hasReceipt": true,
       "rejectionCount": 0,
       "createdAt": "2026-04-15T10:04:00.000Z"

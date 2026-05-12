@@ -1,8 +1,12 @@
 import { DestroyRef, Injectable, computed, inject, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { of, retry, switchMap } from 'rxjs';
+import { of, retry, switchMap, tap } from 'rxjs';
 import { CashRegister } from '../domain/model/cash-register.entity';
+import { PaymentMethod } from '../domain/model/payment-method.enum';
 import { ProductSummary } from '../domain/model/product-summary.entity';
+import { Sale } from '../domain/model/sale.entity';
+import { SaleItem } from '../domain/model/sale-item.entity';
+import { SaleStatus } from '../domain/model/sale-status.enum';
 import { SalesApi } from '../infrastructure/sales-api';
 
 @Injectable({ providedIn: 'root' })
@@ -85,15 +89,37 @@ export class SalesStore {
 
     this.cashRegisterSignal.set(updated);
 
-    this.salesApi.updateCashRegister(updated).subscribe({
-      next: (persisted) => {
-        console.log('✅ Cash register updated:', persisted);
-        this.cashRegisterSignal.set(persisted);
-      },
-      error: (err) => {
-        console.error('❌ Error updating cash register:', err);
-      },
+    this.salesApi
+      .updateCashRegister(updated)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: (persisted) => this.cashRegisterSignal.set(persisted),
+        error: (err) => console.error('❌ Error updating cash register:', err),
+      });
+  }
+
+  createSale(items: SaleItem[], paymentMethod: PaymentMethod, total: number): void {
+    const sale = new Sale({
+      id: 0,
+      sellerId: 1,
+      items,
+      total,
+      paymentMethod,
+      status: SaleStatus.COMPLETED,
+      createdAt: new Date(),
+      completedAt: new Date(),
     });
+
+    this.salesApi
+      .createSale(sale)
+      .pipe(
+        switchMap(() => this.salesApi.decrementStock(items)),
+        tap(() => this.loadProducts()),
+        takeUntilDestroyed(this.destroyRef),
+      )
+      .subscribe({
+        error: (err) => console.error('❌ Error persisting sale or updating stock:', err),
+      });
   }
 
   private formatError(error: unknown, fallback: string): string {
