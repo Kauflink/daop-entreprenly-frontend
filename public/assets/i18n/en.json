@@ -155,6 +155,7 @@
       "home": "Home",
       "products": "Products",
       "lots": "Lots",
+      "batches": "Lots",
       "sales": "Sales",
       "subscription": "Subscription",
       "orders": "Orders",
@@ -497,8 +498,27 @@
       "paymentMethodDescription": "{{ brand }} ending in {{ lastFour }} - expires {{ month }}/{{ year }}",
       "fiscalDataDescription": "{{ documentType }} {{ documentNumber }} - {{ businessName }}"
     }
-<<<<<<< Updated upstream
-=======
+  },
+  "pageTitle": {
+    "home": "Home",
+    "profile": "Profile",
+    "sales": "Sales",
+    "subscription": "Subscription",
+    "inventory": "Inventory",
+    "unitProducts": "Unit Products",
+    "weightProducts": "Weight Products",
+    "newProduct": "New Product",
+    "editProduct": "Edit Product",
+    "lots": "Lots",
+    "unitLots": "Unit Lots",
+    "weightLots": "Weight Lots",
+    "newLot": "New Lot",
+    "editLot": "Edit Lot",
+    "stockAlerts": "Stock Alerts",
+    "chatbot": "Chatbot",
+    "conversations": "Conversations",
+    "orders": "Orders",
+    "help": "Help"
   },
   "profile": {
     "userInfo": {
@@ -612,6 +632,5 @@
       },
       "saveAction": "Save preferences"
     }
->>>>>>> Stashed changes
   }
 }

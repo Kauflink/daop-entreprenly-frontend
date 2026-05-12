@@ -1,0 +1,124 @@
+<div class="flex h-full flex-col p-6 pt-4">
+  <div class="flex flex-1 overflow-hidden rounded-2xl bg-white shadow-sm">
+
+    <div class="w-64 flex-shrink-0">
+      <app-conversation-list
+        [conversations]="store.conversations()"
+        [selectedId]="store.selectedConversationId()"
+        (conversationSelected)="onConversationSelected($event)"
+      />
+    </div>
+
+    <div class="flex flex-1 flex-col border-l border-gray-200">
+      @if (store.selectedConversation(); as conversation) {
+        <app-conversation-header [conversation]="conversation" />
+
+        <div class="flex flex-1 flex-col gap-3 overflow-y-auto bg-gray-50 p-6" #messagesContainer>
+          @for (message of store.messages(); track message.id) {
+            <div class="msg-animate">
+              <app-message-bubble
+                [message]="message"
+                [clientInitials]="conversation.clientName.split(' ')[0][0] + (conversation.clientName.split(' ')[1]?.[0] ?? '')"
+              />
+            </div>
+          }
+          @if (store.isBotTyping()) {
+            <div class="msg-animate flex items-end gap-2">
+              <div class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-green-400 text-xs font-bold text-white">
+                BH
+              </div>
+              <div class="flex items-center gap-1 rounded-2xl rounded-bl-sm border border-gray-200 bg-white px-4 py-3">
+                <span class="h-2 w-2 animate-bounce rounded-full bg-gray-400" style="animation-delay:0ms"></span>
+                <span class="h-2 w-2 animate-bounce rounded-full bg-gray-400" style="animation-delay:150ms"></span>
+                <span class="h-2 w-2 animate-bounce rounded-full bg-gray-400" style="animation-delay:300ms"></span>
+              </div>
+            </div>
+          }
+        </div>
+
+        @if (store.pendingOrder(); as order) {
+          @if (receiptVisible()) {
+            @if (showRejectForm()) {
+              <div class="flex flex-col gap-3 border-t border-red-100 bg-red-50 px-5 py-4">
+                <p class="text-sm font-semibold text-red-700">Motivo del rechazo</p>
+                <div class="flex flex-wrap gap-2">
+                  @for (reason of rejectReasons; track reason) {
+                    <button
+                      type="button"
+                      (click)="selectedReason.set(reason)"
+                      class="rounded-full border px-3 py-1 text-xs font-medium transition-colors"
+                      [class]="selectedReason() === reason
+                        ? 'border-red-500 bg-red-500 text-white'
+                        : 'border-red-300 bg-white text-red-500 hover:bg-red-50'"
+                    >
+                      {{ reason }}
+                    </button>
+                  }
+                </div>
+                <div class="flex gap-2">
+                  <button
+                    type="button"
+                    (click)="onConfirmReject()"
+                    class="rounded-full bg-red-500 px-5 py-1.5 text-xs font-semibold text-white transition-colors hover:bg-red-600"
+                  >
+                    Confirmar rechazo
+                  </button>
+                  <button
+                    type="button"
+                    (click)="onCancelReject()"
+                    class="rounded-full border border-gray-300 bg-white px-5 py-1.5 text-xs font-semibold text-gray-500 transition-colors hover:bg-gray-50"
+                  >
+                    Cancelar
+                  </button>
+                </div>
+              </div>
+            } @else {
+              <div class="flex items-center justify-between border-t border-orange-100 bg-orange-50 px-5 py-3">
+                <div>
+                  <p class="text-sm font-semibold text-orange-700">Pago pendiente — Pedido {{ order.orderNumber }}</p>
+                  <p class="text-xs text-orange-500">{{ order.paymentMethod }} · S/{{ order.total.toFixed(2) }} · Valida el comprobante enviado</p>
+                </div>
+                <div class="flex gap-2">
+                  <button
+                    type="button"
+                    (click)="onApprove()"
+                    class="rounded-full border-2 border-green-500 px-4 py-1 text-xs font-semibold text-green-600 transition-colors hover:bg-green-50"
+                  >
+                    Aprobar pago
+                  </button>
+                  <button
+                    type="button"
+                    (click)="onReject()"
+                    class="rounded-full border-2 border-red-400 px-4 py-1 text-xs font-semibold text-red-500 transition-colors hover:bg-red-50"
+                  >
+                    Rechazar
+                  </button>
+                </div>
+              </div>
+            }
+          }
+        }
+        <app-chat-input (messageSent)="onMessageSent($event)" />
+      } @else if (store.conversations().length === 0) {
+        <div class="flex flex-1 flex-col items-center justify-center gap-3 bg-gray-50">
+          <svg class="h-16 w-16 text-orange-400" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M20 2H4C2.9 2 2 2.9 2 4v13c0 1.1.9 2 2 2h3l3 3 3-3h7c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM9 11H7V9h2v2zm4 0h-2V9h2v2zm4 0h-2V9h2v2z"/>
+          </svg>
+          <p class="text-center text-sm text-orange-400">
+            Aún no hay conversaciones.<br />Los chats de tus clientes aparecerán aquí<br />cuando el chatbot reciba mensajes.
+          </p>
+        </div>
+      } @else {
+        <div class="flex flex-1 flex-col items-center justify-center gap-3 bg-gray-50">
+          <svg class="h-16 w-16 text-orange-400" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M20 2H4C2.9 2 2 2.9 2 4v13c0 1.1.9 2 2 2h3l3 3 3-3h7c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM9 11H7V9h2v2zm4 0h-2V9h2v2zm4 0h-2V9h2v2z"/>
+          </svg>
+          <p class="text-center text-sm text-orange-400">
+            Envía y recibe mensajes sin necesidad<br />de tener tu teléfono conectado
+          </p>
+        </div>
+      }
+    </div>
+
+  </div>
+</div>

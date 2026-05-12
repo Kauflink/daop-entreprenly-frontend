@@ -329,163 +329,19 @@
       "createdAt": "2026-05-10T08:00:00Z"
     }
   ],
-  "sales-products": [
-    {
-      "id": 1,
-      "name": "Arroz Costeño 1kg",
-      "description": "Premium coastal rice 1kg bag",
-      "isWeighted": false,
-      "unitPrice": 5.5,
-      "availableStock": 120
-    },
-    {
-      "id": 2,
-      "name": "Pollo entero",
-      "description": "Fresh whole chicken per kg",
-      "isWeighted": true,
-      "unitPrice": 9.9,
-      "availableStock": 50
-    },
-    {
-      "id": 3,
-      "name": "Coca Cola 500ml",
-      "description": "Coca-Cola 500ml bottle",
-      "isWeighted": false,
-      "unitPrice": 3.5,
-      "availableStock": 80
-    },
-    {
-      "id": 4,
-      "name": "Pan francés",
-      "description": "Traditional French bread roll",
-      "isWeighted": false,
-      "unitPrice": 0.5,
-      "availableStock": 200
-    },
-    {
-      "id": 5,
-      "name": "Inca Kola 500ml",
-      "description": "Inca Kola 500ml bottle",
-      "isWeighted": false,
-      "unitPrice": 3.5,
-      "availableStock": 75
-    },
-    {
-      "id": 6,
-      "name": "Queso fresco",
-      "description": "Fresh cheese per kg",
-      "isWeighted": true,
-      "unitPrice": 18,
-      "availableStock": 30
-    },
-    {
-      "id": 7,
-      "name": "Galleta Oreo",
-      "description": "Oreo cookies pack",
-      "isWeighted": false,
-      "unitPrice": 2,
-      "availableStock": 60
-    },
-    {
-      "id": 8,
-      "name": "Aceite Primor 1L",
-      "description": "Primor vegetable oil 1L bottle",
-      "isWeighted": false,
-      "unitPrice": 8.5,
-      "availableStock": 40
-    }
-  ],
-  "sales": [
-    {
-      "id": 1,
-      "sellerId": 1,
-      "items": [
-        {
-          "productId": 3,
-          "productName": "Coca Cola 500ml",
-          "quantity": 2,
-          "weightKg": null,
-          "unitPrice": 3.5,
-          "subtotal": 7
-        },
-        {
-          "productId": 4,
-          "productName": "Pan francés",
-          "quantity": 6,
-          "weightKg": null,
-          "unitPrice": 0.5,
-          "subtotal": 3
-        }
-      ],
-      "total": 10,
-      "paymentMethod": "CASH",
-      "paymentReceipt": {
-        "method": "CASH",
-        "transactionCode": "CASH-001",
-        "amount": 10,
-        "confirmedAt": "2026-05-08T10:30:00"
-      },
-      "status": "COMPLETED",
-      "createdAt": "2026-05-08T10:25:00",
-      "completedAt": "2026-05-08T10:30:00"
-    },
-    {
-      "id": 2,
-      "sellerId": 1,
-      "items": [
-        {
-          "productId": 1,
-          "productName": "Arroz Costeño 1kg",
-          "quantity": null,
-          "weightKg": 2.5,
-          "unitPrice": 5.5,
-          "subtotal": 13.75
-        }
-      ],
-      "total": 13.75,
-      "paymentMethod": "YAPE",
-      "paymentReceipt": {
-        "method": "YAPE",
-        "transactionCode": "YAPE-987654",
-        "amount": 13.75,
-        "confirmedAt": "2026-05-08T11:15:00"
-      },
-      "status": "COMPLETED",
-      "createdAt": "2026-05-08T11:10:00",
-      "completedAt": "2026-05-08T11:15:00"
-    }
-  ],
+  "sales": [],
   "cash-registers": [
     {
       "id": 1,
-      "date": "2026-05-08",
-      "totalCash": 70,
-      "totalDigital": 23.5
-    },
-    {
-      "id": 2,
-      "date": "2026-05-09",
-      "totalCash": 56,
-      "totalDigital": 45.5
-    },
-    {
-      "id": 3,
-      "date": "2026-05-10",
+      "date": "2026-05-11",
       "totalCash": 0,
       "totalDigital": 0
     },
     {
-<<<<<<< Updated upstream
-      "id": 4,
-      "date": "2026-05-11",
-      "totalCash": 157.5,
-      "totalDigital": 182
-=======
       "date": "2026-05-12",
       "totalCash": 0,
       "totalDigital": 0,
       "id": 2
->>>>>>> Stashed changes
     }
   ],
   "iot-scale": {
@@ -500,53 +356,51 @@
       "currentPlan": {
         "id": "plan-control",
         "name": "Plan Control",
-<<<<<<< Updated upstream
-        "shortDescription": "Tu plan sigue activo hasta el 31 de mayo 2026. No se renovará automáticamente.",
-=======
-        "shortDescription": "subscription.plans.control.shortDescription.active",
->>>>>>> Stashed changes
+        "shortDescription": "Tu plan sigue activo hasta el 11 de junio de 2026. Se renovará automáticamente.",
         "monthlyPrice": 89,
         "annualPrice": 890,
         "status": "active",
-        "statusLabel": "subscription.plans.control.statusLabel.active",
-        "badgeLabel": "subscription.plans.current.badgeLabel",
+        "statusLabel": "Plan Control activo",
+        "badgeLabel": "Plan actual",
         "recommended": false,
         "features": [
           {
-            "description": "subscription.plans.control.features.unlimitedProducts",
+            "description": "Productos y lotes ilimitados",
             "available": true
           },
           {
-            "description": "subscription.plans.control.features.salesOperations",
+            "description": "Ventas, pedidos, caja y trazabilidad en un solo flujo.",
             "available": true
           },
           {
-            "description": "subscription.plans.control.features.chatbot",
+            "description": "Chatbot de WhatsApp y alertas operativas incluidas.",
             "available": true
           }
-        ]
+        ],
+        "currentPeriodStartDate": "2026-05-11",
+        "currentPeriodEndDate": "2026-06-11"
       },
       "recommendedPlan": {
         "id": "plan-control",
         "name": "Plan Control",
-        "shortDescription": "subscription.plans.control.shortDescription.recommended",
+        "shortDescription": "Opera sin restricciones con automatizaciones, alertas y trazabilidad completa.",
         "monthlyPrice": 89,
         "annualPrice": 890,
         "status": "active",
-        "statusLabel": "subscription.plans.control.statusLabel.recommended",
-        "badgeLabel": "subscription.plans.control.badgeLabel",
+        "statusLabel": "Recomendado",
+        "badgeLabel": "Recomendado",
         "recommended": true,
         "features": [
           {
-            "description": "subscription.plans.control.features.unlimitedProducts",
+            "description": "Productos y lotes ilimitados",
             "available": true
           },
           {
-            "description": "subscription.plans.control.features.salesOperations",
+            "description": "Ventas, pedidos, caja y trazabilidad en un solo flujo.",
             "available": true
           },
           {
-            "description": "subscription.plans.control.features.chatbot",
+            "description": "Chatbot de WhatsApp y alertas operativas incluidas.",
             "available": true
           }
         ]
@@ -554,56 +408,36 @@
       "limits": [
         {
           "id": "products",
-<<<<<<< Updated upstream
           "label": "Productos",
-          "usedValue": 18,
-=======
-          "label": "subscription.limits.products.label",
           "usedValue": 10,
->>>>>>> Stashed changes
           "maxValue": 0
         },
         {
           "id": "active-batches",
-<<<<<<< Updated upstream
           "label": "Lotes activos",
-          "usedValue": 6,
-=======
-          "label": "subscription.limits.active-batches.label",
           "usedValue": 18,
->>>>>>> Stashed changes
           "maxValue": 0
         },
         {
           "id": "users",
-          "label": "subscription.limits.users.label",
+          "label": "Usuarios",
           "usedValue": 1,
           "maxValue": 5
         }
       ],
       "billingSetup": {
-<<<<<<< Updated upstream
         "paymentMethodTitle": "Método de pago",
-        "paymentMethodDescription": "Aún no hay tarjeta o medio de pago registrado.",
+        "paymentMethodDescription": "Tarjeta terminada en 0123 - vence 11/30",
         "paymentMethodActionLabel": "Agregar métodos de pago",
         "fiscalDataTitle": "Datos de facturación",
-        "fiscalDataDescription": "Completa RUC, razón social y correo de comprobantes.",
-        "fiscalDataActionLabel": "Completar datos",
-        "hasPaymentMethod": false,
-        "hasFiscalData": false
-=======
-        "paymentMethodTitle": "subscription.billing.paymentMethod.title",
-        "paymentMethodDescription": "Visa terminada en 1111 - vence 12/29",
-        "paymentMethodActionLabel": "subscription.store.paymentMethodActionLabel",
-        "fiscalDataTitle": "subscription.billing.fiscalData.title",
         "fiscalDataDescription": "DNI 60429922 - L.Studios",
-        "fiscalDataActionLabel": "subscription.store.fiscalDataActionLabel",
+        "fiscalDataActionLabel": "Editar datos fiscales",
         "hasPaymentMethod": true,
         "hasFiscalData": true,
         "paymentMethods": [
           {
             "id": "payment-method-1",
-            "cardBrand": "Card",
+            "cardBrand": "Tarjeta",
             "lastFour": "3333",
             "holderName": "Lionel Chavez",
             "expiryMonth": "12",
@@ -612,20 +446,11 @@
           },
           {
             "id": "payment-method-2",
-            "cardBrand": "Card",
+            "cardBrand": "Tarjeta",
             "lastFour": "0123",
             "holderName": "Julius Camargo",
             "expiryMonth": "11",
             "expiryYear": "30",
-            "isDefault": false
-          },
-          {
-            "id": "payment-method-3",
-            "cardBrand": "Visa",
-            "lastFour": "1111",
-            "holderName": "sasdfdsfds",
-            "expiryMonth": "12",
-            "expiryYear": "29",
             "isDefault": true
           }
         ],
@@ -636,28 +461,22 @@
           "receiptEmail": "nutellagamertv2000@gmail.com",
           "fiscalAddress": "Calle Huasta"
         }
->>>>>>> Stashed changes
       },
       "activity": [
         {
           "id": "created-account",
-          "title": "subscription.activity.created-account.title",
-          "detail": "subscription.activity.created-account.detail"
+          "title": "Cuenta creada",
+          "detail": "16 abril 2026 - Plan Free asignado automáticamente"
         },
         {
           "id": "current-status",
-          "title": "subscription.activity.current-status.title",
-          "detail": "subscription.activity.current-status.detail.active"
+          "title": "Estado actual",
+          "detail": "Plan Control activo - S/ 89/mes"
         },
         {
           "id": "billing",
-<<<<<<< Updated upstream
           "title": "Facturación",
-          "detail": "Próxima renovación: 31 mayo 2026 - pago mensual"
-=======
-          "title": "subscription.activity.billing.title",
           "detail": "Próxima renovación: 11 de junio de 2026 - pago mensual"
->>>>>>> Stashed changes
         }
       ]
     }
@@ -669,28 +488,26 @@
       "currentPlan": {
         "id": "plan-control",
         "name": "Plan Control",
-<<<<<<< Updated upstream
-        "shortDescription": "Tu plan sigue activo hasta el 31 de mayo 2026. No se renovará automáticamente.",
-=======
-        "shortDescription": "subscription.plans.control.shortDescription.active",
->>>>>>> Stashed changes
+        "shortDescription": "Tu plan sigue activo hasta el 10 de junio de 2026. Se renovará automáticamente.",
         "monthlyPrice": 89,
         "annualPrice": 890,
         "status": "active",
-        "statusLabel": "subscription.plans.control.statusLabel.active",
-        "badgeLabel": "subscription.plans.current.badgeLabel",
+        "statusLabel": "Plan Control activo",
+        "badgeLabel": "Plan actual",
         "recommended": false,
+        "currentPeriodStartDate": "2026-05-10",
+        "currentPeriodEndDate": "2026-06-10",
         "features": [
           {
-            "description": "subscription.plans.control.features.unlimitedProducts",
+            "description": "Productos y lotes ilimitados",
             "available": true
           },
           {
-            "description": "subscription.plans.control.features.salesOperations",
+            "description": "Ventas, pedidos, caja y trazabilidad en un solo flujo.",
             "available": true
           },
           {
-            "description": "subscription.plans.control.features.chatbot",
+            "description": "Chatbot de WhatsApp y alertas operativas incluidas.",
             "available": true
           }
         ]
@@ -698,24 +515,24 @@
       "recommendedPlan": {
         "id": "plan-control",
         "name": "Plan Control",
-        "shortDescription": "subscription.plans.control.shortDescription.recommended",
+        "shortDescription": "Opera sin restricciones con automatizaciones, alertas y trazabilidad completa.",
         "monthlyPrice": 89,
         "annualPrice": 890,
         "status": "active",
-        "statusLabel": "subscription.plans.control.statusLabel.recommended",
-        "badgeLabel": "subscription.plans.control.badgeLabel",
+        "statusLabel": "Recomendado",
+        "badgeLabel": "Recomendado",
         "recommended": true,
         "features": [
           {
-            "description": "subscription.plans.control.features.unlimitedProducts",
+            "description": "Productos y lotes ilimitados",
             "available": true
           },
           {
-            "description": "subscription.plans.control.features.salesOperations",
+            "description": "Ventas, pedidos, caja y trazabilidad en un solo flujo.",
             "available": true
           },
           {
-            "description": "subscription.plans.control.features.chatbot",
+            "description": "Chatbot de WhatsApp y alertas operativas incluidas.",
             "available": true
           }
         ]
@@ -723,52 +540,50 @@
       "limits": [
         {
           "id": "products",
-          "label": "subscription.limits.products.label",
+          "label": "Productos",
           "usedValue": 18,
           "maxValue": 0
         },
         {
           "id": "active-batches",
-          "label": "subscription.limits.active-batches.label",
+          "label": "Lotes activos",
           "usedValue": 6,
           "maxValue": 0
         },
         {
           "id": "users",
-          "label": "subscription.limits.users.label",
+          "label": "Usuarios",
           "usedValue": 1,
           "maxValue": 5
         }
       ],
       "billingSetup": {
-        "paymentMethodTitle": "subscription.billing.paymentMethod.title",
-        "paymentMethodDescription": "subscription.billing.paymentMethod.emptyDescription",
-        "paymentMethodActionLabel": "subscription.billing.paymentMethod.addAction",
-        "fiscalDataTitle": "subscription.billing.fiscalData.title",
-        "fiscalDataDescription": "subscription.billing.fiscalData.emptyDescription",
-        "fiscalDataActionLabel": "subscription.billing.fiscalData.addAction",
+        "paymentMethodTitle": "Método de pago",
+        "paymentMethodDescription": "Aún no hay tarjeta o medio de pago registrado.",
+        "paymentMethodActionLabel": "Agregar métodos de pago",
+        "fiscalDataTitle": "Datos de facturación",
+        "fiscalDataDescription": "Completa RUC, razón social y correo de comprobantes.",
+        "fiscalDataActionLabel": "Completar datos",
         "hasPaymentMethod": false,
-        "hasFiscalData": false
+        "hasFiscalData": false,
+        "paymentMethods": [],
+        "fiscalData": null
       },
       "activity": [
         {
           "id": "created-account",
-          "title": "subscription.activity.created-account.title",
-          "detail": "subscription.activity.created-account.detail"
+          "title": "Cuenta creada",
+          "detail": "16 abril 2026 - Plan Free asignado automáticamente"
         },
         {
           "id": "current-status",
-          "title": "subscription.activity.current-status.title",
-          "detail": "subscription.activity.current-status.detail.active"
+          "title": "Estado actual",
+          "detail": "Plan Control activo - S/ 89/mes"
         },
         {
           "id": "billing",
-<<<<<<< Updated upstream
           "title": "Facturación",
-          "detail": "Próxima renovación: 31 mayo 2026 - pago mensual"
-=======
-          "title": "subscription.activity.billing.title",
-          "detail": "subscription.activity.billing.detail.active-renewal"
+          "detail": "Próxima renovación: 10 de junio de 2026 - pago mensual"
         }
       ]
     }
@@ -780,26 +595,26 @@
       "currentPlan": {
         "id": "plan-control",
         "name": "Plan Control",
-        "shortDescription": "subscription.plans.control.shortDescription.scheduled-cancellation",
+        "shortDescription": "Tu plan sigue activo hasta el 10 de junio de 2026. No se renovará automáticamente.",
         "monthlyPrice": 89,
         "annualPrice": 890,
         "status": "scheduled-cancellation",
-        "statusLabel": "subscription.plans.control.statusLabel.scheduled-cancellation",
-        "badgeLabel": "subscription.plans.current.badgeLabel",
+        "statusLabel": "Cancelación programada",
+        "badgeLabel": "Plan actual",
         "recommended": false,
         "currentPeriodStartDate": "2026-05-10",
         "currentPeriodEndDate": "2026-06-10",
         "features": [
           {
-            "description": "subscription.plans.control.features.unlimitedProducts",
+            "description": "Productos y lotes ilimitados",
             "available": true
           },
           {
-            "description": "subscription.plans.control.features.salesOperations",
+            "description": "Ventas, pedidos, caja y trazabilidad en un solo flujo.",
             "available": true
           },
           {
-            "description": "subscription.plans.control.features.chatbot",
+            "description": "Chatbot de WhatsApp y alertas operativas incluidas.",
             "available": true
           }
         ]
@@ -807,24 +622,24 @@
       "recommendedPlan": {
         "id": "plan-control",
         "name": "Plan Control",
-        "shortDescription": "subscription.plans.control.shortDescription.recommended",
+        "shortDescription": "Opera sin restricciones con automatizaciones, alertas y trazabilidad completa.",
         "monthlyPrice": 89,
         "annualPrice": 890,
         "status": "active",
-        "statusLabel": "subscription.plans.control.statusLabel.recommended",
-        "badgeLabel": "subscription.plans.control.badgeLabel",
+        "statusLabel": "Recomendado",
+        "badgeLabel": "Recomendado",
         "recommended": true,
         "features": [
           {
-            "description": "subscription.plans.control.features.unlimitedProducts",
+            "description": "Productos y lotes ilimitados",
             "available": true
           },
           {
-            "description": "subscription.plans.control.features.salesOperations",
+            "description": "Ventas, pedidos, caja y trazabilidad en un solo flujo.",
             "available": true
           },
           {
-            "description": "subscription.plans.control.features.chatbot",
+            "description": "Chatbot de WhatsApp y alertas operativas incluidas.",
             "available": true
           }
         ]
@@ -832,30 +647,30 @@
       "limits": [
         {
           "id": "products",
-          "label": "subscription.limits.products.label",
+          "label": "Productos",
           "usedValue": 18,
           "maxValue": 0
         },
         {
           "id": "active-batches",
-          "label": "subscription.limits.active-batches.label",
+          "label": "Lotes activos",
           "usedValue": 6,
           "maxValue": 0
         },
         {
           "id": "users",
-          "label": "subscription.limits.users.label",
+          "label": "Usuarios",
           "usedValue": 1,
           "maxValue": 5
         }
       ],
       "billingSetup": {
-        "paymentMethodTitle": "subscription.billing.paymentMethod.title",
-        "paymentMethodDescription": "subscription.billing.paymentMethod.emptyDescription",
-        "paymentMethodActionLabel": "subscription.billing.paymentMethod.addAction",
-        "fiscalDataTitle": "subscription.billing.fiscalData.title",
-        "fiscalDataDescription": "subscription.billing.fiscalData.emptyDescription",
-        "fiscalDataActionLabel": "subscription.billing.fiscalData.addAction",
+        "paymentMethodTitle": "Método de pago",
+        "paymentMethodDescription": "Aún no hay tarjeta o medio de pago registrado.",
+        "paymentMethodActionLabel": "Agregar métodos de pago",
+        "fiscalDataTitle": "Datos de facturación",
+        "fiscalDataDescription": "Completa RUC, razón social y correo de comprobantes.",
+        "fiscalDataActionLabel": "Completar datos",
         "hasPaymentMethod": false,
         "hasFiscalData": false,
         "paymentMethods": [],
@@ -864,19 +679,18 @@
       "activity": [
         {
           "id": "created-account",
-          "title": "subscription.activity.created-account.title",
-          "detail": "subscription.activity.created-account.detail"
+          "title": "Cuenta creada",
+          "detail": "16 abril 2026 - Plan Free asignado automáticamente"
         },
         {
           "id": "current-status",
-          "title": "subscription.activity.current-status.title",
-          "detail": "subscription.activity.current-status.detail.scheduled-cancellation"
+          "title": "Estado actual",
+          "detail": "Cancelación programada - S/ 89/mes"
         },
         {
           "id": "billing",
-          "title": "subscription.activity.billing.title",
-          "detail": "subscription.activity.billing.detail.cancelled"
->>>>>>> Stashed changes
+          "title": "Facturación",
+          "detail": "Acceso vigente hasta el 10 de junio de 2026 - sin siguiente cobro"
         }
       ]
     }
@@ -892,26 +706,16 @@
     },
     "preferences": {
       "id": 1,
-<<<<<<< Updated upstream
-      "language": "Español (Perú)",
-      "timezone": "America/Lima (UTC-05:00)",
-      "theme": "light"
-=======
       "language": "en",
       "timezone": "America/Bogota (UTC-05:00)",
-      "theme": "light",
-      "currency": "PEN"
->>>>>>> Stashed changes
+      "theme": "light"
     },
     "notification_settings": {
       "id": 1,
-      "stock_alerts": false,
-      "payment_alerts": false,
+      "stock_alerts": true,
+      "payment_alerts": true,
       "chatbot_messages": false
     }
-<<<<<<< Updated upstream
-  }
-=======
   },
   "whatsapp-sessions": [
     {
@@ -1715,5 +1519,4 @@
       "createdAt": "2026-04-15T10:34:00.000Z"
     }
   ]
->>>>>>> Stashed changes
 }

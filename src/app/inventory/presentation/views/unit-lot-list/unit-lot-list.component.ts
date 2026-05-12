@@ -3,7 +3,7 @@ import { Router, RouterOutlet, ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { TranslatePipe } from '@ngx-translate/core';
 import { InventoryStoreService } from '../../../application/inventory-store.service';
-import { buildInventoryLotAlerts, summarizeLotAlerts } from '../../../domain/model/lot-alert';
+import { StockAlert } from '../../../domain/model/stock-alert.entity';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { MatIcon } from '@angular/material/icon';
 
@@ -37,7 +37,7 @@ export class UnitLotListComponent {
     const productId = this.currentProductId;
     if (!productId) return [];
 
-    const alerts = buildInventoryLotAlerts(
+    const alerts = StockAlert.buildFromLots(
       this.store.unitProducts(),
       this.store.weightProducts(),
       this.store.unitLots(),
@@ -47,7 +47,7 @@ export class UnitLotListComponent {
       alert.productId === productId
     );
 
-    return summarizeLotAlerts(alerts);
+    return StockAlert.summarize(alerts);
   });
 
   get currentProductId(): number | null {

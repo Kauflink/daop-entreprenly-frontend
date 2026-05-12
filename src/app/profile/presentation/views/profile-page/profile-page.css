@@ -1,5 +1,5 @@
 .page {
-  background: #f6f4f4;
+  background: var(--color-bg-page);
   box-sizing: border-box;
   height: calc(100dvh - 98px);
   display: flex;
@@ -39,7 +39,7 @@
 }
 .col--right {
   grid-area: right;
-  gap: 10px;
+  gap: 20px;
 }
 
 .col--left > app-user-info-card {

@@ -3,9 +3,9 @@
 }
 
 .panel {
-  border: 1px solid #d8d2cb;
+  border: 1px solid var(--color-card-border);
   border-radius: 18px;
-  background: #ffffff;
+  background: var(--color-card-bg);
   box-shadow: 0 18px 34px rgb(53 48 43 / 12%);
 }
 
@@ -26,8 +26,8 @@
   display: inline-flex;
   align-items: center;
   border-radius: 999px;
-  background: #f0e8e3;
-  color: #5a260f;
+  background: var(--color-inner-bg);
+  color: var(--color-label-accent);
   font-size: 11px;
   font-weight: 800;
   letter-spacing: 1.4px;
@@ -40,13 +40,13 @@
 .card-label {
   border-radius: 0;
   background: transparent;
-  color: #a17a66;
+  color: var(--color-label-accent);
   margin-bottom: 12px;
   padding: 0;
 }
 
 .card-label--accent {
-  color: #f38313;
+  color: var(--color-primary);
 }
 
 h2,
@@ -69,7 +69,7 @@ h3 {
 
 .panel__intro {
   max-width: 760px;
-  color: #666666;
+  color: var(--color-text-muted);
   line-height: 1.8;
   margin-top: 16px;
 }
@@ -77,13 +77,18 @@ h3 {
 .status-badge {
   flex: 0 0 auto;
   border-radius: 999px;
-  background: #e7f8ed;
-  color: #075f24;
+  background: var(--color-inner-bg);
+  color: var(--color-success);
   font-size: 12px;
   font-weight: 800;
   letter-spacing: 1.4px;
   padding: 8px 14px;
   text-transform: uppercase;
+}
+
+.status-badge--warning {
+  background: var(--color-theme-btn-active-bg);
+  color: var(--color-label-accent);
 }
 
 .plans-grid {
@@ -95,14 +100,14 @@ h3 {
 
 .plan-card {
   min-height: 330px;
-  border: 1px solid #e8d8ce;
+  border: 1px solid var(--color-card-border);
   border-radius: 18px;
   padding: 22px 20px;
 }
 
 .plan-card--recommended {
-  background: #fff8e9;
-  border-color: #fedcac;
+  background: var(--color-theme-btn-active-bg);
+  border-color: var(--color-primary);
 }
 
 .plan-card--selected {
@@ -119,7 +124,7 @@ h3 {
 
 .plan-card__heading p:not(.card-label),
 .feature-list {
-  color: #5f5f5f;
+  color: var(--color-text-muted);
   font-size: 14px;
 }
 
@@ -127,21 +132,21 @@ h3 {
   display: grid;
   min-width: 68px;
   justify-items: center;
-  border: 1px solid #dcd5ce;
+  border: 1px solid var(--color-card-border);
   border-radius: 14px;
   padding: 10px 12px;
 }
 
 .price-box strong,
 .recommended-price strong {
-  color: #431500;
+  color: var(--color-text-strong);
   font-size: 24px;
   line-height: 1.1;
 }
 
 .price-box span,
 .recommended-price span {
-  color: #6a625b;
+  color: var(--color-text-muted);
   font-size: 12px;
 }
 
@@ -155,9 +160,9 @@ h3 {
   position: relative;
   display: inline-flex;
   align-items: center;
-  border: 1px solid #d6d2ce;
+  border: 1px solid var(--color-card-border);
   border-radius: 999px;
-  background: #ffffff;
+  background: var(--color-card-bg);
   margin-top: 24px;
   padding: 4px;
 }
@@ -169,7 +174,7 @@ h3 {
   width: calc((100% - 8px) / 2);
   height: calc(100% - 8px);
   border-radius: 999px;
-  background: #fff7e1;
+  background: var(--color-theme-btn-active-bg);
   content: '';
   transition: transform 160ms ease;
 }
@@ -185,7 +190,7 @@ h3 {
   border: 0;
   border-radius: 999px;
   background: transparent;
-  color: #3f2d20;
+  color: var(--color-text-primary);
   cursor: pointer;
   font: inherit;
   font-weight: 700;
@@ -203,7 +208,7 @@ h3 {
 .billing-toggle__button--active {
   background: transparent;
   box-shadow: none;
-  color: #6f2700;
+  color: var(--color-label-accent);
 }
 
 .feature-list {
@@ -223,7 +228,7 @@ h3 {
 .feature-list mat-icon {
   width: 18px;
   height: 18px;
-  color: #f38313;
+  color: var(--color-primary);
   font-size: 18px;
 }
 
@@ -236,7 +241,7 @@ h3 {
   min-height: 50px;
   border: 0;
   border-radius: 999px;
-  background: #f38313;
+  background: var(--color-primary);
   color: #ffffff;
   cursor: pointer;
   font: inherit;
@@ -265,15 +270,15 @@ h3 {
 
 .secondary-primary-action {
   border: 0;
-  background: #f38313;
+  background: var(--color-primary);
   color: #ffffff;
   box-shadow: 0 14px 28px rgb(243 131 19 / 28%);
 }
 
 .secondary-outline-action {
-  border: 1px solid #d8d2cb;
-  background: #ffffff;
-  color: #5a260f;
+  border: 1px solid var(--color-card-border);
+  background: var(--color-card-bg);
+  color: var(--color-label-accent);
 }
 
 .primary-action:hover {

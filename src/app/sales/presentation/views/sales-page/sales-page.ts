@@ -1,56 +1,31 @@
 import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { TranslatePipe } from '@ngx-translate/core';
 import { SalesStore } from '../../../application/sales-store';
+import { PaymentMethod } from '../../../domain/model/payment-method.enum';
 import { ProductSummary } from '../../../domain/model/product-summary.entity';
+import { SaleItem } from '../../../domain/model/sale-item.entity';
 import { QuantityModal } from '../../components/quantity-modal/quantity-modal';
 import { WeightModal } from '../../components/weight-modal/weight-modal';
-<<<<<<< Updated upstream
-
-export interface TicketItem {
-  productId: number;
-  productName: string;
-  type: 'unit' | 'weight';
-  quantity: number | null;
-  weightKg: number | null;
-  unitPrice: number;
-  subtotal: number;
-}
-
-type PaymentMethod = 'CASH' | 'DIGITAL' | null;
-=======
 import { CashSummary } from '../cash-summary/cash-summary';
 import { PaymentSelection, PaymentMethodComponent } from '../payment-method/payment-method';
 import { SalesCart, TicketItem } from '../sales-cart/sales-cart';
 import { TranslatePipe } from '@ngx-translate/core';
-import { CurrencyStore } from '../../../../shared/application/currency.store';
->>>>>>> Stashed changes
 
 @Component({
   selector: 'app-sales-page',
-  imports: [FormsModule, TranslatePipe, QuantityModal, WeightModal],
+  imports: [
+    QuantityModal,
+    WeightModal,
+    CashSummary,
+    PaymentMethodComponent,
+    TranslatePipe,
+    SalesCart,
+  ],
   templateUrl: './sales-page.html',
   styleUrl: './sales-page.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SalesPage {
   protected readonly store = inject(SalesStore);
-  protected readonly currencyStore = inject(CurrencyStore);
-
-  // === Buscador ===
-  protected readonly searchTerm = signal<string>('');
-  protected readonly isDropdownOpen = signal<boolean>(false);
-
-  protected readonly filteredProducts = computed<ProductSummary[]>(() => {
-    const term = this.searchTerm().trim().toLowerCase();
-    if (!term) return [];
-    return this.store.products().filter((p) => p.name.toLowerCase().includes(term));
-  });
-
-  protected readonly showNotFound = computed<boolean>(() => {
-    const term = this.searchTerm().trim();
-    return term.length > 0 && this.filteredProducts().length === 0;
-  });
 
   // === Modales ===
   protected readonly selectedProduct = signal<ProductSummary | null>(null);
@@ -75,42 +50,23 @@ export class SalesPage {
   protected readonly itemCount = computed<number>(() => this.ticketItems().length);
 
   // === Método de pago ===
-  protected readonly paymentMethod = signal<PaymentMethod>(null);
+  protected readonly paymentMethod = signal<PaymentSelection>(null);
   protected readonly showPaymentError = signal<boolean>(false);
   protected readonly showEmptyTicketError = signal<boolean>(false);
   protected readonly showSuccessModal = signal<boolean>(false);
 
-  // === Resumen de Caja (delegado al store para persistencia) ===
-  protected readonly totalCash = computed<number>(() => this.store.totalCash());
-  protected readonly totalDigital = computed<number>(() => this.store.totalDigital());
-  protected readonly totalDay = computed<number>(() => this.store.totalDay());
-
-  // ===== Handlers Buscador =====
-  protected onSearchInput(value: string): void {
-    this.searchTerm.set(value);
-    this.isDropdownOpen.set(value.trim().length > 0);
-  }
-
-  protected onSelectProduct(product: ProductSummary): void {
-    this.searchTerm.set('');
-    this.isDropdownOpen.set(false);
+  // ===== Handlers Sales Cart =====
+  protected onProductSelected(product: ProductSummary): void {
     this.selectedProduct.set(product);
   }
 
-  protected onSearchBlur(): void {
-    setTimeout(() => this.isDropdownOpen.set(false), 200);
-  }
-
-  protected onSearchFocus(): void {
-    if (this.searchTerm().trim().length > 0) {
-      this.isDropdownOpen.set(true);
-    }
+  protected onItemDeleted(index: number): void {
+    this.ticketItems.update((items) => items.filter((_, i) => i !== index));
   }
 
   // ===== Modal Cantidad =====
   protected onQuantityConfirm(event: { product: ProductSummary; quantity: number }): void {
     const { product, quantity } = event;
-    const subtotal = product.unitPrice * quantity;
     this.ticketItems.update((items) => [
       ...items,
       {
@@ -120,7 +76,7 @@ export class SalesPage {
         quantity,
         weightKg: null,
         unitPrice: product.unitPrice,
-        subtotal,
+        subtotal: product.unitPrice * quantity,
       },
     ]);
     this.selectedProduct.set(null);
@@ -134,7 +90,6 @@ export class SalesPage {
   // ===== Modal Peso =====
   protected onWeightConfirm(event: { product: ProductSummary; weight: number }): void {
     const { product, weight } = event;
-    const subtotal = product.unitPrice * weight;
     this.ticketItems.update((items) => [
       ...items,
       {
@@ -144,7 +99,7 @@ export class SalesPage {
         quantity: null,
         weightKg: weight,
         unitPrice: product.unitPrice,
-        subtotal,
+        subtotal: product.unitPrice * weight,
       },
     ]);
     this.selectedProduct.set(null);
@@ -155,50 +110,53 @@ export class SalesPage {
     this.selectedProduct.set(null);
   }
 
-  // ===== Eliminar item =====
-  protected onDeleteItem(index: number): void {
-    this.ticketItems.update((items) => items.filter((_, i) => i !== index));
-  }
-
-  // ===== Selección de método de pago =====
-  protected onSelectPayment(method: PaymentMethod): void {
+  // ===== Handlers Payment Method =====
+  protected onMethodSelected(method: 'CASH' | 'DIGITAL'): void {
     if (this.ticketItems().length === 0) return;
     this.paymentMethod.set(method);
     this.showPaymentError.set(false);
   }
 
-  // ===== Finalizar Venta =====
   protected onFinalizeSale(): void {
     if (this.ticketItems().length === 0) {
       this.showEmptyTicketError.set(true);
       return;
     }
-    if (this.paymentMethod() === null) {
+    const selection = this.paymentMethod();
+    if (selection === null) {
       this.showPaymentError.set(true);
       return;
     }
 
-    const total = this.subtotal();
-    this.store.addSaleToRegister(total, this.paymentMethod() === 'DIGITAL');
+    const isDigital = selection === 'DIGITAL';
+    const domainMethod = isDigital ? PaymentMethod.CARD : PaymentMethod.CASH;
+    const saleItems = this.ticketItems().map(
+      (t) =>
+        new SaleItem({
+          productId: t.productId,
+          productName: t.productName,
+          quantity: t.quantity,
+          weightKg: t.weightKg,
+          unitPrice: t.unitPrice,
+          subtotal: t.subtotal,
+        }),
+    );
+
+    this.store.addSaleToRegister(this.subtotal(), isDigital);
+    this.store.createSale(saleItems, domainMethod, this.subtotal());
 
     this.showSuccessModal.set(true);
-
-    // ⭐ Auto-cerrar el modal después de 2 segundos
     setTimeout(() => {
-      if (this.showSuccessModal()) {
-        this.onCloseSuccessModal();
-      }
+      if (this.showSuccessModal()) this.onCloseSuccessModal();
     }, 2000);
   }
 
-  // ===== Cerrar modal de éxito =====
-  protected onCloseSuccessModal(): void {
-    this.showSuccessModal.set(false);
+  protected onCancelSale(): void {
     this.resetTicket();
   }
 
-  // ===== Cancelar Venta =====
-  protected onCancelSale(): void {
+  protected onCloseSuccessModal(): void {
+    this.showSuccessModal.set(false);
     this.resetTicket();
   }
 

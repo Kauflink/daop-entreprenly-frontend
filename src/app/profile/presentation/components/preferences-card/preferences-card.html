@@ -1,42 +1,35 @@
 <div class="card">
-  <h2 class="card__title">Preferencias de idioma, zona horario y tema</h2>
+  <h2 class="card__title">{{ 'profile.preferences.title' | translate }}</h2>
 
-  <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
+  <form [formGroup]="form" novalidate>
     <div class="field">
-      <label for="language" class="field__label">Idioma</label>
-      <select id="language" formControlName="language" class="field__select">
-        @for (lang of languages; track lang) {
-          <option [value]="lang">{{ lang }}</option>
-        }
-      </select>
-    </div>
-
-    <div class="field">
-      <label for="timezone" class="field__label">Zona horario</label>
-      <select id="timezone" formControlName="timezone" class="field__select">
-        @for (tz of timezones; track tz) {
-          <option [value]="tz">{{ tz }}</option>
-        }
-      </select>
-    </div>
-
-    <button type="submit" class="btn-primary">Guardar preferencias</button>
-
-    <div class="field">
-<<<<<<< Updated upstream
-      <span class="field__label" id="theme-label">Tema visual</span>
-=======
-      <label for="currency" class="field__label">
-        {{ 'profile.preferences.fields.currency.label' | translate }}
+      <label for="language" class="field__label">
+        {{ 'profile.preferences.fields.language.label' | translate }}
       </label>
       <select
-        id="currency"
-        formControlName="currency"
+        id="language"
+        formControlName="language"
         class="field__select"
-        (change)="onCurrencyChange($any($event.target).value)"
+        (change)="onLanguageChange($any($event.target).value)"
       >
-        @for (c of currencies; track c.code) {
-          <option [value]="c.code">{{ c.label }}</option>
+        @for (lang of languages; track lang.code) {
+          <option [value]="lang.code">{{ lang.label }}</option>
+        }
+      </select>
+    </div>
+
+    <div class="field">
+      <label for="timezone" class="field__label">
+        {{ 'profile.preferences.fields.timezone.label' | translate }}
+      </label>
+      <select
+        id="timezone"
+        formControlName="timezone"
+        class="field__select"
+        (change)="onTimezoneChange($any($event.target).value)"
+      >
+        @for (tz of timezones; track tz) {
+          <option [value]="tz">{{ tz }}</option>
         }
       </select>
     </div>
@@ -45,25 +38,24 @@
       <span class="field__label" id="theme-label">
         {{ 'profile.preferences.theme.label' | translate }}
       </span>
->>>>>>> Stashed changes
       <div class="theme-toggle" role="group" aria-labelledby="theme-label">
         <button
           type="button"
           class="theme-btn"
           [class.theme-btn--active]="form.get('theme')!.value === 'light'"
           (click)="setTheme('light')"
-          aria-pressed="{{ form.get('theme')!.value === 'light' }}"
+          [attr.aria-pressed]="form.get('theme')!.value === 'light'"
         >
-          Claro
+          {{ 'profile.preferences.theme.light' | translate }}
         </button>
         <button
           type="button"
           class="theme-btn"
           [class.theme-btn--inactive]="form.get('theme')!.value === 'light'"
           (click)="setTheme('dark')"
-          aria-pressed="{{ form.get('theme')!.value === 'dark' }}"
+          [attr.aria-pressed]="form.get('theme')!.value === 'dark'"
         >
-          Oscuro
+          {{ 'profile.preferences.theme.dark' | translate }}
         </button>
       </div>
     </div>

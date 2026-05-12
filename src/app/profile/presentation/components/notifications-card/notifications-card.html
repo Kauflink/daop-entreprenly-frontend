@@ -1,15 +1,16 @@
 <div class="card">
-  <h2 class="card__title">Configurar notificaciones</h2>
+  <h2 class="card__title">{{ 'profile.notifications.title' | translate }}</h2>
 
-  <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
+  <form [formGroup]="form" novalidate>
     <div class="toggle-item">
       <div class="toggle-item__text">
-        <p class="toggle-item__name">Alertas de Stock y Lotes</p>
-        <p class="toggle-item__desc">
-          Avisos sobre stock bajo, lotes vencidos o próximos a vencer.
-        </p>
+        <p class="toggle-item__name">{{ 'profile.notifications.items.stock.name' | translate }}</p>
+        <p class="toggle-item__desc">{{ 'profile.notifications.items.stock.desc' | translate }}</p>
       </div>
-      <label class="toggle-item__switch" aria-label="Activar alertas de stock y lotes">
+      <label
+        class="toggle-item__switch"
+        [attr.aria-label]="'profile.notifications.items.stock.toggleLabel' | translate"
+      >
         <input type="checkbox" formControlName="stockAlerts" class="visually-hidden" />
         <span class="toggle-item__track" aria-hidden="true"></span>
       </label>
@@ -17,12 +18,17 @@
 
     <div class="toggle-item">
       <div class="toggle-item__text">
-        <p class="toggle-item__name">Validaciones de pago</p>
+        <p class="toggle-item__name">
+          {{ 'profile.notifications.items.payment.name' | translate }}
+        </p>
         <p class="toggle-item__desc">
-          Notificaciones cuando llega un comprobante o queda un pago pendiente.
+          {{ 'profile.notifications.items.payment.desc' | translate }}
         </p>
       </div>
-      <label class="toggle-item__switch" aria-label="Activar validaciones de pago">
+      <label
+        class="toggle-item__switch"
+        [attr.aria-label]="'profile.notifications.items.payment.toggleLabel' | translate"
+      >
         <input type="checkbox" formControlName="paymentAlerts" class="visually-hidden" />
         <span class="toggle-item__track" aria-hidden="true"></span>
       </label>
@@ -30,15 +36,21 @@
 
     <div class="toggle-item">
       <div class="toggle-item__text">
-        <p class="toggle-item__name">Mensajes del chatbot</p>
-        <p class="toggle-item__desc">Aviso de nuevas conversaciones y respuestas del chatbot.</p>
+        <p class="toggle-item__name">
+          {{ 'profile.notifications.items.chatbot.name' | translate }}
+        </p>
+        <p class="toggle-item__desc">
+          {{ 'profile.notifications.items.chatbot.desc' | translate }}
+        </p>
       </div>
-      <label class="toggle-item__switch" aria-label="Activar mensajes del chatbot">
+      <label
+        class="toggle-item__switch"
+        [attr.aria-label]="'profile.notifications.items.chatbot.toggleLabel' | translate"
+      >
         <input type="checkbox" formControlName="chatbotMessages" class="visually-hidden" />
         <span class="toggle-item__track" aria-hidden="true"></span>
       </label>
     </div>
 
-    <button type="submit" class="btn-primary">Guardar notificaciones</button>
   </form>
 </div>

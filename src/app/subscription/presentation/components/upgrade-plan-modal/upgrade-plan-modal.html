@@ -8,67 +8,60 @@
   cdkTrapFocus
   cdkTrapFocusAutoCapture
 >
-  <button
-    class="icon-button"
-    type="button"
-    [attr.aria-label]="'subscription.modal.close' | translate"
-    (click)="close()"
-  >×</button>
-  <p class="eyebrow">{{ 'subscription.modal.eyebrow' | translate }}</p>
+  <button class="icon-button" type="button" aria-label="Cerrar modal" (click)="close()">×</button>
+  <p class="eyebrow">Suscripción</p>
 
   @if (activated()) {
-    <h2 id="upgrade-modal-title">{{ 'subscription.upgrade.activated.title' | translate }}</h2>
+    <h2 id="upgrade-modal-title">Suscripción activada</h2>
     <div class="success-card">
       <div>
-        <h3>{{ 'subscription.upgrade.activated.cardTitle' | translate }}</h3>
-        <p>{{ 'subscription.upgrade.activated.cardDescription' | translate }}</p>
+        <h3>Plan Control activado</h3>
+        <p>Tu suscripción ya está activa. Puedes cerrar este popup y continuar operando.</p>
       </div>
-      <button class="primary-button" type="button" (click)="close()">
-        {{ 'subscription.upgrade.activated.understood' | translate }}
-      </button>
+      <button class="primary-button" type="button" (click)="close()">Entendido</button>
     </div>
   } @else {
-    <h2 id="upgrade-modal-title">{{ 'subscription.upgrade.title' | translate }}</h2>
+    <h2 id="upgrade-modal-title">Actualizar a Plan Control</h2>
 
-    <nav class="step-tabs" [attr.aria-label]="'subscription.upgrade.navAriaLabel' | translate">
+    <nav class="step-tabs" aria-label="Pasos de actualización">
       @for (step of steps; track step.id) {
         <button
           type="button"
           [class.step-tab--active]="isStepActive(step.id)"
           [class.step-tab--complete]="isStepComplete(step.id)"
+          [style.background-color]="stepBackgroundColor(step.id)"
+          [style.border-color]="stepBorderColor(step.id)"
+          [style.color]="stepTextColor(step.id)"
           [attr.aria-current]="isStepActive(step.id) ? 'step' : null"
           [disabled]="!isStepActive(step.id) && !isStepComplete(step.id)"
           (click)="goToStep(step.id)"
         >
-          {{ step.label | translate }}
+          {{ step.label }}
         </button>
       }
     </nav>
 
     @switch (activeStep()) {
       @case ('plan') {
-        <p class="helper-text">{{ 'subscription.upgrade.plan.helper' | translate }}</p>
+        <p class="helper-text">
+          Elegiste Plan Control. Revisa el ciclo de cobro antes de continuar con la suscripción.
+        </p>
         <article class="summary-card">
           <div>
-            <h3>{{ plan().name | translate }}</h3>
-            <p>{{ billingLabel() | translate }}</p>
+            <h3>{{ plan().name }}</h3>
+            <p>{{ billingLabel() }}</p>
           </div>
-          <strong>{{ planPriceLabel() | translate }}</strong>
+          <strong>{{ planPriceLabel() }}</strong>
         </article>
         <div class="modal-actions modal-actions--end">
-          <button class="primary-button" type="button" (click)="continue()">
-            {{ 'subscription.upgrade.continue' | translate }}
-          </button>
+          <button class="primary-button" type="button" (click)="continue()">Continuar</button>
         </div>
       }
 
       @case ('billing') {
         <form class="billing-form" [formGroup]="fiscalForm" (ngSubmit)="continue()">
           <label>
-<<<<<<< Updated upstream
-            <span>RUC</span>
-=======
-            <span>{{ 'subscription.upgrade.billing.documentType' | translate }}</span>
+            <span>Tipo de documento</span>
             <select formControlName="documentType">
               <option value="RUC">RUC</option>
               <option value="DNI">DNI</option>
@@ -77,35 +70,21 @@
           </label>
 
           <label>
-            <span>{{ 'subscription.upgrade.billing.documentNumber' | translate }}</span>
->>>>>>> Stashed changes
+            <span>Número de documento</span>
             <input
               type="text"
               inputmode="numeric"
               autocomplete="off"
-              formControlName="ruc"
-              [attr.aria-invalid]="hasFieldError('ruc')"
+              formControlName="documentNumber"
+              [attr.aria-invalid]="hasFiscalFieldError('documentNumber')"
             />
-<<<<<<< Updated upstream
-            @if (hasFieldError('ruc')) {
-              <small>Ingresa un RUC válido de 11 dígitos.</small>
-=======
             @if (hasFiscalFieldError('documentNumber')) {
-              <small>{{ 'subscription.upgrade.billing.documentNumberError' | translate }}</small>
->>>>>>> Stashed changes
+              <small>Ingresa un documento válido.</small>
             }
           </label>
 
           <label>
-<<<<<<< Updated upstream
-            <span>Razón social</span>
-            <input type="text" autocomplete="organization" formControlName="businessName" />
-          </label>
-
-          <label>
-            <span>Correo de facturación</span>
-=======
-            <span>{{ 'subscription.upgrade.billing.businessName' | translate }}</span>
+            <span>Razón social o nombre</span>
             <input
               type="text"
               autocomplete="organization"
@@ -113,36 +92,25 @@
               [attr.aria-invalid]="hasFiscalFieldError('businessName')"
             />
             @if (hasFiscalFieldError('businessName')) {
-              <small>{{ 'subscription.upgrade.billing.businessNameError' | translate }}</small>
+              <small>Ingresa la razón social o nombre.</small>
             }
           </label>
 
           <label>
-            <span>{{ 'subscription.upgrade.billing.receiptEmail' | translate }}</span>
->>>>>>> Stashed changes
+            <span>Correo de comprobantes</span>
             <input
               type="email"
               autocomplete="email"
-              formControlName="billingEmail"
-              [attr.aria-invalid]="hasFieldError('billingEmail')"
+              formControlName="receiptEmail"
+              [attr.aria-invalid]="hasFiscalFieldError('receiptEmail')"
             />
-<<<<<<< Updated upstream
-            @if (hasFieldError('billingEmail')) {
+            @if (hasFiscalFieldError('receiptEmail')) {
               <small>Ingresa un correo válido.</small>
             }
           </label>
 
-          <label>
-            <span>Distrito</span>
-            <input type="text" autocomplete="address-level2" formControlName="district" />
-=======
-            @if (hasFiscalFieldError('receiptEmail')) {
-              <small>{{ 'subscription.upgrade.billing.receiptEmailError' | translate }}</small>
-            }
-          </label>
-
           <label class="field-wide">
-            <span>{{ 'subscription.upgrade.billing.fiscalAddress' | translate }}</span>
+            <span>Dirección fiscal</span>
             <input
               type="text"
               autocomplete="street-address"
@@ -150,54 +118,34 @@
               [attr.aria-invalid]="hasFiscalFieldError('fiscalAddress')"
             />
             @if (hasFiscalFieldError('fiscalAddress')) {
-              <small>{{ 'subscription.upgrade.billing.fiscalAddressError' | translate }}</small>
+              <small>Ingresa la dirección fiscal.</small>
             }
->>>>>>> Stashed changes
           </label>
 
           <div class="modal-actions">
-            <button class="secondary-button" type="button" (click)="back()">
-              {{ 'subscription.upgrade.back' | translate }}
-            </button>
-            <button class="primary-button" type="submit">
-              {{ 'subscription.upgrade.continue' | translate }}
-            </button>
+            <button class="secondary-button" type="button" (click)="back()">Volver</button>
+            <button class="primary-button" type="submit">Continuar</button>
           </div>
         </form>
       }
 
       @case ('payment') {
-<<<<<<< Updated upstream
-        <div class="stack">
-          <article class="summary-card summary-card--plain">
-            <div>
-              <h3>Tarjeta registrada</h3>
-              <p>Visa terminada en 4242 · Cobro seguro</p>
-=======
         @if (paymentMethods().length > 0) {
           <div class="stack">
             @if (paymentMethods().length === 1 && selectedPaymentMethod(); as paymentMethod) {
               <article class="summary-card summary-card--plain">
                 <div>
                   <app-card-brand-badge [brand]="paymentMethod.cardBrand" />
-                  <h3>{{ 'subscription.upgrade.payment.registeredCard' | translate }}</h3>
+                  <h3>Tarjeta registrada</h3>
                   <p>
-                    {{
-                      'subscription.upgrade.payment.cardEnding'
-                        | translate
-                          : {
-                              brand: paymentMethod.cardBrand,
-                              lastFour: paymentMethod.lastFour,
-                              month: paymentMethod.expiryMonth,
-                              year: paymentMethod.expiryYear
-                            }
-                    }}
+                    {{ paymentMethod.cardBrand }} terminada en {{ paymentMethod.lastFour }} · vence
+                    {{ paymentMethod.expiryMonth }}/{{ paymentMethod.expiryYear }}
                   </p>
                 </div>
               </article>
             } @else {
               <fieldset class="payment-options">
-                <legend>{{ 'subscription.upgrade.payment.selectMethod' | translate }}</legend>
+                <legend>Selecciona un método de pago</legend>
                 @for (paymentMethod of paymentMethods(); track paymentMethod.id) {
                   <label
                     class="payment-option"
@@ -215,24 +163,11 @@
                     <app-card-brand-badge [brand]="paymentMethod.cardBrand" />
                     <span>
                       <strong>
-                        {{
-                          'subscription.upgrade.payment.cardEndingShort'
-                            | translate
-                              : {
-                                  brand: paymentMethod.cardBrand,
-                                  lastFour: paymentMethod.lastFour
-                                }
-                        }}
+                        {{ paymentMethod.cardBrand }} terminada en {{ paymentMethod.lastFour }}
                       </strong>
                       <small>
-                        {{
-                          'subscription.upgrade.payment.holderExpiry'
-                            | translate
-                              : {
-                                  holder: paymentMethod.holderName,
-                                  month: paymentMethod.expiryMonth,
-                                  year: paymentMethod.expiryYear
-                                }
+                        {{ paymentMethod.holderName }} · vence {{ paymentMethod.expiryMonth }}/{{
+                          paymentMethod.expiryYear
                         }}
                       </small>
                     </span>
@@ -242,22 +177,18 @@
             }
 
             <article class="summary-card summary-card--plain">
-              <h3>{{ 'subscription.upgrade.payment.totalCharge' | translate }}</h3>
+              <h3>Total a cobrar</h3>
               <strong>S/ {{ planPrice() }}</strong>
             </article>
           </div>
           <div class="modal-actions">
-            <button class="secondary-button" type="button" (click)="back()">
-              {{ 'subscription.upgrade.back' | translate }}
-            </button>
-            <button class="primary-button" type="button" (click)="continue()">
-              {{ 'subscription.upgrade.continue' | translate }}
-            </button>
+            <button class="secondary-button" type="button" (click)="back()">Volver</button>
+            <button class="primary-button" type="button" (click)="continue()">Continuar</button>
           </div>
         } @else {
           <form class="billing-form" [formGroup]="paymentForm" (ngSubmit)="continue()">
             <label>
-              <span>{{ 'subscription.upgrade.payment.cardNumber' | translate }}</span>
+              <span>Número de tarjeta</span>
               <div class="card-number-field">
                 <input
                   type="text"
@@ -270,12 +201,12 @@
                 <app-card-brand-badge [brand]="detectedPaymentCardBrand()" />
               </div>
               @if (hasPaymentFieldError('cardNumber')) {
-                <small>{{ 'subscription.upgrade.payment.cardNumberError' | translate }}</small>
+                <small>Ingresa un número de tarjeta válido.</small>
               }
             </label>
 
             <label>
-              <span>{{ 'subscription.upgrade.payment.holder' | translate }}</span>
+              <span>Titular</span>
               <input
                 type="text"
                 autocomplete="cc-name"
@@ -283,12 +214,12 @@
                 [attr.aria-invalid]="hasPaymentFieldError('holderName')"
               />
               @if (hasPaymentFieldError('holderName')) {
-                <small>{{ 'subscription.upgrade.payment.holderError' | translate }}</small>
+                <small>Ingresa el nombre del titular.</small>
               }
             </label>
 
             <label>
-              <span>{{ 'subscription.upgrade.payment.expiry' | translate }}</span>
+              <span>Vencimiento</span>
               <input
                 type="text"
                 inputmode="numeric"
@@ -298,7 +229,7 @@
                 [attr.aria-invalid]="hasPaymentFieldError('expiry')"
               />
               @if (hasPaymentFieldError('expiry')) {
-                <small>{{ 'subscription.upgrade.payment.expiryError' | translate }}</small>
+                <small>Usa el formato MM/AA.</small>
               }
             </label>
 
@@ -312,47 +243,35 @@
                 [attr.aria-invalid]="hasPaymentFieldError('cvv')"
               />
               @if (hasPaymentFieldError('cvv')) {
-                <small>{{ 'subscription.upgrade.payment.cvvError' | translate }}</small>
+                <small>Ingresa 3 o 4 dígitos.</small>
               }
             </label>
 
             <article class="summary-card summary-card--plain field-wide">
-              <h3>{{ 'subscription.upgrade.payment.totalCharge' | translate }}</h3>
+              <h3>Total a cobrar</h3>
               <strong>S/ {{ planPrice() }}</strong>
             </article>
 
             <div class="modal-actions">
-              <button class="secondary-button" type="button" (click)="back()">
-                {{ 'subscription.upgrade.back' | translate }}
-              </button>
-              <button class="primary-button" type="submit">
-                {{ 'subscription.upgrade.continue' | translate }}
-              </button>
->>>>>>> Stashed changes
+              <button class="secondary-button" type="button" (click)="back()">Volver</button>
+              <button class="primary-button" type="submit">Continuar</button>
             </div>
-          </article>
-          <article class="summary-card summary-card--plain">
-            <h3>Total a cobrar</h3>
-            <strong>S/ {{ planPrice() }}</strong>
-          </article>
-        </div>
-        <div class="modal-actions">
-          <button class="secondary-button" type="button" (click)="back()">Volver</button>
-          <button class="primary-button" type="button" (click)="continue()">Continuar</button>
-        </div>
+          </form>
+        }
       }
 
       @case ('activation') {
         <article class="ready-card">
-          <h3>{{ 'subscription.upgrade.activation.readyTitle' | translate }}</h3>
-          <p>{{ 'subscription.upgrade.activation.readyDescription' | translate }}</p>
+          <h3>Listo para activar</h3>
+          <p>
+            Al confirmar, el Plan Control queda activo y se habilitan productos, lotes,
+            pedidos y caja sin límites del plan gratuito.
+          </p>
         </article>
         <div class="modal-actions">
-          <button class="secondary-button" type="button" (click)="back()">
-            {{ 'subscription.upgrade.back' | translate }}
-          </button>
+          <button class="secondary-button" type="button" (click)="back()">Volver</button>
           <button class="primary-button" type="button" (click)="activateSubscription()">
-            {{ 'subscription.upgrade.activation.payAndActivate' | translate }}
+            Pagar y activar suscripción
           </button>
         </div>
       }

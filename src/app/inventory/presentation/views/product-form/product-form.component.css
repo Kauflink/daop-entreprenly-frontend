@@ -13,7 +13,7 @@
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 101;
-  background: #fff;
+  background: var(--color-card-bg);
   border-radius: 16px;
   padding: 28px 32px 24px;
   width: min(680px, 92vw);
@@ -34,13 +34,13 @@
   font-size: 1.25rem;
   font-family: 'Reddit Sans', sans-serif;
   font-weight: 700;
-  color: #0C0F12;
+  color: var(--color-text-strong);
   margin: 0 0 4px;
 }
 
 .modal-subtitle {
   font-size: 0.8rem;
-  color: #888;
+  color: var(--color-text-muted);
   margin: 0;
 }
 
@@ -49,14 +49,14 @@
   border: none;
   font-size: 1.1rem;
   cursor: pointer;
-  color: #555;
+  color: var(--color-text-secondary);
   padding: 4px 8px;
   border-radius: 6px;
   transition: background 0.2s;
 }
 
 .btn-close:hover {
-  background: #f0f0f0;
+  background: var(--color-card-border);
 }
 
 /* ── type toggle ───────────────────────────────────────────── */
@@ -69,13 +69,13 @@
 
 .type-toggle button {
   padding: 8px 24px;
-  border: 1.5px solid #dcdcdc;
+  border: 1.5px solid var(--color-card-border);
   border-radius: 999px; /* más redondeados */
   font-size: 0.85rem;
   font-weight: 600;
   cursor: pointer;
-  background: #f5f5f5;
-  color: #555;
+  background: var(--color-bg-page);
+  color: var(--color-text-secondary);
   transition: all 0.2s ease;
 }
 
@@ -91,15 +91,16 @@
 
 /* unidad activo = naranja */
 .type-toggle button.unit.active {
-  background: #F38313;
-  border-color: #F38313;
+  background: var(--color-primary);
+  border-color: var(--color-primary);
   box-shadow: 0 2px 8px rgba(245, 124, 0, 0.35);
 }
 
 /* peso activo = negro */
 .type-toggle button.weight.active {
-  background: #000;
-  border-color: #000;
+  background: var(--color-avatar-bg);
+  border-color: var(--color-avatar-bg);
+  color: var(--color-avatar-fg);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
 }
 
@@ -114,54 +115,54 @@
 .field-label {
   font-size: 0.82rem;
   font-weight: 600;
-  color: #333;
+  color: var(--color-text-primary);
 }
 
 .field-input {
-  border: 1.5px solid #e0e0e0;
+  border: 1.5px solid var(--color-card-border);
   border-radius: 8px;
   padding: 8px 12px;
   font-size: 0.9rem;
-  color: #222;
+  color: var(--color-text-strong);
   outline: none;
   transition: border-color 0.2s;
-  background: #fafafa;
+  background: var(--color-bg-page);
   width: 100%;
   box-sizing: border-box;
 }
 
 .field-input:focus {
-  border-color: #F38313;
-  background: #fff;
+  border-color: var(--color-primary);
+  background: var(--color-card-bg);
 }
 
 .field-error {
   font-size: 0.75rem;
-  color: #e53935;
+  color: var(--color-danger);
 }
 
 /* prefix wrapper ($) */
 .input-prefix {
   display: flex;
   align-items: center;
-  border: 1.5px solid #e0e0e0;
+  border: 1.5px solid var(--color-card-border);
   border-radius: 8px;
-  background: #fafafa;
+  background: var(--color-bg-page);
   overflow: hidden;
   transition: border-color 0.2s;
 }
 
 .input-prefix:focus-within {
-  border-color: #F38313;
-  background: #fff;
+  border-color: var(--color-primary);
+  background: var(--color-card-bg);
 }
 
 .input-prefix span {
   padding: 0 10px;
   font-size: 0.9rem;
-  color: #555;
-  border-right: 1.5px solid #e0e0e0;
-  background: #f0f0f0;
+  color: var(--color-text-secondary);
+  border-right: 1.5px solid var(--color-card-border);
+  background: var(--color-card-border);
   align-self: stretch;
   display: flex;
   align-items: center;
@@ -196,10 +197,10 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  border: 1.5px solid #e0e0e0;
+  border: 1.5px solid var(--color-card-border);
   border-radius: 10px;
   padding: 10px;
-  background: #fafafa;
+  background: var(--color-bg-page);
   gap: 6px;
 }
 
@@ -227,7 +228,7 @@
 }
 
 .btn-save {
-  background: #F38313;
+  background: var(--color-primary);
   color: #fff;
   border: none;
   border-radius: 10px;
@@ -240,7 +241,7 @@
 }
 
 .btn-save:hover {
-  background: #e65100;
+  background: var(--color-primary-hover);
 }
 
 .btn-save:active {
@@ -248,7 +249,7 @@
 }
 
 .btn-save--invalid {
-  background: #ffb3b3 !important;
+  background: var(--color-danger) !important;
   box-shadow: none !important;
   cursor: not-allowed;
 }
@@ -258,7 +259,7 @@
   text-align: center;
   margin-top: 6px;
   font-size: 0.78rem;
-  color: #ff6b6b;
+  color: var(--color-danger);
   font-weight: 500;
 }
 
@@ -271,14 +272,14 @@
 .field-row-valid .field-input { flex: 1; }
 
 .field-input--error {
-  border-color: #ff6b6b !important;
-  background: #fff5f5 !important;
+  border-color: var(--color-danger) !important;
+  background: rgba(211, 47, 47, 0.08) !important;
 }
 
 .input-prefix--error {
-  border-color: #ff6b6b !important;
-  background: #fff5f5 !important;
+  border-color: var(--color-danger) !important;
+  background: rgba(211, 47, 47, 0.08) !important;
 }
 
-.v-x { color: #ff6b6b; font-size: 15px; font-weight: 700; flex-shrink: 0; }
-.v-text { color: #ff6b6b; font-size: 12px; white-space: nowrap; flex-shrink: 0; }
+.v-x { color: var(--color-danger); font-size: 15px; font-weight: 700; flex-shrink: 0; }
+.v-text { color: var(--color-danger); font-size: 12px; white-space: nowrap; flex-shrink: 0; }

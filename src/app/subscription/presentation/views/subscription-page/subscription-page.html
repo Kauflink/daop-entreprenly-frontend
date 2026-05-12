@@ -20,28 +20,72 @@
       [controlPlanSelected]="controlPlanSelected()"
       (billingCycleSelected)="selectBillingCycle($event)"
       (controlPlanRequested)="selectControlPlan()"
+      (renewalRequested)="openRenewalModal()"
+      (cancellationRequested)="openCancellationModal()"
+      (keepPlanRequested)="openKeepPlanModal()"
     />
 
     <div class="secondary-grid">
       <app-plan-usage [limits]="dashboard().limits" [planStatus]="dashboard().currentPlan.status" />
       <app-billing-setup
         [billingSetup]="dashboard().billingSetup"
-        (paymentMethodRequested)="addPaymentMethod()"
-        (fiscalDataRequested)="completeFiscalData()"
+        (paymentMethodRequested)="openPaymentMethodModal()"
+        (fiscalDataRequested)="openBillingDataModal()"
       />
     </div>
 
     <app-subscription-activity
       [activity]="dashboard().activity"
-      (historyDownloadRequested)="downloadActivityHistory()"
+      [billingSetup]="dashboard().billingSetup"
+      (historyDownloadRequested)="openHistoryModal()"
     />
 
     @if (upgradeModalOpen()) {
       <app-upgrade-plan-modal
         [plan]="dashboard().recommendedPlan"
         [billingCycle]="selectedCycle()"
+        [billingSetup]="dashboard().billingSetup"
         (closed)="closeUpgradeModal()"
+        (fiscalDataSaved)="saveUpgradeFiscalData($event)"
+        (paymentMethodSaved)="saveUpgradePaymentMethod($event)"
+        (paymentMethodSelected)="selectUpgradePaymentMethod($event)"
         (subscriptionActivated)="activateControlPlan()"
+      />
+    }
+
+    @if (planActionModalMode(); as modalMode) {
+      <app-subscription-plan-action-modal
+        [mode]="modalMode"
+        [currentPlan]="dashboard().currentPlan"
+        [billingCycle]="dashboard().defaultBillingCycle"
+        (closed)="closePlanActionModal()"
+        (cancellationConfirmed)="confirmCancellation()"
+        (keepPlanConfirmed)="keepControlPlan()"
+      />
+    }
+
+    @if (paymentMethodModalOpen()) {
+      <app-payment-method-modal
+        (closed)="closePaymentMethodModal()"
+        (saved)="savePaymentMethod($event)"
+      />
+    }
+
+    @if (billingDataModalOpen()) {
+      <app-billing-data-modal
+        [fiscalData]="dashboard().billingSetup.fiscalData"
+        (closed)="closeBillingDataModal()"
+        (saved)="saveFiscalData($event)"
+      />
+    }
+
+    @if (historyModalOpen()) {
+      <app-subscription-history-modal
+        [activity]="dashboard().activity"
+        [billingSetup]="dashboard().billingSetup"
+        [downloaded]="historyDownloaded()"
+        (closed)="closeHistoryModal()"
+        (historyDownloadRequested)="downloadActivityHistory()"
       />
     }
   }

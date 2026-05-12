@@ -29,7 +29,7 @@
 }
 
 .modal-card {
-  background: #ffffff;
+  background: var(--color-card-bg);
   border-radius: 28px;
   width: 90%;
   max-width: 680px;
@@ -49,14 +49,14 @@
   position: absolute;
   top: 25px;
   right: 25px;
-  background: #f0f0f0;
+  background: var(--color-card-border);
   border: none;
   border-radius: 50%;
   width: 36px;
   height: 36px;
   cursor: pointer;
   font-size: 20px;
-  color: #333;
+  color: var(--color-text-primary);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -64,19 +64,19 @@
 }
 
 .btn-close:hover {
-  background: #e5e5e5;
+  background: var(--color-card-border);
 }
 
 .modal-title {
   font-size: 24px;
   font-weight: 700;
   margin: 0;
-  color: #000;
+  color: var(--color-text-strong);
 }
 
 .modal-subtitle {
   font-size: 14px;
-  color: #888;
+  color: var(--color-text-muted);
   margin: 8px 0 25px 0;
 }
 
@@ -85,29 +85,29 @@
   font-weight: 600;
   font-size: 14px;
   margin-bottom: 8px;
-  color: #1a1a1a;
+  color: var(--color-text-strong);
 }
 
 .input-gray, .input-gray-small {
   width: 100%;
-  background-color: #f4f4f4;
+  background-color: var(--color-bg-page);
   border: 1px solid transparent;
   border-radius: 12px;
   padding: 12px 16px;
   font-size: 15px;
-  color: #333;
+  color: var(--color-text-primary);
   box-sizing: border-box;
   transition: border 0.2s;
 }
 
 .input-gray:focus, .input-gray-small:focus {
   outline: none;
-  border: 1px solid #F38313;
+  border: 1px solid var(--color-primary);
 }
 
 .input-error {
-  border: 1.5px solid #ff4d4d !important;
-  background-color: #fff9f9;
+  border: 1.5px solid var(--color-danger) !important;
+  background-color: var(--color-bg-page);
 }
 
 
@@ -153,7 +153,7 @@
 }
 
 .qr-card {
-  background: #f4f4f4;
+  background: var(--color-bg-page);
   padding: 15px;
   border-radius: 20px;
   width: 100%;
@@ -168,7 +168,7 @@
 .qr-number {
   display: block;
   font-size: 12px;
-  color: #666;
+  color: var(--color-text-muted);
   margin-top: 8px;
   font-family: monospace;
 }
@@ -189,13 +189,13 @@
 .input-group label {
   font-size: 14px;
   font-weight: 500;
-  color: #444;
+  color: var(--color-text-primary);
 }
 
 .prefix-box {
   display: flex;
   align-items: center;
-  background: #f4f4f4;
+  background: var(--color-bg-page);
   border-radius: 10px;
   padding-left: 12px;
   width: 160px;
@@ -215,7 +215,7 @@
 
 
 .btn-submit {
-  background: #F38313;
+  background: var(--color-primary);
   color: white;
   border: none;
   padding: 16px 85px;
@@ -229,17 +229,17 @@
 }
 
 .btn-submit:hover:not(:disabled) {
-  background: #e07216;
+  background: var(--color-primary-hover);
   transform: translateY(-1px);
 }
 
 .btn-submit:disabled {
-  background: #ccc;
+  background: var(--color-card-border);
   cursor: not-allowed;
 }
 
 .btn-submit--invalid {
-  background: #ffb3b3 !important;
+  background: var(--color-danger) !important;
   cursor: not-allowed;
 }
 
@@ -252,7 +252,7 @@
 .form-incomplete {
   margin-top: 6px;
   font-size: 12px;
-  color: #ff6b6b;
+  color: var(--color-danger);
   font-weight: 500;
 }
 
@@ -264,5 +264,5 @@
 .field-row-valid .input-gray { flex: 1; }
 .field-row-valid .input-gray-small { flex: 1; }
 
-.v-x { color: #ff6b6b; font-size: 15px; font-weight: 700; flex-shrink: 0; }
-.v-text { color: #ff6b6b; font-size: 12px; white-space: nowrap; flex-shrink: 0; }
+.v-x { color: var(--color-danger); font-size: 15px; font-weight: 700; flex-shrink: 0; }
+.v-text { color: var(--color-danger); font-size: 12px; white-space: nowrap; flex-shrink: 0; }

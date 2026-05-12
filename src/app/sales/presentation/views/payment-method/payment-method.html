@@ -1,0 +1,43 @@
+<section class="card payment-card">
+  <h2 class="card-title">
+    <span class="title-icon">☀</span>
+    {{ 'sales.payment.title' | translate }}
+  </h2>
+
+  <div class="payment-buttons">
+    <button
+      class="payment-btn"
+      [class.selected]="selectedMethod() === 'CASH'"
+      [disabled]="!hasItems()"
+      (click)="methodSelected.emit('CASH')"
+    >
+      <span class="material-icons payment-icon">payments</span>
+      <span class="payment-label">{{ 'sales.payment.cash' | translate }}</span>
+    </button>
+    <button
+      class="payment-btn"
+      [class.selected]="selectedMethod() === 'DIGITAL'"
+      [disabled]="!hasItems()"
+      (click)="methodSelected.emit('DIGITAL')"
+    >
+      <span class="material-icons payment-icon">point_of_sale</span>
+      <span class="payment-label">{{ 'sales.payment.digital' | translate }}</span>
+    </button>
+  </div>
+
+  @if (showError()) {
+  <div class="payment-error">
+    <span class="error-icon">⊘</span>
+    {{ 'sales.payment.error' | translate }}
+  </div>
+  }
+</section>
+
+<button
+  class="btn-finalize"
+  [class.btn-finalize-inactive]="!hasItems() || selectedMethod() === null"
+  (click)="finalizeSale.emit()"
+>
+  {{ 'sales.finalize' | translate }}
+</button>
+<button class="btn-cancel" (click)="cancelSale.emit()">{{ 'sales.cancel' | translate }}</button>

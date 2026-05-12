@@ -1,12 +1,11 @@
 import { CdkTrapFocus } from '@angular/cdk/a11y';
 import { ChangeDetectionStrategy, Component, OnInit, inject, input, output } from '@angular/core';
 import { NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { TranslatePipe } from '@ngx-translate/core';
 import { BillingFiscalData } from '../../../domain/model/billing-setup.entity';
 
 @Component({
   selector: 'app-billing-data-modal',
-  imports: [CdkTrapFocus, ReactiveFormsModule, TranslatePipe],
+  imports: [CdkTrapFocus, ReactiveFormsModule],
   templateUrl: './billing-data-modal.html',
   styleUrl: './billing-data-modal.css',
   changeDetection: ChangeDetectionStrategy.OnPush,

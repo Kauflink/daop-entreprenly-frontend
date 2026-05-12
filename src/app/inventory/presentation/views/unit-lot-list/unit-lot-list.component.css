@@ -1,7 +1,7 @@
 /* Contenedor Principal */
 .page-container {
   padding: 60px 20px;
-  background-color: #f5f5f5;
+  background-color: var(--color-bg-page);
   min-height: 100vh;
   position: relative;
   display: flex;
@@ -15,8 +15,8 @@
   position: absolute;
   top: 30px;
   right: 40px;
-  background: #000;
-  color: #fff;
+  background: var(--color-avatar-bg);
+  color: var(--color-avatar-fg);
   border: none;
   padding: 10px 25px;
   border-radius: 25px;
@@ -68,7 +68,7 @@
 }
 
 .lot-alert-copy strong {
-  color: #111827;
+  color: var(--color-text-strong);
   font-size: 15px;
   font-weight: 700;
 }
@@ -78,13 +78,18 @@
 }
 
 .lot-alert--danger {
-  background: #ffc1c7;
+  background: #fff1f1;
   border-color: #ff5a5f;
-  color: #ff3030;
+  color: #7f1111;
+}
+
+.lot-alert--danger .lot-alert-copy strong,
+.lot-alert--danger .lot-alert-copy span {
+  color: #7f1111;
 }
 
 .lot-alert--warning {
-  background: #fff6dc;
+  background: var(--color-theme-btn-active-bg);
   border-color: #d9a900;
   color: #c58b00;
 }
@@ -99,7 +104,7 @@
 .content-card {
   width: 100%;
   max-width: 950px;
-  background: white;
+  background: var(--color-card-bg);
   border-radius: 30px;
   padding: 40px;
   box-shadow: 0 4px 20px rgba(0,0,0,0.05);
@@ -114,7 +119,7 @@
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  background: #F38313;
+  background: var(--color-primary);
   color: white;
   padding: 5px 14px;
   border-radius: 999px;
@@ -130,8 +135,8 @@
   margin-top: 10px;
 }
 
-.title-group h2 { margin: 0; font-size: 24px; color: #1a1a1a; }
-.title-group p { margin: 0; color: #888; font-weight: 500; }
+.title-group h2 { margin: 0; font-size: 24px; color: var(--color-text-strong); }
+.title-group p { margin: 0; color: var(--color-text-muted); font-weight: 500; }
 
 .stats-group .stat-item {
   display: flex;
@@ -139,8 +144,8 @@
   gap: 8px;
 }
 
-.stat-item .value { font-size: 20px; font-weight: 800; }
-.stat-item .label { color: #888; font-size: 14px; }
+.stat-item .value { font-size: 20px; font-weight: 800; color: var(--color-text-strong); }
+.stat-item .label { color: var(--color-text-muted); font-size: 14px; }
 
 /* --- TABLA DE LOTES (GRID) --- */
 .table-header-labels {
@@ -148,7 +153,7 @@
   /* 7 columnas: editar, ID, Cant, Ingreso, Caducidad, QR, eliminar */
   grid-template-columns: 50px 1fr 1fr 1fr 1fr 1.5fr 50px;
   padding: 0 20px 15px;
-  color: #adb5bd;
+  color: var(--color-text-muted);
   font-size: 13px;
   font-weight: 600;
   text-align: center;
@@ -158,8 +163,8 @@
   display: grid;
   grid-template-columns: 50px 1fr 1fr 1fr 1fr 1.5fr 50px; /* Misma estructura que el header */
   align-items: center;
-  background: #fff;
-  border: 1px solid #f1f3f5;
+  background: var(--color-card-bg);
+  border: 1px solid var(--color-card-border);
   border-radius: 20px;
   padding: 18px 15px 12px;
   margin-bottom: 12px;
@@ -167,8 +172,8 @@
 }
 
 .lot-row:hover {
-  border-color: #F38313;
-  background: #fffcf9;
+  border-color: var(--color-primary);
+  background: var(--color-theme-btn-active-bg);
 }
 
 /* Contenedor de celdas de datos */
@@ -178,11 +183,11 @@
 
 .data-cells span {
   font-size: 14px;
-  color: #495057;
+  color: var(--color-text-secondary);
   text-align: center;
 }
 
-.id-cell { font-weight: 700; color: #212529 !important; }
+.id-cell { font-weight: 700; color: var(--color-text-strong) !important; }
 .qty-cell { font-weight: 500; }
 
 .qr-cell {
@@ -191,11 +196,11 @@
   align-items: center;
 }
 
-.qr-code { font-family: monospace; font-size: 12px; color: #212529; }
-.qr-sub { font-size: 10px; color: #adb5bd; }
+.qr-code { font-family: monospace; font-size: 12px; color: var(--color-text-strong); }
+.qr-sub { font-size: 10px; color: var(--color-text-muted); }
 
 .warning,
-.warning-text { color: #fa5252 !important; font-weight: 700; }
+.warning-text { color: var(--color-danger) !important; font-weight: 700; }
 
 .row-action-cell {
   position: relative;
@@ -209,7 +214,7 @@
   top: -16px;
   left: 50%;
   transform: translateX(-50%);
-  background: #ff3030;
+  background: var(--color-danger);
   color: #fff;
   border-radius: 999px;
   padding: 2px 8px;
@@ -221,8 +226,8 @@
 
 /* --- BOTONES DE ACCIÓN --- */
 .btn-edit-square {
-  background: #f8f9fa;
-  border: 1px solid #dee2e6;
+  background: var(--color-inner-bg);
+  border: 1px solid var(--color-card-border);
   width: 40px;
   height: 40px;
   border-radius: 12px;
@@ -230,11 +235,11 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #495057;
+  color: var(--color-text-secondary);
 }
 
 .btn-delete-circle {
-  background: #fa5252;
+  background: var(--color-danger);
   border: none;
   width: 35px;
   height: 35px;
@@ -255,7 +260,7 @@
 }
 
 .btn-add-main {
-  background: #F38313;
+  background: var(--color-primary);
   color: white;
   border: none;
   padding: 14px 35px;
@@ -272,7 +277,7 @@
 
 .btn-add-main:hover {
   transform: translateY(-2px);
-  background: #ea580c;
+  background: var(--color-primary-hover);
 }
 
 .plus-icon { font-size: 22px; line-height: 1; }
