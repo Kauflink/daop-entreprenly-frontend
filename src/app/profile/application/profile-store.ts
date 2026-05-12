@@ -11,6 +11,7 @@ import {
   UserPreferencesResource,
   UserProfileResource,
 } from '../infrastructure/profile-response';
+import { Currency, CurrencyStore } from '../../shared/application/currency.store';
 
 interface ProfileResponse {
   user: UserProfileResource;
@@ -29,6 +30,7 @@ export class ProfileStore {
   }
   private readonly http = inject(HttpClient);
   private readonly translate = inject(TranslateService);
+  private readonly currencyStore = inject(CurrencyStore);
   private readonly profileUrl =
     environment.entreprenlyProviderApiBaseUrl + environment.entreprenlyProviderProfileEndpointPath;
 
@@ -46,6 +48,7 @@ export class ProfileStore {
     language: ProfileStore.readStorage('entreprenly-lang') ?? '',
     timezone: '',
     theme: (ProfileStore.readStorage('entreprenly-theme') as UserPreferences['theme']) ?? 'light',
+    currency: (ProfileStore.readStorage('entreprenly-currency') as Currency) ?? 'PEN',
   });
 
   readonly notificationSettings = signal<NotificationSettings>({
@@ -78,6 +81,12 @@ export class ProfileStore {
         try {
           localStorage.setItem('entreprenly-theme', theme);
         } catch {}
+      }
+    });
+    effect(() => {
+      const currency = this.preferences().currency;
+      if (currency) {
+        this.currencyStore.setCurrency(currency);
       }
     });
     this.load();
@@ -147,6 +156,7 @@ export class ProfileStore {
       language: r.language,
       timezone: r.timezone,
       theme: r.theme,
+      currency: r.currency ?? 'PEN',
     };
   }
 
@@ -176,6 +186,7 @@ export class ProfileStore {
       language: e.language,
       timezone: e.timezone,
       theme: e.theme,
+      currency: e.currency,
     };
   }
 

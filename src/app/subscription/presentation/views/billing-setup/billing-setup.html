@@ -5,67 +5,55 @@
   <div class="billing-grid">
     <article
       class="billing-card"
-      [class.billing-card--complete]="billingSetup().hasPaymentMethod"
+      [class.billing-card--complete]="hasPaymentMethod()"
     >
       <div class="billing-card__body">
         <span class="billing-card__icon" aria-hidden="true">
           <mat-icon>credit_card</mat-icon>
         </span>
         <div>
-          <h3>{{ billingSetup().paymentMethodTitle | translate }}</h3>
+          <h3>{{ billingSetup().paymentMethodTitle }}</h3>
           @if (primaryPaymentMethod(); as paymentMethod) {
             <p>
-              {{
-                'subscription.billing.paymentMethod.cardEnding'
-                  | translate
-                    : {
-                        brand: paymentMethod.cardBrand,
-                        lastFour: paymentMethod.lastFour,
-                        month: paymentMethod.expiryMonth,
-                        year: paymentMethod.expiryYear
-                      }
-              }}
+              {{ paymentMethod.cardBrand }} terminada en {{ paymentMethod.lastFour }} · vence
+              {{ paymentMethod.expiryMonth }}/{{ paymentMethod.expiryYear }}
             </p>
             <strong class="billing-card__status">
-              {{ 'subscription.billing.paymentMethod.available' | translate }}
+              Disponible para pagos y renovaciones
             </strong>
             @if (extraPaymentMethodCount() > 0) {
               <span class="billing-card__meta">
-                {{
-                  (extraPaymentMethodCount() === 1
-                    ? 'subscription.billing.paymentMethod.additionalMethod'
-                    : 'subscription.billing.paymentMethod.additionalMethods'
-                  ) | translate: { count: extraPaymentMethodCount() }
-                }}
+                +{{ extraPaymentMethodCount() }}
+                {{ extraPaymentMethodCount() === 1 ? 'método adicional' : 'métodos adicionales' }}
               </span>
             }
           } @else {
-            <p>{{ billingSetup().paymentMethodDescription | translate }}</p>
+            <p>{{ billingSetup().paymentMethodDescription }}</p>
           }
         </div>
       </div>
       <button type="button" (click)="requestPaymentMethod()">
-        {{ paymentActionLabel() | translate }}
+        {{ paymentActionLabel() }}
       </button>
     </article>
 
-    <article class="billing-card" [class.billing-card--complete]="billingSetup().hasFiscalData">
+    <article class="billing-card" [class.billing-card--complete]="hasFiscalData()">
       <div class="billing-card__body">
         <span class="billing-card__icon" aria-hidden="true">
           <mat-icon>receipt_long</mat-icon>
         </span>
         <div>
-          <h3>{{ billingSetup().fiscalDataTitle | translate }}</h3>
+          <h3>{{ billingSetup().fiscalDataTitle }}</h3>
           @if (fiscalData(); as data) {
             <p>{{ data.documentType }} {{ data.documentNumber }} · {{ data.businessName }}</p>
-            <strong class="billing-card__status">{{ 'subscription.billing.fiscalData.complete' | translate }}</strong>
+            <strong class="billing-card__status">Información fiscal completa</strong>
           } @else {
-            <p>{{ billingSetup().fiscalDataDescription | translate }}</p>
+            <p>{{ billingSetup().fiscalDataDescription }}</p>
           }
         </div>
       </div>
       <button type="button" (click)="requestFiscalData()">
-        {{ fiscalActionLabel() | translate }}
+        {{ fiscalActionLabel() }}
       </button>
     </article>
   </div>

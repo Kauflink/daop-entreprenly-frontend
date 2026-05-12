@@ -8,7 +8,7 @@
       </p>
     </div>
     <span class="status-badge" [class.status-badge--warning]="cancellationScheduled()">
-      {{ currentPlan().statusLabel | translate }}
+      {{ currentPlan().statusLabel }}
     </span>
   </div>
 
@@ -16,13 +16,13 @@
     <article class="plan-card" aria-labelledby="current-plan-title">
       <div class="plan-card__heading">
         <div>
-          <p class="card-label">{{ currentPlan().badgeLabel | translate }}</p>
-          <h3 id="current-plan-title">{{ ('subscription.plans.' + currentPlan().id.replace('plan-', '') + '.name') | translate }}</h3>
-          <p>{{ currentPlan().shortDescription | translate }}</p>
+          <p class="card-label">{{ currentPlan().badgeLabel }}</p>
+          <h3 id="current-plan-title">{{ currentPlan().name }}</h3>
+          <p>{{ currentPlan().shortDescription }}</p>
         </div>
         <div class="price-box" [attr.aria-label]="currentPlanPriceAriaLabel()">
           <strong>S/ {{ currentPlan().monthlyPrice }}</strong>
-          <span>{{ currentPlanPriceLabel() | translate }}</span>
+          <span>{{ currentPlanPriceLabel() }}</span>
         </div>
       </div>
 
@@ -30,22 +30,22 @@
         @for (feature of currentPlan().features; track feature.description) {
           <li>
             <mat-icon aria-hidden="true">check</mat-icon>
-            <span>{{ feature.description | translate }}</span>
+            <span>{{ feature.description }}</span>
           </li>
         }
       </ul>
 
-      @if (activeCurrentPlan()) {
+      @if (planControlCurrentPlan()) {
         <div class="plan-card__actions">
           <button class="secondary-primary-action" type="button" (click)="requestRenewal()">
-            {{ 'subscription.overview.renewAction' | translate }}
+            Renovar suscripción
           </button>
           <button
             class="secondary-outline-action"
             type="button"
             (click)="requestCancellationAction()"
           >
-            {{ cancellationActionLabel() | translate }}
+            {{ cancellationActionLabel() }}
           </button>
         </div>
       }
@@ -58,12 +58,12 @@
     >
       <div class="plan-card__heading">
         <div>
-          <p class="card-label card-label--accent">{{ recommendedPlan().badgeLabel | translate }}</p>
-          <h3 id="recommended-plan-title">{{ ('subscription.plans.' + recommendedPlan().id.replace('plan-', '') + '.name') | translate }}</h3>
+          <p class="card-label card-label--accent">{{ recommendedPlan().badgeLabel }}</p>
+          <h3 id="recommended-plan-title">{{ recommendedPlan().name }}</h3>
         </div>
         <div class="recommended-price">
           <strong>S/ {{ selectedPrice() }}</strong>
-          <span>{{ selectedPriceLabel() | translate }}</span>
+          <span>{{ selectedPriceLabel() }}</span>
         </div>
       </div>
 
@@ -95,7 +95,7 @@
         @for (feature of recommendedPlan().features; track feature.description) {
           <li>
             <mat-icon aria-hidden="true">check</mat-icon>
-            <span>{{ feature.description | translate }}</span>
+            <span>{{ feature.description }}</span>
           </li>
         }
       </ul>
