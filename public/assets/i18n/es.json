@@ -488,6 +488,14 @@
       "voiceNote": "Nota de voz",
       "attach": "Adjuntar archivo",
       "send": "Enviar mensaje"
+    },
+    "messages": {
+      "sysPaymentApproved": "Sistema: pago validado por el comerciante — {{ time }}",
+      "botPaymentApproved": "Tu pago fue recibido y verificado correctamente.\nEl pedido {{ orderNumber }} está confirmado y en preparación. ¡Gracias por tu compra!",
+      "sysBlocked": "Sistema: pedido bloqueado por múltiples rechazos — {{ time }}",
+      "sysReceiptRejected": "Sistema: comprobante rechazado — imagen ilegible — {{ time }}",
+      "botBlocked": "Tu pedido {{ orderNumber }} ha sido bloqueado debido a múltiples rechazos de pago.\n\nPara resolver esta situación, comunícate directamente con la bodega:\nTeléfono: 999 888 777",
+      "botReceiptRejected": "Tu comprobante no pudo ser validado.\nMotivo: {{ reason }}.\n\nEl pedido {{ orderNumber }} ha vuelto al estado Esperando pago.\nPor favor envía un nuevo comprobante."
     }
   },
   "dashboard-home": {

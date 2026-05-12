@@ -488,6 +488,14 @@
       "voiceNote": "Voice note",
       "attach": "Attach file",
       "send": "Send message"
+    },
+    "messages": {
+      "sysPaymentApproved": "System: payment validated by merchant — {{ time }}",
+      "botPaymentApproved": "Your payment was received and verified correctly.\nOrder {{ orderNumber }} is confirmed and being prepared. Thank you for your purchase!",
+      "sysBlocked": "System: order blocked due to multiple rejections — {{ time }}",
+      "sysReceiptRejected": "System: receipt rejected — illegible image — {{ time }}",
+      "botBlocked": "Your order {{ orderNumber }} has been blocked due to multiple payment rejections.\n\nTo resolve this, please contact the store directly:\nPhone: 999 888 777",
+      "botReceiptRejected": "Your receipt could not be validated.\nReason: {{ reason }}.\n\nOrder {{ orderNumber }} has returned to Awaiting Payment status.\nPlease send a new receipt."
     }
   },
   "dashboard-home": {

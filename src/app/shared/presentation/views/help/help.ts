@@ -318,9 +318,11 @@ export class Help {
   }
 
   protected get nowString(): string {
-    return new Date().toLocaleDateString('es-PE', {
+    const lang   = this.translate.currentLang ?? this.translate.defaultLang ?? 'es';
+    const locale = lang === 'en' ? 'en-US' : 'es-PE';
+    return new Date().toLocaleDateString(locale, {
       day: '2-digit', month: '2-digit', year: 'numeric',
-    }) + ' · ' + new Date().toLocaleTimeString('es-PE', {
+    }) + ' · ' + new Date().toLocaleTimeString(locale, {
       hour: '2-digit', minute: '2-digit',
     });
   }

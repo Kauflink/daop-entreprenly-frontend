@@ -1,5 +1,6 @@
 import { Injectable, inject, signal, computed } from '@angular/core';
 import { timer } from 'rxjs';
+import { TranslateService } from '@ngx-translate/core';
 import { ChatbotApiService } from '../infrastructure/chatbot-api.service';
 import { Conversation, ConversationStatus } from '../domain/model/conversation.entity';
 import { ChatMessage } from '../domain/model/chat-message.entity';
@@ -9,7 +10,14 @@ import { InventoryProduct } from '../domain/model/inventory-product.entity';
 
 @Injectable({ providedIn: 'root' })
 export class ChatbotStoreService {
-  private api = inject(ChatbotApiService);
+  private api       = inject(ChatbotApiService);
+  private translate = inject(TranslateService);
+
+  /** Locale del idioma activo para formatear fechas */
+  private get locale(): string {
+    const lang = this.translate.currentLang ?? this.translate.defaultLang ?? 'es';
+    return lang === 'en' ? 'en-US' : 'es-PE';
+  }
 
   readonly session = signal<WhatsappSession | null>(null);
   readonly isSessionLoaded = signal(false);
@@ -183,7 +191,7 @@ export class ChatbotStoreService {
     const updated: WhatsappSession = {
       ...current,
       status: 'connected',
-      connectedAt: new Date().toLocaleString('es-PE'),
+      connectedAt: new Date().toLocaleString(this.locale),
     };
     this.api.whatsappSessions.update(updated, current.id).subscribe(session => {
       this.session.set(session);
@@ -208,15 +216,15 @@ export class ChatbotStoreService {
       this.orders.update(list => list.map(o => o.id === orderId ? confirmed : o));
       this._updateConversationStatus(order.conversationId, 'COMPLETED');
 
-      const time = new Date().toLocaleTimeString('es-PE', { hour: '2-digit', minute: '2-digit' });
+      const time = new Date().toLocaleTimeString(this.locale, { hour: '2-digit', minute: '2-digit' });
       const sysMsg: ChatMessage = {
         id: 0, conversationId: order.conversationId,
-        content: `Sistema: pago validado por el comerciante — ${time}`,
+        content: this.translate.instant('chatbot.messages.sysPaymentApproved', { time }),
         sender: 'system', type: 'text', sentAt: new Date().toISOString(),
       };
       const botMsg: ChatMessage = {
         id: 0, conversationId: order.conversationId,
-        content: `Tu pago fue recibido y verificado correctamente.\nEl pedido ${order.orderNumber} está confirmado y en preparación. ¡Gracias por tu compra!`,
+        content: this.translate.instant('chatbot.messages.botPaymentApproved', { orderNumber: order.orderNumber }),
         sender: 'bot', type: 'text', sentAt: new Date().toISOString(),
       };
 
@@ -249,15 +257,15 @@ export class ChatbotStoreService {
         this._updateConversationStatus(order.conversationId, 'CLOSED');
       }
 
-      const time = new Date().toLocaleTimeString('es-PE', { hour: '2-digit', minute: '2-digit' });
+      const time = new Date().toLocaleTimeString(this.locale, { hour: '2-digit', minute: '2-digit' });
 
       const sysContent = isBlocked
-        ? `Sistema: pedido bloqueado por múltiples rechazos — ${time}`
-        : `Sistema: comprobante rechazado — imagen ilegible — ${time}`;
+        ? this.translate.instant('chatbot.messages.sysBlocked',         { time })
+        : this.translate.instant('chatbot.messages.sysReceiptRejected',  { time });
 
       const botContent = isBlocked
-        ? `Tu pedido ${order.orderNumber} ha sido bloqueado debido a múltiples rechazos de pago.\n\nPara resolver esta situación, comunícate directamente con la bodega:\nTeléfono: 999 888 777`
-        : `Tu comprobante no pudo ser validado.\nMotivo: ${reason}.\n\nEl pedido ${order.orderNumber} ha vuelto al estado Esperando pago.\nPor favor envía un nuevo comprobante.`;
+        ? this.translate.instant('chatbot.messages.botBlocked',         { orderNumber: order.orderNumber })
+        : this.translate.instant('chatbot.messages.botReceiptRejected', { orderNumber: order.orderNumber, reason });
 
       const sysMsg: ChatMessage = {
         id: 0, conversationId: order.conversationId,
