@@ -11,10 +11,5 @@
   } @else {
     <p class="mb-6 mt-1 text-sm text-gray-500">{{ 'chatbot.page.connectionStatus' | translate }}</p>
     <app-whatsapp-status-card [session]="store.session()" [justConnected]="justConnected()" (reconnect)="onReconnect()" />
-    <p class="mt-6 text-xs text-gray-300">
-      Demo: para reiniciar los escenarios, corre
-      <code class="rounded bg-gray-100 px-1 text-gray-400">npx json-server server/db.json</code>
-      con Ctrl+C primero y vuelve a simular el escaneo.
-    </p>
   }
 </div>
