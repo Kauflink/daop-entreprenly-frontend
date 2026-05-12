@@ -26,7 +26,7 @@
         </h2>
         <div class="summary-row">
           <span>{{ 'sales.summary.subtotal' | translate }}</span>
-          <span>{{ currencyStore.format(subtotal()) }}</span>
+          <span>{{ currencyAssembler.format(subtotal()) }}</span>
         </div>
         <div class="summary-row">
           <span>{{ itemCount() }} {{ 'sales.summary.items' | translate }}</span>
@@ -34,7 +34,7 @@
         <hr />
         <div class="summary-total">
           <span>{{ 'sales.summary.total' | translate }}</span>
-          <span class="total-value">{{ currencyStore.format(subtotal()) }}</span>
+          <span class="total-value">{{ currencyAssembler.format(subtotal()) }}</span>
         </div>
       </section>
 

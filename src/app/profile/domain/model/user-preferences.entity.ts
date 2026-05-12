@@ -1,5 +1,5 @@
 import { BaseEntity } from '../../../shared/infrastructure/base-entity';
-import { Currency } from '../../../shared/application/currency.store';
+import { Currency } from '../../../shared/infrastructure/currency-service';
 
 export type Theme = 'light' | 'dark';
 

@@ -257,7 +257,7 @@
         "annual": "pago anual",
         "free": "por mes"
       },
-      "priceAriaLabel": "Costo actual {{ price }} soles {{ label }}"
+      "priceAriaLabel": "Costo actual {{ price }} {{ label }}"
     },
     "usage": {
       "eyebrow": "Uso del plan",
@@ -309,8 +309,8 @@
         "title": "Estado actual",
         "detail": {
           "free": "Plan Free activo - Sin cargos registrados",
-          "active": "Plan Control activo - S/ 89/mes",
-          "scheduled-cancellation": "Cancelación programada - S/ 89/mes"
+          "active": "Plan Control activo - {{ price }}/mes",
+          "scheduled-cancellation": "Cancelación programada - {{ price }}/mes"
         }
       },
       "billing": {
@@ -431,8 +431,8 @@
           "annual": "Facturación anual"
         },
         "priceLabel": {
-          "monthly": "S/ 89/mes",
-          "annual": "S/ 890/año"
+          "monthly": "/mes",
+          "annual": "/año"
         }
       },
       "billing": {

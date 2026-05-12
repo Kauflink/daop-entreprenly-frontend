@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, computed, inject, input, output } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
+import { CurrencyService } from '../../../../shared/infrastructure/currency-service';
 import { BillingCycle, SubscriptionPlan } from '../../../domain/model/subscription-plan.entity';
 
 @Component({
@@ -23,11 +24,18 @@ export class PlanOverview {
   readonly keepPlanRequested = output<void>();
 
   private readonly translate = inject(TranslateService);
+  private readonly currencyAssembler = inject(CurrencyService);
 
   protected readonly selectedPrice = computed(() =>
     this.selectedCycle() === 'monthly'
       ? this.recommendedPlan().monthlyPrice
       : this.recommendedPlan().annualPrice,
+  );
+  protected readonly formattedCurrentPlanPrice = computed(() =>
+    this.currencyAssembler.format(this.currentPlan().monthlyPrice),
+  );
+  protected readonly formattedSelectedPrice = computed(() =>
+    this.currencyAssembler.format(this.selectedPrice()),
   );
   protected readonly selectedPriceLabelKey = computed(() =>
     this.selectedCycle() === 'monthly'

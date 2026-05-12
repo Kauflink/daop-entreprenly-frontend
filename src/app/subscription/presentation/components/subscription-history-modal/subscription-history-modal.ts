@@ -1,6 +1,7 @@
 import { CdkTrapFocus } from '@angular/cdk/a11y';
 import { ChangeDetectionStrategy, Component, computed, inject, input, output } from '@angular/core';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
+import { CurrencyService } from '../../../../shared/infrastructure/currency-service';
 import { BillingSetup } from '../../../domain/model/billing-setup.entity';
 import { SubscriptionActivity } from '../../../domain/model/subscription-activity.entity';
 import { BillingCycle, SubscriptionPlan } from '../../../domain/model/subscription-plan.entity';
@@ -35,6 +36,7 @@ export class SubscriptionHistoryModal {
   readonly historyDownloadRequested = output<void>();
 
   private readonly translate = inject(TranslateService);
+  private readonly currencyAssembler = inject(CurrencyService);
 
   protected readonly activityRows = computed<ActivityRow[]>(() => [
     ...this.activity().map((item) => this.toActivityRow(item)),
@@ -79,6 +81,7 @@ export class SubscriptionHistoryModal {
         id: item.id,
         titleKey: 'subscription.activity.current-status.title',
         detailKey: `subscription.activity.current-status.detail.${this.currentPlan().status}`,
+        detailParams: this.currentStatusDetailParams(),
       };
     }
 
@@ -165,6 +168,12 @@ export class SubscriptionHistoryModal {
     return ['tarjeta', 'card'].includes(normalizedBrand)
       ? this.translate.instant('subscription.cardBrand.generic')
       : cardBrand;
+  }
+
+  private currentStatusDetailParams(): Record<string, string> {
+    return {
+      price: this.currencyAssembler.format(this.currentPlan().monthlyPrice),
+    };
   }
 
   private billingCycleLabel(): string {

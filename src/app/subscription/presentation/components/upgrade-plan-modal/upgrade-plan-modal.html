@@ -53,7 +53,7 @@
             <h3>{{ plan().name }}</h3>
             <p>{{ billingLabelKey() | translate }}</p>
           </div>
-          <strong>{{ planPriceLabelKey() | translate }}</strong>
+          <strong>{{ formattedPlanPrice() }}{{ planPriceSuffixKey() | translate }}</strong>
         </article>
         <div class="modal-actions modal-actions--end">
           <button class="primary-button" type="button" (click)="continue()">
@@ -207,7 +207,7 @@
 
             <article class="summary-card summary-card--plain">
               <h3>{{ 'subscription.upgrade.payment.totalCharge' | translate }}</h3>
-              <strong>S/ {{ planPrice() }}</strong>
+              <strong>{{ formattedPlanPrice() }}</strong>
             </article>
           </div>
           <div class="modal-actions">
@@ -282,7 +282,7 @@
 
             <article class="summary-card summary-card--plain field-wide">
               <h3>{{ 'subscription.upgrade.payment.totalCharge' | translate }}</h3>
-              <strong>S/ {{ planPrice() }}</strong>
+              <strong>{{ formattedPlanPrice() }}</strong>
             </article>
 
             <div class="modal-actions">
