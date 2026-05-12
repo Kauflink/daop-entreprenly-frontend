@@ -6,11 +6,14 @@ export class CashRegister implements BaseEntity {
   private _totalCash: number;
   private _totalDigital: number;
 
-  constructor(register: { id: number; date: string; totalCash?: number; totalDigital?: number }) {
+  private _saleCount: number;
+
+  constructor(register: { id: number; date: string; totalCash?: number; totalDigital?: number; saleCount?: number }) {
     this._id = register.id;
     this._date = register.date;
     this._totalCash = register.totalCash ?? 0;
     this._totalDigital = register.totalDigital ?? 0;
+    this._saleCount = register.saleCount ?? 0;
   }
 
   get totalDay(): number {
@@ -43,5 +46,12 @@ export class CashRegister implements BaseEntity {
   }
   set totalDigital(value: number) {
     this._totalDigital = value;
+  }
+
+  get saleCount(): number {
+    return this._saleCount;
+  }
+  set saleCount(value: number) {
+    this._saleCount = value;
   }
 }
