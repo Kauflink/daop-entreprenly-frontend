@@ -48,18 +48,27 @@ import { buildQrCodeDataUrl } from '../../../../inventory/infrastructure/qr-code
 })
 export class QrConnectionCard {
   readonly hasError = input<boolean>(false);
-  readonly phone = input<string>('+51999888777');
-  readonly retry = output<void>();
+  readonly retry   = output<void>();
   readonly expired = output<void>();
   readonly scanned = output<void>();
 
-  protected readonly seconds = signal(120);
-  protected readonly isExpired = signal(false);
-  protected readonly whatsappLink = computed(() => {
-    const cleaned = this.phone().replace(/\s+/g, '').replace('+', '');
-    return `https://wa.me/${cleaned}`;
-  });
-  protected readonly qrCodeDataUrl = computed(() => buildQrCodeDataUrl(this.whatsappLink(), 192));
+  protected readonly seconds      = signal(120);
+  protected readonly isExpired    = signal(false);
+  /** Token de sesión temporal — se regenera cada vez que el QR expira */
+  protected readonly sessionToken = signal(this._generateToken());
+  protected readonly qrCodeDataUrl = computed(() =>
+    buildQrCodeDataUrl(this.sessionToken(), 192),
+  );
+
+  /** Genera un token de sesión único (mismo formato que WhatsApp Web) */
+  private _generateToken(): string {
+    const chars  = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+    const random = Array.from({ length: 8 }, () =>
+      chars[Math.floor(Math.random() * chars.length)],
+    ).join('');
+    const ts = Math.floor(Date.now() / 1000);
+    return `WA-SESSION-${random}-${ts}`;
+  }
 
   private resetting = false;
   private readonly destroyRef = inject(DestroyRef);
@@ -79,6 +88,7 @@ export class QrConnectionCard {
             timer(3000)
               .pipe(takeUntilDestroyed(this.destroyRef))
               .subscribe(() => {
+                this.sessionToken.set(this._generateToken()); // nuevo token = nuevo QR
                 this.isExpired.set(false);
                 this.seconds.set(120);
                 this.resetting = false;
