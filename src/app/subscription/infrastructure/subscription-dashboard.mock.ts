@@ -197,7 +197,7 @@ export const ACTIVE_SUBSCRIPTION_DASHBOARD_RESPONSE: SubscriptionDashboardRespon
     {
       id: 'current-status',
       title: 'Estado actual',
-      detail: 'Plan Control activo - S/ 89/mes',
+      detail: 'Plan Control activo',
     },
     {
       id: 'billing',
@@ -222,7 +222,7 @@ export const SCHEDULED_CANCELLATION_SUBSCRIPTION_DASHBOARD_RESPONSE: Subscriptio
       {
         id: 'current-status',
         title: 'Estado actual',
-        detail: 'Cancelación programada - S/ 89/mes',
+        detail: 'Cancelacion programada',
       },
       {
         id: 'billing',

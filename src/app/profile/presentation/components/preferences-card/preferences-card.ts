@@ -3,7 +3,7 @@ import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { ProfileStore } from '../../../application/profile-store';
 import { Theme } from '../../../domain/model/user-preferences.entity';
-import { Currency } from '../../../../shared/application/currency.store';
+import { Currency } from '../../../../shared/infrastructure/currency-service';
 
 interface LanguageOption {
   code: string;

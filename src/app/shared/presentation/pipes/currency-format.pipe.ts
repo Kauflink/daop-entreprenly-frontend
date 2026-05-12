@@ -1,14 +1,14 @@
 import { Pipe, PipeTransform, inject } from '@angular/core';
-import { CurrencyStore } from '../../application/currency.store';
+import { CurrencyService } from '../../infrastructure/currency-service';
 
 @Pipe({
   name: 'currencyFormat',
   pure: false,
 })
 export class CurrencyFormatPipe implements PipeTransform {
-  private readonly currencyStore = inject(CurrencyStore);
+  private readonly currencyAssembler = inject(CurrencyService);
 
   transform(priceInPEN: number): string {
-    return this.currencyStore.format(priceInPEN);
+    return this.currencyAssembler.format(priceInPEN);
   }
 }
