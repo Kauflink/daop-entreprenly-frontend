@@ -10,7 +10,7 @@
     <p class="loading-message" role="status">{{ 'subscription.page.loading' | translate }}</p>
   } @else {
     @if (feedback()) {
-      <p class="feedback-message" role="status" aria-live="polite">{{ feedback() }}</p>
+      <p class="feedback-message" role="status" aria-live="polite">{{ feedback() | translate }}</p>
     }
 
     <app-plan-overview
