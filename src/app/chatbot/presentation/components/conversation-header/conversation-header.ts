@@ -1,9 +1,11 @@
 import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { Conversation } from '../../../domain/model/conversation.entity';
 
 @Component({
   selector: 'app-conversation-header',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [TranslatePipe],
   template: `
     <div class="flex items-center gap-3 border-b border-gray-200 bg-white px-5 py-3">
       <div
@@ -13,7 +15,7 @@ import { Conversation } from '../../../domain/model/conversation.entity';
       </div>
       <div>
         <p class="font-bold text-gray-900">{{ conversation().clientName }}</p>
-        <p class="text-xs text-green-500">En línea</p>
+        <p class="text-xs text-green-500">{{ 'chatbot.header.online' | translate }}</p>
       </div>
     </div>
   `,
