@@ -18,7 +18,7 @@ const QUICK_LINKS: QuickLink[] = [
   { labelKey: 'dashboard-home.links.sales',     icon: 'cart',      route: '/dashboard/sales' },
   { labelKey: 'dashboard-home.links.chatbot',   icon: 'chat',      route: '/dashboard/chatbot' },
   { labelKey: 'dashboard-home.links.orders',    icon: 'orders',    route: '/dashboard/chatbot/orders' },
-  { labelKey: 'dashboard-home.links.inventory', icon: 'inventory', route: '/dashboard/inventory' },
+  { labelKey: 'dashboard-home.links.inventory', icon: 'inventory', route: '/dashboard/inventory/lots' },
   { labelKey: 'dashboard-home.links.help',      icon: 'help',      route: '/dashboard/help' },
 ];
 
@@ -79,13 +79,14 @@ export class Home implements OnInit {
   protected readonly hasAlerts    = computed(() => this.stockAlerts().length > 0);
   protected readonly alertsLoading = computed(() => this.inventoryStore.loading());
 
-  // ── Today label ─────────────────────────────────────────────────────────────
-  protected readonly todayLabel = (() => {
-    const d = new Date();
-    return d.toLocaleDateString('es-PE', {
+  // ── Today label (idioma reactivo al TranslateService) ────────────────────────
+  protected get todayLabel(): string {
+    const lang = this.translate.currentLang ?? this.translate.defaultLang ?? 'es';
+    const locale = lang === 'en' ? 'en-US' : 'es-PE';
+    return new Date().toLocaleDateString(locale, {
       weekday: 'long', day: 'numeric', month: 'long', year: 'numeric',
     });
-  })();
+  }
 
   // ── Lifecycle ────────────────────────────────────────────────────────────────
   ngOnInit(): void {
