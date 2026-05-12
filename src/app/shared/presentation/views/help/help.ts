@@ -179,7 +179,9 @@ export class Help {
   protected readonly formSubmitted       = signal(false);
   protected readonly ticketNumber        = signal('');
   protected readonly savedData           = signal<{ category: string; module: string; description: string } | null>(null);
-  protected readonly simulateError       = signal(false);
+  protected readonly simulateError        = signal(false);
+  protected readonly quickReportText      = signal('');
+  protected readonly quickReportInvalid   = signal(false);
 
   // ── Static data ─────────────────────────────────────────────────────────────
   protected readonly articles        = ARTICLES;
@@ -298,6 +300,22 @@ export class Help {
     }
   }
 
+  protected onSubmitQuickReport(): void {
+    if (!this.quickReportText().trim()) {
+      this.quickReportInvalid.set(true);
+      return;
+    }
+    const article = this.selectedArticle();
+    const num = String(Math.floor(10000 + Math.random() * 89999));
+    this.ticketNumber.set(`#TKT-2026-${num}`);
+    this.savedData.set({
+      category:    article ? this.translate.instant(article.categoryKey) : '',
+      module:      article ? this.translate.instant(article.categoryKey) : '',
+      description: this.quickReportText(),
+    });
+    this.view.set('success');
+  }
+
   protected onRetry(): void       { this.view.set('report'); }
 
   protected onBackToHome(): void {
@@ -314,6 +332,8 @@ export class Help {
   protected onBackToArticle(): void {
     this.articleFeedback.set(null);
     this.showQuickReport.set(false);
+    this.quickReportText.set('');
+    this.quickReportInvalid.set(false);
     this.view.set('article');
   }
 
@@ -330,4 +350,30 @@ export class Help {
   protected isCategoryError():    boolean { const c = this.fCategory;    return c.invalid && (c.dirty || this.formSubmitted()); }
   protected isModuleError():      boolean { const c = this.fModule;      return c.invalid && (c.dirty || this.formSubmitted()); }
   protected isDescriptionError(): boolean { const c = this.fDescription; return c.invalid && (c.dirty || this.formSubmitted()); }
+
+  protected highlightQuery(titleKey: string): string {
+    const title = this.translate.instant(titleKey);
+    const q = this.searchQuery().trim();
+    if (!q) return title;
+    const safe = q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    return title.replace(new RegExp(`(${safe})`, 'gi'),
+      '<mark class="bg-transparent text-orange-500 font-semibold not-italic">$1</mark>');
+  }
+
+  protected categoryBg(categoryId: string): string {
+    const map: Record<string, string> = {
+      inventario: 'bg-orange-100',
+      chatbot:    'bg-blue-100',
+      pedidos:    'bg-gray-100',
+      ventas:     'bg-green-100',
+    };
+    return map[categoryId] ?? 'bg-gray-100';
+  }
+
+  protected get formErrors(): string[] {
+    const errs: string[] = [];
+    if (this.isCategoryError())    errs.push(this.translate.instant('dashboard-help.report.categoryRequired'));
+    if (this.isDescriptionError()) errs.push(this.translate.instant('dashboard-help.report.descriptionRequired'));
+    return errs;
+  }
 }
