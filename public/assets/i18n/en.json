@@ -406,5 +406,369 @@
       },
       "saveAction": "Save preferences"
     }
+  },
+  "chatbot": {
+    "page": {
+      "title": "Chatbot",
+      "loading": "Loading...",
+      "connectPrompt": "Connect your WhatsApp Business to activate the chatbot",
+      "connectionStatus": "Connection status"
+    },
+    "conversations": {
+      "empty": "No conversations yet.\nYour clients' chats will appear here\nwhen the chatbot receives messages.",
+      "placeholder": "Send and receive messages without needing your phone connected"
+    },
+    "payment": {
+      "pendingBar": "Pending payment — Order {{ orderNumber }}",
+      "pendingBarDetail": "{{ paymentMethod }} · S/{{ total }} · Validate the receipt sent",
+      "approve": "Approve payment",
+      "reject": "Reject",
+      "rejectTitle": "Rejection reason",
+      "confirmReject": "Confirm rejection",
+      "cancelReject": "Cancel",
+      "reasons": {
+        "illegible": "Illegible image",
+        "wrongAmount": "Wrong amount",
+        "fake": "Fake receipt"
+      }
+    },
+    "orders": {
+      "title": "Orders",
+      "subtitle": "History and receipt validation",
+      "connectPrompt": "Connect your WhatsApp to view orders",
+      "goToConfig": "Go to settings →",
+      "empty": "No orders registered yet",
+      "goToConversations": "View conversations →",
+      "receiptAlt": "Payment receipt",
+      "delivery": "Delivery:",
+      "total": "Total",
+      "traceability": "Traceability",
+      "trace": {
+        "registered": "Order registered — {{ date }}",
+        "paymentSent": "Payment instructions sent to client",
+        "receiptReceived": "Receipt received via WhatsApp",
+        "receiptRejected": "Receipt rejected ({{ count }}x) — illegible image",
+        "paymentApproved": "Payment validated by merchant",
+        "blocked": "Order blocked — multiple rejections",
+        "cancelled": "Order cancelled due to inactivity — stock restored",
+        "pendingValidation": "Pending validation by merchant",
+        "awaitingReceipt": "Awaiting client's receipt"
+      },
+      "approvePayment": "Approve Payment",
+      "rejectPayment": "Reject",
+      "willBlock": "(will block client)",
+      "blockedMessage": "Order blocked. Client must contact the store directly.",
+      "status": {
+        "approved": "Payment approved",
+        "blocked": "Order blocked",
+        "cancelled": "Order cancelled",
+        "receiptReceived": "Receipt received",
+        "awaitingReceipt": "Awaiting receipt"
+      }
+    },
+    "qr": {
+      "expiredTitle": "QR code expired — linking not completed",
+      "expiredDetail": "The QR code was not scanned within the time limit. The previous code was automatically discarded and a new one was generated. Scan the new code to complete the linking.",
+      "newCode": "New code generated",
+      "linkTitle": "Link WhatsApp Business",
+      "scanInstruction": "Scan the QR code from your app",
+      "alt": "QR code to link WhatsApp Business",
+      "generating": "Generating new code...",
+      "expiresIn": "Code expires in {{ seconds }} seconds",
+      "expiresInOne": "Code expires in {{ seconds }} second",
+      "simulateScan": "Simulate scan"
+    },
+    "statusCard": {
+      "connectedTitle": "Account linked successfully",
+      "connectedDetail": "WhatsApp Business connected successfully. The chatbot can now receive and reply to your clients' messages automatically.",
+      "expiredTitle": "Session expired",
+      "expiredDetail": "The WhatsApp Business session was closed externally. The chatbot cannot receive messages until the connection is restored.",
+      "cardTitle": "WhatsApp Business",
+      "activeSince": "active since",
+      "lastConnection": "last connection:",
+      "operative": "The chatbot is operational and processing messages automatically.",
+      "viewConversations": "View conversations →",
+      "disconnect": "Disconnect",
+      "reconnect": "Link again",
+      "connected": "● Connected",
+      "disconnected": "● Disconnected"
+    },
+    "conversationList": {
+      "title": "Conversations"
+    },
+    "header": {
+      "online": "Online"
+    },
+    "message": {
+      "receiptAlt": "Payment receipt"
+    },
+    "input": {
+      "placeholder": "Write a message...",
+      "emptyError": "Message cannot be empty",
+      "ariaLabel": "Write a message",
+      "voiceNote": "Voice note",
+      "attach": "Attach file",
+      "send": "Send message"
+    },
+    "messages": {
+      "sysPaymentApproved": "System: payment validated by merchant — {{ time }}",
+      "botPaymentApproved": "Your payment was received and verified correctly.\nOrder {{ orderNumber }} is confirmed and being prepared. Thank you for your purchase!",
+      "sysBlocked": "System: order blocked due to multiple rejections — {{ time }}",
+      "sysReceiptRejected": "System: receipt rejected — illegible image — {{ time }}",
+      "botBlocked": "Your order {{ orderNumber }} has been blocked due to multiple payment rejections.\n\nTo resolve this, please contact the store directly:\nPhone: 999 888 777",
+      "botReceiptRejected": "Your receipt could not be validated.\nReason: {{ reason }}.\n\nOrder {{ orderNumber }} has returned to Awaiting Payment status.\nPlease send a new receipt."
+    },
+    "sys": {
+      "deliveryNotRegistered": "System: delivery address not registered — bot requested from client",
+      "orderRegistered": "System: order {{ orderNumber }} registered — status: pending — {{ time }}",
+      "receiptReceived": "System: receipt received — pending validation — {{ time }}",
+      "paymentApproved": "System: payment validated by merchant — {{ time }}",
+      "noReceiptReminder": "System: no receipt received — automatic reminder sent — {{ time }}",
+      "conversationClosed": "System: conversation closed due to inactivity — no client response — {{ time }}",
+      "receiptRejected": "System: receipt rejected — illegible image — {{ time }}",
+      "orderBlocked": "System: order blocked due to multiple rejections — {{ time }}"
+    }
+  },
+  "dashboard-home": {
+    "welcome": "Welcome to Entreprenly! 👋",
+    "welcomeSub": "Here is a summary of your business today.",
+    "alertBanner": "You have <strong>{{count}}</strong> inventory alert(s) that need attention.",
+    "alertBannerLink": "View inventory →",
+    "quickLinksLabel": "Quick access to modules",
+    "links": {
+      "sales": "Sales",
+      "chatbot": "Chatbot",
+      "orders": "Orders",
+      "inventory": "Inventory",
+      "help": "Help",
+      "goTo": "Go to {{label}}"
+    },
+    "cash": {
+      "title": "Today's revenue",
+      "total": "Total accumulated today",
+      "cash": "Cash",
+      "digital": "Yape / Plin / Card",
+      "goToSales": "Go to Sales →"
+    },
+    "chatbot": {
+      "title": "Chatbot Status",
+      "connected": "WhatsApp Connected",
+      "connectedSub": "The chatbot is active and receiving messages.",
+      "disconnected": "WhatsApp Disconnected",
+      "disconnectedSub": "The chatbot is not active.",
+      "connectNow": "Connect now →",
+      "pendingOrders_one": "{{count}} order awaiting payment validation.",
+      "pendingOrders_other": "{{count}} orders awaiting payment validation."
+    },
+    "orders": {
+      "title": "Recent orders",
+      "viewAll": "View all →",
+      "empty": "No orders yet.",
+      "approved": "Approved",
+      "pending": "Pending",
+      "status": {
+        "confirmed": "Approved",
+        "blocked": "Blocked",
+        "cancelled": "Cancelled",
+        "receiptReceived": "Receipt received",
+        "awaitingReceipt": "Awaiting receipt"
+      }
+    },
+    "alerts": {
+      "title": "Inventory alerts",
+      "viewInventory": "View inventory →",
+      "loadingLabel": "Loading inventory alerts",
+      "empty": "All good!",
+      "emptySub": "No inventory alerts.",
+      "types": {
+        "out_of_stock": "Out of stock",
+        "expiring_soon": "Expiring soon",
+        "expired": "Expired",
+        "low_stock": "Low stock ({{count}})"
+      }
+    }
+  },
+  "dashboard-help": {
+    "title": "How can we help you?",
+    "subtitle": "Search for articles, guides and quick answers for your business.",
+    "searchPlaceholder": "Type your question here…",
+    "searchBtn": "Search",
+    "backBtn": "Back",
+    "popular": "Most consulted articles",
+    "allArticles": "All articles",
+    "readTime": "min read",
+    "categories": "Categories",
+    "articlesLabel": "articles",
+    "ctaTitle": "Didn't find what you were looking for?",
+    "ctaSub": "Tell us your problem and we'll help you solve it.",
+    "ctaBtn": "Report a problem",
+    "openArticle": "Open article: {{title}}",
+    "results": {
+      "count_one": "{{count}} result for",
+      "count_other": "{{count}} results for",
+      "relatedCategories": "Related categories",
+      "noResults": "No results found for \"{{q}}\"",
+      "noResultsSub": "Try a different keyword or browse the categories.",
+      "report": "Report a problem"
+    },
+    "article": {
+      "help": "Help",
+      "useful": "Was this article helpful?",
+      "yes": "Yes, it helped",
+      "no": "Not helpful",
+      "thanks": "Thanks for your feedback!",
+      "notUsefulTitle": "Sorry it wasn't helpful",
+      "notUsefulSub": "You can report the problem and our team will contact you.",
+      "report": "Report problem",
+      "cancel": "Cancel",
+      "related": "Related articles",
+      "backToHome": "Back to home"
+    },
+    "report": {
+      "title": "Report a problem",
+      "subtitle": "Our team will review your report and contact you soon.",
+      "errorsCount_one": "Please fix <strong>{{count}}</strong> field to continue.",
+      "errorsCount_other": "Please fix <strong>{{count}}</strong> fields to continue.",
+      "category": "Problem category",
+      "categoryRequired": "Select a valid category.",
+      "module": "Affected module",
+      "moduleDefault": "-- Select a module --",
+      "moduleRequired": "Select the affected module.",
+      "description": "Problem description",
+      "descriptionPlaceholder": "Describe in detail what happened and when…",
+      "descriptionRequired": "Describe the problem (minimum 5 characters).",
+      "when": "When did it happen?",
+      "whenOptional": "(optional)",
+      "submit": "Submit report"
+    },
+    "success": {
+      "title": "Report submitted!",
+      "subtitle": "Your report was successfully received. Our team will review it soon.",
+      "ticketLabel": "Ticket number",
+      "summaryTitle": "Report summary",
+      "categoryLabel": "Category",
+      "moduleLabel": "Module",
+      "descriptionLabel": "Description",
+      "backToHome": "Back to home"
+    },
+    "error": {
+      "title": "We couldn't submit the report",
+      "subtitle": "There was a problem submitting your report. Please try again or contact us directly.",
+      "retry": "Try again",
+      "backToHome": "Back to home"
+    },
+    "categoryNames": {
+      "inventario": "Inventory",
+      "chatbot": "Chatbot",
+      "pedidos": "Orders & Payments",
+      "reportes": "Reports",
+      "suscripcion": "Subscription",
+      "configuracion": "Configuration",
+      "ventas": "Sales · Cash",
+      "lotes": "Lots"
+    },
+    "problemCategories": [
+      "-- Select a category --",
+      "Inventory / Products",
+      "Chatbot / WhatsApp",
+      "Orders & Payments",
+      "Sales & Cash",
+      "Subscription",
+      "Reports",
+      "Configuration",
+      "Other"
+    ],
+    "modules": [
+      "Inventory",
+      "Chatbot",
+      "Orders",
+      "Sales",
+      "Subscription",
+      "Reports",
+      "Configuration",
+      "General"
+    ],
+    "articles": {
+      "1": {
+        "title": "How to add a product to the inventory?",
+        "category": "Inventory",
+        "steps": [
+          "Go to the <strong>Inventory</strong> module in the side panel.",
+          "Select \"Products\" and click <strong>Add product</strong>.",
+          "Fill in the form: name, price and initial stock.",
+          "Save the changes — the product will appear in the catalog immediately."
+        ]
+      },
+      "2": {
+        "title": "How to connect the WhatsApp chatbot?",
+        "category": "Chatbot",
+        "steps": [
+          "Go to the <strong>Chatbot</strong> module in the configuration panel.",
+          "Press <strong>\"Connect WhatsApp\"</strong> to display the QR code.",
+          "Scan the QR code from your <strong>WhatsApp Business</strong> app on your phone.",
+          "Done! The chatbot is now active and can receive and respond to messages."
+        ]
+      },
+      "3": {
+        "title": "How to validate a payment from the dashboard?",
+        "category": "Orders & Payment",
+        "steps": [
+          "Access the <strong>Orders</strong> module from the side panel.",
+          "Filter orders with status \"Awaiting receipt\".",
+          "Open the order and review the receipt image sent by the client.",
+          "Press <strong>Approve payment</strong> if valid, or <strong>Reject</strong> with a reason."
+        ]
+      },
+      "4": {
+        "title": "How to manage expiry dates in lots?",
+        "category": "Lots",
+        "steps": [
+          "Go to the <strong>Inventory</strong> module and select the <strong>Lots</strong> tab.",
+          "Review the \"Expiry date\" column — lots expiring soon are highlighted.",
+          "Critical lots generate <strong>stock alerts</strong> automatically on the home page.",
+          "Edit a lot to adjust the date or available quantity."
+        ]
+      },
+      "5": {
+        "title": "How to check the daily cash summary?",
+        "category": "Sales · Cash",
+        "steps": [
+          "Go to the <strong>Sales</strong> module from the side panel.",
+          "The cash summary appears in the right side panel.",
+          "It shows the <strong>Day total</strong>, Cash and Yape/Plin separately.",
+          "It updates automatically with each completed sale."
+        ]
+      },
+      "6": {
+        "title": "What to do if the chatbot disconnects?",
+        "category": "Chatbot",
+        "steps": [
+          "Go to the <strong>Chatbot</strong> module — you will see a \"Session expired\" notice in red.",
+          "Press <strong>\"Reconnect\"</strong> to start the reconnection.",
+          "Scan the new QR code from your WhatsApp Business app.",
+          "The chatbot will resume its activity normally."
+        ]
+      },
+      "7": {
+        "title": "Can the chatbot send receipts automatically?",
+        "category": "Chatbot",
+        "steps": [
+          "The chatbot <strong>receives</strong> receipts sent by clients via WhatsApp.",
+          "It displays them automatically in the <strong>Orders</strong> module of the dashboard.",
+          "The merchant must <strong>validate them manually</strong> — the system does not approve them automatically.",
+          "After validation, the client receives an automatic confirmation via WhatsApp."
+        ]
+      },
+      "8": {
+        "title": "How to validate a payment?",
+        "category": "Orders & Payments",
+        "steps": [
+          "Access the <strong>Orders</strong> module.",
+          "Select the order pending validation.",
+          "Review the receipt attached by the client.",
+          "Approve or reject the payment accordingly."
+        ]
+      }
+    }
   }
 }

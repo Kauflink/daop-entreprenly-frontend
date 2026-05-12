@@ -1,64 +1,57 @@
 import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { TranslatePipe } from '@ngx-translate/core';
 import { WhatsappSession } from '../../../domain/model/whatsapp-session.entity';
 
 @Component({
   selector: 'app-whatsapp-status-card',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [RouterLink],
+  imports: [RouterLink, TranslatePipe],
   template: `
     @if (justConnected()) {
       <div class="mb-4 rounded-2xl border border-green-200 bg-green-50 p-4">
-        <p class="font-semibold text-green-700">Cuenta vinculada correctamente</p>
-        <p class="mt-1 text-sm text-green-600">
-          WhatsApp Business conectado exitosamente. El chatbot ya puede recibir y responder mensajes
-          de tus clientes de forma automática.
-        </p>
+        <p class="font-semibold text-green-700">{{ 'chatbot.statusCard.connectedTitle' | translate }}</p>
+        <p class="mt-1 text-sm text-green-600">{{ 'chatbot.statusCard.connectedDetail' | translate }}</p>
       </div>
     }
     @if (session()?.status === 'expired') {
       <div class="mb-4 rounded-2xl border border-red-200 bg-red-50 p-4">
-        <p class="font-semibold text-red-600">Sesión expirada</p>
-        <p class="mt-1 text-sm text-red-500">
-          La sesión de WhatsApp Business fue cerrada externamente. El chatbot no puede recibir
-          mensajes hasta que se restaure la conexión.
-        </p>
+        <p class="font-semibold text-red-600">{{ 'chatbot.statusCard.expiredTitle' | translate }}</p>
+        <p class="mt-1 text-sm text-red-500">{{ 'chatbot.statusCard.expiredDetail' | translate }}</p>
       </div>
     }
     <div class="rounded-2xl border border-gray-200 bg-white p-5">
       <div class="flex items-start justify-between gap-4">
         <div class="flex flex-col gap-1">
-          <p class="font-bold text-gray-900">WhatsApp Business</p>
+          <p class="font-bold text-gray-900">{{ 'chatbot.statusCard.cardTitle' | translate }}</p>
           @if (session(); as s) {
             <p class="text-sm text-gray-500">
               {{ s.phone }}
               @if (s.status === 'connected' && s.connectedAt) {
-                — activo desde el {{ s.connectedAt }}
+                — {{ 'chatbot.statusCard.activeSince' | translate }} {{ s.connectedAt }}
               }
               @if (s.status === 'expired' && s.connectedAt) {
-                — última conexión: {{ s.connectedAt }}
+                — {{ 'chatbot.statusCard.lastConnection' | translate }} {{ s.connectedAt }}
               }
               @if (s.businessName) {
                 · {{ s.businessName }}
               }
             </p>
             @if (s.status === 'connected') {
-              <p class="mt-1 text-sm text-gray-500">
-                El chatbot se encuentra operativo y procesando mensajes automáticamente.
-              </p>
+              <p class="mt-1 text-sm text-gray-500">{{ 'chatbot.statusCard.operative' | translate }}</p>
               <div class="mt-3 flex gap-2">
                 <a
                   routerLink="/dashboard/chatbot/conversations"
                   class="inline-block rounded-full bg-orange-500 px-5 py-1.5 text-sm font-medium text-white transition-colors hover:bg-orange-600"
                 >
-                  Ver conversaciones →
+                  {{ 'chatbot.statusCard.viewConversations' | translate }}
                 </a>
                 <button
                   type="button"
                   (click)="reconnect.emit()"
                   class="rounded-full border border-gray-300 px-4 py-1.5 text-sm text-gray-500 transition-colors hover:bg-gray-50"
                 >
-                  Desconectar
+                  {{ 'chatbot.statusCard.disconnect' | translate }}
                 </button>
               </div>
             }
@@ -67,7 +60,7 @@ import { WhatsappSession } from '../../../domain/model/whatsapp-session.entity';
                 class="mt-3 w-fit rounded-full border border-orange-500 px-4 py-1.5 text-sm text-orange-500 hover:bg-orange-50"
                 (click)="reconnect.emit()"
               >
-                Volver a vincular
+                {{ 'chatbot.statusCard.reconnect' | translate }}
               </button>
             }
           }
@@ -75,13 +68,9 @@ import { WhatsappSession } from '../../../domain/model/whatsapp-session.entity';
         @if (session(); as s) {
           <span
             class="shrink-0 rounded-full px-3 py-1 text-xs font-medium"
-            [class]="
-              s.status === 'connected'
-                ? 'bg-green-100 text-green-600'
-                : 'bg-red-100 text-red-500'
-            "
+            [class]="s.status === 'connected' ? 'bg-green-100 text-green-600' : 'bg-red-100 text-red-500'"
           >
-            {{ s.status === 'connected' ? '● Conectado' : '● Desconectado' }}
+            {{ (s.status === 'connected' ? 'chatbot.statusCard.connected' : 'chatbot.statusCard.disconnected') | translate }}
           </span>
         }
       </div>
