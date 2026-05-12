@@ -15,4 +15,8 @@ export const environment = {
   entreprenlyProviderInventoryWeightLotsEndpointPath: '/inventory-weight-lots',
   entreprenlyProviderInventoryStockAlertsEndpointPath: '/inventory-stock-alerts',
   entreprenlyProviderSubscriptionActivationEndpointPath: '/subscription-payment-confirmation/1',
+  entreprenlyProviderChatOrdersEndpointPath: '/chat-orders',
+  entreprenlyProviderChatMessagesEndpointPath: '/chat-messages',
+  entreprenlyProviderConversationsEndpointPath: '/conversations',
+  entreprenlyProviderWhatsappSessionsEndpointPath: '/whatsapp-sessions',
 };
