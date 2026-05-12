@@ -3,9 +3,15 @@ import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { ProfileStore } from '../../../application/profile-store';
 import { Theme } from '../../../domain/model/user-preferences.entity';
+import { Currency } from '../../../../shared/application/currency.store';
 
 interface LanguageOption {
   code: string;
+  label: string;
+}
+
+interface CurrencyOption {
+  code: Currency;
   label: string;
 }
 
@@ -34,16 +40,22 @@ export class PreferencesCard {
     'Europe/Madrid (UTC+01:00)',
   ];
 
+  protected readonly currencies: CurrencyOption[] = [
+    { code: 'PEN', label: 'S/ Sol (PEN)' },
+    { code: 'USD', label: '$ Dollar (USD)' },
+  ];
+
   protected readonly form = this.fb.nonNullable.group({
     language: ['es'],
     timezone: [''],
     theme: ['light' as Theme],
+    currency: ['PEN' as Currency],
   });
 
   constructor() {
     effect(() => {
-      const { language, timezone, theme } = this.store.preferences();
-      this.form.setValue({ language, timezone, theme }, { emitEvent: false });
+      const { language, timezone, theme, currency } = this.store.preferences();
+      this.form.setValue({ language, timezone, theme, currency }, { emitEvent: false });
     });
   }
 
@@ -56,6 +68,11 @@ export class PreferencesCard {
   protected onTimezoneChange(timezone: string): void {
     this.form.patchValue({ timezone });
     this.store.updatePreferences({ timezone });
+  }
+
+  protected onCurrencyChange(currency: Currency): void {
+    this.form.patchValue({ currency });
+    this.store.updatePreferences({ currency });
   }
 
   protected setTheme(theme: Theme): void {
