@@ -1,0 +1,91 @@
+<<<<<<< Updated upstream
+=======
+<section class="card detail-card">
+  <h2 class="card-title">
+    <span class="title-icon">☀</span>
+    {{ 'sales.detail.title' | translate }}
+  </h2>
+
+  <div class="search-container">
+    <input
+      type="text"
+      [placeholder]="'sales.search.placeholder' | translate"
+      class="search-input"
+      [ngModel]="searchTerm()"
+      (ngModelChange)="onSearchInput($event)"
+      (focus)="onSearchFocus()"
+      (blur)="onSearchBlur()"
+      [disabled]="loading()"
+    />
+
+    @if (isDropdownOpen() && filteredProducts().length > 0) {
+    <ul class="suggestions-dropdown">
+      @for (product of filteredProducts(); track product.id) {
+      <li class="suggestion-item" (mousedown)="onSelectProduct(product)">
+        {{ product.name }}
+      </li>
+      }
+    </ul>
+    }
+
+    @if (showNotFound()) {
+    <div class="not-found-message">
+      <span class="error-icon">⊘</span>
+      {{ 'sales.search.notFound' | translate }}
+    </div>
+    }
+
+    @if (showEmptyError()) {
+    <div class="not-found-message">
+      <span class="error-icon">⊘</span>
+      {{ 'sales.search.emptyTicket' | translate }}
+    </div>
+    }
+  </div>
+
+  <table class="ticket-table">
+    <thead>
+      <tr>
+        <th>{{ 'sales.ticket.col.product' | translate }}</th>
+        <th>{{ 'sales.ticket.col.type' | translate }}</th>
+        <th>{{ 'sales.ticket.col.quantity' | translate }}</th>
+        <th>{{ 'sales.ticket.col.unitPrice' | translate }}</th>
+        <th>{{ 'sales.ticket.col.subtotal' | translate }}</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      @if (ticketItems().length === 0) {
+      <tr class="empty-row">
+        <td colspan="6">{{ 'sales.ticket.empty' | translate }}</td>
+      </tr>
+      } @else {
+      @for (item of ticketItems(); track $index; let i = $index) {
+      <tr>
+        <td class="product-cell">{{ item.productName }}</td>
+        <td>
+          @if (item.type === 'unit') {
+          <span class="badge badge-unit">📦 {{ 'sales.ticket.badge.unit' | translate }}</span>
+          } @else {
+          <span class="badge badge-weight">⚖ {{ 'sales.ticket.badge.weight' | translate }}</span>
+          }
+        </td>
+        <td>
+          @if (item.type === 'unit') {
+          {{ item.quantity }} {{ 'sales.ticket.unit' | translate }}
+          } @else {
+          {{ item.weightKg }} {{ 'sales.ticket.kg' | translate }}
+          }
+        </td>
+        <td>{{ currencyStore.format(item.unitPrice) }}</td>
+        <td>{{ currencyStore.format(item.subtotal) }}</td>
+        <td>
+          <button class="delete-btn" (click)="itemDeleted.emit(i)">🗑</button>
+        </td>
+      </tr>
+      }
+      }
+    </tbody>
+  </table>
+</section>
+>>>>>>> Stashed changes

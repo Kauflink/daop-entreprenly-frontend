@@ -1,0 +1,42 @@
+<div class="modal-backdrop" aria-hidden="true"></div>
+
+<section
+  class="history-modal"
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby="history-modal-title"
+  cdkTrapFocus
+  cdkTrapFocusAutoCapture
+>
+  <button
+    class="icon-button"
+    type="button"
+    [attr.aria-label]="'subscription.modal.close' | translate"
+    (click)="close()"
+  >×</button>
+  <p class="eyebrow">{{ 'subscription.modal.eyebrow' | translate }}</p>
+  <h2 id="history-modal-title">{{ 'subscription.history.title' | translate }}</h2>
+
+  <div
+    class="history-list"
+    role="table"
+    [attr.aria-label]="'subscription.history.ariaLabel' | translate"
+  >
+    @for (item of activityRows(); track item.id) {
+      <div class="activity-row" role="row">
+        <strong role="cell">{{ item.title | translate }}</strong>
+        <span role="cell">{{ item.detail | translate }}</span>
+      </div>
+    }
+  </div>
+
+  @if (downloaded()) {
+    <p class="success-message" role="status" aria-live="polite">
+      {{ 'subscription.history.downloaded' | translate }}
+    </p>
+  }
+
+  <button class="primary-button" type="button" (click)="requestHistoryDownload()">
+    {{ 'subscription.history.downloadAction' | translate }}
+  </button>
+</section>

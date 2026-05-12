@@ -23,7 +23,29 @@
     <button type="submit" class="btn-primary">Guardar preferencias</button>
 
     <div class="field">
+<<<<<<< Updated upstream
       <span class="field__label" id="theme-label">Tema visual</span>
+=======
+      <label for="currency" class="field__label">
+        {{ 'profile.preferences.fields.currency.label' | translate }}
+      </label>
+      <select
+        id="currency"
+        formControlName="currency"
+        class="field__select"
+        (change)="onCurrencyChange($any($event.target).value)"
+      >
+        @for (c of currencies; track c.code) {
+          <option [value]="c.code">{{ c.label }}</option>
+        }
+      </select>
+    </div>
+
+    <div class="field">
+      <span class="field__label" id="theme-label">
+        {{ 'profile.preferences.theme.label' | translate }}
+      </span>
+>>>>>>> Stashed changes
       <div class="theme-toggle" role="group" aria-labelledby="theme-label">
         <button
           type="button"

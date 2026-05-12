@@ -13,8 +13,8 @@
   <div class="activity-list" role="table" [attr.aria-label]="'subscription.activity.title' | translate">
     @for (item of activity(); track item.id) {
       <div class="activity-row" role="row">
-        <strong role="cell">{{ item.title }}</strong>
-        <span role="cell">{{ item.detail }}</span>
+        <strong role="cell">{{ item.title | translate }}</strong>
+        <span role="cell">{{ item.detail | translate }}</span>
       </div>
     }
   </div>
