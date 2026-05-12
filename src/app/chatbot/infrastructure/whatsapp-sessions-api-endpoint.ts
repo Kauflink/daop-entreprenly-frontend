@@ -1,4 +1,5 @@
 import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../environments/environment';
 import { BaseApiEndpoint } from '../../shared/infrastructure/base-api-endpoint';
 import { WhatsappSession } from '../domain/model/whatsapp-session.entity';
 import { WhatsappSessionResource, WhatsappSessionsResponse } from './whatsapp-sessions-response';
@@ -11,6 +12,6 @@ export class WhatsappSessionsApiEndpoint extends BaseApiEndpoint<
   WhatsappSessionAssembler
 > {
   constructor(http: HttpClient, assembler: WhatsappSessionAssembler) {
-    super(http, 'http://localhost:3000/whatsapp-sessions', assembler);
+    super(http, `${environment.entreprenlyProviderApiBaseUrl}${environment.entreprenlyProviderWhatsappSessionsEndpointPath}`, assembler);
   }
 }
