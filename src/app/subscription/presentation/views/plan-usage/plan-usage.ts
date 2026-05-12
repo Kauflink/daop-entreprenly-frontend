@@ -1,5 +1,5 @@
-import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
-import { TranslatePipe } from '@ngx-translate/core';
+import { ChangeDetectionStrategy, Component, computed, inject, input } from '@angular/core';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { SubscriptionLimit } from '../../../domain/model/subscription-limit.entity';
 
 @Component({
@@ -12,6 +12,8 @@ import { SubscriptionLimit } from '../../../domain/model/subscription-limit.enti
 export class PlanUsage {
   readonly limits = input.required<SubscriptionLimit[]>();
   readonly planStatus = input.required<string>();
+
+  private readonly translate = inject(TranslateService);
 
   protected readonly statusLabel = computed(() =>
     this.controlPlanAccessEnabled() ? 'Control' : 'Free',
@@ -27,15 +29,16 @@ export class PlanUsage {
     }
 
     if (limit.id === 'products') {
-      return `${limit.usedValue} productos`;
+      return this.translate.instant('subscription.usage.limitValue.products', { count: limit.usedValue });
     }
 
     if (limit.id === 'active-batches') {
-      return `${limit.usedValue} lotes`;
+      return this.translate.instant('subscription.usage.limitValue.active-batches', { count: limit.usedValue });
     }
 
     if (limit.id === 'users') {
-      return limit.usedValue === 1 ? '1 usuario' : `${limit.usedValue} usuarios`;
+      const key = limit.usedValue === 1 ? 'subscription.usage.limitValue.users-singular' : 'subscription.usage.limitValue.users-plural';
+      return this.translate.instant(key, { count: limit.usedValue });
     }
 
     return `${limit.usedValue}`;

@@ -248,32 +248,264 @@
       "billingFrequencyLabel": "Frecuencia de facturación",
       "monthly": "Mensual",
       "annual": "Anual",
-      "upgradeAction": "Actualizar a Plan Control"
+      "upgradeAction": "Actualizar a Plan Control",
+      "renewAction": "Renovar suscripción",
+      "keepPlanAction": "Mantener plan",
+      "cancelAction": "Solicitar cancelación",
+      "priceLabel": {
+        "monthly": "pago mensual",
+        "annual": "pago anual",
+        "free": "por mes"
+      },
+      "priceAriaLabel": "Costo actual {{ price }} soles {{ label }}"
     },
     "usage": {
       "eyebrow": "Uso del plan",
       "title": "Límites disponibles",
-      "counter": "{{ used }} de {{ max }}"
+      "counter": "{{ used }} de {{ max }}",
+      "usageOf": "Uso de {{ label }}",
+      "limitValue": {
+        "products": "{{ count }} productos",
+        "active-batches": "{{ count }} lotes",
+        "users-singular": "1 usuario",
+        "users-plural": "{{ count }} usuarios"
+      }
     },
     "billing": {
       "eyebrow": "Facturación",
-      "title": "Método de pago y datos fiscales"
+      "title": "Método de pago y datos fiscales",
+      "paymentMethod": {
+        "title": "Método de pago",
+        "emptyDescription": "Aún no hay tarjeta o medio de pago registrado.",
+        "addAction": "Agregar métodos de pago",
+        "manageAction": "Gestionar métodos de pago",
+        "available": "Disponible para pagos y renovaciones",
+        "additionalMethod": "+{{ count }} método adicional",
+        "additionalMethods": "+{{ count }} métodos adicionales",
+        "cardEnding": "{{ brand }} terminada en {{ lastFour }} · vence {{ month }}/{{ year }}"
+      },
+      "fiscalData": {
+        "title": "Datos de facturación",
+        "emptyDescription": "Completa RUC, razón social y correo de comprobantes.",
+        "addAction": "Completar datos",
+        "editAction": "Editar datos fiscales",
+        "complete": "Información fiscal completa"
+      }
     },
     "activity": {
       "eyebrow": "Historial",
       "title": "Actividad de la suscripción",
-      "downloadAction": "Descargar historial"
+      "downloadAction": "Descargar historial",
+      "created-account": {
+        "title": "Cuenta creada",
+        "detail": "16 abril 2026 - Plan Free asignado automáticamente"
+      },
+      "current-status": {
+        "title": "Estado actual",
+        "detail": {
+          "free": "Plan Free activo - Sin cargos registrados",
+          "active": "Plan Control activo - S/ 89/mes",
+          "scheduled-cancellation": "Cancelación programada - S/ 89/mes"
+        }
+      },
+      "billing": {
+        "title": "Facturación",
+        "detail": {
+          "free": "Pendiente de completar para actualizar a Plan Control",
+          "dashboard": "Próxima renovación: 11 de junio de 2026 - pago mensual",
+          "active-renewal": "Próxima renovación: 10 de junio de 2026 - pago mensual",
+          "cancelled": "Acceso vigente hasta el 10 de junio de 2026 - sin siguiente cobro",
+          "renewalWithDate": "Próxima renovación: {{ date }} - {{ cycle }}",
+          "accessUntil": "Acceso vigente hasta el {{ date }} - sin siguiente cobro",
+          "unknownDate": "Acceso vigente hasta la fecha registrada en tu suscripción"
+        }
+      }
     },
     "plans": {
       "free": {
         "name": "Plan Free",
         "status": "Plan Free activo",
-        "badge": "Plan actual"
+        "badge": "Plan actual",
+        "shortDescription": "Incluido automáticamente al crear la cuenta. No requiere tarjeta ni genera cargos.",
+        "features": {
+          "basicInventory": "Inventario básico con productos y lotes limitados.",
+          "manualMovements": "Registro manual de movimientos principales.",
+          "noChatbot": "Sin chatbot de WhatsApp ni automatizaciones avanzadas."
+        }
       },
       "control": {
         "name": "Plan Control",
-        "badge": "Recomendado"
+        "badge": "Recomendado",
+        "badgeLabel": "Recomendado",
+        "statusLabel": {
+          "active": "Plan Control activo",
+          "recommended": "Recomendado",
+          "scheduled-cancellation": "Cancelación programada"
+        },
+        "shortDescription": {
+          "active": "Tu plan está activo y se renovará automáticamente.",
+          "recommended": "Opera sin restricciones con automatizaciones, alertas y trazabilidad completa.",
+          "scheduled-cancellation": "Tu plan finalizará en su fecha de vencimiento. No se renovará automáticamente."
+        },
+        "features": {
+          "unlimitedProducts": "Productos y lotes ilimitados",
+          "salesOperations": "Ventas, pedidos, caja y trazabilidad en un solo flujo.",
+          "chatbot": "Chatbot de WhatsApp y alertas operativas incluidas."
+        }
+      },
+      "current": {
+        "badgeLabel": "Plan actual"
       }
+    },
+    "limits": {
+      "products": {
+        "label": "Productos",
+        "ariaLabel": "Uso de Productos"
+      },
+      "active-batches": {
+        "label": "Lotes activos",
+        "ariaLabel": "Uso de Lotes activos"
+      },
+      "users": {
+        "label": "Usuarios",
+        "ariaLabel": "Uso de Usuarios"
+      }
+    },
+    "modal": {
+      "close": "Cerrar modal",
+      "eyebrow": "Suscripción"
+    },
+    "planAction": {
+      "renew": {
+        "title": "Renovar suscripción",
+        "cardTitle": "Renovación preparada",
+        "cardDescription": "La nueva vigencia se extenderá hasta el {{ date }}."
+      },
+      "cancel": {
+        "title": "Solicitar cancelación",
+        "cardTitle": "Confirma la cancelación",
+        "cardDescription": "Tu acceso al Plan Control se mantendrá hasta el {{ date }}. No se realizará el siguiente cobro."
+      },
+      "cancelSuccess": {
+        "title": "Cancelación programada",
+        "cardTitle": "Cancelación programada",
+        "cardDescription": "La solicitud fue registrada. Tu acceso premium continúa hasta el {{ date }}."
+      },
+      "keep": {
+        "title": "Mantener Plan Control",
+        "cardTitle": "Mantener renovación activa",
+        "cardDescription": "Se cancelará la solicitud de baja y el plan seguirá renovándose al finalizar la vigencia actual: {{ date }}."
+      },
+      "understood": "Entendido",
+      "confirmCancellation": "Confirmar cancelación",
+      "keepPlan": "Mantener Plan Control"
+    },
+    "upgrade": {
+      "title": "Actualizar a Plan Control",
+      "navAriaLabel": "Pasos de actualización",
+      "steps": {
+        "plan": "Plan",
+        "billing": "Facturación",
+        "payment": "Pago",
+        "activation": "Activación"
+      },
+      "activated": {
+        "title": "Suscripción activada",
+        "cardTitle": "Plan Control activado",
+        "cardDescription": "Tu suscripción ya está activa. Puedes cerrar este popup y continuar operando.",
+        "understood": "Entendido"
+      },
+      "plan": {
+        "helper": "Elegiste Plan Control. Revisa el ciclo de cobro antes de continuar con la suscripción.",
+        "billingLabel": {
+          "monthly": "Facturación mensual",
+          "annual": "Facturación anual"
+        },
+        "priceLabel": {
+          "monthly": "S/ 89/mes",
+          "annual": "S/ 890/año"
+        }
+      },
+      "billing": {
+        "documentType": "Tipo de documento",
+        "documentNumber": "Número de documento",
+        "documentNumberError": "Ingresa un documento válido.",
+        "businessName": "Razón social o nombre",
+        "businessNameError": "Ingresa la razón social o nombre.",
+        "receiptEmail": "Correo de comprobantes",
+        "receiptEmailError": "Ingresa un correo válido.",
+        "fiscalAddress": "Dirección fiscal",
+        "fiscalAddressError": "Ingresa la dirección fiscal."
+      },
+      "payment": {
+        "registeredCard": "Tarjeta registrada",
+        "cardEnding": "{{ brand }} terminada en {{ lastFour }} · vence {{ month }}/{{ year }}",
+        "selectMethod": "Selecciona un método de pago",
+        "cardEndingShort": "{{ brand }} terminada en {{ lastFour }}",
+        "holderExpiry": "{{ holder }} · vence {{ month }}/{{ year }}",
+        "totalCharge": "Total a cobrar",
+        "cardNumber": "Número de tarjeta",
+        "cardNumberError": "Ingresa un número de tarjeta válido.",
+        "holder": "Titular",
+        "holderError": "Ingresa el nombre del titular.",
+        "expiry": "Vencimiento",
+        "expiryError": "Usa el formato MM/AA.",
+        "cvvError": "Ingresa 3 o 4 dígitos."
+      },
+      "activation": {
+        "readyTitle": "Listo para activar",
+        "readyDescription": "Al confirmar, el Plan Control queda activo y se habilitan productos, lotes, pedidos y caja sin límites del plan gratuito.",
+        "payAndActivate": "Pagar y activar suscripción"
+      },
+      "continue": "Continuar",
+      "back": "Volver"
+    },
+    "billingData": {
+      "title": "Completar datos de facturación",
+      "cancel": "Cancelar",
+      "save": "Guardar datos"
+    },
+    "paymentMethod": {
+      "addTitle": "Agregar método de pago",
+      "holderPlaceholder": "Nombre del titular",
+      "save": "Guardar cambios"
+    },
+    "history": {
+      "title": "Historial de suscripción",
+      "ariaLabel": "Historial de suscripción",
+      "downloaded": "Historial descargado correctamente con la actividad visible de la suscripción.",
+      "downloadAction": "Descargar historial",
+      "paymentMethod": {
+        "title": "Método de pago",
+        "empty": "Sin método de pago registrado.",
+        "detail": "{{ brand }} terminada en {{ lastFour }} registrada para pagos y renovaciones"
+      },
+      "fiscalData": {
+        "title": "Datos fiscales",
+        "empty": "Datos fiscales pendientes de completar.",
+        "detail": "{{ documentType }} {{ documentNumber }} - {{ businessName }}"
+      }
+    },
+    "store": {
+      "feedback": {
+        "planSelected": "Plan Control seleccionado. Completa facturación para continuar.",
+        "activated": "Suscripción actualizada a Plan Control.",
+        "cancelled": "Cancelación programada.",
+        "kept": "Plan Control se mantendrá activo.",
+        "paymentAdded": "Método de pago registrado para la suscripción.",
+        "paymentSelected": "Método de pago seleccionado para la suscripción.",
+        "fiscalCompleted": "Datos fiscales completados para facturación.",
+        "emptyHistory": "No hay actividad suficiente para descargar.",
+        "historyDownloaded": "Historial de suscripción descargado."
+      },
+      "csv": {
+        "filename": "historial-suscripcion-entreprenly.csv",
+        "header": "Evento,Detalle"
+      },
+      "paymentMethodActionLabel": "Agregar métodos de pago",
+      "fiscalDataActionLabel": "Editar datos fiscales",
+      "paymentMethodDescription": "{{ brand }} terminada en {{ lastFour }} - vence {{ month }}/{{ year }}",
+      "fiscalDataDescription": "{{ documentType }} {{ documentNumber }} - {{ businessName }}"
     }
   },
   "pageTitle": {
@@ -397,6 +629,9 @@
         },
         "timezone": {
           "label": "Zona horaria"
+        },
+        "currency": {
+          "label": "Divisa"
         }
       },
       "theme": {
