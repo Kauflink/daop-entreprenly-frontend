@@ -17,6 +17,7 @@ export interface InventoryDisplayItem {
 interface QuickLink {
   labelKey: string;
   subtextKey: string;
+  subtextDynamic?: string;
   icon: 'products' | 'lots' | 'chat' | 'orders' | 'reports';
   route: string;
   alertBadge?: boolean;
@@ -117,40 +118,66 @@ export class Home implements OnInit {
     return items;
   });
 
+  // ── Computed: productos e inventario counts ─────────────────────────────────
+  protected readonly productCount = computed(() =>
+    this.inventoryStore.unitProducts().length + this.inventoryStore.weightProducts().length,
+  );
+
+  protected readonly lotCount = computed(() =>
+    this.inventoryStore.unitLots().length + this.inventoryStore.weightLots().length,
+  );
+
   // ── Quick links reactivos (badge en Lotes si hay alertas) ───────────────────
-  protected readonly quickLinks = computed<QuickLink[]>(() => [
-    {
-      labelKey: 'dashboard-home.links.products',
-      subtextKey: 'dashboard-home.links.productsSub',
-      icon: 'products',
-      route: '/dashboard/inventory',
-    },
-    {
-      labelKey: 'dashboard-home.links.lots',
-      subtextKey: 'dashboard-home.links.lotsSub',
-      icon: 'lots',
-      route: '/dashboard/inventory/lots',
-      alertBadge: this.hasAlerts(),
-    },
-    {
-      labelKey: 'dashboard-home.links.chatbot',
-      subtextKey: 'dashboard-home.links.chatbotSub',
-      icon: 'chat',
-      route: '/dashboard/chatbot',
-    },
-    {
-      labelKey: 'dashboard-home.links.orders',
-      subtextKey: 'dashboard-home.links.ordersSub',
-      icon: 'orders',
-      route: '/dashboard/chatbot/orders',
-    },
-    {
-      labelKey: 'dashboard-home.links.reports',
-      subtextKey: 'dashboard-home.links.reportsSub',
-      icon: 'reports',
-      route: '/dashboard/sales',
-    },
-  ]);
+  protected readonly quickLinks = computed<QuickLink[]>(() => {
+    const productCount = this.productCount();
+    const lotCount     = this.lotCount();
+    const chatConnected = this.isChatbotConnected();
+    const chatsCount   = this.chatbotChatsCount();
+    const ordersCount  = this.chatbotOrdersCount();
+    const lang = this.translate.currentLang ?? 'es';
+    const activeLabel  = lang === 'en' ? 'Active' : 'Activo';
+    const disconnected = lang === 'en' ? 'Disconnected' : 'Desconectado';
+    return [
+      {
+        labelKey: 'dashboard-home.links.products',
+        subtextKey: '',
+        subtextDynamic: `${productCount} ${lang === 'en' ? 'active' : 'activos'}`,
+        icon: 'products',
+        route: '/dashboard/inventory',
+      },
+      {
+        labelKey: 'dashboard-home.links.lots',
+        subtextKey: '',
+        subtextDynamic: `${lotCount} ${lang === 'en' ? 'lots' : 'lotes'}`,
+        icon: 'lots',
+        route: '/dashboard/inventory/lots',
+        alertBadge: this.hasAlerts(),
+      },
+      {
+        labelKey: 'dashboard-home.links.chatbot',
+        subtextKey: '',
+        subtextDynamic: chatConnected
+          ? `${activeLabel} · ${chatsCount} chats`
+          : disconnected,
+        icon: 'chat',
+        route: '/dashboard/chatbot',
+      },
+      {
+        labelKey: 'dashboard-home.links.orders',
+        subtextKey: '',
+        subtextDynamic: `${ordersCount} ${lang === 'en' ? 'today' : 'hoy'}`,
+        icon: 'orders',
+        route: '/dashboard/chatbot/orders',
+      },
+      {
+        labelKey: 'dashboard-home.links.reports',
+        subtextKey: 'dashboard-home.links.reportsSub',
+        subtextDynamic: '',
+        icon: 'reports',
+        route: '/dashboard/sales',
+      },
+    ];
+  });
 
   // ── Today label ─────────────────────────────────────────────────────────────
   protected get todayLabel(): string {
@@ -169,6 +196,16 @@ export class Home implements OnInit {
   }
 
   // ── Helpers ──────────────────────────────────────────────────────────────────
+  protected clientName(conversationId: number): string {
+    return this.chatbotStore.conversations().find(c => c.id === conversationId)?.clientName ?? 'Cliente';
+  }
+
+  protected orderTime(dateStr: string): string {
+    const lang   = this.translate.currentLang ?? this.translate.defaultLang ?? 'es';
+    const locale = lang === 'en' ? 'en-US' : 'es-PE';
+    return new Date(dateStr).toLocaleTimeString(locale, { hour: '2-digit', minute: '2-digit' });
+  }
+
   protected orderStatusLabel(status: string, hasReceipt: boolean): string {
     const k = status === 'CONFIRMED'       ? 'confirmed'
             : status === 'BLOCKED'         ? 'blocked'
