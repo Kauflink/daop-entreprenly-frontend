@@ -1,6 +1,5 @@
 import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { RouterLink } from '@angular/router';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 
 // ── Domain types ──────────────────────────────────────────────────────────────
@@ -162,7 +161,7 @@ const CATEGORIES: HelpCategory[] = [
 @Component({
   selector: 'app-help',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [ReactiveFormsModule, RouterLink, TranslatePipe],
+  imports: [ReactiveFormsModule, TranslatePipe],
   templateUrl: './help.html',
   styleUrl: './help.css',
 })
@@ -268,11 +267,12 @@ export class Help {
     if (!useful) this.showQuickReport.set(true);
   }
 
-  protected onGoReport(prefillModule?: string): void {
+  protected onGoReport(prefillModuleKey?: string): void {
     this.reportForm.reset();
     this.formSubmitted.set(false);
-    if (prefillModule) {
-      this.reportForm.patchValue({ module: prefillModule });
+    if (prefillModuleKey) {
+      const translated = this.translate.instant(prefillModuleKey);
+      this.reportForm.patchValue({ module: translated });
     }
     this.view.set('report');
   }
