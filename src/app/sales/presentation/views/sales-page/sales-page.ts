@@ -1,10 +1,13 @@
 import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 import { SalesStore } from '../../../application/sales-store';
+import { CurrencyStore } from '../../../../shared/application/currency.store';
+import { PaymentMethod } from '../../../domain/model/payment-method.enum';
 import { ProductSummary } from '../../../domain/model/product-summary.entity';
+import { SaleItem } from '../../../domain/model/sale-item.entity';
 import { QuantityModal } from '../../components/quantity-modal/quantity-modal';
 import { WeightModal } from '../../components/weight-modal/weight-modal';
 import { CashSummary } from '../cash-summary/cash-summary';
-import { PaymentMethod, PaymentMethodComponent } from '../payment-method/payment-method';
+import { PaymentSelection, PaymentMethodComponent } from '../payment-method/payment-method';
 import { SalesCart, TicketItem } from '../sales-cart/sales-cart';
 import { TranslatePipe } from '@ngx-translate/core';
 
@@ -24,6 +27,7 @@ import { TranslatePipe } from '@ngx-translate/core';
 })
 export class SalesPage {
   protected readonly store = inject(SalesStore);
+  protected readonly currencyStore = inject(CurrencyStore);
 
   // === Modales ===
   protected readonly selectedProduct = signal<ProductSummary | null>(null);
@@ -48,7 +52,7 @@ export class SalesPage {
   protected readonly itemCount = computed<number>(() => this.ticketItems().length);
 
   // === Método de pago ===
-  protected readonly paymentMethod = signal<PaymentMethod>(null);
+  protected readonly paymentMethod = signal<PaymentSelection>(null);
   protected readonly showPaymentError = signal<boolean>(false);
   protected readonly showEmptyTicketError = signal<boolean>(false);
   protected readonly showSuccessModal = signal<boolean>(false);
@@ -120,14 +124,30 @@ export class SalesPage {
       this.showEmptyTicketError.set(true);
       return;
     }
-    if (this.paymentMethod() === null) {
+    const selection = this.paymentMethod();
+    if (selection === null) {
       this.showPaymentError.set(true);
       return;
     }
 
-    this.store.addSaleToRegister(this.subtotal(), this.paymentMethod() === 'DIGITAL');
-    this.showSuccessModal.set(true);
+    const isDigital = selection === 'DIGITAL';
+    const domainMethod = isDigital ? PaymentMethod.CARD : PaymentMethod.CASH;
+    const saleItems = this.ticketItems().map(
+      (t) =>
+        new SaleItem({
+          productId: t.productId,
+          productName: t.productName,
+          quantity: t.quantity,
+          weightKg: t.weightKg,
+          unitPrice: t.unitPrice,
+          subtotal: t.subtotal,
+        }),
+    );
 
+    this.store.addSaleToRegister(this.subtotal(), isDigital);
+    this.store.createSale(saleItems, domainMethod, this.subtotal());
+
+    this.showSuccessModal.set(true);
     setTimeout(() => {
       if (this.showSuccessModal()) this.onCloseSuccessModal();
     }, 2000);

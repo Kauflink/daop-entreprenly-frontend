@@ -5,6 +5,7 @@ import { ConversationsApiEndpoint } from './conversations-api-endpoint';
 import { ChatMessagesApiEndpoint } from './chat-messages-api-endpoint';
 import { ChatOrdersApiEndpoint } from './chat-orders-api-endpoint';
 import { WhatsappSessionsApiEndpoint } from './whatsapp-sessions-api-endpoint';
+import { InventoryProductsApiEndpoint } from './inventory-products-api-endpoint';
 import { ConversationAssembler } from './conversation-assembler';
 import { ChatMessageAssembler } from './chat-message-assembler';
 import { ChatOrderAssembler } from './chat-order-assembler';
@@ -22,4 +23,5 @@ export class ChatbotApiService extends BaseApi {
   readonly chatMessages = new ChatMessagesApiEndpoint(this.http, this.chatMessageAssembler);
   readonly chatOrders = new ChatOrdersApiEndpoint(this.http, this.chatOrderAssembler);
   readonly whatsappSessions = new WhatsappSessionsApiEndpoint(this.http, this.whatsappSessionAssembler);
+  readonly inventoryProducts = new InventoryProductsApiEndpoint(this.http);
 }
