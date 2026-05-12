@@ -7,7 +7,7 @@ import { TranslatePipe } from '@ngx-translate/core';
 import { MatIcon } from '@angular/material/icon';
 
 import { InventoryStoreService } from '../../../application/inventory-store.service';
-import { buildInventoryLotAlerts, summarizeLotAlerts } from '../../../domain/model/lot-alert';
+import { StockAlert } from '../../../domain/model/stock-alert.entity';
 
 import { UnitProduct } from '../../../domain/model/unit-product.entity';
 import { WeightProduct } from '../../../domain/model/weight-product.entity';
@@ -53,7 +53,7 @@ export class LotListComponent {
   activeAlertIndex = signal(0);
 
   private readonly rawAlerts = computed(() =>
-    buildInventoryLotAlerts(
+    StockAlert.buildFromLots(
       this.store.unitProducts(),
       this.store.weightProducts(),
       this.store.unitLots(),
@@ -61,7 +61,7 @@ export class LotListComponent {
     )
   );
 
-  alertSummaries = computed(() => summarizeLotAlerts(this.rawAlerts()));
+  alertSummaries = computed(() => StockAlert.summarize(this.rawAlerts()));
 
   activeAlertSummary = computed(() => {
     const alerts = this.alertSummaries();
@@ -79,11 +79,11 @@ export class LotListComponent {
   );
 
   expiredAlertsCount = computed(() =>
-    this.rawAlerts().filter(alert => alert.kind === 'expired').length
+    this.rawAlerts().filter(alert => alert.isExpired).length
   );
 
   outOfStockAlertsCount = computed(() =>
-    this.rawAlerts().filter(alert => alert.kind === 'outOfStock').length
+    this.rawAlerts().filter(alert => alert.isOutOfStock).length
   );
 
   // ───────────────── PRODUCTS SELECTOR ─────────────────

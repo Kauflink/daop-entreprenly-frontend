@@ -18,7 +18,7 @@
   position: relative;
   width: min(680px, 100%);
   border-radius: 28px;
-  background: #ffffff;
+  background: var(--color-card-bg);
   box-shadow: 0 28px 64px rgb(45 39 34 / 22%);
   padding: 30px;
 }
@@ -31,10 +31,10 @@
   width: 38px;
   height: 38px;
   place-items: center;
-  border: 1px solid #eadbd0;
+  border: 1px solid var(--color-inner-bg);
   border-radius: 50%;
-  background: #ffffff;
-  color: #5a260f;
+  background: var(--color-card-bg);
+  color: var(--color-label-accent);
   cursor: pointer;
   font: inherit;
   font-size: 24px;
@@ -44,8 +44,8 @@
 .eyebrow {
   display: inline-flex;
   border-radius: 999px;
-  background: #f0e8e3;
-  color: #5a260f;
+  background: var(--color-inner-bg);
+  color: var(--color-label-accent);
   font-size: 11px;
   font-weight: 800;
   letter-spacing: 1.4px;
@@ -62,7 +62,7 @@ p {
 }
 
 h2 {
-  color: #080604;
+  color: var(--color-text-strong);
   font-size: 28px;
   font-weight: 850;
   line-height: 1.16;
@@ -76,7 +76,7 @@ h3 {
 }
 
 .helper-text {
-  color: #6e645d;
+  color: var(--color-text-muted);
   font-size: 13px;
   line-height: 1.6;
   margin-top: 28px;
@@ -91,10 +91,10 @@ h3 {
 
 .step-tabs button {
   min-height: 44px;
-  border: 1px solid #eadbd0;
+  border: 1px solid var(--color-card-border);
   border-radius: 12px;
-  background: #fffdfa;
-  color: #a17a66;
+  background: var(--color-inner-bg);
+  color: rgb(81 30 0 / 50%);
   cursor: pointer;
   font: inherit;
   font-size: 11px;
@@ -105,17 +105,7 @@ h3 {
 
 .step-tabs button:disabled {
   cursor: default;
-}
-
-.step-tab--active {
-  border-color: #fedcac;
-  color: #5a260f;
-}
-
-.step-tab--complete {
-  border-color: #b9e2c8;
-  background: #f2fbf6;
-  color: #075f24;
+  opacity: 1;
 }
 
 .summary-card,
@@ -125,14 +115,14 @@ h3 {
   align-items: center;
   justify-content: space-between;
   gap: 20px;
-  border: 1px solid #eadbd0;
+  border: 1px solid var(--color-inner-bg);
   border-radius: 18px;
   margin-top: 18px;
   padding: 22px;
 }
 
 .summary-card strong {
-  color: #5a260f;
+  color: var(--color-label-accent);
   font-size: 24px;
   white-space: nowrap;
 }
@@ -140,7 +130,7 @@ h3 {
 .summary-card p,
 .ready-card p,
 .success-card p {
-  color: #716861;
+  color: var(--color-text-muted);
   font-size: 14px;
   line-height: 1.5;
   margin-top: 7px;
@@ -152,7 +142,7 @@ h3 {
 
 .ready-card {
   display: block;
-  border-color: #b9e2c8;
+  border-color: var(--color-success);
   background: #f2fbf6;
   margin-top: 24px;
   min-height: 118px;
@@ -172,19 +162,40 @@ h3 {
 label {
   display: grid;
   gap: 8px;
-  color: #5a260f;
+  color: var(--color-label-accent);
   font-size: 12px;
   font-weight: 850;
 }
 
-input {
+.field-wide {
+  grid-column: 1 / -1;
+}
+
+input,
+select {
   min-height: 46px;
-  border: 1px solid #eadbd0;
+  border: 1px solid var(--color-inner-bg);
   border-radius: 12px;
-  background: #fffdfa;
-  color: #080604;
+  background: var(--color-card-bg);
+  color: var(--color-text-strong);
   font: inherit;
   padding: 0 14px;
+}
+
+.card-number-field {
+  position: relative;
+}
+
+.card-number-field input {
+  width: 100%;
+  padding-right: 88px;
+}
+
+.card-number-field app-card-brand-badge {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
 }
 
 input[aria-invalid='true'] {
@@ -202,15 +213,47 @@ small {
   margin-top: 24px;
 }
 
+.payment-options {
+  display: grid;
+  gap: 10px;
+  border: 0;
+  margin: 0;
+  padding: 0;
+}
+
+.payment-options legend {
+  color: var(--color-label-accent);
+  font-size: 12px;
+  font-weight: 850;
+  margin-bottom: 6px;
+}
+
+.payment-option {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border: 1px solid var(--color-inner-bg);
+  border-radius: 16px;
+  background: var(--color-card-bg);
+  color: var(--color-text-strong);
+  cursor: pointer;
+  padding: 14px 16px;
+}
+
+.payment-option--selected {
+  border-color: var(--color-success);
+  background: var(--color-inner-bg);
+}
+
+.payment-option small {
+  color: var(--color-text-muted);
+}
+
 .modal-actions {
   display: flex;
   grid-column: 1 / -1;
   justify-content: flex-end;
   gap: 12px;
-  margin-top: 24px;
-}
-
-.modal-actions--end {
   margin-top: 24px;
 }
 
@@ -226,19 +269,20 @@ small {
 
 .primary-button {
   border: 0;
-  background: #f38313;
+  background: var(--color-primary);
   color: #ffffff;
   box-shadow: 0 14px 28px rgb(243 131 19 / 28%);
 }
 
 .secondary-button {
-  border: 1px solid #d8d2cb;
-  background: #ffffff;
-  color: #5a260f;
+  border: 1px solid var(--color-card-border);
+  background: var(--color-card-bg);
+  color: var(--color-label-accent);
 }
 
 button:focus-visible,
-input:focus-visible {
+input:focus-visible,
+select:focus-visible {
   outline: 3px solid rgb(243 131 19 / 32%);
   outline-offset: 3px;
 }

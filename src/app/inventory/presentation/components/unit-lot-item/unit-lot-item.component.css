@@ -1,9 +1,9 @@
 .lot-row-card {
   display: flex;
   align-items: center;
-  background: #ffffff;
-  border: 1.5px solid #e9ecef;
-  border-radius: 40px; /* Bordes muy redondeados según imagen */
+  background: var(--color-card-bg);
+  border: 1.5px solid var(--color-card-border);
+  border-radius: 40px;
   padding: 20px 35px;
   margin-bottom: 20px;
   gap: 30px;
@@ -11,7 +11,6 @@
   transition: transform 0.2s ease;
 }
 
-/* Badge de Vencido */
 .edit-action-container {
   position: relative;
   display: flex;
@@ -22,8 +21,8 @@
 .status-badge.expired {
   position: absolute;
   top: -12px;
-  background-color: #ff5252;
-  color: white;
+  background-color: var(--color-danger);
+  color: #fff;
   font-size: 10px;
   font-weight: 800;
   padding: 2px 10px;
@@ -33,14 +32,13 @@
   box-shadow: 0 2px 4px rgba(255, 82, 82, 0.3);
 }
 
-/* Botón Editar Cuadrado con sombra */
 .btn-edit-card {
   width: 50px;
   height: 50px;
-  background: #ffffff;
-  border: 1px solid #dee2e6;
+  background: var(--color-card-bg);
+  border: 1px solid var(--color-card-border);
   border-radius: 12px;
-  color: #495057;
+  color: var(--color-text-secondary);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -48,7 +46,6 @@
   box-shadow: 0 4px 6px rgba(0,0,0,0.05);
 }
 
-/* Grilla de datos */
 .lot-data-table {
   flex: 1;
   display: grid;
@@ -67,7 +64,7 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  color: #868e96;
+  color: var(--color-text-muted);
 }
 
 .icon-small {
@@ -82,22 +79,21 @@
 .col-value {
   font-size: 13px;
   font-weight: 700;
-  color: #212529;
+  color: var(--color-text-strong);
   padding-left: 2px;
 }
 
 .col-subtext {
   font-size: 11px;
-  color: #adb5bd;
+  color: var(--color-text-muted);
   font-weight: 500;
 }
 
-/* Botón Eliminar Rojo */
 .btn-delete-card {
   width: 42px;
   height: 42px;
-  background: #ff5252;
-  color: white;
+  background: var(--color-danger);
+  color: #fff;
   border: none;
   border-radius: 50%;
   display: flex;
@@ -109,5 +105,5 @@
 
 .btn-delete-card:hover {
   transform: scale(1.1);
-  background: #fa5252;
+  background: var(--color-danger);
 }

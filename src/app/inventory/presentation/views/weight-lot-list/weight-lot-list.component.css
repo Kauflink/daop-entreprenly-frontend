@@ -1,6 +1,6 @@
 .page-container {
   padding: 60px 20px;
-  background-color: #f5f5f5;
+  background-color: var(--color-bg-page);
   min-height: 100vh;
   position: relative;
   display: flex;
@@ -13,8 +13,8 @@
   position: absolute;
   top: 30px;
   right: 40px;
-  background: #000;
-  color: #fff;
+  background: var(--color-avatar-bg);
+  color: var(--color-avatar-fg);
   border: none;
   padding: 10px 25px;
   border-radius: 25px;
@@ -66,7 +66,7 @@
 }
 
 .lot-alert-copy strong {
-  color: #111827;
+  color: var(--color-text-strong);
   font-size: 15px;
   font-weight: 700;
 }
@@ -76,13 +76,18 @@
 }
 
 .lot-alert--danger {
-  background: #ffc1c7;
+  background: #fff1f1;
   border-color: #ff5a5f;
-  color: #ff3030;
+  color: #7f1111;
+}
+
+.lot-alert--danger .lot-alert-copy strong,
+.lot-alert--danger .lot-alert-copy span {
+  color: #7f1111;
 }
 
 .lot-alert--warning {
-  background: #fff6dc;
+  background: var(--color-theme-btn-active-bg);
   border-color: #d9a900;
   color: #c58b00;
 }
@@ -96,7 +101,7 @@
 .content-card {
   width: 100%;
   max-width: 900px;
-  background: white;
+  background: var(--color-card-bg);
   border-radius: 30px;
   padding: 40px;
   box-shadow: 0 4px 20px rgba(0,0,0,0.05);
@@ -110,8 +115,8 @@
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  background: #0C0F12;
-  color: white;
+  background: var(--color-avatar-bg);
+  color: var(--color-avatar-fg);
   padding: 5px 14px;
   border-radius: 999px;
   font-family: 'Reddit Sans', sans-serif;
@@ -126,7 +131,7 @@
   margin-top: 10px;
 }
 
-.title-group h2 { margin: 0; font-size: 24px; color: #1a1a1a; }
+.title-group h2 { margin: 0; font-size: 24px; color: var(--color-text-strong); }
 
 .stats-group .stat-item {
   display: flex;
@@ -134,15 +139,15 @@
   gap: 8px;
 }
 
-.stat-item .value { font-size: 20px; font-weight: 800; }
-.stat-item .label { color: #888; font-size: 14px; }
+.stat-item .value { font-size: 20px; font-weight: 800; color: var(--color-text-strong); }
+.stat-item .label { color: var(--color-text-muted); font-size: 14px; }
 
 /* 6 columns: edit, ID, Qty(Kg), Entry Date, QR, delete */
 .table-header-labels {
   display: grid;
   grid-template-columns: 50px 1fr 1fr 1fr 1.5fr 50px;
   padding: 0 20px 15px;
-  color: #adb5bd;
+  color: var(--color-text-muted);
   font-size: 13px;
   font-weight: 600;
   text-align: center;
@@ -152,8 +157,8 @@
   display: grid;
   grid-template-columns: 50px 1fr 1fr 1fr 1.5fr 50px;
   align-items: center;
-  background: #fff;
-  border: 1px solid #f1f3f5;
+  background: var(--color-card-bg);
+  border: 1px solid var(--color-card-border);
   border-radius: 20px;
   padding: 18px 15px 12px;
   margin-bottom: 12px;
@@ -161,11 +166,11 @@
 }
 
 .lot-row:hover {
-  border-color: #1a1a1a;
-  background: #fafafa;
+  border-color: var(--color-text-strong);
+  background: var(--color-bg-page);
 }
 
-.id-cell { font-weight: 700; color: #212529 !important; }
+.id-cell { font-weight: 700; color: var(--color-text-strong) !important; }
 .qty-cell { font-weight: 500; }
 
 .qr-cell {
@@ -174,8 +179,8 @@
   align-items: center;
 }
 
-.qr-code { font-family: monospace; font-size: 12px; color: #212529; }
-.qr-sub { font-size: 10px; color: #adb5bd; }
+.qr-code { font-family: monospace; font-size: 12px; color: var(--color-text-strong); }
+.qr-sub { font-size: 10px; color: var(--color-text-muted); }
 
 .row-action-cell {
   display: flex;
@@ -184,8 +189,8 @@
 }
 
 .btn-edit-square {
-  background: #f8f9fa;
-  border: 1px solid #dee2e6;
+  background: var(--color-inner-bg);
+  border: 1px solid var(--color-card-border);
   width: 40px;
   height: 40px;
   border-radius: 12px;
@@ -193,11 +198,11 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #495057;
+  color: var(--color-text-secondary);
 }
 
 .btn-delete-circle {
-  background: #fa5252;
+  background: var(--color-danger);
   border: none;
   width: 35px;
   height: 35px;
@@ -217,8 +222,8 @@
 }
 
 .btn-add-main {
-  background: #1a1a1a;
-  color: white;
+  background: var(--color-avatar-bg);
+  color: var(--color-avatar-fg);
   border: none;
   padding: 14px 35px;
   border-radius: 18px;
@@ -234,7 +239,8 @@
 
 .btn-add-main:hover {
   transform: translateY(-2px);
-  background: #333;
+  background: var(--color-avatar-bg);
+  opacity: 0.85;
 }
 
 .plus-icon { font-size: 22px; line-height: 1; }

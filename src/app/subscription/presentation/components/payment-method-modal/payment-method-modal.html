@@ -8,18 +8,13 @@
   cdkTrapFocus
   cdkTrapFocusAutoCapture
 >
-  <button
-    class="icon-button"
-    type="button"
-    [attr.aria-label]="'subscription.modal.close' | translate"
-    (click)="close()"
-  >×</button>
-  <p class="eyebrow">{{ 'subscription.modal.eyebrow' | translate }}</p>
-  <h2 id="payment-method-modal-title">{{ 'subscription.paymentMethod.addTitle' | translate }}</h2>
+  <button class="icon-button" type="button" aria-label="Cerrar modal" (click)="close()">×</button>
+  <p class="eyebrow">Suscripción</p>
+  <h2 id="payment-method-modal-title">Agregar método de pago</h2>
 
   <form class="modal-form" [formGroup]="paymentForm" (ngSubmit)="save()">
     <label>
-      <span>{{ 'subscription.upgrade.payment.cardNumber' | translate }}</span>
+      <span>Número de tarjeta</span>
       <div class="card-number-field">
         <input
           type="text"
@@ -32,26 +27,26 @@
         <app-card-brand-badge [brand]="detectedCardBrand()" />
       </div>
       @if (hasFieldError('cardNumber')) {
-        <small>{{ 'subscription.upgrade.payment.cardNumberError' | translate }}</small>
+        <small>Ingresa un número de tarjeta válido.</small>
       }
     </label>
 
     <label>
-      <span>{{ 'subscription.upgrade.payment.holder' | translate }}</span>
+      <span>Titular</span>
       <input
         type="text"
         autocomplete="cc-name"
         formControlName="holderName"
-        [attr.placeholder]="'subscription.paymentMethod.holderPlaceholder' | translate"
+        placeholder="Nombre del titular"
         [attr.aria-invalid]="hasFieldError('holderName')"
       />
       @if (hasFieldError('holderName')) {
-        <small>{{ 'subscription.upgrade.payment.holderError' | translate }}</small>
+        <small>Ingresa el nombre del titular.</small>
       }
     </label>
 
     <label>
-      <span>{{ 'subscription.upgrade.payment.expiry' | translate }}</span>
+      <span>Vencimiento</span>
       <input
         type="text"
         inputmode="numeric"
@@ -61,7 +56,7 @@
         [attr.aria-invalid]="hasFieldError('expiry')"
       />
       @if (hasFieldError('expiry')) {
-        <small>{{ 'subscription.upgrade.payment.expiryError' | translate }}</small>
+        <small>Usa el formato MM/AA.</small>
       }
     </label>
 
@@ -76,12 +71,10 @@
         [attr.aria-invalid]="hasFieldError('cvv')"
       />
       @if (hasFieldError('cvv')) {
-        <small>{{ 'subscription.upgrade.payment.cvvError' | translate }}</small>
+        <small>Ingresa 3 o 4 dígitos.</small>
       }
     </label>
 
-    <button class="primary-button" type="submit">
-      {{ 'subscription.paymentMethod.save' | translate }}
-    </button>
+    <button class="primary-button" type="submit">Guardar cambios</button>
   </form>
 </section>

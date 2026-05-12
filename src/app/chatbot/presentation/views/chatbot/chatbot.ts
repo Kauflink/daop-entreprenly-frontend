@@ -1,0 +1,29 @@
+import { ChangeDetectionStrategy, Component, inject, OnInit, signal } from '@angular/core';
+import { ChatbotStoreService } from '../../../application/chatbot-store.service';
+import { QrConnectionCard } from '../../components/qr-connection-card/qr-connection-card';
+import { WhatsappStatusCard } from '../../components/whatsapp-status-card/whatsapp-status-card';
+
+@Component({
+  selector: 'app-chatbot',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [QrConnectionCard, WhatsappStatusCard],
+  templateUrl: './chatbot.html',
+})
+export class Chatbot implements OnInit {
+  protected readonly store = inject(ChatbotStoreService);
+  protected readonly justConnected = signal(false);
+
+  ngOnInit(): void {
+    this.store.loadSession();
+  }
+
+  protected onScanned(): void {
+    this.store.simulateScan();
+    this.justConnected.set(true);
+  }
+
+  protected onReconnect(): void {
+    this.store.simulateDisconnect();
+    this.justConnected.set(false);
+  }
+}

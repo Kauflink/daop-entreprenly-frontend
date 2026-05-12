@@ -11,7 +11,7 @@
   </div>
 
   <div class="activity-list" role="table" [attr.aria-label]="'subscription.activity.title' | translate">
-    @for (item of activity(); track item.id) {
+    @for (item of activityRows(); track item.id) {
       <div class="activity-row" role="row">
         <strong role="cell">{{ item.title | translate }}</strong>
         <span role="cell">{{ item.detail | translate }}</span>

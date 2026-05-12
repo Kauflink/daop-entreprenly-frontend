@@ -1,5 +1,3 @@
-<<<<<<< Updated upstream
-=======
 <section class="cash-summary">
   <h2 class="cash-title">{{ 'sales.register.title' | translate }}</h2>
   <p class="cash-subtitle">{{ 'sales.register.subtitle' | translate }}</p>
@@ -10,22 +8,21 @@
         <span class="material-icons widget-icon">receipt</span>
         {{ 'sales.register.totalDay' | translate }}
       </p>
-      <p class="widget-value">{{ currencyStore.format(store.totalDay()) }}</p>
+      <p class="widget-value">S/ {{ store.totalDay().toFixed(2) }}</p>
     </div>
     <div class="cash-widget">
       <p class="widget-label">
         <span class="material-icons widget-icon">payments</span>
         {{ 'sales.register.cash' | translate }}
       </p>
-      <p class="widget-value">{{ currencyStore.format(store.totalCash()) }}</p>
+      <p class="widget-value">S/ {{ store.totalCash().toFixed(2) }}</p>
     </div>
     <div class="cash-widget">
       <p class="widget-label">
         <span class="material-icons widget-icon">point_of_sale</span>
         {{ 'sales.register.digital' | translate }}
       </p>
-      <p class="widget-value">{{ currencyStore.format(store.totalDigital()) }}</p>
+      <p class="widget-value">S/ {{ store.totalDigital().toFixed(2) }}</p>
     </div>
   </div>
 </section>
->>>>>>> Stashed changes
