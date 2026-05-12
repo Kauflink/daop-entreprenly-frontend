@@ -1,1 +1,550 @@
-<p>help works!</p>
+<div class="min-h-screen bg-gray-50 p-6">
+
+  <!-- ══════════════════════════════════════════════════════════════ HOME ══ -->
+  @if (view() === 'home') {
+    <div class="mx-auto max-w-5xl">
+
+      <div class="mb-8 text-center">
+        <h1 class="text-3xl font-bold text-gray-900">{{ 'dashboard-help.title' | translate }}</h1>
+        <p class="mt-2 text-sm text-gray-500">{{ 'dashboard-help.subtitle' | translate }}</p>
+      </div>
+
+      <div class="mb-10 flex gap-2">
+        <input
+          type="search"
+          [value]="searchInput()"
+          (input)="searchInput.set($any($event.target).value)"
+          (keydown.enter)="onSearch()"
+          [placeholder]="'dashboard-help.searchPlaceholder' | translate"
+          class="flex-1 rounded-full border border-gray-200 bg-white px-5 py-3 text-sm shadow-sm outline-none focus:border-orange-400 focus:ring-2 focus:ring-orange-100"
+          [attr.aria-label]="'dashboard-help.searchPlaceholder' | translate"
+        />
+        <button
+          type="button"
+          (click)="onSearch()"
+          class="rounded-full bg-orange-500 px-6 py-3 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-orange-600"
+        >
+          {{ 'dashboard-help.searchBtn' | translate }}
+        </button>
+      </div>
+
+      <div class="grid grid-cols-1 gap-8 lg:grid-cols-3">
+
+        <div class="lg:col-span-2 flex flex-col gap-8">
+
+          <!-- Artículos más consultados -->
+          <section aria-labelledby="popular-heading">
+            <h2 id="popular-heading" class="mb-4 text-base font-semibold text-gray-800">
+              {{ 'dashboard-help.popular' | translate }}
+            </h2>
+            <div class="flex flex-col gap-3">
+              @for (article of popularArticles; track article.id) {
+                <button
+                  type="button"
+                  (click)="onOpenArticle(article.id)"
+                  class="flex items-center justify-between rounded-xl border border-gray-100 bg-white px-5 py-4 text-left shadow-sm transition-shadow hover:shadow-md"
+                >
+                  <div>
+                    <span class="text-sm font-medium text-gray-900">{{ article.titleKey | translate }}</span>
+                    <p class="mt-0.5 text-xs text-gray-400">
+                      {{ article.categoryKey | translate }} · {{ article.readTime }} {{ 'dashboard-help.readTime' | translate }}
+                    </p>
+                  </div>
+                  <svg class="ml-4 h-4 w-4 shrink-0 text-orange-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                  </svg>
+                </button>
+              }
+            </div>
+          </section>
+
+          <!-- Todos los artículos -->
+          <section aria-labelledby="articles-heading">
+            <h2 id="articles-heading" class="mb-4 text-base font-semibold text-gray-800">
+              {{ 'dashboard-help.allArticles' | translate }}
+            </h2>
+            <div class="flex flex-col gap-2">
+              @for (article of frequentArticles; track article.id) {
+                <button
+                  type="button"
+                  (click)="onOpenArticle(article.id)"
+                  class="flex items-center justify-between rounded-xl border border-gray-100 bg-white px-5 py-3 text-left shadow-sm transition-shadow hover:shadow-md"
+                >
+                  <span class="text-sm text-gray-800">{{ article.titleKey | translate }}</span>
+                  <svg class="ml-4 h-4 w-4 shrink-0 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                  </svg>
+                </button>
+              }
+            </div>
+          </section>
+        </div>
+
+        <!-- Sidebar -->
+        <aside class="flex flex-col gap-6">
+
+          <section aria-labelledby="categories-heading">
+            <h2 id="categories-heading" class="mb-3 text-base font-semibold text-gray-800">
+              {{ 'dashboard-help.categories' | translate }}
+            </h2>
+            <ul class="flex flex-col gap-2" role="list">
+              @for (cat of categories; track cat.id) {
+                <li>
+                  <button
+                    type="button"
+                    class="flex w-full items-center justify-between rounded-lg border border-gray-100 bg-white px-4 py-2.5 text-left text-sm transition-colors hover:bg-orange-50"
+                  >
+                    <span class="text-gray-800">{{ cat.nameKey | translate }}</span>
+                    <span class="rounded-full bg-orange-100 px-2 py-0.5 text-xs font-medium text-orange-600">{{ cat.articleCount }}</span>
+                  </button>
+                </li>
+              }
+            </ul>
+          </section>
+
+          <div class="rounded-xl border border-orange-100 bg-orange-50 p-5">
+            <p class="text-sm font-semibold text-orange-800">{{ 'dashboard-help.ctaTitle' | translate }}</p>
+            <p class="mt-1 text-xs text-orange-600">{{ 'dashboard-help.ctaSub' | translate }}</p>
+            <button
+              type="button"
+              (click)="onGoReport()"
+              class="mt-3 w-full rounded-full bg-orange-500 py-2 text-xs font-semibold text-white transition-colors hover:bg-orange-600"
+            >
+              {{ 'dashboard-help.ctaBtn' | translate }}
+            </button>
+          </div>
+
+        </aside>
+      </div>
+    </div>
+  }
+
+  <!-- ═══════════════════════════════════════════════════════════ RESULTS ══ -->
+  @if (view() === 'results') {
+    <div class="mx-auto max-w-3xl">
+
+      <div class="mb-6 flex items-center gap-3">
+        <button
+          type="button"
+          (click)="onClearSearch()"
+          class="flex items-center gap-1.5 text-sm text-orange-500 hover:underline"
+        >
+          <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+          </svg>
+          {{ 'dashboard-help.backBtn' | translate }}
+        </button>
+        <div class="flex flex-1 gap-2">
+          <input
+            type="search"
+            [value]="searchInput()"
+            (input)="searchInput.set($any($event.target).value)"
+            (keydown.enter)="onSearch()"
+            [placeholder]="'dashboard-help.searchPlaceholder' | translate"
+            class="flex-1 rounded-full border border-gray-200 bg-white px-4 py-2 text-sm shadow-sm outline-none focus:border-orange-400 focus:ring-2 focus:ring-orange-100"
+          />
+          <button type="button" (click)="onSearch()"
+            class="rounded-full bg-orange-500 px-5 py-2 text-sm font-semibold text-white transition-colors hover:bg-orange-600">
+            {{ 'dashboard-help.searchBtn' | translate }}
+          </button>
+        </div>
+      </div>
+
+      @if (searchResults().length > 0) {
+        <p class="mb-4 text-sm text-gray-500">
+          <strong class="text-gray-800">{{ searchResults().length }}</strong>
+          {{ 'dashboard-help.results.count_other' | translate: { count: searchResults().length } }}
+          "<strong class="text-orange-600">{{ searchQuery() }}</strong>"
+        </p>
+
+        @if (relatedCategories().length > 0) {
+          <div class="mb-4 flex flex-wrap gap-2">
+            @for (cat of relatedCategories(); track cat.id) {
+              <span class="rounded-full bg-orange-100 px-3 py-1 text-xs font-medium text-orange-700">
+                {{ cat.nameKey | translate }}
+              </span>
+            }
+          </div>
+        }
+
+        <div class="flex flex-col gap-3">
+          @for (article of searchResults(); track article.id) {
+            <button
+              type="button"
+              (click)="onOpenArticle(article.id)"
+              class="flex items-center justify-between rounded-xl border border-gray-100 bg-white px-5 py-4 text-left shadow-sm transition-shadow hover:shadow-md"
+            >
+              <div>
+                <span class="text-sm font-medium text-gray-900">{{ article.titleKey | translate }}</span>
+                <p class="mt-0.5 text-xs text-gray-400">
+                  {{ article.categoryKey | translate }} · {{ article.readTime }} {{ 'dashboard-help.readTime' | translate }}
+                </p>
+              </div>
+              <svg class="ml-4 h-4 w-4 shrink-0 text-orange-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+              </svg>
+            </button>
+          }
+        </div>
+
+      } @else {
+        <!-- Sin resultados (US-70) -->
+        <div class="flex flex-col items-center justify-center rounded-2xl bg-white py-16 shadow-sm">
+          <svg class="h-14 w-14 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+              d="M21 21l-4.35-4.35M17 11A6 6 0 1 1 5 11a6 6 0 0 1 12 0z" />
+          </svg>
+          <p class="mt-4 font-semibold text-gray-700">
+            {{ 'dashboard-help.results.noResults' | translate: { q: searchQuery() } }}
+          </p>
+          <p class="mt-1 text-sm text-gray-400">{{ 'dashboard-help.results.noResultsSub' | translate }}</p>
+          <button
+            type="button"
+            (click)="onGoReport()"
+            class="mt-6 rounded-full bg-orange-500 px-6 py-2 text-sm font-semibold text-white transition-colors hover:bg-orange-600"
+          >
+            {{ 'dashboard-help.results.report' | translate }}
+          </button>
+        </div>
+      }
+    </div>
+  }
+
+  <!-- ══════════════════════════════════════════════════════════ ARTICLE ══ -->
+  @if (view() === 'article') {
+    @if (selectedArticle(); as article) {
+      <div class="mx-auto max-w-2xl">
+
+        <!-- Breadcrumb -->
+        <nav aria-label="breadcrumb" class="mb-6">
+          <ol class="flex items-center gap-1.5 text-sm" role="list">
+            <li>
+              <button type="button" (click)="onBackToHome()" class="text-orange-500 hover:underline">
+                {{ 'dashboard-help.article.help' | translate }}
+              </button>
+            </li>
+            <li aria-hidden="true"><span class="text-gray-300">/</span></li>
+            <li>
+              <span class="rounded-full bg-orange-100 px-2 py-0.5 text-xs text-orange-700">
+                {{ article.categoryKey | translate }}
+              </span>
+            </li>
+          </ol>
+        </nav>
+
+        <article class="rounded-2xl bg-white p-8 shadow-sm" aria-labelledby="article-title">
+          <header class="mb-6">
+            <h1 id="article-title" class="text-xl font-bold text-gray-900">{{ article.titleKey | translate }}</h1>
+            <p class="mt-1 text-xs text-gray-400">{{ article.readTime }} {{ 'dashboard-help.readTime' | translate }}</p>
+          </header>
+
+          <!-- Pasos — usa [innerHTML] porque los pasos contienen <strong> -->
+          <ol class="flex flex-col gap-4" role="list">
+            @for (stepKey of article.stepKeys; track $index) {
+              <li class="flex gap-4">
+                <span
+                  class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-orange-500 text-xs font-bold text-white"
+                  aria-hidden="true"
+                >{{ $index + 1 }}</span>
+                <p class="text-sm leading-relaxed text-gray-700" [innerHTML]="stepKey | translate"></p>
+              </li>
+            }
+          </ol>
+
+          <!-- Feedback -->
+          <div class="mt-8 border-t border-gray-100 pt-6">
+            @if (articleFeedback() === null) {
+              <p class="mb-3 text-sm font-medium text-gray-700">{{ 'dashboard-help.article.useful' | translate }}</p>
+              <div class="flex gap-3">
+                <button
+                  type="button"
+                  (click)="onArticleFeedback(true)"
+                  class="flex items-center gap-2 rounded-full border border-gray-200 px-4 py-1.5 text-sm text-gray-600 transition-colors hover:border-green-400 hover:bg-green-50 hover:text-green-700"
+                >
+                  <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017a2 2 0 01-1.415-.586l-3.42-3.42a1 1 0 00-1.414 0l-.707.707A1 1 0 013 18V10a2 2 0 012-2h2.172a2 2 0 011.414.586L10 10" />
+                  </svg>
+                  {{ 'dashboard-help.article.yes' | translate }}
+                </button>
+                <button
+                  type="button"
+                  (click)="onArticleFeedback(false)"
+                  class="flex items-center gap-2 rounded-full border border-gray-200 px-4 py-1.5 text-sm text-gray-600 transition-colors hover:border-red-400 hover:bg-red-50 hover:text-red-700"
+                >
+                  <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M10 14H5.236a2 2 0 01-1.789-2.894l3.5-7A2 2 0 018.736 3h4.018a2 2 0 011.414.586l3.42 3.42a1 1 0 001.414 0l.707-.707A1 1 0 0121 6v8a2 2 0 01-2 2h-2.172a2 2 0 01-1.414-.586L14 14" />
+                  </svg>
+                  {{ 'dashboard-help.article.no' | translate }}
+                </button>
+              </div>
+            } @else if (articleFeedback() === 'useful') {
+              <div class="flex items-center gap-2 text-green-700" role="status">
+                <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                <span class="text-sm font-medium">{{ 'dashboard-help.article.thanks' | translate }}</span>
+              </div>
+            } @else {
+              @if (showQuickReport()) {
+                <div class="rounded-xl border border-orange-100 bg-orange-50 p-4">
+                  <p class="text-sm font-semibold text-orange-800">{{ 'dashboard-help.article.notUsefulTitle' | translate }}</p>
+                  <p class="mt-1 text-xs text-orange-600">{{ 'dashboard-help.article.notUsefulSub' | translate }}</p>
+                  <div class="mt-3 flex gap-2">
+                    <button
+                      type="button"
+                      (click)="onGoReport(article.categoryKey)"
+                      class="rounded-full bg-orange-500 px-4 py-1.5 text-xs font-semibold text-white transition-colors hover:bg-orange-600"
+                    >
+                      {{ 'dashboard-help.article.report' | translate }}
+                    </button>
+                    <button
+                      type="button"
+                      (click)="onBackToArticle()"
+                      class="rounded-full border border-gray-300 bg-white px-4 py-1.5 text-xs font-semibold text-gray-500 transition-colors hover:bg-gray-50"
+                    >
+                      {{ 'dashboard-help.article.cancel' | translate }}
+                    </button>
+                  </div>
+                </div>
+              }
+            }
+          </div>
+        </article>
+
+        <!-- Artículos relacionados -->
+        @if (relatedArticles().length > 0) {
+          <section class="mt-6" aria-labelledby="related-heading">
+            <h2 id="related-heading" class="mb-3 text-sm font-semibold text-gray-700">
+              {{ 'dashboard-help.article.related' | translate }}
+            </h2>
+            <div class="flex flex-col gap-2">
+              @for (related of relatedArticles(); track related.id) {
+                <button
+                  type="button"
+                  (click)="onOpenArticle(related.id)"
+                  class="flex items-center justify-between rounded-xl border border-gray-100 bg-white px-5 py-3 text-left text-sm shadow-sm transition-shadow hover:shadow-md"
+                >
+                  <span class="text-gray-800">{{ related.titleKey | translate }}</span>
+                  <svg class="ml-4 h-4 w-4 shrink-0 text-orange-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                  </svg>
+                </button>
+              }
+            </div>
+          </section>
+        }
+
+        <div class="mt-6">
+          <button type="button" (click)="onBackToHome()"
+            class="flex items-center gap-1.5 text-sm text-orange-500 hover:underline">
+            <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+            </svg>
+            {{ 'dashboard-help.article.backToHome' | translate }}
+          </button>
+        </div>
+
+      </div>
+    }
+  }
+
+  <!-- ═══════════════════════════════════════════════════════════ REPORT ══ -->
+  @if (view() === 'report') {
+    <div class="mx-auto max-w-xl">
+
+      <button type="button" (click)="onBackToHome()"
+        class="mb-6 flex items-center gap-1.5 text-sm text-orange-500 hover:underline">
+        <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+        </svg>
+        {{ 'dashboard-help.backBtn' | translate }}
+      </button>
+
+      <div class="rounded-2xl bg-white p-8 shadow-sm">
+        <h1 class="text-xl font-bold text-gray-900">{{ 'dashboard-help.report.title' | translate }}</h1>
+        <p class="mt-1 text-sm text-gray-500">{{ 'dashboard-help.report.subtitle' | translate }}</p>
+
+        @if (formSubmitted() && errorCount > 0) {
+          <div
+            class="mt-4 flex items-start gap-2 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700"
+            role="alert" aria-live="assertive"
+          >
+            <svg class="mt-0.5 h-4 w-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z" />
+            </svg>
+            <span [innerHTML]="'dashboard-help.report.errorsCount_other' | translate: { count: errorCount }"></span>
+          </div>
+        }
+
+        <form [formGroup]="reportForm" (ngSubmit)="onSubmitReport()" class="mt-6 flex flex-col gap-5" novalidate>
+
+          <!-- Categoría -->
+          <div class="flex flex-col gap-1.5">
+            <label for="rep-category" class="text-sm font-medium text-gray-700">
+              {{ 'dashboard-help.report.category' | translate }}
+              <span class="text-red-500" aria-hidden="true"> *</span>
+            </label>
+            <select id="rep-category" formControlName="category"
+              class="rounded-lg border px-3 py-2.5 text-sm outline-none focus:ring-2 focus:ring-orange-200"
+              [class]="isCategoryError() ? 'border-red-400 bg-red-50' : 'border-gray-200 bg-white'"
+              [attr.aria-invalid]="isCategoryError() ? 'true' : 'false'"
+              aria-describedby="cat-error">
+              @for (cat of problemCategories; track $index) {
+                <option [value]="$index === 0 ? '' : cat">{{ cat }}</option>
+              }
+            </select>
+            @if (isCategoryError()) {
+              <p id="cat-error" class="text-xs text-red-600" role="alert">
+                {{ 'dashboard-help.report.categoryRequired' | translate }}
+              </p>
+            }
+          </div>
+
+          <!-- Módulo -->
+          <div class="flex flex-col gap-1.5">
+            <label for="rep-module" class="text-sm font-medium text-gray-700">
+              {{ 'dashboard-help.report.module' | translate }}
+              <span class="text-red-500" aria-hidden="true"> *</span>
+            </label>
+            <select id="rep-module" formControlName="module"
+              class="rounded-lg border px-3 py-2.5 text-sm outline-none focus:ring-2 focus:ring-orange-200"
+              [class]="isModuleError() ? 'border-red-400 bg-red-50' : 'border-gray-200 bg-white'"
+              [attr.aria-invalid]="isModuleError() ? 'true' : 'false'"
+              aria-describedby="mod-error">
+              <option value="">{{ 'dashboard-help.report.moduleDefault' | translate }}</option>
+              @for (mod of modules; track mod) {
+                <option [value]="mod">{{ mod }}</option>
+              }
+            </select>
+            @if (isModuleError()) {
+              <p id="mod-error" class="text-xs text-red-600" role="alert">
+                {{ 'dashboard-help.report.moduleRequired' | translate }}
+              </p>
+            }
+          </div>
+
+          <!-- Descripción -->
+          <div class="flex flex-col gap-1.5">
+            <label for="rep-description" class="text-sm font-medium text-gray-700">
+              {{ 'dashboard-help.report.description' | translate }}
+              <span class="text-red-500" aria-hidden="true"> *</span>
+            </label>
+            <textarea id="rep-description" formControlName="description" rows="4"
+              [placeholder]="'dashboard-help.report.descriptionPlaceholder' | translate"
+              class="resize-none rounded-lg border px-3 py-2.5 text-sm outline-none focus:ring-2 focus:ring-orange-200"
+              [class]="isDescriptionError() ? 'border-red-400 bg-red-50' : 'border-gray-200 bg-white'"
+              [attr.aria-invalid]="isDescriptionError() ? 'true' : 'false'"
+              aria-describedby="desc-error">
+            </textarea>
+            @if (isDescriptionError()) {
+              <p id="desc-error" class="text-xs text-red-600" role="alert">
+                {{ 'dashboard-help.report.descriptionRequired' | translate }}
+              </p>
+            }
+          </div>
+
+          <!-- Cuándo (opcional) -->
+          <div class="flex flex-col gap-1.5">
+            <label for="rep-when" class="text-sm font-medium text-gray-700">
+              {{ 'dashboard-help.report.when' | translate }}
+              <span class="ml-1 text-xs text-gray-400">{{ 'dashboard-help.report.whenOptional' | translate }}</span>
+            </label>
+            <input id="rep-when" type="datetime-local" formControlName="when"
+              class="rounded-lg border border-gray-200 px-3 py-2.5 text-sm outline-none focus:ring-2 focus:ring-orange-200" />
+          </div>
+
+          <button type="submit"
+            class="mt-2 w-full rounded-full bg-orange-500 py-3 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-orange-600 focus:ring-2 focus:ring-orange-300 focus:outline-none">
+            {{ 'dashboard-help.report.submit' | translate }}
+          </button>
+
+        </form>
+      </div>
+    </div>
+  }
+
+  <!-- ══════════════════════════════════════════════════════════ SUCCESS ══ -->
+  @if (view() === 'success') {
+    <div class="mx-auto max-w-md" role="main" aria-live="polite">
+      <div class="flex flex-col items-center rounded-2xl bg-white px-8 py-12 text-center shadow-sm">
+
+        <div class="flex h-16 w-16 items-center justify-center rounded-full bg-green-100" aria-hidden="true">
+          <svg class="h-8 w-8 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+        </div>
+
+        <h1 class="mt-5 text-xl font-bold text-gray-900">{{ 'dashboard-help.success.title' | translate }}</h1>
+        <p class="mt-2 text-sm text-gray-500">{{ 'dashboard-help.success.subtitle' | translate }}</p>
+
+        <div class="mt-5 rounded-xl bg-gray-50 px-6 py-4 text-center">
+          <p class="text-xs text-gray-400">{{ 'dashboard-help.success.ticketLabel' | translate }}</p>
+          <p class="mt-1 font-mono text-lg font-bold text-orange-600">{{ ticketNumber() }}</p>
+          <p class="mt-0.5 text-xs text-gray-400">{{ nowString }}</p>
+        </div>
+
+        @if (savedData(); as data) {
+          <div class="mt-5 w-full rounded-xl border border-gray-100 bg-gray-50 px-5 py-4 text-left">
+            <p class="mb-2 text-xs font-semibold uppercase tracking-wide text-gray-400">
+              {{ 'dashboard-help.success.summaryTitle' | translate }}
+            </p>
+            <div class="flex flex-col gap-1.5 text-sm">
+              <div class="flex justify-between">
+                <span class="text-gray-500">{{ 'dashboard-help.success.categoryLabel' | translate }}</span>
+                <span class="font-medium text-gray-800">{{ data.category }}</span>
+              </div>
+              <div class="flex justify-between">
+                <span class="text-gray-500">{{ 'dashboard-help.success.moduleLabel' | translate }}</span>
+                <span class="font-medium text-gray-800">{{ data.module }}</span>
+              </div>
+              <div class="flex flex-col gap-0.5 border-t border-gray-100 pt-2">
+                <span class="text-gray-500">{{ 'dashboard-help.success.descriptionLabel' | translate }}</span>
+                <span class="text-gray-800">{{ data.description }}</span>
+              </div>
+            </div>
+          </div>
+        }
+
+        <button type="button" (click)="onBackToHome()"
+          class="mt-7 w-full rounded-full bg-orange-500 py-3 text-sm font-semibold text-white transition-colors hover:bg-orange-600">
+          {{ 'dashboard-help.success.backToHome' | translate }}
+        </button>
+      </div>
+    </div>
+  }
+
+  <!-- ════════════════════════════════════════════════════════════ ERROR ══ -->
+  @if (view() === 'error') {
+    <div class="mx-auto max-w-md" role="main" aria-live="assertive">
+      <div class="flex flex-col items-center rounded-2xl bg-white px-8 py-12 text-center shadow-sm">
+
+        <div class="flex h-16 w-16 items-center justify-center rounded-full bg-red-100" aria-hidden="true">
+          <svg class="h-8 w-8 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M12 9v2m0 4h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z" />
+          </svg>
+        </div>
+
+        <h1 class="mt-5 text-xl font-bold text-gray-900">{{ 'dashboard-help.error.title' | translate }}</h1>
+        <p class="mt-2 text-sm text-gray-500">{{ 'dashboard-help.error.subtitle' | translate }}</p>
+
+        <div class="mt-6 flex w-full flex-col gap-3">
+          <button type="button" (click)="onRetry()"
+            class="w-full rounded-full bg-orange-500 py-3 text-sm font-semibold text-white transition-colors hover:bg-orange-600">
+            {{ 'dashboard-help.error.retry' | translate }}
+          </button>
+          <button type="button" (click)="onBackToHome()"
+            class="w-full rounded-full border border-gray-300 py-3 text-sm font-semibold text-gray-500 transition-colors hover:bg-gray-50">
+            {{ 'dashboard-help.error.backToHome' | translate }}
+          </button>
+        </div>
+      </div>
+    </div>
+  }
+
+</div>

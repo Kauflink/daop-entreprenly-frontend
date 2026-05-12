@@ -237,44 +237,297 @@
   },
   "subscription": {
     "page": {
-      "title": "Suscripci\u00f3n",
-      "description": "Consulta tu plan actual, revisa l\u00edmites disponibles, actualiza a Plan Control y gestiona facturaci\u00f3n desde el dashboard.",
-      "loading": "Cargando panel de suscripci\u00f3n..."
+      "title": "Suscripción",
+      "description": "Consulta tu plan actual, revisa límites disponibles, actualiza a Plan Control y gestiona facturación desde el dashboard.",
+      "loading": "Cargando panel de suscripción..."
     },
     "overview": {
-      "eyebrow": "Suscripci\u00f3n",
-      "title": "Plan actual y facturaci\u00f3n",
-      "description": "Administra el plan de tu negocio, revisa los l\u00edmites disponibles y actualiza a Plan Control cuando necesites operar sin restricciones.",
-      "billingFrequencyLabel": "Frecuencia de facturaci\u00f3n",
+      "eyebrow": "Suscripción",
+      "title": "Plan actual y facturación",
+      "description": "Administra el plan de tu negocio, revisa los límites disponibles y actualiza a Plan Control cuando necesites operar sin restricciones.",
+      "billingFrequencyLabel": "Frecuencia de facturación",
       "monthly": "Mensual",
       "annual": "Anual",
-      "upgradeAction": "Actualizar a Plan Control"
+      "upgradeAction": "Actualizar a Plan Control",
+      "renewAction": "Renovar suscripción",
+      "keepPlanAction": "Mantener plan",
+      "cancelAction": "Solicitar cancelación",
+      "priceLabel": {
+        "monthly": "pago mensual",
+        "annual": "pago anual",
+        "free": "por mes"
+      },
+      "priceAriaLabel": "Costo actual {{ price }} soles {{ label }}"
     },
     "usage": {
       "eyebrow": "Uso del plan",
-      "title": "L\u00edmites disponibles",
-      "counter": "{{ used }} de {{ max }}"
+      "title": "Límites disponibles",
+      "counter": "{{ used }} de {{ max }}",
+      "usageOf": "Uso de {{ label }}",
+      "limitValue": {
+        "products": "{{ count }} productos",
+        "active-batches": "{{ count }} lotes",
+        "users-singular": "1 usuario",
+        "users-plural": "{{ count }} usuarios"
+      }
     },
     "billing": {
-      "eyebrow": "Facturaci\u00f3n",
-      "title": "M\u00e9todo de pago y datos fiscales"
+      "eyebrow": "Facturación",
+      "title": "Método de pago y datos fiscales",
+      "paymentMethod": {
+        "title": "Método de pago",
+        "emptyDescription": "Aún no hay tarjeta o medio de pago registrado.",
+        "addAction": "Agregar métodos de pago",
+        "manageAction": "Gestionar métodos de pago",
+        "available": "Disponible para pagos y renovaciones",
+        "additionalMethod": "+{{ count }} método adicional",
+        "additionalMethods": "+{{ count }} métodos adicionales",
+        "cardEnding": "{{ brand }} terminada en {{ lastFour }} · vence {{ month }}/{{ year }}"
+      },
+      "fiscalData": {
+        "title": "Datos de facturación",
+        "emptyDescription": "Completa RUC, razón social y correo de comprobantes.",
+        "addAction": "Completar datos",
+        "editAction": "Editar datos fiscales",
+        "complete": "Información fiscal completa"
+      }
     },
     "activity": {
       "eyebrow": "Historial",
-      "title": "Actividad de la suscripci\u00f3n",
-      "downloadAction": "Descargar historial"
+      "title": "Actividad de la suscripción",
+      "downloadAction": "Descargar historial",
+      "created-account": {
+        "title": "Cuenta creada",
+        "detail": "16 abril 2026 - Plan Free asignado automáticamente"
+      },
+      "current-status": {
+        "title": "Estado actual",
+        "detail": {
+          "free": "Plan Free activo - Sin cargos registrados",
+          "active": "Plan Control activo - S/ 89/mes",
+          "scheduled-cancellation": "Cancelación programada - S/ 89/mes"
+        }
+      },
+      "billing": {
+        "title": "Facturación",
+        "detail": {
+          "free": "Pendiente de completar para actualizar a Plan Control",
+          "dashboard": "Próxima renovación: 11 de junio de 2026 - pago mensual",
+          "active-renewal": "Próxima renovación: 10 de junio de 2026 - pago mensual",
+          "cancelled": "Acceso vigente hasta el 10 de junio de 2026 - sin siguiente cobro",
+          "renewalWithDate": "Próxima renovación: {{ date }} - {{ cycle }}",
+          "accessUntil": "Acceso vigente hasta el {{ date }} - sin siguiente cobro",
+          "unknownDate": "Acceso vigente hasta la fecha registrada en tu suscripción"
+        }
+      }
     },
     "plans": {
       "free": {
         "name": "Plan Free",
         "status": "Plan Free activo",
-        "badge": "Plan actual"
+        "badge": "Plan actual",
+        "shortDescription": "Incluido automáticamente al crear la cuenta. No requiere tarjeta ni genera cargos.",
+        "features": {
+          "basicInventory": "Inventario básico con productos y lotes limitados.",
+          "manualMovements": "Registro manual de movimientos principales.",
+          "noChatbot": "Sin chatbot de WhatsApp ni automatizaciones avanzadas."
+        }
       },
       "control": {
         "name": "Plan Control",
-        "badge": "Recomendado"
+        "badge": "Recomendado",
+        "badgeLabel": "Recomendado",
+        "statusLabel": {
+          "active": "Plan Control activo",
+          "recommended": "Recomendado",
+          "scheduled-cancellation": "Cancelación programada"
+        },
+        "shortDescription": {
+          "active": "Tu plan está activo y se renovará automáticamente.",
+          "recommended": "Opera sin restricciones con automatizaciones, alertas y trazabilidad completa.",
+          "scheduled-cancellation": "Tu plan finalizará en su fecha de vencimiento. No se renovará automáticamente."
+        },
+        "features": {
+          "unlimitedProducts": "Productos y lotes ilimitados",
+          "salesOperations": "Ventas, pedidos, caja y trazabilidad en un solo flujo.",
+          "chatbot": "Chatbot de WhatsApp y alertas operativas incluidas."
+        }
+      },
+      "current": {
+        "badgeLabel": "Plan actual"
       }
+    },
+    "limits": {
+      "products": {
+        "label": "Productos",
+        "ariaLabel": "Uso de Productos"
+      },
+      "active-batches": {
+        "label": "Lotes activos",
+        "ariaLabel": "Uso de Lotes activos"
+      },
+      "users": {
+        "label": "Usuarios",
+        "ariaLabel": "Uso de Usuarios"
+      }
+    },
+    "modal": {
+      "close": "Cerrar modal",
+      "eyebrow": "Suscripción"
+    },
+    "planAction": {
+      "renew": {
+        "title": "Renovar suscripción",
+        "cardTitle": "Renovación preparada",
+        "cardDescription": "La nueva vigencia se extenderá hasta el {{ date }}."
+      },
+      "cancel": {
+        "title": "Solicitar cancelación",
+        "cardTitle": "Confirma la cancelación",
+        "cardDescription": "Tu acceso al Plan Control se mantendrá hasta el {{ date }}. No se realizará el siguiente cobro."
+      },
+      "cancelSuccess": {
+        "title": "Cancelación programada",
+        "cardTitle": "Cancelación programada",
+        "cardDescription": "La solicitud fue registrada. Tu acceso premium continúa hasta el {{ date }}."
+      },
+      "keep": {
+        "title": "Mantener Plan Control",
+        "cardTitle": "Mantener renovación activa",
+        "cardDescription": "Se cancelará la solicitud de baja y el plan seguirá renovándose al finalizar la vigencia actual: {{ date }}."
+      },
+      "understood": "Entendido",
+      "confirmCancellation": "Confirmar cancelación",
+      "keepPlan": "Mantener Plan Control"
+    },
+    "upgrade": {
+      "title": "Actualizar a Plan Control",
+      "navAriaLabel": "Pasos de actualización",
+      "steps": {
+        "plan": "Plan",
+        "billing": "Facturación",
+        "payment": "Pago",
+        "activation": "Activación"
+      },
+      "activated": {
+        "title": "Suscripción activada",
+        "cardTitle": "Plan Control activado",
+        "cardDescription": "Tu suscripción ya está activa. Puedes cerrar este popup y continuar operando.",
+        "understood": "Entendido"
+      },
+      "plan": {
+        "helper": "Elegiste Plan Control. Revisa el ciclo de cobro antes de continuar con la suscripción.",
+        "billingLabel": {
+          "monthly": "Facturación mensual",
+          "annual": "Facturación anual"
+        },
+        "priceLabel": {
+          "monthly": "S/ 89/mes",
+          "annual": "S/ 890/año"
+        }
+      },
+      "billing": {
+        "documentType": "Tipo de documento",
+        "documentNumber": "Número de documento",
+        "documentNumberError": "Ingresa un documento válido.",
+        "businessName": "Razón social o nombre",
+        "businessNameError": "Ingresa la razón social o nombre.",
+        "receiptEmail": "Correo de comprobantes",
+        "receiptEmailError": "Ingresa un correo válido.",
+        "fiscalAddress": "Dirección fiscal",
+        "fiscalAddressError": "Ingresa la dirección fiscal."
+      },
+      "payment": {
+        "registeredCard": "Tarjeta registrada",
+        "cardEnding": "{{ brand }} terminada en {{ lastFour }} · vence {{ month }}/{{ year }}",
+        "selectMethod": "Selecciona un método de pago",
+        "cardEndingShort": "{{ brand }} terminada en {{ lastFour }}",
+        "holderExpiry": "{{ holder }} · vence {{ month }}/{{ year }}",
+        "totalCharge": "Total a cobrar",
+        "cardNumber": "Número de tarjeta",
+        "cardNumberError": "Ingresa un número de tarjeta válido.",
+        "holder": "Titular",
+        "holderError": "Ingresa el nombre del titular.",
+        "expiry": "Vencimiento",
+        "expiryError": "Usa el formato MM/AA.",
+        "cvvError": "Ingresa 3 o 4 dígitos."
+      },
+      "activation": {
+        "readyTitle": "Listo para activar",
+        "readyDescription": "Al confirmar, el Plan Control queda activo y se habilitan productos, lotes, pedidos y caja sin límites del plan gratuito.",
+        "payAndActivate": "Pagar y activar suscripción"
+      },
+      "continue": "Continuar",
+      "back": "Volver"
+    },
+    "billingData": {
+      "title": "Completar datos de facturación",
+      "cancel": "Cancelar",
+      "save": "Guardar datos"
+    },
+    "paymentMethod": {
+      "addTitle": "Agregar método de pago",
+      "holderPlaceholder": "Nombre del titular",
+      "save": "Guardar cambios"
+    },
+    "history": {
+      "title": "Historial de suscripción",
+      "ariaLabel": "Historial de suscripción",
+      "downloaded": "Historial descargado correctamente con la actividad visible de la suscripción.",
+      "downloadAction": "Descargar historial",
+      "paymentMethod": {
+        "title": "Método de pago",
+        "empty": "Sin método de pago registrado.",
+        "detail": "{{ brand }} terminada en {{ lastFour }} registrada para pagos y renovaciones"
+      },
+      "fiscalData": {
+        "title": "Datos fiscales",
+        "empty": "Datos fiscales pendientes de completar.",
+        "detail": "{{ documentType }} {{ documentNumber }} - {{ businessName }}"
+      }
+    },
+    "store": {
+      "feedback": {
+        "planSelected": "Plan Control seleccionado. Completa facturación para continuar.",
+        "activated": "Suscripción actualizada a Plan Control.",
+        "cancelled": "Cancelación programada.",
+        "kept": "Plan Control se mantendrá activo.",
+        "paymentAdded": "Método de pago registrado para la suscripción.",
+        "paymentSelected": "Método de pago seleccionado para la suscripción.",
+        "fiscalCompleted": "Datos fiscales completados para facturación.",
+        "emptyHistory": "No hay actividad suficiente para descargar.",
+        "historyDownloaded": "Historial de suscripción descargado."
+      },
+      "csv": {
+        "filename": "historial-suscripcion-entreprenly.csv",
+        "header": "Evento,Detalle"
+      },
+      "paymentMethodActionLabel": "Agregar métodos de pago",
+      "fiscalDataActionLabel": "Editar datos fiscales",
+      "paymentMethodDescription": "{{ brand }} terminada en {{ lastFour }} - vence {{ month }}/{{ year }}",
+      "fiscalDataDescription": "{{ documentType }} {{ documentNumber }} - {{ businessName }}"
     }
+  },
+  "pageTitle": {
+    "home": "Home",
+    "profile": "Perfil",
+    "sales": "Ventas",
+    "subscription": "Suscripción",
+    "inventory": "Inventario",
+    "unitProducts": "Productos por Unidad",
+    "weightProducts": "Productos por Peso",
+    "newProduct": "Nuevo Producto",
+    "editProduct": "Editar Producto",
+    "lots": "Lotes",
+    "unitLots": "Lotes por Unidad",
+    "weightLots": "Lotes por Peso",
+    "newLot": "Nuevo Lote",
+    "editLot": "Editar Lote",
+    "stockAlerts": "Alertas de Stock",
+    "chatbot": "Chatbot",
+    "conversations": "Conversaciones",
+    "orders": "Pedidos",
+    "help": "Ayuda"
   },
   "profile": {
     "userInfo": {
@@ -376,6 +629,9 @@
         },
         "timezone": {
           "label": "Zona horaria"
+        },
+        "currency": {
+          "label": "Divisa"
         }
       },
       "theme": {
@@ -384,6 +640,370 @@
         "dark": "Oscuro"
       },
       "saveAction": "Guardar preferencias"
+    }
+  },
+  "chatbot": {
+    "page": {
+      "title": "Chatbot",
+      "loading": "Cargando...",
+      "connectPrompt": "Conecta tu WhatsApp Business para activar el chatbot",
+      "connectionStatus": "Estado de la conexión"
+    },
+    "conversations": {
+      "empty": "Aún no hay conversaciones.\nLos chats de tus clientes aparecerán aquí\ncuando el chatbot reciba mensajes.",
+      "placeholder": "Envía y recibe mensajes sin necesidad de tener tu teléfono conectado"
+    },
+    "payment": {
+      "pendingBar": "Pago pendiente — Pedido {{ orderNumber }}",
+      "pendingBarDetail": "{{ paymentMethod }} · S/{{ total }} · Valida el comprobante enviado",
+      "approve": "Aprobar pago",
+      "reject": "Rechazar",
+      "rejectTitle": "Motivo del rechazo",
+      "confirmReject": "Confirmar rechazo",
+      "cancelReject": "Cancelar",
+      "reasons": {
+        "illegible": "Imagen ilegible",
+        "wrongAmount": "Monto incorrecto",
+        "fake": "Comprobante falso"
+      }
+    },
+    "orders": {
+      "title": "Pedidos",
+      "subtitle": "Historial y validación de comprobantes",
+      "connectPrompt": "Conecta tu WhatsApp para ver los pedidos",
+      "goToConfig": "Ir a configuración →",
+      "empty": "No hay pedidos registrados aún",
+      "goToConversations": "Ver conversaciones →",
+      "receiptAlt": "Comprobante de pago",
+      "delivery": "Entrega:",
+      "total": "Total",
+      "traceability": "Trazabilidad",
+      "trace": {
+        "registered": "Pedido registrado — {{ date }}",
+        "paymentSent": "Instrucciones de pago enviadas al cliente",
+        "receiptReceived": "Comprobante recibido vía WhatsApp",
+        "receiptRejected": "Comprobante rechazado ({{ count }}x) — imagen ilegible",
+        "paymentApproved": "Pago validado por el comerciante",
+        "blocked": "Pedido bloqueado — múltiples rechazos",
+        "cancelled": "Pedido cancelado por inactividad — stock repuesto",
+        "pendingValidation": "Pendiente de validación por el comerciante",
+        "awaitingReceipt": "Esperando comprobante del cliente"
+      },
+      "approvePayment": "Aprobar Pago",
+      "rejectPayment": "Rechazar",
+      "willBlock": "(bloqueará al cliente)",
+      "blockedMessage": "Pedido bloqueado. El cliente debe contactar a la bodega directamente.",
+      "status": {
+        "approved": "Pago aprobado",
+        "blocked": "Pedido bloqueado",
+        "cancelled": "Pedido cancelado",
+        "receiptReceived": "Comprobante recibido",
+        "awaitingReceipt": "Esperando comprobante"
+      }
+    },
+    "qr": {
+      "expiredTitle": "Código QR expirado — vinculación no completada",
+      "expiredDetail": "El código QR no fue escaneado en el tiempo límite. El código anterior fue descartado automáticamente y se generó uno nuevo. Escanea el nuevo código para completar la vinculación.",
+      "newCode": "Nuevo código generado",
+      "linkTitle": "Vincular WhatsApp Business",
+      "scanInstruction": "Escanea el código QR desde tu app",
+      "alt": "Código QR para vincular WhatsApp Business",
+      "generating": "Generando nuevo código...",
+      "expiresIn": "El código expira en {{ seconds }} segundos",
+      "expiresInOne": "El código expira en {{ seconds }} segundo",
+      "simulateScan": "Simular escaneo"
+    },
+    "statusCard": {
+      "connectedTitle": "Cuenta vinculada correctamente",
+      "connectedDetail": "WhatsApp Business conectado exitosamente. El chatbot ya puede recibir y responder mensajes de tus clientes de forma automática.",
+      "expiredTitle": "Sesión expirada",
+      "expiredDetail": "La sesión de WhatsApp Business fue cerrada externamente. El chatbot no puede recibir mensajes hasta que se restaure la conexión.",
+      "cardTitle": "WhatsApp Business",
+      "activeSince": "activo desde el",
+      "lastConnection": "última conexión:",
+      "operative": "El chatbot se encuentra operativo y procesando mensajes automáticamente.",
+      "viewConversations": "Ver conversaciones →",
+      "disconnect": "Desconectar",
+      "reconnect": "Volver a vincular",
+      "connected": "● Conectado",
+      "disconnected": "● Desconectado"
+    },
+    "conversationList": {
+      "title": "Conversaciones"
+    },
+    "header": {
+      "online": "En línea"
+    },
+    "message": {
+      "receiptAlt": "Comprobante de pago"
+    },
+    "input": {
+      "placeholder": "Escribe un mensaje...",
+      "emptyError": "El mensaje no puede estar vacío",
+      "ariaLabel": "Escribe un mensaje",
+      "voiceNote": "Nota de voz",
+      "attach": "Adjuntar archivo",
+      "send": "Enviar mensaje"
+    },
+    "messages": {
+      "sysPaymentApproved": "Sistema: pago validado por el comerciante — {{ time }}",
+      "botPaymentApproved": "Tu pago fue recibido y verificado correctamente.\nEl pedido {{ orderNumber }} está confirmado y en preparación. ¡Gracias por tu compra!",
+      "sysBlocked": "Sistema: pedido bloqueado por múltiples rechazos — {{ time }}",
+      "sysReceiptRejected": "Sistema: comprobante rechazado — imagen ilegible — {{ time }}",
+      "botBlocked": "Tu pedido {{ orderNumber }} ha sido bloqueado debido a múltiples rechazos de pago.\n\nPara resolver esta situación, comunícate directamente con la bodega:\nTeléfono: 999 888 777",
+      "botReceiptRejected": "Tu comprobante no pudo ser validado.\nMotivo: {{ reason }}.\n\nEl pedido {{ orderNumber }} ha vuelto al estado Esperando pago.\nPor favor envía un nuevo comprobante."
+    },
+    "sys": {
+      "deliveryNotRegistered": "Sistema: dirección de entrega no registrada — bot solicita al cliente",
+      "orderRegistered": "Sistema: pedido {{ orderNumber }} registrado — estado: pendiente — {{ time }}",
+      "receiptReceived": "Sistema: comprobante recibido — pendiente de validación — {{ time }}",
+      "paymentApproved": "Sistema: pago validado por el comerciante — {{ time }}",
+      "noReceiptReminder": "Sistema: sin comprobante recibido — recordatorio automático enviado — {{ time }}",
+      "conversationClosed": "Sistema: conversación cerrada por inactividad — sin respuesta del cliente — {{ time }}",
+      "receiptRejected": "Sistema: comprobante rechazado — imagen ilegible — {{ time }}",
+      "orderBlocked": "Sistema: pedido bloqueado por múltiples rechazos — {{ time }}"
+    }
+  },
+  "dashboard-home": {
+    "welcome": "¡Bienvenido a Entreprenly! 👋",
+    "welcomeSub": "Aquí tienes un resumen de tu negocio hoy.",
+    "alertBanner": "Tienes <strong>{{count}}</strong> alerta(s) de inventario que requieren atención.",
+    "alertBannerLink": "Ver inventario →",
+    "quickLinksLabel": "Accesos rápidos a módulos",
+    "links": {
+      "sales": "Ventas",
+      "chatbot": "Chatbot",
+      "orders": "Pedidos",
+      "inventory": "Inventario",
+      "help": "Ayuda",
+      "goTo": "Ir a {{label}}"
+    },
+    "cash": {
+      "title": "Ingresos del día",
+      "total": "Total acumulado hoy",
+      "cash": "Efectivo",
+      "digital": "Yape / Plin / Tarjeta",
+      "goToSales": "Ir a Ventas →"
+    },
+    "chatbot": {
+      "title": "Estado del Chatbot",
+      "connected": "WhatsApp Conectado",
+      "connectedSub": "El chatbot está activo y recibiendo mensajes.",
+      "disconnected": "WhatsApp Desconectado",
+      "disconnectedSub": "El chatbot no está activo.",
+      "connectNow": "Conectar ahora →",
+      "pendingOrders_one": "{{count}} pedido esperando validación de pago.",
+      "pendingOrders_other": "{{count}} pedidos esperando validación de pago."
+    },
+    "orders": {
+      "title": "Pedidos recientes",
+      "viewAll": "Ver todos →",
+      "empty": "Sin pedidos todavía.",
+      "approved": "Aprobados",
+      "pending": "Pendientes",
+      "status": {
+        "confirmed": "Aprobado",
+        "blocked": "Bloqueado",
+        "cancelled": "Cancelado",
+        "receiptReceived": "Comprobante recibido",
+        "awaitingReceipt": "Esperando comprobante"
+      }
+    },
+    "alerts": {
+      "title": "Alertas de inventario",
+      "viewInventory": "Ver inventario →",
+      "loadingLabel": "Cargando alertas de inventario",
+      "empty": "¡Todo en orden!",
+      "emptySub": "No hay alertas de inventario.",
+      "types": {
+        "out_of_stock": "Sin stock",
+        "expiring_soon": "Próximo a vencer",
+        "expired": "Vencido",
+        "low_stock": "Stock bajo ({{count}})"
+      }
+    }
+  },
+  "dashboard-help": {
+    "title": "¿En qué podemos ayudarte?",
+    "subtitle": "Busca artículos, guías y respuestas rápidas para tu negocio.",
+    "searchPlaceholder": "Escribe tu pregunta aquí…",
+    "searchBtn": "Buscar",
+    "backBtn": "Volver",
+    "popular": "Artículos más consultados",
+    "allArticles": "Todos los artículos",
+    "readTime": "min de lectura",
+    "categories": "Categorías",
+    "articlesLabel": "artículos",
+    "ctaTitle": "¿No encontraste lo que buscabas?",
+    "ctaSub": "Cuéntanos tu problema y te ayudamos a resolverlo.",
+    "ctaBtn": "Reportar un problema",
+    "openArticle": "Abrir artículo: {{title}}",
+    "results": {
+      "count_one": "{{count}} resultado para",
+      "count_other": "{{count}} resultados para",
+      "relatedCategories": "Categorías relacionadas",
+      "noResults": "No encontramos resultados para \"{{q}}\"",
+      "noResultsSub": "Intenta con otra palabra clave o revisa las categorías.",
+      "report": "Reportar un problema"
+    },
+    "article": {
+      "help": "Ayuda",
+      "useful": "¿Te fue útil este artículo?",
+      "yes": "Sí, me ayudó",
+      "no": "No me ayudó",
+      "thanks": "¡Gracias por tu feedback!",
+      "notUsefulTitle": "Lamentamos que no te haya ayudado",
+      "notUsefulSub": "Puedes reportar el problema y nuestro equipo te contactará.",
+      "report": "Reportar problema",
+      "cancel": "Cancelar",
+      "related": "Artículos relacionados",
+      "backToHome": "Volver al inicio"
+    },
+    "report": {
+      "title": "Reportar un problema",
+      "subtitle": "Nuestro equipo revisará tu reporte y te contactará pronto.",
+      "errorsCount_one": "Por favor corrige <strong>{{count}}</strong> campo para continuar.",
+      "errorsCount_other": "Por favor corrige <strong>{{count}}</strong> campos para continuar.",
+      "category": "Categoría del problema",
+      "categoryRequired": "Selecciona una categoría válida.",
+      "module": "Módulo afectado",
+      "moduleDefault": "-- Selecciona un módulo --",
+      "moduleRequired": "Selecciona el módulo afectado.",
+      "description": "Descripción del problema",
+      "descriptionPlaceholder": "Describe con detalle qué ocurrió y cuándo…",
+      "descriptionRequired": "Describe el problema (mínimo 5 caracteres).",
+      "when": "¿Cuándo ocurrió?",
+      "whenOptional": "(opcional)",
+      "submit": "Enviar reporte"
+    },
+    "success": {
+      "title": "¡Reporte enviado!",
+      "subtitle": "Tu reporte fue recibido con éxito. Nuestro equipo lo revisará pronto.",
+      "ticketLabel": "Número de ticket",
+      "summaryTitle": "Resumen del reporte",
+      "categoryLabel": "Categoría",
+      "moduleLabel": "Módulo",
+      "descriptionLabel": "Descripción",
+      "backToHome": "Volver al inicio"
+    },
+    "error": {
+      "title": "No pudimos enviar el reporte",
+      "subtitle": "Hubo un problema al enviar tu reporte. Por favor intenta nuevamente o contáctanos directamente.",
+      "retry": "Intentar de nuevo",
+      "backToHome": "Volver al inicio"
+    },
+    "categoryNames": {
+      "inventario": "Inventario",
+      "chatbot": "Chatbot",
+      "pedidos": "Pedidos y Pagos",
+      "reportes": "Reportes",
+      "suscripcion": "Suscripción",
+      "configuracion": "Configuración",
+      "ventas": "Ventas · Caja",
+      "lotes": "Lotes"
+    },
+    "problemCategories": [
+      "-- Selecciona una categoría --",
+      "Inventario / Productos",
+      "Chatbot / WhatsApp",
+      "Pedidos y Pagos",
+      "Ventas y Caja",
+      "Suscripción",
+      "Reportes",
+      "Configuración",
+      "Otro"
+    ],
+    "modules": [
+      "Inventario",
+      "Chatbot",
+      "Pedidos",
+      "Ventas",
+      "Suscripción",
+      "Reportes",
+      "Configuración",
+      "General"
+    ],
+    "articles": {
+      "1": {
+        "title": "¿Cómo agregar un producto al inventario?",
+        "category": "Inventario",
+        "steps": [
+          "Ve al módulo <strong>Inventario</strong> en el panel lateral.",
+          "Selecciona \"Productos\" y luego haz clic en <strong>Agregar producto</strong>.",
+          "Completa el formulario: nombre, precio y stock inicial.",
+          "Guarda los cambios — el producto aparecerá en el catálogo de inmediato."
+        ]
+      },
+      "2": {
+        "title": "¿Cómo conectar el chatbot de WhatsApp?",
+        "category": "Chatbot",
+        "steps": [
+          "Ve al módulo <strong>Chatbot</strong> en el panel de configuración.",
+          "Pulsa <strong>\"Conectar WhatsApp\"</strong> para mostrar el código QR.",
+          "Escanea el código QR desde tu app de <strong>WhatsApp Business</strong> en tu teléfono.",
+          "¡Listo! El chatbot ya está activo y puede recibir y responder mensajes."
+        ]
+      },
+      "3": {
+        "title": "¿Cómo validar un pago desde el dashboard?",
+        "category": "Pedidos y Pago",
+        "steps": [
+          "Accede al módulo <strong>Pedidos</strong> desde el panel lateral.",
+          "Filtra los pedidos con estado \"Esperando comprobante\".",
+          "Abre el pedido y revisa la imagen del comprobante enviado.",
+          "Pulsa <strong>Aprobar pago</strong> si es válido, o <strong>Rechazar</strong> con un motivo."
+        ]
+      },
+      "4": {
+        "title": "¿Cómo gestionar fechas de caducidad en lotes?",
+        "category": "Lotes",
+        "steps": [
+          "Ve al módulo <strong>Inventario</strong> y selecciona la pestaña <strong>Lotes</strong>.",
+          "Revisa la columna \"Fecha de vencimiento\" — los próximos a vencer están resaltados.",
+          "Los lotes críticos generan <strong>alertas de stock</strong> automáticamente en el home.",
+          "Edita un lote para ajustar la fecha o la cantidad disponible."
+        ]
+      },
+      "5": {
+        "title": "¿Cómo consultar el resumen de caja diario?",
+        "category": "Ventas · Caja",
+        "steps": [
+          "Ve al módulo <strong>Ventas</strong> desde el panel lateral.",
+          "El resumen de caja aparece en el panel lateral derecho.",
+          "Muestra el <strong>Total del día</strong>, Efectivo y Yape/Plin por separado.",
+          "Se actualiza automáticamente con cada venta finalizada."
+        ]
+      },
+      "6": {
+        "title": "¿Qué hacer si el chatbot se desconecta?",
+        "category": "Chatbot",
+        "steps": [
+          "Ve al módulo <strong>Chatbot</strong> — verás un aviso de \"Sesión expirada\" en rojo.",
+          "Pulsa <strong>\"Volver a vincular\"</strong> para iniciar la reconexión.",
+          "Escanea el nuevo código QR desde tu WhatsApp Business.",
+          "El chatbot retomará su actividad con normalidad."
+        ]
+      },
+      "7": {
+        "title": "¿El chatbot puede enviar comprobantes automáticamente?",
+        "category": "Chatbot",
+        "steps": [
+          "El chatbot <strong>recibe</strong> comprobantes enviados por los clientes vía WhatsApp.",
+          "Los muestra automáticamente en el módulo <strong>Pedidos</strong> del dashboard.",
+          "El comerciante debe <strong>validarlos manualmente</strong> — el sistema no los aprueba solo.",
+          "Tras la validación, el cliente recibe una confirmación automática por WhatsApp."
+        ]
+      },
+      "8": {
+        "title": "¿Cómo validar un pago?",
+        "category": "Pedidos y Pagos",
+        "steps": [
+          "Accede al módulo <strong>Pedidos</strong>.",
+          "Selecciona el pedido pendiente de validación.",
+          "Revisa el comprobante adjunto por el cliente.",
+          "Aprueba o rechaza el pago según corresponda."
+        ]
+      }
     }
   }
 }

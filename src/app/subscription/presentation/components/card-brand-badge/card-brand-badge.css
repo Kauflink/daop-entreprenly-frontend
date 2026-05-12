@@ -10,8 +10,8 @@
   height: 30px;
   border: 1px solid #d8d0ca;
   border-radius: 9px;
-  background: var(--color-inner-bg);
-  color: var(--color-text-secondary);
+  background: #f7f3ef;
+  color: #5f554e;
   font-size: 10px;
   font-weight: 900;
   letter-spacing: 0;

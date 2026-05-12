@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="144" height="176" viewBox="0 0 144 176">
+  <rect width="144" height="176" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+  <rect x="0" y="0" width="144" height="44" rx="12" fill="#6B21A8"/>
+  <rect x="0" y="32" width="144" height="12" fill="#6B21A8"/>
+  <text x="72" y="18" font-family="Arial" font-size="11" font-weight="bold" fill="white" text-anchor="middle">YAPE</text>
+  <text x="72" y="32" font-family="Arial" font-size="8" fill="#e9d5ff" text-anchor="middle">Comprobante de Pago</text>
+  <text x="72" y="68" font-family="Arial" font-size="22" font-weight="bold" fill="#6B21A8" text-anchor="middle">S/7.50</text>
+  <text x="72" y="84" font-family="Arial" font-size="7" fill="#9ca3af" text-anchor="middle">MONTO PAGADO</text>
+  <line x1="16" y1="96" x2="128" y2="96" stroke="#f3f4f6" stroke-width="1"/>
+  <text x="16" y="110" font-family="Arial" font-size="7" fill="#9ca3af">Para</text>
+  <text x="128" y="110" font-family="Arial" font-size="7" fill="#374151" text-anchor="end">Bodega El Huerto</text>
+  <text x="16" y="124" font-family="Arial" font-size="7" fill="#9ca3af">Fecha</text>
+  <text x="128" y="124" font-family="Arial" font-size="7" fill="#374151" text-anchor="end">15/04/2026 10:18</text>
+  <text x="16" y="138" font-family="Arial" font-size="7" fill="#9ca3af">Operacion</text>
+  <text x="128" y="138" font-family="Arial" font-size="7" fill="#374151" text-anchor="end">YAPE-042-001</text>
+  <line x1="16" y1="148" x2="128" y2="148" stroke="#f3f4f6" stroke-width="1" stroke-dasharray="3,3"/>
+  <text x="72" y="162" font-family="Arial" font-size="7" fill="#9ca3af" text-anchor="middle">Transferencia exitosa</text>
+</svg>
