@@ -8,13 +8,18 @@
   cdkTrapFocus
   cdkTrapFocusAutoCapture
 >
-  <button class="icon-button" type="button" aria-label="Cerrar modal" (click)="close()">×</button>
-  <p class="eyebrow">Suscripción</p>
-  <h2 id="billing-data-modal-title">Completar datos de facturación</h2>
+  <button
+    class="icon-button"
+    type="button"
+    [attr.aria-label]="'subscription.modal.close' | translate"
+    (click)="close()"
+  >×</button>
+  <p class="eyebrow">{{ 'subscription.modal.eyebrow' | translate }}</p>
+  <h2 id="billing-data-modal-title">{{ 'subscription.billingData.title' | translate }}</h2>
 
   <form class="modal-form" [formGroup]="fiscalForm" (ngSubmit)="save()">
     <label>
-      <span>Tipo de documento</span>
+      <span>{{ 'subscription.upgrade.billing.documentType' | translate }}</span>
       <select formControlName="documentType">
         <option value="RUC">RUC</option>
         <option value="DNI">DNI</option>
@@ -23,7 +28,7 @@
     </label>
 
     <label>
-      <span>Número de documento</span>
+      <span>{{ 'subscription.upgrade.billing.documentNumber' | translate }}</span>
       <input
         type="text"
         inputmode="numeric"
@@ -32,12 +37,12 @@
         [attr.aria-invalid]="hasFieldError('documentNumber')"
       />
       @if (hasFieldError('documentNumber')) {
-        <small>Ingresa un documento válido.</small>
+        <small>{{ 'subscription.upgrade.billing.documentNumberError' | translate }}</small>
       }
     </label>
 
     <label>
-      <span>Razón social o nombre</span>
+      <span>{{ 'subscription.upgrade.billing.businessName' | translate }}</span>
       <input
         type="text"
         autocomplete="organization"
@@ -45,12 +50,12 @@
         [attr.aria-invalid]="hasFieldError('businessName')"
       />
       @if (hasFieldError('businessName')) {
-        <small>Ingresa la razón social o nombre.</small>
+        <small>{{ 'subscription.upgrade.billing.businessNameError' | translate }}</small>
       }
     </label>
 
     <label>
-      <span>Correo de comprobantes</span>
+      <span>{{ 'subscription.upgrade.billing.receiptEmail' | translate }}</span>
       <input
         type="email"
         autocomplete="email"
@@ -58,12 +63,12 @@
         [attr.aria-invalid]="hasFieldError('receiptEmail')"
       />
       @if (hasFieldError('receiptEmail')) {
-        <small>Ingresa un correo válido.</small>
+        <small>{{ 'subscription.upgrade.billing.receiptEmailError' | translate }}</small>
       }
     </label>
 
     <label class="field-wide">
-      <span>Dirección fiscal</span>
+      <span>{{ 'subscription.upgrade.billing.fiscalAddress' | translate }}</span>
       <input
         type="text"
         autocomplete="street-address"
@@ -71,13 +76,17 @@
         [attr.aria-invalid]="hasFieldError('fiscalAddress')"
       />
       @if (hasFieldError('fiscalAddress')) {
-        <small>Ingresa la dirección fiscal.</small>
+        <small>{{ 'subscription.upgrade.billing.fiscalAddressError' | translate }}</small>
       }
     </label>
 
     <div class="modal-actions">
-      <button class="secondary-button" type="button" (click)="close()">Cancelar</button>
-      <button class="primary-button" type="submit">Guardar datos</button>
+      <button class="secondary-button" type="button" (click)="close()">
+        {{ 'subscription.billingData.cancel' | translate }}
+      </button>
+      <button class="primary-button" type="submit">
+        {{ 'subscription.billingData.save' | translate }}
+      </button>
     </div>
   </form>
 </section>

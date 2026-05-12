@@ -21,8 +21,6 @@ export class SubscriptionPlan {
   statusLabel: string;
   badgeLabel: string;
   recommended: boolean;
-  currentPeriodStartDate: string;
-  currentPeriodEndDate: string;
   features: PlanFeature[];
 
   constructor(plan?: Partial<SubscriptionPlan>) {
@@ -35,8 +33,6 @@ export class SubscriptionPlan {
     this.statusLabel = plan?.statusLabel ?? '';
     this.badgeLabel = plan?.badgeLabel ?? '';
     this.recommended = plan?.recommended ?? false;
-    this.currentPeriodStartDate = plan?.currentPeriodStartDate ?? '';
-    this.currentPeriodEndDate = plan?.currentPeriodEndDate ?? '';
     this.features = plan?.features ?? [];
   }
 }
