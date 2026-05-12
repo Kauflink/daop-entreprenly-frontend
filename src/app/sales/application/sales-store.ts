@@ -24,6 +24,7 @@ export class SalesStore {
   readonly totalCash = computed(() => this.cashRegisterSignal()?.totalCash ?? 0);
   readonly totalDigital = computed(() => this.cashRegisterSignal()?.totalDigital ?? 0);
   readonly totalDay = computed(() => (this.cashRegisterSignal()?.totalCash ?? 0) + (this.cashRegisterSignal()?.totalDigital ?? 0));
+  readonly saleCount = computed(() => this.cashRegisterSignal()?.saleCount ?? 0);
 
   private readonly destroyRef = inject(DestroyRef);
   private readonly salesApi = inject(SalesApi);
@@ -81,6 +82,7 @@ export class SalesStore {
       totalDigital: isDigital
         ? Number((current.totalDigital + amount).toFixed(2))
         : current.totalDigital,
+      saleCount: current.saleCount + 1,
     });
 
     this.cashRegisterSignal.set(updated);
