@@ -1,4 +1,5 @@
 import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../environments/environment';
 import { BaseApiEndpoint } from '../../shared/infrastructure/base-api-endpoint';
 import { ChatMessage } from '../domain/model/chat-message.entity';
 import { ChatMessageResource, ChatMessagesResponse } from './chat-messages-response';
@@ -11,6 +12,6 @@ export class ChatMessagesApiEndpoint extends BaseApiEndpoint<
   ChatMessageAssembler
 > {
   constructor(http: HttpClient, assembler: ChatMessageAssembler) {
-    super(http, 'http://localhost:3000/chat-messages', assembler);
+    super(http, `${environment.entreprenlyProviderApiBaseUrl}${environment.entreprenlyProviderChatMessagesEndpointPath}`, assembler);
   }
 }
