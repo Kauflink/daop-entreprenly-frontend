@@ -196,7 +196,9 @@ export class Orders implements OnInit {
   }
 
   protected formatDate(dateStr: string): string {
-    return new Date(dateStr).toLocaleString('es-PE', {
+    const lang   = this.translate.currentLang ?? this.translate.defaultLang ?? 'es';
+    const locale = lang === 'en' ? 'en-US' : 'es-PE';
+    return new Date(dateStr).toLocaleString(locale, {
       day: '2-digit', month: '2-digit', year: 'numeric',
       hour: '2-digit', minute: '2-digit',
     });
