@@ -1,13 +1,13 @@
 <section class="card detail-card">
   <h2 class="card-title">
     <span class="title-icon">☀</span>
-    Detalle de venta
+    {{ 'sales.detail.title' | translate }}
   </h2>
 
   <div class="search-container">
     <input
       type="text"
-      placeholder="Buscar producto por nombre..."
+      [placeholder]="'sales.search.placeholder' | translate"
       class="search-input"
       [ngModel]="searchTerm()"
       (ngModelChange)="onSearchInput($event)"
@@ -29,14 +29,14 @@
     @if (showNotFound()) {
     <div class="not-found-message">
       <span class="error-icon">⊘</span>
-      Producto no encontrado
+      {{ 'sales.search.notFound' | translate }}
     </div>
     }
 
     @if (showEmptyError()) {
     <div class="not-found-message">
       <span class="error-icon">⊘</span>
-      No hay productos en el ticket
+      {{ 'sales.search.emptyTicket' | translate }}
     </div>
     }
   </div>
@@ -44,18 +44,18 @@
   <table class="ticket-table">
     <thead>
       <tr>
-        <th>Producto</th>
-        <th>Tipo</th>
-        <th>Cantidad/peso</th>
-        <th>P. Unit.</th>
-        <th>Subtotal</th>
+        <th>{{ 'sales.ticket.col.product' | translate }}</th>
+        <th>{{ 'sales.ticket.col.type' | translate }}</th>
+        <th>{{ 'sales.ticket.col.quantity' | translate }}</th>
+        <th>{{ 'sales.ticket.col.unitPrice' | translate }}</th>
+        <th>{{ 'sales.ticket.col.subtotal' | translate }}</th>
         <th></th>
       </tr>
     </thead>
     <tbody>
       @if (ticketItems().length === 0) {
       <tr class="empty-row">
-        <td colspan="6">Aún no se han añadido productos al ticket</td>
+        <td colspan="6">{{ 'sales.ticket.empty' | translate }}</td>
       </tr>
       } @else {
       @for (item of ticketItems(); track $index; let i = $index) {
@@ -63,16 +63,16 @@
         <td class="product-cell">{{ item.productName }}</td>
         <td>
           @if (item.type === 'unit') {
-          <span class="badge badge-unit">📦 Unidad</span>
+          <span class="badge badge-unit">📦 {{ 'sales.ticket.badge.unit' | translate }}</span>
           } @else {
-          <span class="badge badge-weight">⚖ Peso</span>
+          <span class="badge badge-weight">⚖ {{ 'sales.ticket.badge.weight' | translate }}</span>
           }
         </td>
         <td>
           @if (item.type === 'unit') {
-          {{ item.quantity }} und
+          {{ item.quantity }} {{ 'sales.ticket.unit' | translate }}
           } @else {
-          {{ item.weightKg }} kg
+          {{ item.weightKg }} {{ 'sales.ticket.kg' | translate }}
           }
         </td>
         <td>S/ {{ item.unitPrice.toFixed(2) }}</td>

@@ -1,6 +1,6 @@
 export const environment = {
   production: true,
-  entreprenlyProviderApiBaseUrl: 'http://localhost:3000/api/v1',
+  entreprenlyProviderApiBaseUrl: 'https://api.entreprenly.com/api/v1',
   entreprenlyProviderSalesEndpointPath: '/sales',
   entreprenlyProviderProfileEndpointPath: '/profile',
   entreprenlyProviderSalesProductsEndpointPath: '/sales-products',
