@@ -145,6 +145,34 @@ const ARTICLES: HelpArticle[] = [
     ],
     relatedIds: [3, 2],
   },
+  {
+    id: 9,
+    titleKey:    'dashboard-help.articles.9.title',
+    categoryKey: 'dashboard-help.articles.9.category',
+    categoryId:  'reportes',
+    readTime: 3,
+    stepKeys: [
+      'dashboard-help.articles.9.steps.0',
+      'dashboard-help.articles.9.steps.1',
+      'dashboard-help.articles.9.steps.2',
+      'dashboard-help.articles.9.steps.3',
+    ],
+    relatedIds: [5, 1],
+  },
+  {
+    id: 10,
+    titleKey:    'dashboard-help.articles.10.title',
+    categoryKey: 'dashboard-help.articles.10.category',
+    categoryId:  'suscripcion',
+    readTime: 2,
+    stepKeys: [
+      'dashboard-help.articles.10.steps.0',
+      'dashboard-help.articles.10.steps.1',
+      'dashboard-help.articles.10.steps.2',
+      'dashboard-help.articles.10.steps.3',
+    ],
+    relatedIds: [2, 9],
+  },
 ];
 
 /** Categorías calculadas dinámicamente desde los artículos reales */
@@ -366,6 +394,10 @@ export class Help {
       chatbot:    'bg-blue-100',
       pedidos:    'bg-gray-100',
       ventas:     'bg-green-100',
+      reportes:   'bg-purple-100',
+      suscripcion:'bg-indigo-100',
+      lotes:      'bg-yellow-100',
+      configuracion: 'bg-slate-100',
     };
     return map[categoryId] ?? 'bg-gray-100';
   }

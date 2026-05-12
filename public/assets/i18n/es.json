@@ -237,31 +237,31 @@
   },
   "subscription": {
     "page": {
-      "title": "Suscripci\u00f3n",
-      "description": "Consulta tu plan actual, revisa l\u00edmites disponibles, actualiza a Plan Control y gestiona facturaci\u00f3n desde el dashboard.",
-      "loading": "Cargando panel de suscripci\u00f3n..."
+      "title": "Suscripción",
+      "description": "Consulta tu plan actual, revisa límites disponibles, actualiza a Plan Control y gestiona facturación desde el dashboard.",
+      "loading": "Cargando panel de suscripción..."
     },
     "overview": {
-      "eyebrow": "Suscripci\u00f3n",
-      "title": "Plan actual y facturaci\u00f3n",
-      "description": "Administra el plan de tu negocio, revisa los l\u00edmites disponibles y actualiza a Plan Control cuando necesites operar sin restricciones.",
-      "billingFrequencyLabel": "Frecuencia de facturaci\u00f3n",
+      "eyebrow": "Suscripción",
+      "title": "Plan actual y facturación",
+      "description": "Administra el plan de tu negocio, revisa los límites disponibles y actualiza a Plan Control cuando necesites operar sin restricciones.",
+      "billingFrequencyLabel": "Frecuencia de facturación",
       "monthly": "Mensual",
       "annual": "Anual",
       "upgradeAction": "Actualizar a Plan Control"
     },
     "usage": {
       "eyebrow": "Uso del plan",
-      "title": "L\u00edmites disponibles",
+      "title": "Límites disponibles",
       "counter": "{{ used }} de {{ max }}"
     },
     "billing": {
-      "eyebrow": "Facturaci\u00f3n",
-      "title": "M\u00e9todo de pago y datos fiscales"
+      "eyebrow": "Facturación",
+      "title": "Método de pago y datos fiscales"
     },
     "activity": {
       "eyebrow": "Historial",
-      "title": "Actividad de la suscripci\u00f3n",
+      "title": "Actividad de la suscripción",
       "downloadAction": "Descargar historial"
     },
     "plans": {
@@ -509,6 +509,7 @@
     }
   },
   "dashboard-home": {
+    "title": "Panel de Inicio",
     "welcomeBack": "Bienvenido de vuelta",
     "welcome": "¡Hola! Aquí está tu resumen de hoy.",
     "alertBannerTitle": "Alertas de inventario que requieren atención",
@@ -562,11 +563,17 @@
       "empty": "Aún no hay pedidos para hoy",
       "emptySub": "Los pedidos por WhatsApp o presenciales aparecerán aquí en tiempo real.",
       "colClient": "Cliente",
+      "colTime": "Hora",
       "colStatus": "Estado",
       "colTotal": "Total",
       "clientFallback": "Cliente",
+      "botActive": "Chatbot activo en",
+      "botActiveSub": "Los pedidos nuevos aparecerán aquí en tiempo real.",
+      "pendingBadge": "pedidos pendientes de validación",
       "approved": "Completados",
+      "approvedDetail": "completados hoy",
       "pending": "Pendientes",
+      "pendingDetail": "con comprobante pendiente",
       "status": {
         "confirmed": "Completado",
         "blocked": "Bloqueado",
@@ -767,8 +774,14 @@
       "Otro"
     ],
     "modules": [
-      "Inventario", "Chatbot", "Pedidos", "Ventas",
-      "Suscripción", "Reportes", "Configuración", "General"
+      "Inventario",
+      "Chatbot",
+      "Pedidos",
+      "Ventas",
+      "Suscripción",
+      "Reportes",
+      "Configuración",
+      "General"
     ],
     "articles": {
       "1": {
@@ -849,6 +862,26 @@
           "Selecciona el pedido pendiente de validación.",
           "Revisa el comprobante adjunto por el cliente.",
           "Aprueba o rechaza el pago según corresponda."
+        ]
+      },
+      "9": {
+        "title": "¿Cómo ver el reporte de ventas del día?",
+        "category": "Reportes",
+        "steps": [
+          "Ve al módulo <strong>Ventas</strong> desde el panel lateral.",
+          "El resumen diario aparece en el widget de Caja: total, efectivo y digital.",
+          "Puedes consultar el historial de ventas en la sección <strong>Historial</strong>.",
+          "Los datos se actualizan en tiempo real con cada venta registrada."
+        ]
+      },
+      "10": {
+        "title": "¿Cómo gestionar mi plan de suscripción?",
+        "category": "Suscripción",
+        "steps": [
+          "Ve al módulo <strong>Suscripción</strong> desde el panel lateral.",
+          "Revisa el plan activo, las funciones incluidas y la fecha de renovación.",
+          "Para cambiar de plan, haz clic en <strong>Gestionar plan</strong> y elige el nuevo.",
+          "Recibirás una confirmación por correo al completar el cambio."
         ]
       }
     }

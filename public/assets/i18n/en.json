@@ -509,6 +509,7 @@
     }
   },
   "dashboard-home": {
+    "title": "Home Dashboard",
     "welcomeBack": "Welcome back",
     "welcome": "Hi! Here's your summary for today.",
     "alertBannerTitle": "Inventory alerts that need attention",
@@ -562,11 +563,17 @@
       "empty": "No orders for today yet",
       "emptySub": "WhatsApp or in-person orders will appear here in real time.",
       "colClient": "Client",
+      "colTime": "Time",
       "colStatus": "Status",
       "colTotal": "Total",
       "clientFallback": "Client",
+      "botActive": "Chatbot active on",
+      "botActiveSub": "New orders will appear here in real time.",
+      "pendingBadge": "pending orders",
       "approved": "Completed",
+      "approvedDetail": "completed today",
       "pending": "Pending",
+      "pendingDetail": "with pending receipt",
       "status": {
         "confirmed": "Completed",
         "blocked": "Blocked",
@@ -767,8 +774,14 @@
       "Other"
     ],
     "modules": [
-      "Inventory", "Chatbot", "Orders", "Sales",
-      "Subscription", "Reports", "Configuration", "General"
+      "Inventory",
+      "Chatbot",
+      "Orders",
+      "Sales",
+      "Subscription",
+      "Reports",
+      "Configuration",
+      "General"
     ],
     "articles": {
       "1": {
@@ -849,6 +862,26 @@
           "Select the order pending validation.",
           "Review the receipt attached by the client.",
           "Approve or reject the payment accordingly."
+        ]
+      },
+      "9": {
+        "title": "How to view the daily sales report?",
+        "category": "Reports",
+        "steps": [
+          "Go to the <strong>Sales</strong> module from the sidebar.",
+          "The daily summary appears in the Cash widget: total, cash and digital.",
+          "You can check the sales history in the <strong>History</strong> section.",
+          "Data updates in real time with each completed sale."
+        ]
+      },
+      "10": {
+        "title": "How to manage my subscription plan?",
+        "category": "Subscription",
+        "steps": [
+          "Go to the <strong>Subscription</strong> module from the sidebar.",
+          "Review your active plan, included features and renewal date.",
+          "To change your plan, click <strong>Manage plan</strong> and choose the new one.",
+          "You will receive a confirmation email when the change is complete."
         ]
       }
     }
