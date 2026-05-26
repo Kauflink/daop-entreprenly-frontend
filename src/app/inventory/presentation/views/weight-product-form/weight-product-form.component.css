@@ -172,7 +172,7 @@
   background: var(--color-bg-page);
   border-radius: 10px;
   padding-left: 12px;
-  width: 160px; /* Aligned with the mockup */
+  width: 160px;
 }
 
 .prefix-box input {

@@ -344,6 +344,12 @@
       "totalCash": 5,
       "totalDigital": 0,
       "saleCount": 1
+    },
+    {
+      "date": "2026-05-26",
+      "totalCash": 0,
+      "totalDigital": 0,
+      "id": 3
     }
   ],
   "iot-scale": {
