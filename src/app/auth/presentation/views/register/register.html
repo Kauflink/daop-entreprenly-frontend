@@ -1,0 +1,112 @@
+<main class="access-page">
+  <div class="access-shell">
+    <header class="access-header">
+      <a class="ghost-button" routerLink="/login">
+        <span class="material-icons" aria-hidden="true">arrow_back</span>
+        <span>Volver</span>
+      </a>
+
+      <img class="brand-logo" src="brand/brand-logo-light-transparent.png" alt="Entreprenly" />
+
+      <a class="ghost-button" routerLink="/login"> Iniciar sesion </a>
+    </header>
+
+    <div class="access-grid">
+      <section class="access-copy">
+        <p class="eyebrow">Crear cuenta</p>
+        <h1>Crea tu cuenta para empezar a ordenar inventario, ventas y caja.</h1>
+        <p>Registro para empezar a usar Entreprenly con tu negocio.</p>
+
+        <div class="benefits-grid">
+          @for (benefit of benefits; track benefit.title) {
+            <article class="benefit-card">
+              <span class="benefit-icon material-icons" aria-hidden="true">check</span>
+              <div>
+                <h2>{{ benefit.title }}</h2>
+                <p>{{ benefit.copy }}</p>
+              </div>
+            </article>
+          }
+        </div>
+      </section>
+
+      <section class="form-panel" aria-labelledby="register-title">
+        <span class="mini-tag">Registro</span>
+        <h2 id="register-title">Activa tu acceso</h2>
+        <p class="form-copy">Completa tus datos para crear la cuenta.</p>
+
+        <form class="access-form" [formGroup]="form" (ngSubmit)="submitRegister()">
+          <label>
+            <span>Nombre del negocio</span>
+            <span class="field-shell">
+              <span class="material-icons" aria-hidden="true">store</span>
+              <input formControlName="businessName" type="text" autocomplete="organization" />
+            </span>
+          </label>
+
+          <label>
+            <span>Responsable</span>
+            <span class="field-shell">
+              <span class="material-icons" aria-hidden="true">person</span>
+              <input formControlName="ownerName" type="text" autocomplete="name" />
+            </span>
+          </label>
+
+          <label>
+            <span>Correo electronico</span>
+            <span class="field-shell">
+              <span class="material-icons" aria-hidden="true">mail</span>
+              <input formControlName="email" type="email" autocomplete="email" />
+            </span>
+          </label>
+
+          <label>
+            <span>Contrasena</span>
+            <span class="field-shell">
+              <span class="material-icons" aria-hidden="true">lock</span>
+              <input formControlName="password" type="password" autocomplete="new-password" />
+            </span>
+          </label>
+
+          <label>
+            <span>Confirmar contrasena</span>
+            <span class="field-shell">
+              <span class="material-icons" aria-hidden="true">lock</span>
+              <input formControlName="confirmPassword" type="password" autocomplete="new-password" />
+            </span>
+          </label>
+
+          <label class="check-row">
+            <input formControlName="acceptedTerms" type="checkbox" />
+            <span>Acepto terminos y condiciones.</span>
+          </label>
+
+          @if (errors().length > 0) {
+            <div class="message message--error" role="alert">
+              @for (item of errors(); track item) {
+                <p>{{ item }}</p>
+              }
+            </div>
+          }
+          @if (notice()) {
+            <p class="message" role="status" aria-live="polite">{{ notice() }}</p>
+          }
+
+          <button class="primary-button" type="submit" [disabled]="loading()">
+            {{ loading() ? 'Creando...' : 'Crear cuenta' }}
+          </button>
+
+          <button class="secondary-button" type="button" (click)="registerWithGoogle()">
+            <span class="material-icons" aria-hidden="true">account_circle</span>
+            <span>Registrarme con Google</span>
+          </button>
+        </form>
+
+        <p class="switch-copy">
+          Ya tienes cuenta?
+          <a routerLink="/login">Inicia sesion aqui</a>
+        </p>
+      </section>
+    </div>
+  </div>
+</main>
