@@ -1,0 +1,101 @@
+<main class="access-page">
+  <div class="access-shell">
+    <header class="access-header">
+      <a class="ghost-button" routerLink="/dashboard">
+        <span class="material-icons" aria-hidden="true">arrow_back</span>
+        <span>Volver</span>
+      </a>
+
+      <img class="brand-logo" src="brand/brand-logo-light-transparent.png" alt="Entreprenly" />
+
+      <a class="ghost-button" routerLink="/register"> Crear cuenta </a>
+    </header>
+
+    <div class="access-grid">
+      <section class="access-copy">
+        <p class="eyebrow">Acceso a la plataforma</p>
+        <h1>Ingresa para revisar inventario, ventas y caja desde un solo lugar.</h1>
+        <p>
+          Pantalla de acceso simple para entrar al dashboard de Entreprenly.
+        </p>
+
+        <div class="benefits-grid">
+          @for (benefit of benefits; track benefit.title) {
+            <article class="benefit-card">
+              <span class="benefit-icon material-icons" aria-hidden="true">check</span>
+              <div>
+                <h2>{{ benefit.title }}</h2>
+                <p>{{ benefit.copy }}</p>
+              </div>
+            </article>
+          }
+        </div>
+      </section>
+
+      <section class="form-panel" aria-labelledby="login-title">
+        <span class="mini-tag">Iniciar sesion</span>
+        <h2 id="login-title">Bienvenido de vuelta</h2>
+        <p class="form-copy">Ingresa con tu correo y contrasena.</p>
+
+        <form class="access-form" [formGroup]="form" (ngSubmit)="submitLogin()">
+          <label>
+            <span>Correo electronico</span>
+            <span class="field-shell">
+              <span class="material-icons" aria-hidden="true">mail</span>
+              <input
+                formControlName="email"
+                type="email"
+                autocomplete="username"
+                placeholder="tu@correo.com"
+              />
+            </span>
+          </label>
+
+          <label>
+            <span class="label-row">
+              <span>Contrasena</span>
+              <button type="button" (click)="forgotPassword()">Olvide mi contrasena</button>
+            </span>
+            <span class="field-shell">
+              <span class="material-icons" aria-hidden="true">lock</span>
+              <input
+                formControlName="password"
+                type="password"
+                autocomplete="current-password"
+                placeholder="********"
+              />
+            </span>
+          </label>
+
+          <div class="form-meta">
+            <label class="check-row">
+              <input formControlName="rememberSession" type="checkbox" />
+              <span>Mantener sesion iniciada</span>
+            </label>
+          </div>
+
+          @if (error()) {
+            <p class="message message--error" role="alert">{{ error() }}</p>
+          }
+          @if (notice()) {
+            <p class="message" role="status" aria-live="polite">{{ notice() }}</p>
+          }
+
+          <button class="primary-button" type="submit" [disabled]="loading()">
+            {{ loading() ? 'Ingresando...' : 'Ingresar al dashboard' }}
+          </button>
+
+          <button class="secondary-button" type="button" (click)="loginWithGoogle()">
+            <span class="material-icons" aria-hidden="true">account_circle</span>
+            <span>Continuar con Google</span>
+          </button>
+        </form>
+
+        <p class="switch-copy">
+          No tienes cuenta todavia?
+          <a routerLink="/register">Registrate aqui</a>
+        </p>
+      </section>
+    </div>
+  </div>
+</main>
