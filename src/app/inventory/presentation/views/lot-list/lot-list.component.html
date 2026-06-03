@@ -1,4 +1,4 @@
-<div class="page">
+﻿<div class="page">
   <div class="page-header">
     <div>
       <h1 class="page-title">
@@ -9,6 +9,53 @@
       </p>
     </div>
     <div class="header-actions">
+      <div class="alert-menu">
+        <button
+          type="button"
+          class="alert-icon-btn"
+          [attr.aria-label]="'lots.alerts.buttonLabel' | translate"
+          [attr.aria-expanded]="alertsMenuOpen()"
+          (click)="toggleAlertsMenu()">
+          <mat-icon>notifications</mat-icon>
+          @if (totalAlertCount() > 0) {
+            <span class="alert-badge">{{ totalAlertCount() }}</span>
+          }
+        </button>
+
+        @if (alertsMenuOpen()) {
+          <section class="alert-dropdown" aria-live="polite">
+            <div class="alert-dropdown-header">
+              <strong>{{ 'lots.alerts.dropdownTitle' | translate }}</strong>
+              <span>{{ totalAlertCount() }} {{ 'lots.alerts.totalLabel' | translate }}</span>
+            </div>
+
+            @if (rawAlerts().length > 0) {
+              <div class="alert-dropdown-list">
+                @for (alert of rawAlerts(); track alert.productType + '-' + alert.productId + '-' + alert.lotId + '-' + alert.alertType + '-' + $index) {
+                  <button
+                    type="button"
+                    class="lot-alert"
+                    [class.lot-alert--danger]="alert.tone === 'danger'"
+                    [class.lot-alert--warning]="alert.tone === 'warning'"
+                    [class.lot-alert--low]="alert.tone === 'low'"
+                    (click)="navigateToAlert(alert)">
+                    <span class="lot-alert-icon" aria-hidden="true">
+                      <mat-icon>{{ alert.icon }}</mat-icon>
+                    </span>
+                    <div class="lot-alert-copy">
+                      <strong>{{ alertTitleKey(alert) | translate: alertTitleParams(alert) }}</strong>
+                      <span>{{ alert.detailKey | translate: alert.detailParams }}</span>
+                    </div>
+                  </button>
+                }
+              </div>
+            } @else {
+              <p class="alert-empty">{{ 'lots.alerts.empty' | translate }}</p>
+            }
+          </section>
+        }
+      </div>
+
       <input
         class="search-input"
         type="text"
@@ -23,6 +70,7 @@
       </button>
     </div>
   </div>
+
   <div class="stats-row">
     <div class="stat-card">
       <div class="stat-icon stat-icon--orange">
@@ -73,64 +121,7 @@
     </div>
   </div>
 
-  @if (activeAlertSummary(); as alert) {
-    <div class="lot-alert-slider">
-      <button
-        type="button"
-        class="alert-slide-btn"
-        [disabled]="alertSummaries().length <= 1"
-        (click)="previousAlert()">
-        <mat-icon>chevron_left</mat-icon>
-      </button>
-
-        <div
-          class="lot-alert"
-          [class.lot-alert--danger]="alert.tone === 'danger'"
-          [class.lot-alert--warning]="alert.tone === 'warning'"
-          [class.lot-alert--low]="alert.tone === 'low'">
-          @if (alert.tone === 'warning') {
-            <svg class="lot-alert-icon" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
-              <line x1="12" y1="9" x2="12" y2="13"/>
-              <circle cx="12" cy="17" r="1" fill="currentColor" stroke="none"/>
-            </svg>
-          } @else if (alert.tone === 'low') {
-            <svg class="lot-alert-icon" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <polyline points="23 18 13.5 8.5 8.5 13.5 1 6"/>
-              <polyline points="17 18 23 18 23 12"/>
-            </svg>
-          } @else {
-            <svg class="lot-alert-icon" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <circle cx="12" cy="12" r="10"/>
-              <line x1="12" y1="8" x2="12" y2="12"/>
-              <circle cx="12" cy="16.5" r="1" fill="currentColor" stroke="none"/>
-            </svg>
-          }
-          <div class="lot-alert-copy">
-            <strong>{{ alert.titleKey | translate: alert.titleParams }}</strong>
-            <span>{{ alert.detailKey | translate: alert.detailParams }}</span>
-          </div>
-        </div>
-
-      <button
-        type="button"
-        class="alert-slide-btn"
-        [disabled]="alertSummaries().length <= 1"
-        (click)="nextAlert()">
-        <mat-icon>chevron_right</mat-icon>
-      </button>
-    </div>
-  }
-
-  <div class="cards-wrapper">
-    <button
-      class="scroll-btn scroll-btn-left"
-      (click)="scrollLeft()">
-      ❮
-    </button>
-    <div
-      class="cards-grid"
-      #cardsContainer>
+  <div class="cards-grid">
       @if (cards().length === 0) {
         <p class="empty">
           {{ 'lots.empty' | translate }}
@@ -203,12 +194,6 @@
         </div>
       }
     </div>
-    <button
-      class="scroll-btn scroll-btn-right"
-      (click)="scrollRight()">
-      ❯
-    </button>
-  </div>
 </div>
 @if (showProductSelector()) {
   <div
