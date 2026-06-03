@@ -1,5 +1,5 @@
 
-import {Component, inject, computed, signal, ElementRef, ViewChild} from '@angular/core';
+import {Component, inject, computed, signal} from '@angular/core';
 import {Router, RouterOutlet} from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -50,9 +50,9 @@ export class LotListComponent {
 
   showProductSelector = signal(false);
 
-  activeAlertIndex = signal(0);
+  alertsMenuOpen = signal(false);
 
-  private readonly rawAlerts = computed(() =>
+  readonly rawAlerts = computed(() =>
     StockAlert.buildFromLots(
       this.store.unitProducts(),
       this.store.weightProducts(),
@@ -61,15 +61,61 @@ export class LotListComponent {
     )
   );
 
-  alertSummaries = computed(() => StockAlert.summarize(this.rawAlerts()));
+  totalAlertCount = computed(() => this.rawAlerts().length);
 
-  activeAlertSummary = computed(() => {
-    const alerts = this.alertSummaries();
-    if (alerts.length === 0) return null;
+  toggleAlertsMenu(): void {
+    this.alertsMenuOpen.update(open => !open);
+  }
 
-    const index = Math.min(this.activeAlertIndex(), alerts.length - 1);
-    return alerts[index];
-  });
+  alertTitleKey(alert: StockAlert): string {
+    switch (alert.alertType) {
+      case StockAlert.AlertType.LOW_STOCK:
+        return 'lots.alerts.title.lowStock';
+      case StockAlert.AlertType.OUT_OF_STOCK:
+        return 'lots.alerts.title.outOfStock';
+      case StockAlert.AlertType.EXPIRING_SOON:
+        return 'lots.alerts.title.expiringSoon';
+      case StockAlert.AlertType.EXPIRED:
+        return 'lots.alerts.title.expired';
+    }
+  }
+
+  alertTitleParams(alert: StockAlert): Record<string, number> {
+    const count = this.rawAlerts().filter(item =>
+      item.alertType === alert.alertType &&
+      item.productId === alert.productId &&
+      item.productType === alert.productType
+    ).length;
+
+    return { count };
+  }
+
+  navigateToAlert(alert: StockAlert): void {
+    if (!alert.productType) return;
+
+    this.alertsMenuOpen.set(false);
+
+    const path =
+      alert.productType === 'unit'
+        ? 'unit-lots'
+        : 'weight-lots';
+
+    const queryParams: {
+      productId: number;
+      lotId?: number;
+    } = {
+      productId: alert.productId
+    };
+
+    if (alert.lotId !== null) {
+      queryParams.lotId = alert.lotId;
+    }
+
+    this.router.navigate(
+      ['/dashboard/inventory', path],
+      { queryParams }
+    );
+  }
 
   // ───────────────── STATS ─────────────────
 
@@ -289,33 +335,6 @@ export class LotListComponent {
       type as 'unit' | 'weight'
     );
 
-  }
-
-  @ViewChild('cardsContainer')
-  cardsContainer!: ElementRef<HTMLDivElement>;
-
-  scrollLeft(): void {
-    const card = this.cardsContainer.nativeElement.querySelector('.lot-card') as HTMLElement;
-    const amount = card ? card.offsetWidth + 24 : 0;
-    this.cardsContainer.nativeElement.scrollBy({ left: -amount*3, behavior: 'smooth' });
-  }
-
-  scrollRight(): void {
-    const card = this.cardsContainer.nativeElement.querySelector('.lot-card') as HTMLElement;
-    const amount = card ? card.offsetWidth + 24 : 0;
-    this.cardsContainer.nativeElement.scrollBy({ left: amount *3, behavior: 'smooth' });
-  }
-
-  previousAlert(): void {
-    const total = this.alertSummaries().length;
-    if (total <= 1) return;
-    this.activeAlertIndex.update(index => (index - 1 + total) % total);
-  }
-
-  nextAlert(): void {
-    const total = this.alertSummaries().length;
-    if (total <= 1) return;
-    this.activeAlertIndex.update(index => (index + 1) % total);
   }
 
 }
