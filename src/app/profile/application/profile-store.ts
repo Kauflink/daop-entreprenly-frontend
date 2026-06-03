@@ -6,36 +6,10 @@ import { environment } from '../../../environments/environment';
 import { UserProfile } from '../domain/model/user-profile.entity';
 import { UserPreferences, Theme } from '../domain/model/user-preferences.entity';
 import { NotificationSettings } from '../domain/model/notification-settings.entity';
-import {
-  Currency,
-  CurrencyService,
-  isSupportedCurrency,
-} from '../../shared/infrastructure/currency-service';
+import { Currency, CurrencyService, isSupportedCurrency } from '../../shared/infrastructure/currency-service';
 import { AuthStore } from '../../auth/application/auth-store';
-
-/** Backend profile resource (clean REST contract, camelCase, nested). */
-interface PreferencesResource {
-  language: string;
-  timezone: string;
-  theme: string;
-  currency: string;
-}
-interface NotificationSettingsResource {
-  stockAlerts: boolean;
-  paymentAlerts: boolean;
-  chatbotMessages: boolean;
-}
-interface ProfileResource {
-  id: number;
-  userId: number;
-  firstName: string;
-  lastName: string;
-  avatarUrl: string | null;
-  role: string;
-  plan: string;
-  preferences: PreferencesResource;
-  notificationSettings: NotificationSettingsResource;
-}
+import { ProfileResource } from '../infrastructure/profile-response';
+import { ProfileAssembler } from '../infrastructure/profile-assembler';
 
 @Injectable({ providedIn: 'root' })
 export class ProfileStore {
@@ -50,6 +24,7 @@ export class ProfileStore {
   private readonly translate = inject(TranslateService);
   private readonly currencyAssembler = inject(CurrencyService);
   private readonly authStore = inject(AuthStore);
+  private readonly assembler = inject(ProfileAssembler);
   private readonly profilesUrl =
     environment.entreprenlyProviderApiBaseUrl + environment.entreprenlyProviderProfilesEndpointPath;
 
@@ -60,6 +35,7 @@ export class ProfileStore {
     id: 0,
     firstName: '',
     lastName: '',
+    phone: null,
     avatarUrl: null,
     role: '',
     plan: '',
@@ -135,6 +111,7 @@ export class ProfileStore {
     this.put(`${this.profilesUrl}/${this.profileId()}`, {
       firstName: updated.firstName,
       lastName: updated.lastName,
+      phone: updated.phone,
       avatarUrl: updated.avatarUrl,
     });
   }
@@ -175,29 +152,9 @@ export class ProfileStore {
 
   private applyResource(resource: ProfileResource): void {
     this.profileId.set(resource.id);
-    this.profile.set({
-      id: resource.id,
-      firstName: resource.firstName,
-      lastName: resource.lastName,
-      avatarUrl: resource.avatarUrl,
-      role: resource.role,
-      plan: resource.plan,
-    });
-    this.preferences.set({
-      id: resource.id,
-      language: resource.preferences.language,
-      timezone: resource.preferences.timezone,
-      theme: resource.preferences.theme === 'dark' ? 'dark' : 'light',
-      currency: isSupportedCurrency(resource.preferences.currency)
-        ? resource.preferences.currency
-        : 'PEN',
-    });
-    this.notificationSettings.set({
-      id: resource.id,
-      stockAlerts: resource.notificationSettings.stockAlerts,
-      paymentAlerts: resource.notificationSettings.paymentAlerts,
-      chatbotMessages: resource.notificationSettings.chatbotMessages,
-    });
+    this.profile.set(this.assembler.toProfile(resource));
+    this.preferences.set(this.assembler.toPreferences(resource));
+    this.notificationSettings.set(this.assembler.toNotifications(resource));
   }
 
   private readStoredCurrency(): Currency {

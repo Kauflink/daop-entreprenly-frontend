@@ -37,18 +37,18 @@
 
         <form class="access-form" [formGroup]="form" (ngSubmit)="submitRegister()">
           <label>
-            <span>Nombre del negocio</span>
+            <span>Nombre</span>
             <span class="field-shell">
-              <span class="material-icons" aria-hidden="true">store</span>
-              <input formControlName="businessName" type="text" autocomplete="organization" />
+              <span class="material-icons" aria-hidden="true">person</span>
+              <input formControlName="firstName" type="text" autocomplete="given-name" />
             </span>
           </label>
 
           <label>
-            <span>Responsable</span>
+            <span>Apellido</span>
             <span class="field-shell">
-              <span class="material-icons" aria-hidden="true">person</span>
-              <input formControlName="ownerName" type="text" autocomplete="name" />
+              <span class="material-icons" aria-hidden="true">badge</span>
+              <input formControlName="lastName" type="text" autocomplete="family-name" />
             </span>
           </label>
 
@@ -57,6 +57,26 @@
             <span class="field-shell">
               <span class="material-icons" aria-hidden="true">mail</span>
               <input formControlName="email" type="email" autocomplete="email" />
+            </span>
+          </label>
+
+          <label>
+            <span>Telefono</span>
+            <span class="field-shell">
+              <span class="material-icons" aria-hidden="true">call</span>
+              <input formControlName="phone" type="tel" autocomplete="tel" placeholder="+51 999 888 777" />
+            </span>
+          </label>
+
+          <label>
+            <span>Zona horaria</span>
+            <span class="field-shell">
+              <span class="material-icons" aria-hidden="true">schedule</span>
+              <select formControlName="timezone">
+                @for (tz of timezones; track tz) {
+                  <option [value]="tz">{{ tz }}</option>
+                }
+              </select>
             </span>
           </label>
 
