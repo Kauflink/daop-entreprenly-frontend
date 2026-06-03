@@ -1,16 +1,19 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { AuthenticatedUser } from '../domain/model/authenticated-user.entity';
+import { AuthenticatedUserResource, SignUpResultResource } from './auth-response';
+import { AuthAssembler } from './auth-assembler';
 
-/**
- * Response returned by the sign-up endpoint (no token; the user must sign in afterwards).
- */
-export interface SignUpResponse {
-  id: number;
+/** Registration payload sent to the sign-up endpoint. */
+export interface SignUpRequest {
   email: string;
-  roles: string[];
+  password: string;
+  firstName?: string;
+  lastName?: string;
+  phone?: string;
+  timezone?: string;
 }
 
 /**
@@ -19,14 +22,17 @@ export interface SignUpResponse {
 @Injectable({ providedIn: 'root' })
 export class AuthApi {
   private readonly http = inject(HttpClient);
+  private readonly assembler = inject(AuthAssembler);
   private readonly baseUrl =
     environment.entreprenlyProviderApiBaseUrl + environment.entreprenlyProviderAuthEndpointPath;
 
   signIn(email: string, password: string): Observable<AuthenticatedUser> {
-    return this.http.post<AuthenticatedUser>(`${this.baseUrl}/sign-in`, { email, password });
+    return this.http
+      .post<AuthenticatedUserResource>(`${this.baseUrl}/sign-in`, { email, password })
+      .pipe(map((resource) => this.assembler.toEntityFromResource(resource)));
   }
 
-  signUp(email: string, password: string): Observable<SignUpResponse> {
-    return this.http.post<SignUpResponse>(`${this.baseUrl}/sign-up`, { email, password });
+  signUp(request: SignUpRequest): Observable<SignUpResultResource> {
+    return this.http.post<SignUpResultResource>(`${this.baseUrl}/sign-up`, request);
   }
 }

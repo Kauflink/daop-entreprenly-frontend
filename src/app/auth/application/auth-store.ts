@@ -30,10 +30,20 @@ export class AuthStore {
     return this.api.signIn(email, password).pipe(tap((u) => this.setUser(u)));
   }
 
-  register(email: string, password: string): Observable<AuthenticatedUser> {
+  register(input: {
+    email: string;
+    password: string;
+    firstName?: string;
+    lastName?: string;
+    phone?: string;
+    timezone?: string;
+  }): Observable<AuthenticatedUser> {
     return this.api
-      .signUp(email, password)
-      .pipe(switchMap(() => this.api.signIn(email, password)), tap((u) => this.setUser(u)));
+      .signUp(input)
+      .pipe(
+        switchMap(() => this.api.signIn(input.email, input.password)),
+        tap((u) => this.setUser(u)),
+      );
   }
 
   logout(): void {
