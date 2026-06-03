@@ -1,12 +1,25 @@
 import { Routes } from '@angular/router';
 
 import { DashboardLayout } from './shared/presentation/components/dashboard-layout/dashboard-layout';
+import { authGuard } from './auth/infrastructure/auth.guard';
 
 
 export const routes: Routes = [
   {
+    path: 'login',
+    loadComponent: () => import('./auth/presentation/views/login/login').then((m) => m.Login),
+    title: 'Entreprenly - Login',
+  },
+  {
+    path: 'register',
+    loadComponent: () =>
+      import('./auth/presentation/views/register/register').then((m) => m.Register),
+    title: 'Entreprenly - Registro',
+  },
+  {
     path: 'dashboard',
     component: DashboardLayout,
+    canActivate: [authGuard],
     children: [
       {
         path: 'home',
