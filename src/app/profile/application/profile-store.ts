@@ -4,23 +4,37 @@ import { TranslateService } from '@ngx-translate/core';
 import { catchError, of, tap } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { UserProfile } from '../domain/model/user-profile.entity';
-import { UserPreferences } from '../domain/model/user-preferences.entity';
+import { UserPreferences, Theme } from '../domain/model/user-preferences.entity';
 import { NotificationSettings } from '../domain/model/notification-settings.entity';
-import {
-  NotificationSettingsResource,
-  UserPreferencesResource,
-  UserProfileResource,
-} from '../infrastructure/profile-response';
 import {
   Currency,
   CurrencyService,
   isSupportedCurrency,
 } from '../../shared/infrastructure/currency-service';
+import { AuthStore } from '../../auth/application/auth-store';
 
-interface ProfileResponse {
-  user: UserProfileResource;
-  preferences: UserPreferencesResource;
-  notification_settings: NotificationSettingsResource;
+/** Backend profile resource (clean REST contract, camelCase, nested). */
+interface PreferencesResource {
+  language: string;
+  timezone: string;
+  theme: string;
+  currency: string;
+}
+interface NotificationSettingsResource {
+  stockAlerts: boolean;
+  paymentAlerts: boolean;
+  chatbotMessages: boolean;
+}
+interface ProfileResource {
+  id: number;
+  userId: number;
+  firstName: string;
+  lastName: string;
+  avatarUrl: string | null;
+  role: string;
+  plan: string;
+  preferences: PreferencesResource;
+  notificationSettings: NotificationSettingsResource;
 }
 
 @Injectable({ providedIn: 'root' })
@@ -35,8 +49,12 @@ export class ProfileStore {
   private readonly http = inject(HttpClient);
   private readonly translate = inject(TranslateService);
   private readonly currencyAssembler = inject(CurrencyService);
-  private readonly profileUrl =
-    environment.entreprenlyProviderApiBaseUrl + environment.entreprenlyProviderProfileEndpointPath;
+  private readonly authStore = inject(AuthStore);
+  private readonly profilesUrl =
+    environment.entreprenlyProviderApiBaseUrl + environment.entreprenlyProviderProfilesEndpointPath;
+
+  /** Identifier of the loaded profile, used to target update endpoints. */
+  private readonly profileId = signal<number>(0);
 
   readonly profile = signal<UserProfile>({
     id: 0,
@@ -51,7 +69,7 @@ export class ProfileStore {
     id: 0,
     language: ProfileStore.readStorage('entreprenly-lang') ?? '',
     timezone: '',
-    theme: (ProfileStore.readStorage('entreprenly-theme') as UserPreferences['theme']) ?? 'light',
+    theme: (ProfileStore.readStorage('entreprenly-theme') as Theme) ?? 'light',
     currency: this.readStoredCurrency(),
   });
 
@@ -97,14 +115,12 @@ export class ProfileStore {
   }
 
   load(): void {
+    const userId = this.authStore.userId;
+    if (!userId) return;
     this.http
-      .get<ProfileResponse>(this.profileUrl)
+      .get<ProfileResource>(`${this.profilesUrl}?userId=${userId}`)
       .pipe(
-        tap((response) => {
-          this.profile.set(this.toProfile(response.user));
-          this.preferences.set(this.toPreferences(response.preferences));
-          this.notificationSettings.set(this.toNotifications(response.notification_settings));
-        }),
+        tap((resource) => this.applyResource(resource)),
         catchError((error) => {
           console.error('Failed to load profile', error);
           return of(null);
@@ -116,25 +132,39 @@ export class ProfileStore {
   updateProfile(partial: Partial<Omit<UserProfile, 'id'>>): void {
     const updated: UserProfile = { ...this.profile(), ...partial };
     this.profile.set(updated);
-    this.persist({ user: this.toUserResource(updated) });
+    this.put(`${this.profilesUrl}/${this.profileId()}`, {
+      firstName: updated.firstName,
+      lastName: updated.lastName,
+      avatarUrl: updated.avatarUrl,
+    });
   }
 
   updatePreferences(partial: Partial<Omit<UserPreferences, 'id'>>): void {
     const updated: UserPreferences = { ...this.preferences(), ...partial };
     this.preferences.set(updated);
-    this.persist({ preferences: this.toPreferencesResource(updated) });
+    this.put(`${this.profilesUrl}/${this.profileId()}/preferences`, {
+      language: updated.language,
+      timezone: updated.timezone,
+      theme: updated.theme,
+      currency: updated.currency,
+    });
   }
 
   updateNotifications(partial: Partial<Omit<NotificationSettings, 'id'>>): void {
     const updated: NotificationSettings = { ...this.notificationSettings(), ...partial };
     this.notificationSettings.set(updated);
-    this.persist({ notification_settings: this.toNotificationsResource(updated) });
+    this.put(`${this.profilesUrl}/${this.profileId()}/notification-settings`, {
+      stockAlerts: updated.stockAlerts,
+      paymentAlerts: updated.paymentAlerts,
+      chatbotMessages: updated.chatbotMessages,
+    });
   }
 
-  private persist(payload: Partial<ProfileResponse>): void {
+  private put(url: string, body: unknown): void {
     this.http
-      .patch(this.profileUrl, payload)
+      .put<ProfileResource>(url, body)
       .pipe(
+        tap((resource) => this.applyResource(resource)),
         catchError((error) => {
           console.error('Failed to persist profile changes', error);
           return of(null);
@@ -143,66 +173,31 @@ export class ProfileStore {
       .subscribe();
   }
 
-  private toProfile(r: UserProfileResource): UserProfile {
-    return {
-      id: r.id,
-      firstName: r.first_name,
-      lastName: r.last_name,
-      avatarUrl: r.avatar_url,
-      role: r.role,
-      plan: r.plan,
-    };
-  }
-
-  private toPreferences(r: UserPreferencesResource): UserPreferences {
-    const currency = r.currency ?? null;
-
-    return {
-      id: r.id,
-      language: r.language,
-      timezone: r.timezone,
-      theme: r.theme,
-      currency: isSupportedCurrency(currency) ? currency : 'PEN',
-    };
-  }
-
-  private toNotifications(r: NotificationSettingsResource): NotificationSettings {
-    return {
-      id: r.id,
-      stockAlerts: r.stock_alerts,
-      paymentAlerts: r.payment_alerts,
-      chatbotMessages: r.chatbot_messages,
-    };
-  }
-
-  private toUserResource(e: UserProfile): UserProfileResource {
-    return {
-      id: e.id,
-      first_name: e.firstName,
-      last_name: e.lastName,
-      avatar_url: e.avatarUrl,
-      role: e.role,
-      plan: e.plan,
-    };
-  }
-
-  private toPreferencesResource(e: UserPreferences): UserPreferencesResource {
-    return {
-      id: e.id,
-      language: e.language,
-      timezone: e.timezone,
-      theme: e.theme,
-      currency: e.currency,
-    };
-  }
-
-  private toNotificationsResource(e: NotificationSettings): NotificationSettingsResource {
-    return {
-      id: e.id,
-      stock_alerts: e.stockAlerts,
-      payment_alerts: e.paymentAlerts,
-      chatbot_messages: e.chatbotMessages,
-    };
+  private applyResource(resource: ProfileResource): void {
+    this.profileId.set(resource.id);
+    this.profile.set({
+      id: resource.id,
+      firstName: resource.firstName,
+      lastName: resource.lastName,
+      avatarUrl: resource.avatarUrl,
+      role: resource.role,
+      plan: resource.plan,
+    });
+    this.preferences.set({
+      id: resource.id,
+      language: resource.preferences.language,
+      timezone: resource.preferences.timezone,
+      theme: resource.preferences.theme === 'dark' ? 'dark' : 'light',
+      currency: isSupportedCurrency(resource.preferences.currency)
+        ? resource.preferences.currency
+        : 'PEN',
+    });
+    this.notificationSettings.set({
+      id: resource.id,
+      stockAlerts: resource.notificationSettings.stockAlerts,
+      paymentAlerts: resource.notificationSettings.paymentAlerts,
+      chatbotMessages: resource.notificationSettings.chatbotMessages,
+    });
   }
 
   private readStoredCurrency(): Currency {
