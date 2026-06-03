@@ -94,6 +94,13 @@
       "expired": "Expired"
     },
     "alerts": {
+      "panelEyebrow": "Alerts",
+      "panelTitle": "Attention priority",
+      "panelSubtitle": "Review expired, out-of-stock, or expiring lots first before continuing inventory management.",
+      "totalLabel": "alerts",
+      "buttonLabel": "View lot alerts",
+      "dropdownTitle": "Lot alerts",
+      "empty": "No pending alerts.",
       "title": {
         "expired": "{{count}} expired lot(s)",
         "outOfStock": "{{count}} lot(s) out of stock",
