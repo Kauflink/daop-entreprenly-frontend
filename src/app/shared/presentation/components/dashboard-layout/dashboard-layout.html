@@ -18,7 +18,11 @@
       [attr.aria-label]="'dashboard.currentUserLabel' | translate"
     >
       <span class="profile__avatar" aria-hidden="true">
-        <mat-icon>person</mat-icon>
+        @if (profileStore.profile().avatarUrl; as avatar) {
+          <img [src]="avatar" alt="" class="profile__avatar-img" />
+        } @else {
+          <mat-icon>person</mat-icon>
+        }
       </span>
       <strong>{{ 'dashboard.welcome' | translate }}</strong>
     </a>

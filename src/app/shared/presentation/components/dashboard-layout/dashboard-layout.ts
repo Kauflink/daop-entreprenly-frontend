@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { AuthStore } from '../../../../auth/application/auth-store';
+import { ProfileStore } from '../../../../profile/application/profile-store';
 import { NgOptimizedImage } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { TranslatePipe } from '@ngx-translate/core';
@@ -27,6 +28,7 @@ interface NavigationItem {
 })
 export class DashboardLayout {
   private readonly authStore = inject(AuthStore);
+  protected readonly profileStore = inject(ProfileStore);
 
   protected logout(): void {
     this.authStore.logout();
