@@ -94,6 +94,13 @@
       "expired": "Vencido"
     },
     "alerts": {
+      "panelEyebrow": "Alertamientos",
+      "panelTitle": "Prioridad de atención",
+      "panelSubtitle": "Revise primero los lotes vencidos, sin stock o por vencer antes de continuar con la gestión.",
+      "totalLabel": "alertas",
+      "buttonLabel": "Ver alertas de lotes",
+      "dropdownTitle": "Alertas de lotes",
+      "empty": "No hay alertas pendientes.",
       "title": {
         "expired": "{{count}} lote(s) vencido(s)",
         "outOfStock": "{{count}} lote(s) sin stock",
