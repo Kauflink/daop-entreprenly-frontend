@@ -87,7 +87,37 @@ export class ProfileStore {
         this.currencyAssembler.setCurrency(currency);
       }
     });
-    this.load();
+    // React to authentication changes: load the profile on login, clear it on logout.
+    // Without this the root-singleton store keeps the previous user's data after a
+    // logout/login until a full page reload.
+    effect(() => {
+      const user = this.authStore.user();
+      if (user) {
+        this.load();
+      } else {
+        this.reset();
+      }
+    });
+  }
+
+  /** Clears the in-memory profile (used on logout / when no user is authenticated). */
+  private reset(): void {
+    this.profileId.set(0);
+    this.profile.set({
+      id: 0,
+      firstName: '',
+      lastName: '',
+      phone: null,
+      avatarUrl: null,
+      role: '',
+      plan: '',
+    });
+    this.notificationSettings.set({
+      id: 0,
+      stockAlerts: false,
+      paymentAlerts: false,
+      chatbotMessages: false,
+    });
   }
 
   load(): void {
