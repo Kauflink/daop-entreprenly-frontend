@@ -1,6 +1,6 @@
 import { DestroyRef, Injectable, computed, inject, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { of, retry, switchMap, tap } from 'rxjs';
+import { retry } from 'rxjs';
 import { CashRegister } from '../domain/model/cash-register.entity';
 import { PaymentMethod } from '../domain/model/payment-method.enum';
 import { ProductSummary } from '../domain/model/product-summary.entity';
@@ -61,15 +61,26 @@ export class SalesStore {
     const today = new Date().toISOString().split('T')[0];
     this.salesApi
       .getTodayCashRegister(today)
-      .pipe(
-        switchMap((register) =>
-          register ? of(register) : this.salesApi.createTodayCashRegister(today),
-        ),
-        takeUntilDestroyed(this.destroyRef),
-      )
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: (register) => {
+          if (register) {
+            this.cashRegisterSignal.set(register);
+          } else {
+            this.createTodayCashRegister(today);
+          }
+        },
+        error: (err) => console.error('❌ Error loading cash register:', err),
+      });
+  }
+
+  private createTodayCashRegister(date: string): void {
+    this.salesApi
+      .createTodayCashRegister(date)
+      .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
         next: (register) => this.cashRegisterSignal.set(register),
-        error: (err) => console.error('❌ Error loading/creating cash register:', err),
+        error: (err) => console.error('❌ Error creating cash register:', err),
       });
   }
 
@@ -114,14 +125,34 @@ export class SalesStore {
 
     this.salesApi
       .createSale(sale)
-      .pipe(
-        switchMap(() => this.salesApi.decrementStock(items)),
-        tap(() => this.loadProducts()),
-        takeUntilDestroyed(this.destroyRef),
-      )
+      .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
-        error: (err) => console.error('❌ Error persisting sale or updating stock:', err),
+        next: () => this.decrementStockSequentially(items, 0),
+        error: (err) => console.error('❌ Error persisting sale:', err),
       });
+  }
+
+  /**
+   * Decrements stock one item at a time, advancing to the next item only after the
+   * previous request completes, and reloads the product list once every item is done.
+   * Sequential by design to stay within the taught RxJS patterns (no forkJoin/switchMap).
+   */
+  private decrementStockSequentially(items: SaleItem[], index: number): void {
+    if (index >= items.length) {
+      this.loadProducts();
+      return;
+    }
+
+    const decrement$ = this.salesApi.decrementStockForItem(items[index]);
+    if (!decrement$) {
+      this.decrementStockSequentially(items, index + 1);
+      return;
+    }
+
+    decrement$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe({
+      next: () => this.decrementStockSequentially(items, index + 1),
+      error: (err) => console.error('❌ Error updating stock:', err),
+    });
   }
 
   private formatError(error: unknown, fallback: string): string {
