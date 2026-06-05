@@ -185,6 +185,7 @@ export class Orders implements OnInit {
     this.store.loadOrders();
     this.store.loadConversations();
     this.store.loadInventoryProducts();
+    this.store.connectRealtime();
   }
 
   protected receiptUrl(total: number): string {

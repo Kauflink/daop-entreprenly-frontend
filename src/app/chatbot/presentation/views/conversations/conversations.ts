@@ -61,6 +61,7 @@ export class Conversations implements OnInit {
     this.store.loadSession();
     this.store.loadConversations();
     this.store.loadOrders();
+    this.store.connectRealtime();
   }
 
   protected onApprove(): void {
