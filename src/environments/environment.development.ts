@@ -22,4 +22,5 @@ export const environment = {
   entreprenlyProviderConversationsEndpointPath: '/conversations',
   entreprenlyProviderWhatsappSessionsEndpointPath: '/whatsapp-sessions',
   entreprenlyProviderChatbotStreamEndpointPath: '/chatbot/stream',
+  entreprenlyProviderChatbotBridgeQrEndpointPath: '/chatbot/whatsapp/bridge/qr',
 };

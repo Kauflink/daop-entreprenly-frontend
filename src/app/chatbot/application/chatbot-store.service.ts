@@ -35,6 +35,8 @@ export class ChatbotStoreService {
   readonly botInputText = signal('');
   readonly orders = signal<ChatOrder[]>([]);
   readonly inventoryProducts = signal<InventoryProduct[]>([]);
+  /** Real WhatsApp pairing QR relayed by the bridge (null until one is available). */
+  readonly bridgeQr = signal<string | null>(null);
 
   readonly selectedConversation = computed(() =>
     this.conversations().find(c => c.id === this.selectedConversationId()) ?? null,
@@ -73,6 +75,22 @@ export class ChatbotStoreService {
   loadInventoryProducts(): void {
     this.api.inventoryProducts.getAll().subscribe(products => {
       this.inventoryProducts.set(products);
+    });
+  }
+
+  /**
+   * Pulls the real WhatsApp pairing QR (and link state) from the backend bridge.
+   * When the bridge reports connected, refreshes the session so the dashboard unlocks.
+   */
+  refreshBridgeQr(): void {
+    this.api.getBridgeQrState().subscribe({
+      next: state => {
+        this.bridgeQr.set(state.qr);
+        if (state.connected && this.session()?.status !== 'connected') {
+          this.loadSession();
+        }
+      },
+      error: () => { /* bridge offline: keep showing the placeholder */ },
     });
   }
 

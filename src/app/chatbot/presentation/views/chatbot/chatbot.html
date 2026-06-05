@@ -6,7 +6,7 @@
   } @else if (store.session() === null || store.session()?.status === 'disconnected') {
     <p class="mb-6 mt-1 text-sm text-gray-500">{{ 'chatbot.page.connectPrompt' | translate }}</p>
     <div class="rounded-2xl bg-white shadow-sm">
-      <app-qr-connection-card [hasError]="false" (scanned)="onScanned()" />
+      <app-qr-connection-card [hasError]="false" [realMode]="true" [realToken]="store.bridgeQr()" (scanned)="onScanned()" />
     </div>
   } @else {
     <p class="mb-6 mt-1 text-sm text-gray-500">{{ 'chatbot.page.connectionStatus' | translate }}</p>

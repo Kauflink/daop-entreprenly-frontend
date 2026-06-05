@@ -9,7 +9,7 @@ import { buildQrCodeDataUrl } from '../../../../inventory/infrastructure/qr-code
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [TranslatePipe],
   template: `
-    @if (isExpired() || hasError()) {
+    @if ((isExpired() || hasError()) && !realMode()) {
       <div class="m-5 rounded-2xl border border-red-200 bg-red-50 p-4">
         <p class="font-semibold text-red-600">{{ 'chatbot.qr.expiredTitle' | translate }}</p>
         <p class="mt-1 text-sm text-red-500">{{ 'chatbot.qr.expiredDetail' | translate }}</p>
@@ -17,48 +17,67 @@ import { buildQrCodeDataUrl } from '../../../../inventory/infrastructure/qr-code
     }
     <div class="flex flex-col items-center gap-3 py-20">
       <h2 class="text-lg font-bold text-gray-900">
-        {{ (isExpired() || hasError() ? 'chatbot.qr.newCode' : 'chatbot.qr.linkTitle') | translate }}
+        {{ ((isExpired() || hasError()) && !realMode() ? 'chatbot.qr.newCode' : 'chatbot.qr.linkTitle') | translate }}
       </h2>
       <p class="text-sm text-gray-500">{{ 'chatbot.qr.scanInstruction' | translate }}</p>
       <div class="overflow-hidden rounded-xl bg-white p-2">
-        <img
-          class="block size-48"
-          [src]="qrCodeDataUrl()"
-          width="192"
-          height="192"
-          [alt]="'chatbot.qr.alt' | translate"
-        />
-      </div>
-      <p class="text-sm" [class]="seconds() <= 10 ? 'font-medium text-red-400' : 'text-gray-400'">
-        @if (isExpired()) {
-          {{ 'chatbot.qr.generating' | translate }}
+        @if (qrCodeDataUrl()) {
+          <img
+            class="block size-48"
+            [src]="qrCodeDataUrl()"
+            width="192"
+            height="192"
+            [alt]="'chatbot.qr.alt' | translate"
+          />
         } @else {
-          {{ (seconds() === 1 ? 'chatbot.qr.expiresInOne' : 'chatbot.qr.expiresIn') | translate: { seconds: seconds() } }}
+          <div class="flex size-48 items-center justify-center text-center text-sm text-gray-400">
+            {{ 'chatbot.qr.generating' | translate }}
+          </div>
         }
-      </p>
-      <button
-        (click)="scanned.emit()"
-        class="mt-2 rounded-full bg-green-500 px-6 py-2 text-sm font-medium text-white transition-colors hover:bg-green-600"
-        type="button"
-      >
-        {{ 'chatbot.qr.simulateScan' | translate }}
-      </button>
+      </div>
+
+      @if (realMode()) {
+        <p class="text-sm text-gray-400">{{ 'chatbot.qr.scanInstruction' | translate }}</p>
+      } @else {
+        <p class="text-sm" [class]="seconds() <= 10 ? 'font-medium text-red-400' : 'text-gray-400'">
+          @if (isExpired()) {
+            {{ 'chatbot.qr.generating' | translate }}
+          } @else {
+            {{ (seconds() === 1 ? 'chatbot.qr.expiresInOne' : 'chatbot.qr.expiresIn') | translate: { seconds: seconds() } }}
+          }
+        </p>
+        <button
+          (click)="scanned.emit()"
+          class="mt-2 rounded-full bg-green-500 px-6 py-2 text-sm font-medium text-white transition-colors hover:bg-green-600"
+          type="button"
+        >
+          {{ 'chatbot.qr.simulateScan' | translate }}
+        </button>
+      }
     </div>
   `,
 })
 export class QrConnectionCard {
   readonly hasError = input<boolean>(false);
+  /** When true, the card renders the real pairing QR and hides the simulation controls. */
+  readonly realMode = input<boolean>(false);
+  /** Real QR payload relayed by the backend bridge (null until one is available). */
+  readonly realToken = input<string | null>(null);
   readonly retry   = output<void>();
   readonly expired = output<void>();
   readonly scanned = output<void>();
 
   protected readonly seconds      = signal(120);
   protected readonly isExpired    = signal(false);
-  /** Token de sesión temporal — se regenera cada vez que el QR expira */
+  /** Token de sesión temporal — se regenera cada vez que el QR expira (modo simulación) */
   protected readonly sessionToken = signal(this._generateToken());
-  protected readonly qrCodeDataUrl = computed(() =>
-    buildQrCodeDataUrl(this.sessionToken(), 192),
-  );
+  protected readonly qrCodeDataUrl = computed(() => {
+    if (this.realMode()) {
+      const real = this.realToken();
+      return real ? buildQrCodeDataUrl(real, 192) : '';
+    }
+    return buildQrCodeDataUrl(this.sessionToken(), 192);
+  });
 
   /** Genera un token de sesión único (mismo formato que WhatsApp Web) */
   private _generateToken(): string {
@@ -77,7 +96,7 @@ export class QrConnectionCard {
     interval(1000)
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(() => {
-        if (this.resetting) return;
+        if (this.resetting || this.realMode()) return;
 
         this.seconds.update((seconds) => {
           if (seconds <= 1) {
