@@ -1,5 +1,6 @@
 import { Injectable, Signal, WritableSignal, computed, inject, signal } from '@angular/core';
 import { InventoryStoreService } from '../../inventory/application/inventory-store.service';
+import { CurrencyService } from '../../shared/infrastructure/currency-service';
 import {
   BillingFiscalData,
   BillingPaymentMethod,
@@ -13,12 +14,18 @@ import { SubscriptionLimit } from '../domain/model/subscription-limit.entity';
 import { BillingCycle } from '../domain/model/subscription-plan.entity';
 import { SubscriptionApi } from '../infrastructure/subscription-api';
 
+interface SubscriptionInventoryUsageSnapshot {
+  productCount: number;
+  lotCount: number;
+}
+
 @Injectable({
   providedIn: 'root',
 })
 export class SubscriptionStore {
   private readonly subscriptionApi = inject(SubscriptionApi);
   private readonly inventoryStore = inject(InventoryStoreService);
+  private readonly currencyAssembler = inject(CurrencyService);
   private readonly dashboardSignal: WritableSignal<SubscriptionDashboard> = signal(
     new SubscriptionDashboard(),
   );
@@ -27,15 +34,13 @@ export class SubscriptionStore {
   private readonly selectedCycleSignal: WritableSignal<BillingCycle> = signal('monthly');
   private readonly selectedPlanIdSignal: WritableSignal<string | null> = signal(null);
   private readonly feedbackSignal = signal('');
-  private readonly inventoryProductCount = computed(
-    () => this.inventoryStore.unitProductCount() + this.inventoryStore.weightProductCount(),
-  );
-  private readonly inventoryLotCount = computed(
-    () => this.inventoryStore.unitLotCount() + this.inventoryStore.weightLotCount(),
-  );
+  private readonly inventoryUsageObserver = computed<SubscriptionInventoryUsageSnapshot>(() => ({
+    productCount: this.inventoryStore.unitProductCount() + this.inventoryStore.weightProductCount(),
+    lotCount: this.inventoryStore.unitLotCount() + this.inventoryStore.weightLotCount(),
+  }));
 
   readonly dashboard: Signal<SubscriptionDashboard> = computed(() =>
-    this.withInventoryUsage(this.dashboardSignal()),
+    this.withInventoryUsage(this.dashboardSignal(), this.inventoryUsageObserver()),
   );
   readonly loading: Signal<boolean> = computed(() => this.loadingSignal());
   readonly selectedCycle: Signal<BillingCycle> = computed(() => this.selectedCycleSignal());
@@ -183,7 +188,7 @@ export class SubscriptionStore {
     const dashboard = this.dashboard();
 
     return [
-      ...dashboard.activity,
+      ...dashboard.activity.map((item) => this.withCurrentCurrencyActivityDetail(item, dashboard)),
       new SubscriptionActivity({
         id: 'payment-method',
         title: 'Método de pago',
@@ -195,6 +200,34 @@ export class SubscriptionStore {
         detail: this.fiscalDataActivityDetail(dashboard.billingSetup),
       }),
     ];
+  }
+
+  private withCurrentCurrencyActivityDetail(
+    activity: SubscriptionActivity,
+    dashboard: SubscriptionDashboard,
+  ): SubscriptionActivity {
+    if (activity.id !== 'current-status') {
+      return activity;
+    }
+
+    return new SubscriptionActivity({
+      ...activity,
+      detail: this.currentStatusActivityDetail(dashboard),
+    });
+  }
+
+  private currentStatusActivityDetail(dashboard: SubscriptionDashboard): string {
+    if (dashboard.currentPlan.status === 'free') {
+      return 'Plan Free activo - Sin cargos registrados';
+    }
+
+    const price = this.currencyAssembler.format(dashboard.currentPlan.monthlyPrice);
+
+    if (dashboard.currentPlan.status === 'scheduled-cancellation') {
+      return `Cancelacion programada - ${price}/mes`;
+    }
+
+    return `Plan Control activo - ${price}/mes`;
   }
 
   private paymentMethodActivityDetail(billingSetup: BillingSetup): string {
@@ -219,25 +252,31 @@ export class SubscriptionStore {
     return `${fiscalData.documentType} ${fiscalData.documentNumber} - ${fiscalData.businessName}`;
   }
 
-  private withInventoryUsage(dashboard: SubscriptionDashboard): SubscriptionDashboard {
+  private withInventoryUsage(
+    dashboard: SubscriptionDashboard,
+    inventoryUsage: SubscriptionInventoryUsageSnapshot,
+  ): SubscriptionDashboard {
     return new SubscriptionDashboard({
       ...dashboard,
-      limits: dashboard.limits.map((limit) => this.withCurrentLimitUsage(limit)),
+      limits: dashboard.limits.map((limit) => this.withCurrentLimitUsage(limit, inventoryUsage)),
     });
   }
 
-  private withCurrentLimitUsage(limit: SubscriptionLimit): SubscriptionLimit {
+  private withCurrentLimitUsage(
+    limit: SubscriptionLimit,
+    inventoryUsage: SubscriptionInventoryUsageSnapshot,
+  ): SubscriptionLimit {
     if (limit.id === 'products') {
       return new SubscriptionLimit({
         ...limit,
-        usedValue: this.inventoryProductCount(),
+        usedValue: inventoryUsage.productCount,
       });
     }
 
     if (limit.id === 'active-batches') {
       return new SubscriptionLimit({
         ...limit,
-        usedValue: this.inventoryLotCount(),
+        usedValue: inventoryUsage.lotCount,
       });
     }
 

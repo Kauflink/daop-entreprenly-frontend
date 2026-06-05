@@ -6,10 +6,6 @@ import { BillingSetup } from '../domain/model/billing-setup.entity';
 import { SubscriptionDashboard } from '../domain/model/subscription-dashboard.entity';
 import { BillingCycle } from '../domain/model/subscription-plan.entity';
 import { SubscriptionAssembler } from './subscription-assembler';
-import {
-  ACTIVE_SUBSCRIPTION_DASHBOARD_RESPONSE,
-  SUBSCRIPTION_DASHBOARD_RESPONSE,
-} from './subscription-dashboard.mock';
 import { SubscriptionDashboardResponse, SubscriptionPlanResponse } from './subscription-response';
 
 @Injectable({
@@ -32,10 +28,7 @@ export class SubscriptionApi {
   getSubscriptionDashboard(): Observable<SubscriptionDashboard> {
     return this.http
       .get<SubscriptionDashboardResponse>(`${this.baseUrl}${this.subscriptionDashboardEndpoint}`)
-      .pipe(
-        catchError(() => of(SUBSCRIPTION_DASHBOARD_RESPONSE)),
-        map((response) => SubscriptionAssembler.toEntityFromResponse(response)),
-      );
+      .pipe(map((response) => SubscriptionAssembler.toEntityFromResponse(response)));
   }
 
   activateControlPlan(
@@ -45,7 +38,6 @@ export class SubscriptionApi {
     return this.http
       .get<SubscriptionDashboardResponse>(`${this.baseUrl}${this.subscriptionActivationEndpoint}`)
       .pipe(
-        catchError(() => of(ACTIVE_SUBSCRIPTION_DASHBOARD_RESPONSE)),
         map((response) => ({
           ...response,
           billingSetup: this.toDashboardResponseFromEntity(currentDashboard).billingSetup,
@@ -125,7 +117,7 @@ export class SubscriptionApi {
         shortDescription: `Tu plan sigue activo hasta el ${endDateLabel}. No se renovará automáticamente.`,
       },
       activity: this.withSubscriptionActivity(response, {
-        statusDetail: `Cancelación programada - S/ ${currentPlan.monthlyPrice}/mes`,
+        statusDetail: 'Cancelacion programada',
         billingDetail: `Acceso vigente hasta el ${endDateLabel} - sin siguiente cobro`,
       }),
     };
@@ -144,7 +136,7 @@ export class SubscriptionApi {
         shortDescription: `Tu plan sigue activo hasta el ${endDateLabel}. Se renovará automáticamente.`,
       },
       activity: this.withSubscriptionActivity(response, {
-        statusDetail: `Plan Control activo - S/ ${currentPlan.monthlyPrice}/mes`,
+        statusDetail: 'Plan Control activo',
         billingDetail: `Próxima renovación: ${endDateLabel} - ${this.billingCycleLabel(
           response.defaultBillingCycle,
         )}`,

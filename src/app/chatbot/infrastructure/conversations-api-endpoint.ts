@@ -1,4 +1,5 @@
 import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../environments/environment';
 import { BaseApiEndpoint } from '../../shared/infrastructure/base-api-endpoint';
 import { Conversation } from '../domain/model/conversation.entity';
 import { ConversationResource, ConversationsResponse } from './conversations-response';
@@ -11,6 +12,6 @@ export class ConversationsApiEndpoint extends BaseApiEndpoint<
   ConversationAssembler
 > {
   constructor(http: HttpClient, assembler: ConversationAssembler) {
-    super(http, 'http://localhost:3000/conversations', assembler);
+    super(http, `${environment.entreprenlyProviderApiBaseUrl}${environment.entreprenlyProviderConversationsEndpointPath}`, assembler);
   }
 }

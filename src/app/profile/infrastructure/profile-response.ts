@@ -1,25 +1,29 @@
-import { BaseResource, BaseResponse } from '../../shared/infrastructure/base-response';
+import { BaseResource } from '../../shared/infrastructure/base-response';
 
-export interface UserProfileResource extends BaseResource {
-  first_name: string;
-  last_name: string;
-  avatar_url: string | null;
-  role: string;
-  plan: string;
-}
-
-export interface UserPreferencesResource extends BaseResource {
+/** Preferences as returned/accepted by the backend (nested in the profile). */
+export interface PreferencesResource {
   language: string;
   timezone: string;
-  theme: 'light' | 'dark';
+  theme: string;
+  currency: string;
 }
 
-export interface NotificationSettingsResource extends BaseResource {
-  stock_alerts: boolean;
-  payment_alerts: boolean;
-  chatbot_messages: boolean;
+/** Notification settings as returned/accepted by the backend (nested in the profile). */
+export interface NotificationSettingsResource {
+  stockAlerts: boolean;
+  paymentAlerts: boolean;
+  chatbotMessages: boolean;
 }
 
-export interface UserProfileResponse extends BaseResponse {
-  data: UserProfileResource;
+/** Profile resource from the backend clean REST contract (camelCase, nested). */
+export interface ProfileResource extends BaseResource {
+  userId: number;
+  firstName: string;
+  lastName: string;
+  phone: string | null;
+  avatarUrl: string | null;
+  role: string;
+  plan: string;
+  preferences: PreferencesResource;
+  notificationSettings: NotificationSettingsResource;
 }

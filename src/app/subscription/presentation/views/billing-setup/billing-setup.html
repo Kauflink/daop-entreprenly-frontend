@@ -12,28 +12,38 @@
           <mat-icon>credit_card</mat-icon>
         </span>
         <div>
-          <h3>{{ billingSetup().paymentMethodTitle }}</h3>
+          <h3>{{ 'subscription.billing.paymentMethod.title' | translate }}</h3>
           @if (primaryPaymentMethod(); as paymentMethod) {
             <p>
-              {{ paymentMethod.cardBrand }} terminada en {{ paymentMethod.lastFour }} · vence
-              {{ paymentMethod.expiryMonth }}/{{ paymentMethod.expiryYear }}
+              {{
+                'subscription.billing.paymentMethod.cardEnding'
+                  | translate
+                    : {
+                        brand: cardBrandLabel(paymentMethod.cardBrand),
+                        lastFour: paymentMethod.lastFour,
+                        month: paymentMethod.expiryMonth,
+                        year: paymentMethod.expiryYear
+                      }
+              }}
             </p>
             <strong class="billing-card__status">
-              Disponible para pagos y renovaciones
+              {{ 'subscription.billing.paymentMethod.available' | translate }}
             </strong>
             @if (extraPaymentMethodCount() > 0) {
               <span class="billing-card__meta">
-                +{{ extraPaymentMethodCount() }}
-                {{ extraPaymentMethodCount() === 1 ? 'método adicional' : 'métodos adicionales' }}
+                {{
+                  extraPaymentMethodLabelKey()
+                    | translate: { count: extraPaymentMethodCount() }
+                }}
               </span>
             }
           } @else {
-            <p>{{ billingSetup().paymentMethodDescription }}</p>
+            <p>{{ 'subscription.billing.paymentMethod.emptyDescription' | translate }}</p>
           }
         </div>
       </div>
       <button type="button" (click)="requestPaymentMethod()">
-        {{ paymentActionLabel() }}
+        {{ paymentActionLabelKey() | translate }}
       </button>
     </article>
 
@@ -43,17 +53,19 @@
           <mat-icon>receipt_long</mat-icon>
         </span>
         <div>
-          <h3>{{ billingSetup().fiscalDataTitle }}</h3>
+          <h3>{{ 'subscription.billing.fiscalData.title' | translate }}</h3>
           @if (fiscalData(); as data) {
             <p>{{ data.documentType }} {{ data.documentNumber }} · {{ data.businessName }}</p>
-            <strong class="billing-card__status">Información fiscal completa</strong>
+            <strong class="billing-card__status">
+              {{ 'subscription.billing.fiscalData.complete' | translate }}
+            </strong>
           } @else {
-            <p>{{ billingSetup().fiscalDataDescription }}</p>
+            <p>{{ 'subscription.billing.fiscalData.emptyDescription' | translate }}</p>
           }
         </div>
       </div>
       <button type="button" (click)="requestFiscalData()">
-        {{ fiscalActionLabel() }}
+        {{ fiscalActionLabelKey() | translate }}
       </button>
     </article>
   </div>

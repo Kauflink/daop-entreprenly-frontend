@@ -1,4 +1,5 @@
 import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../environments/environment';
 import { BaseApiEndpoint } from '../../shared/infrastructure/base-api-endpoint';
 import { ChatOrder } from '../domain/model/chat-order.entity';
 import { ChatOrderResource, ChatOrdersResponse } from './chat-orders-response';
@@ -11,6 +12,6 @@ export class ChatOrdersApiEndpoint extends BaseApiEndpoint<
   ChatOrderAssembler
 > {
   constructor(http: HttpClient, assembler: ChatOrderAssembler) {
-    super(http, 'http://localhost:3000/chat-orders', assembler);
+    super(http, `${environment.entreprenlyProviderApiBaseUrl}${environment.entreprenlyProviderChatOrdersEndpointPath}`, assembler);
   }
 }
