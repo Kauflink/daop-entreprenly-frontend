@@ -1,5 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { environment } from '../../../environments/environment';
 import { BaseApi } from '../../shared/infrastructure/base-api';
 import { ConversationsApiEndpoint } from './conversations-api-endpoint';
 import { ChatMessagesApiEndpoint } from './chat-messages-api-endpoint';
@@ -24,4 +26,15 @@ export class ChatbotApiService extends BaseApi {
   readonly chatOrders = new ChatOrdersApiEndpoint(this.http, this.chatOrderAssembler);
   readonly whatsappSessions = new WhatsappSessionsApiEndpoint(this.http, this.whatsappSessionAssembler);
   readonly inventoryProducts = new InventoryProductsApiEndpoint(this.http);
+
+  /** Reads the real WhatsApp pairing QR and link state relayed by the bridge. */
+  getBridgeQrState(): Observable<BridgeQrState> {
+    const url = `${environment.entreprenlyProviderApiBaseUrl}${environment.entreprenlyProviderChatbotBridgeQrEndpointPath}`;
+    return this.http.get<BridgeQrState>(url);
+  }
+}
+
+export interface BridgeQrState {
+  qr: string | null;
+  connected: boolean;
 }
