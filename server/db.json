@@ -344,6 +344,12 @@
       "totalCash": 5,
       "totalDigital": 0,
       "saleCount": 1
+    },
+    {
+      "date": "2026-05-26",
+      "totalCash": 0,
+      "totalDigital": 0,
+      "id": 3
     }
   ],
   "iot-scale": {
@@ -358,7 +364,7 @@
       "currentPlan": {
         "id": "plan-control",
         "name": "Plan Control",
-        "shortDescription": "Tu plan sigue activo hasta el 11 de junio de 2026. Se renovará automáticamente.",
+        "shortDescription": "Tu plan sigue activo hasta el 12 de junio de 2026. Se renovará automáticamente.",
         "monthlyPrice": 89,
         "annualPrice": 890,
         "status": "active",
@@ -379,8 +385,8 @@
             "available": true
           }
         ],
-        "currentPeriodStartDate": "2026-05-11",
-        "currentPeriodEndDate": "2026-06-11"
+        "currentPeriodStartDate": "2026-05-12",
+        "currentPeriodEndDate": "2026-06-12"
       },
       "recommendedPlan": {
         "id": "plan-control",
@@ -478,7 +484,7 @@
         {
           "id": "billing",
           "title": "Facturación",
-          "detail": "Próxima renovación: 11 de junio de 2026 - pago mensual"
+          "detail": "Próxima renovación: 12 de junio de 2026 - pago mensual"
         }
       ]
     }
@@ -710,7 +716,8 @@
       "id": 1,
       "language": "en",
       "timezone": "America/Bogota (UTC-05:00)",
-      "theme": "light"
+      "theme": "light",
+      "currency": "USD"
     },
     "notification_settings": {
       "id": 1,

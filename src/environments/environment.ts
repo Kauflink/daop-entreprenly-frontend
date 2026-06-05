@@ -1,6 +1,8 @@
 export const environment = {
   production: true,
-  entreprenlyProviderApiBaseUrl: 'http://localhost:3000/api/v1',
+  entreprenlyProviderApiBaseUrl: 'https://daop-api.entreprenly.online/api/v1',
+  entreprenlyProviderAuthEndpointPath: '/authentication',
+  entreprenlyProviderProfilesEndpointPath: '/profiles',
   entreprenlyProviderSalesEndpointPath: '/sales',
   entreprenlyProviderProfileEndpointPath: '/profile',
   entreprenlyProviderSalesProductsEndpointPath: '/sales-products',
@@ -15,4 +17,9 @@ export const environment = {
   entreprenlyProviderInventoryWeightLotsEndpointPath: '/inventory-weight-lots',
   entreprenlyProviderInventoryStockAlertsEndpointPath: '/inventory-stock-alerts',
   entreprenlyProviderSubscriptionActivationEndpointPath: '/subscription-payment-confirmation/1',
+  entreprenlyProviderChatOrdersEndpointPath: '/chat-orders',
+  entreprenlyProviderChatMessagesEndpointPath: '/chat-messages',
+  entreprenlyProviderConversationsEndpointPath: '/conversations',
+  entreprenlyProviderWhatsappSessionsEndpointPath: '/whatsapp-sessions',
+  entreprenlyProviderChatbotStreamEndpointPath: '/chatbot/stream',
 };

@@ -2,6 +2,7 @@ import { Injectable, inject, signal, computed } from '@angular/core';
 import { timer } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 import { ChatbotApiService } from '../infrastructure/chatbot-api.service';
+import { ChatbotStreamService } from '../infrastructure/chatbot-stream.service';
 import { Conversation, ConversationStatus } from '../domain/model/conversation.entity';
 import { ChatMessage } from '../domain/model/chat-message.entity';
 import { WhatsappSession } from '../domain/model/whatsapp-session.entity';
@@ -11,7 +12,11 @@ import { InventoryProduct } from '../domain/model/inventory-product.entity';
 @Injectable({ providedIn: 'root' })
 export class ChatbotStoreService {
   private api       = inject(ChatbotApiService);
+  private stream    = inject(ChatbotStreamService);
   private translate = inject(TranslateService);
+
+  /** Guards against opening more than one realtime stream across views. */
+  private realtimeConnected = false;
 
   /** Locale del idioma activo para formatear fechas */
   private get locale(): string {
@@ -69,6 +74,44 @@ export class ChatbotStoreService {
     this.api.inventoryProducts.getAll().subscribe(products => {
       this.inventoryProducts.set(products);
     });
+  }
+
+  /**
+   * Subscribes to the backend realtime stream so conversations, orders and
+   * messages update immediately. Idempotent: safe to call from several views.
+   */
+  connectRealtime(): void {
+    if (this.realtimeConnected) return;
+    this.realtimeConnected = true;
+    this.stream.connect();
+    this.stream.conversations$.subscribe(conversation => this.upsertConversation(conversation));
+    this.stream.orders$.subscribe(order => this.upsertOrder(order));
+    this.stream.messages$.subscribe(message => this.appendRealtimeMessage(message));
+  }
+
+  private upsertConversation(conversation: Conversation): void {
+    this.conversations.update(list => {
+      const index = list.findIndex(c => c.id === conversation.id);
+      if (index === -1) return [conversation, ...list];
+      const next = [...list];
+      next[index] = conversation;
+      return next;
+    });
+  }
+
+  private upsertOrder(order: ChatOrder): void {
+    this.orders.update(list => {
+      const index = list.findIndex(o => o.id === order.id);
+      if (index === -1) return [...list, order];
+      const next = [...list];
+      next[index] = order;
+      return next;
+    });
+  }
+
+  private appendRealtimeMessage(message: ChatMessage): void {
+    if (message.conversationId !== this.selectedConversationId()) return;
+    this.messages.update(list => (list.some(m => m.id === message.id) ? list : [...list, message]));
   }
 
   private _playId = 0;

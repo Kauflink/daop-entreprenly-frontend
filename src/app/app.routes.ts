@@ -1,23 +1,35 @@
 import { Routes } from '@angular/router';
 
 import { DashboardLayout } from './shared/presentation/components/dashboard-layout/dashboard-layout';
+import { authGuard } from './auth/infrastructure/auth.guard';
 
-const baseTitle = 'Entreprenly';
 
 export const routes: Routes = [
   {
+    path: 'login',
+    loadComponent: () => import('./auth/presentation/views/login/login').then((m) => m.Login),
+    title: 'Entreprenly - Login',
+  },
+  {
+    path: 'register',
+    loadComponent: () =>
+      import('./auth/presentation/views/register/register').then((m) => m.Register),
+    title: 'Entreprenly - Registro',
+  },
+  {
     path: 'dashboard',
     component: DashboardLayout,
+    canActivate: [authGuard],
     children: [
       {
         path: 'home',
         loadComponent: () => import('./shared/presentation/views/home/home').then((m) => m.Home),
-        title: `${baseTitle} - Home`,
+        title: 'pageTitle.home',
       },
       {
         path: 'help',
         loadComponent: () => import('./shared/presentation/views/help/help').then((m) => m.Help),
-        title: `${baseTitle} - Help`,
+        title: 'pageTitle.help',
       },
       {
         path: 'profile',
@@ -52,7 +64,7 @@ export const routes: Routes = [
         path: 'orders',
         loadComponent: () =>
           import('./chatbot/presentation/views/orders/orders').then(m => m.Orders),
-        title: 'Entreprenly - Pedidos',
+        title: 'pageTitle.orders',
       },
       {
         path: '',

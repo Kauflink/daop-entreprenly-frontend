@@ -11,7 +11,9 @@ import {
 } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { startWith } from 'rxjs';
+import { CurrencyService } from '../../../../shared/infrastructure/currency-service';
 import {
   BillingFiscalData,
   BillingPaymentMethodInput,
@@ -25,12 +27,12 @@ type UpgradeStep = 'plan' | 'billing' | 'payment' | 'activation';
 
 interface StepItem {
   id: UpgradeStep;
-  label: string;
+  labelKey: string;
 }
 
 @Component({
   selector: 'app-upgrade-plan-modal',
-  imports: [CdkTrapFocus, ReactiveFormsModule, CardBrandBadge],
+  imports: [CdkTrapFocus, ReactiveFormsModule, TranslatePipe, CardBrandBadge],
   templateUrl: './upgrade-plan-modal.html',
   styleUrl: './upgrade-plan-modal.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -50,6 +52,8 @@ export class UpgradePlanModal implements OnInit {
   readonly subscriptionActivated = output<void>();
 
   private readonly formBuilder = inject(NonNullableFormBuilder);
+  private readonly translate = inject(TranslateService);
+  private readonly currencyAssembler = inject(CurrencyService);
   protected readonly activeStep = signal<UpgradeStep>('plan');
   protected readonly activated = signal(false);
   protected readonly selectedPaymentMethodId = signal('');
@@ -79,10 +83,10 @@ export class UpgradePlanModal implements OnInit {
   );
 
   protected readonly steps: StepItem[] = [
-    { id: 'plan', label: 'Plan' },
-    { id: 'billing', label: 'Facturación' },
-    { id: 'payment', label: 'Pago' },
-    { id: 'activation', label: 'Activación' },
+    { id: 'plan', labelKey: 'subscription.upgrade.steps.plan' },
+    { id: 'billing', labelKey: 'subscription.upgrade.steps.billing' },
+    { id: 'payment', labelKey: 'subscription.upgrade.steps.payment' },
+    { id: 'activation', labelKey: 'subscription.upgrade.steps.activation' },
   ];
 
   protected readonly activeIndex = computed(() =>
@@ -91,11 +95,16 @@ export class UpgradePlanModal implements OnInit {
   protected readonly planPrice = computed(() =>
     this.billingCycle() === 'monthly' ? this.plan().monthlyPrice : this.plan().annualPrice,
   );
-  protected readonly planPriceLabel = computed(() =>
-    this.billingCycle() === 'monthly' ? 'S/ 89/mes' : 'S/ 890/año',
+  protected readonly formattedPlanPrice = computed(() => this.currencyAssembler.format(this.planPrice()));
+  protected readonly planPriceSuffixKey = computed(() =>
+    this.billingCycle() === 'monthly'
+      ? 'subscription.upgrade.plan.priceLabel.monthly'
+      : 'subscription.upgrade.plan.priceLabel.annual',
   );
-  protected readonly billingLabel = computed(() =>
-    this.billingCycle() === 'monthly' ? 'Facturación mensual' : 'Facturación anual',
+  protected readonly billingLabelKey = computed(() =>
+    this.billingCycle() === 'monthly'
+      ? 'subscription.upgrade.plan.billingLabel.monthly'
+      : 'subscription.upgrade.plan.billingLabel.annual',
   );
   protected readonly paymentMethods = computed(() => this.billingSetup().paymentMethods);
   protected readonly defaultPaymentMethodId = computed(
@@ -224,6 +233,14 @@ export class UpgradePlanModal implements OnInit {
   protected hasPaymentFieldError(fieldName: keyof typeof this.paymentForm.controls): boolean {
     const field = this.paymentForm.controls[fieldName];
     return field.invalid && (field.dirty || field.touched);
+  }
+
+  protected cardBrandLabel(cardBrand: string): string {
+    const normalizedBrand = cardBrand.trim().toLowerCase();
+
+    return ['tarjeta', 'card'].includes(normalizedBrand)
+      ? this.translate.instant('subscription.cardBrand.generic')
+      : cardBrand;
   }
 
   private continueFromBilling(): void {
