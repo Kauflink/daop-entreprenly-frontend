@@ -210,6 +210,8 @@ export class Help {
   protected readonly simulateError        = signal(false);
   protected readonly quickReportText      = signal('');
   protected readonly quickReportInvalid   = signal(false);
+  /** Categoría seleccionada al hacer clic en una tarjeta de "Explorar por categoría". */
+  protected readonly selectedCategoryId  = signal<string | null>(null);
 
   // ── Static data ─────────────────────────────────────────────────────────────
   protected readonly articles        = ARTICLES;
@@ -234,6 +236,10 @@ export class Help {
   );
 
   protected readonly searchResults = computed(() => {
+    const categoryId = this.selectedCategoryId();
+    if (categoryId) {
+      return ARTICLES.filter(a => a.categoryId === categoryId);
+    }
     const q = this.searchQuery().toLowerCase().trim();
     if (!q) return [];
     return ARTICLES.filter(a => {
@@ -241,6 +247,14 @@ export class Help {
       const cat   = this.translate.instant(a.categoryKey).toLowerCase();
       return title.includes(q) || cat.includes(q);
     });
+  });
+
+  /** Nombre de la categoría seleccionada (para el encabezado de resultados). */
+  protected readonly selectedCategoryName = computed(() => {
+    const categoryId = this.selectedCategoryId();
+    if (!categoryId) return '';
+    const category = CATEGORIES.find(c => c.id === categoryId);
+    return category ? this.translate.instant(category.nameKey) : '';
   });
 
   protected readonly relatedCategories = computed(() => {
@@ -276,6 +290,7 @@ export class Help {
   protected onSearch(): void {
     const q = this.searchInput().trim();
     if (!q) return;
+    this.selectedCategoryId.set(null);
     this.searchQuery.set(q);
     this.view.set('results');
   }
@@ -283,7 +298,16 @@ export class Help {
   protected onClearSearch(): void {
     this.searchInput.set('');
     this.searchQuery.set('');
+    this.selectedCategoryId.set(null);
     this.view.set('home');
+  }
+
+  /** Muestra los artículos de una categoría al hacer clic en su tarjeta. */
+  protected onSelectCategory(categoryId: string): void {
+    this.selectedCategoryId.set(categoryId);
+    this.searchInput.set('');
+    this.searchQuery.set('');
+    this.view.set('results');
   }
 
   protected onOpenArticle(id: number): void {
@@ -351,6 +375,7 @@ export class Help {
     this.selectedArticleId.set(null);
     this.searchInput.set('');
     this.searchQuery.set('');
+    this.selectedCategoryId.set(null);
     this.articleFeedback.set(null);
     this.showQuickReport.set(false);
     this.formSubmitted.set(false);
