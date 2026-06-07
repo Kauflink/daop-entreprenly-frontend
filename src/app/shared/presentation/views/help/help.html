@@ -102,7 +102,8 @@
               @for (cat of categories; track cat.id) {
                 <button
                   type="button"
-                  class="flex items-center gap-3 rounded-xl border border-gray-100 bg-white px-4 py-3 text-left shadow-sm transition-shadow hover:shadow-md"
+                  (click)="onSelectCategory(cat.id)"
+                  class="flex items-center gap-3 rounded-xl border border-gray-100 bg-white px-4 py-3 text-left shadow-sm transition-shadow hover:shadow-md hover:border-orange-200 cursor-pointer"
                 >
                   <span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl" [class]="categoryBg(cat.id)" aria-hidden="true">
                     @if (cat.id === 'inventario') {
@@ -225,7 +226,7 @@
       <p class="text-sm text-gray-500" aria-live="polite">
         <strong class="text-gray-800">{{ searchResults().length }}</strong>
         {{ 'dashboard-help.results.count_other' | translate: { count: searchResults().length } }}
-        "<strong class="text-orange-500">{{ searchQuery() }}</strong>"
+        "<strong class="text-orange-500">{{ selectedCategoryId() ? selectedCategoryName() : searchQuery() }}</strong>"
       </p>
 
       @if (searchResults().length > 0) {
