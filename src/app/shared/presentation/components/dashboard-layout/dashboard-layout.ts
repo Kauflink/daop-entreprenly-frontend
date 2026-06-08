@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { AuthStore } from '../../../../auth/application/auth-store';
 import { ProfileStore } from '../../../../profile/application/profile-store';
@@ -30,7 +30,19 @@ export class DashboardLayout {
   private readonly authStore = inject(AuthStore);
   protected readonly profileStore = inject(ProfileStore);
 
+  /** Whether the mobile sidebar drawer is open (hamburger menu). */
+  protected readonly sidebarOpen = signal(false);
+
+  protected toggleSidebar(): void {
+    this.sidebarOpen.update(open => !open);
+  }
+
+  protected closeSidebar(): void {
+    this.sidebarOpen.set(false);
+  }
+
   protected logout(): void {
+    this.closeSidebar();
     this.authStore.logout();
   }
 
