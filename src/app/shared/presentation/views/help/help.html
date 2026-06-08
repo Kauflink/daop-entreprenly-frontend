@@ -419,6 +419,11 @@
     @if (selectedArticle(); as article) {
       <div class="mx-auto max-w-5xl flex flex-col gap-4">
 
+        <button type="button" (click)="onBackFromArticle()"
+          class="self-start text-sm font-medium text-orange-500 hover:underline">
+          ← {{ 'dashboard-help.back' | translate }}
+        </button>
+
         <!-- Breadcrumb -->
         <nav aria-label="breadcrumb">
           <ol class="flex items-center gap-1.5 text-sm" role="list">
