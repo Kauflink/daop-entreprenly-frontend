@@ -214,12 +214,24 @@ export class InventoryStoreService {
     this.inventoryApi.deleteUnitProduct(id).pipe(retry(2)).subscribe({
       next: () => {
         this.unitProductsSignal.update(products => products.filter(p => p.id !== id));
+        this.cascadeDeleteUnitLots(id);
         this.loadingSignal.set(false);
       },
       error: err => {
         this.errorSignal.set(this.formatError(err, 'Failed to delete unit product'));
         this.loadingSignal.set(false);
       }
+    });
+  }
+
+  /** Removes every unit lot tied to a deleted product (backend + local state) so no orphans remain. */
+  private cascadeDeleteUnitLots(productId: number): void {
+    const orphanLots = this.unitLots().filter(l => l.productId === productId);
+    this.unitLotsSignal.update(lots => lots.filter(l => l.productId !== productId));
+    orphanLots.forEach(lot => {
+      this.inventoryApi.deleteUnitLot(lot.id).pipe(retry(2)).subscribe({
+        error: err => this.errorSignal.set(this.formatError(err, 'Failed to delete unit lot'))
+      });
     });
   }
 
@@ -260,12 +272,24 @@ export class InventoryStoreService {
     this.inventoryApi.deleteWeightProduct(id).pipe(retry(2)).subscribe({
       next: () => {
         this.weightProductsSignal.update(products => products.filter(p => p.id !== id));
+        this.cascadeDeleteWeightLots(id);
         this.loadingSignal.set(false);
       },
       error: err => {
         this.errorSignal.set(this.formatError(err, 'Failed to delete weight product'));
         this.loadingSignal.set(false);
       }
+    });
+  }
+
+  /** Removes every weight lot tied to a deleted product (backend + local state) so no orphans remain. */
+  private cascadeDeleteWeightLots(productId: number): void {
+    const orphanLots = this.weightLots().filter(l => l.productId === productId);
+    this.weightLotsSignal.update(lots => lots.filter(l => l.productId !== productId));
+    orphanLots.forEach(lot => {
+      this.inventoryApi.deleteWeightLot(lot.id).pipe(retry(2)).subscribe({
+        error: err => this.errorSignal.set(this.formatError(err, 'Failed to delete weight lot'))
+      });
     });
   }
 

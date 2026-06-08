@@ -73,10 +73,16 @@ export class LotListComponent {
 
   // ───────────────── STATS ─────────────────
 
-  totalLotsCount = computed(() =>
-    this.store.unitLots().length +
-    this.store.weightLots().length
-  );
+  // Only count lots tied to an existing product, so the total always matches
+  // the lots shown in the product cards (orphan lots never inflate the count).
+  totalLotsCount = computed(() => {
+    const unitIds   = new Set(this.store.unitProducts().map(p => p.id));
+    const weightIds = new Set(this.store.weightProducts().map(p => p.id));
+    return (
+      this.store.unitLots().filter(l => unitIds.has(l.productId)).length +
+      this.store.weightLots().filter(l => weightIds.has(l.productId)).length
+    );
+  });
 
   expiredAlertsCount = computed(() =>
     this.rawAlerts().filter(alert => alert.isExpired).length
