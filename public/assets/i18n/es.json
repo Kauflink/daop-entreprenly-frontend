@@ -42,7 +42,9 @@
       "price": "Precio",
       "byUnit": "Unidad",
       "byWeight": "Peso",
-      "edit": "Editar"
+      "edit": "Editar",
+      "delete": "Eliminar",
+      "actions": "Acciones"
     },
     "form": {
       "addTitle": "Agregar Nuevo Producto",

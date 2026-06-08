@@ -2,7 +2,7 @@
 
 .row {
   display: grid;
-  grid-template-columns: 110px 1fr 1fr 90px 100px 90px 60px;
+  grid-template-columns: 110px 1fr 1fr 90px 100px 90px 96px;
   align-items: center;
   padding: 14px 24px;
   border-bottom: 1px solid var(--color-card-border);
@@ -26,10 +26,10 @@
 .badge--unit   { background: var(--color-primary); color: #fff; font-family: 'Reddit Sans', sans-serif; font-weight: 700; }
 .badge--weight { background: var(--color-avatar-bg); color: var(--color-avatar-fg); font-family: 'Reddit Sans', sans-serif; font-weight: 700; }
 
-.col-qr    { display: flex; justify-content: center; }
-.col-stock { text-align: center; }
-.col-price { text-align: center; }
-.col-edit  { display: flex; justify-content: center; }
+.col-qr      { display: flex; justify-content: center; }
+.col-stock   { text-align: center; }
+.col-price   { text-align: center; }
+.col-actions { display: flex; justify-content: center; gap: 8px; }
 
 .name {
   font-size: 14px;
@@ -83,3 +83,20 @@
 
 .btn-edit:hover  { border-color: var(--color-primary); color: var(--color-primary); background: var(--color-theme-btn-active-bg); }
 .btn-edit:active { transform: scale(0.94); }
+
+.btn-delete {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  border: 1.5px solid var(--color-card-border);
+  background: var(--color-card-bg);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-text-secondary);
+  transition: all 0.18s;
+}
+
+.btn-delete:hover  { border-color: #e5484d; color: #e5484d; background: rgba(229, 72, 77, 0.08); }
+.btn-delete:active { transform: scale(0.94); }
