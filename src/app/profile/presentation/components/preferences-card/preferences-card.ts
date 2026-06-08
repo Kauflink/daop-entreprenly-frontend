@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, effect, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { Currency, CurrencyStore } from '../../../../shared/application/currency.store';
 import { ProfileStore } from '../../../application/profile-store';
 import { Theme } from '../../../domain/model/user-preferences.entity';
 
@@ -19,6 +20,7 @@ interface LanguageOption {
 export class PreferencesCard {
   private readonly fb = inject(FormBuilder);
   private readonly translate = inject(TranslateService);
+  private readonly currencyStore = inject(CurrencyStore);
   protected readonly store = inject(ProfileStore);
 
   protected readonly languages: LanguageOption[] = [
@@ -34,16 +36,22 @@ export class PreferencesCard {
     'Europe/Madrid (UTC+01:00)',
   ];
 
+  protected readonly currencies: { code: Currency; label: string }[] = [
+    { code: 'PEN', label: 'S/ Sol (PEN)' },
+    { code: 'USD', label: '$ Dollar (USD)' },
+  ];
+
   protected readonly form = this.fb.nonNullable.group({
     language: ['es'],
     timezone: [''],
     theme: ['light' as Theme],
+    currency: ['PEN' as Currency],
   });
 
   constructor() {
     effect(() => {
-      const { language, timezone, theme } = this.store.preferences();
-      this.form.setValue({ language, timezone, theme }, { emitEvent: false });
+      const { language, timezone, theme, currency } = this.store.preferences();
+      this.form.setValue({ language, timezone, theme, currency }, { emitEvent: false });
     });
   }
 
@@ -56,6 +64,12 @@ export class PreferencesCard {
   protected onTimezoneChange(timezone: string): void {
     this.form.patchValue({ timezone });
     this.store.updatePreferences({ timezone });
+  }
+
+  protected onCurrencyChange(currency: Currency): void {
+    this.form.patchValue({ currency });
+    this.currencyStore.setCurrency(currency);
+    this.store.updatePreferences({ currency });
   }
 
   protected setTheme(theme: Theme): void {
