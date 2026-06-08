@@ -85,17 +85,16 @@
 .btn-edit:active { transform: scale(0.94); }
 
 .btn-delete-card {
-  width: 36px;
-  height: 36px;
+  width: 42px;
+  height: 42px;
   background: var(--color-danger);
-  color: #fff;
+  color: #000;
   border: none;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  box-shadow: 0 4px 10px rgba(255, 82, 82, 0.4);
   transition: transform 0.18s;
 }
 
