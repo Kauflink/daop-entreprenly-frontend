@@ -212,6 +212,8 @@ export class Help {
   protected readonly quickReportInvalid   = signal(false);
   /** Categoría seleccionada al hacer clic en una tarjeta de "Explorar por categoría". */
   protected readonly selectedCategoryId  = signal<string | null>(null);
+  /** Vista a la que se regresa al salir de un artículo (inicio o resultados). */
+  protected readonly previousView        = signal<HelpView>('home');
 
   // ── Static data ─────────────────────────────────────────────────────────────
   protected readonly articles        = ARTICLES;
@@ -311,10 +313,22 @@ export class Help {
   }
 
   protected onOpenArticle(id: number): void {
+    // Remember where we came from (home or a results list) to offer an accurate "back".
+    const current = this.view();
+    if (current === 'home' || current === 'results') {
+      this.previousView.set(current);
+    }
     this.selectedArticleId.set(id);
     this.articleFeedback.set(null);
     this.showQuickReport.set(false);
     this.view.set('article');
+  }
+
+  /** Returns from an article to the list/home the user came from. */
+  protected onBackFromArticle(): void {
+    this.articleFeedback.set(null);
+    this.showQuickReport.set(false);
+    this.view.set(this.previousView());
   }
 
   protected onArticleFeedback(useful: boolean): void {
