@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 import { Observable, catchError, map, of, switchMap } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { BillingSetup } from '../domain/model/billing-setup.entity';
@@ -13,17 +14,12 @@ import { SubscriptionDashboardResponse, SubscriptionPlanResponse } from './subsc
 })
 export class SubscriptionApi {
   private readonly http = inject(HttpClient);
+  private readonly translate = inject(TranslateService);
   private readonly baseUrl = environment.entreprenlyProviderApiBaseUrl;
   private readonly subscriptionDashboardEndpoint =
     environment.entreprenlyProviderSubscriptionDashboardEndpointPath;
   private readonly subscriptionActivationEndpoint =
     environment.entreprenlyProviderSubscriptionActivationEndpointPath;
-
-  private readonly longDateFormatter = new Intl.DateTimeFormat('es-PE', {
-    day: 'numeric',
-    month: 'long',
-    year: 'numeric',
-  });
 
   getSubscriptionDashboard(): Observable<SubscriptionDashboard> {
     return this.http
@@ -97,7 +93,10 @@ export class SubscriptionApi {
         ...response.currentPlan,
         currentPeriodStartDate: startDateText,
         currentPeriodEndDate: endDateText,
-        shortDescription: `Tu plan sigue activo hasta el ${endDateLabel}. Se renovará automáticamente.`,
+        shortDescription: this.translate.instant(
+          'subscription.plans.control.shortDescription.active',
+          { date: endDateLabel },
+        ),
       },
     });
   }
@@ -113,12 +112,22 @@ export class SubscriptionApi {
       currentPlan: {
         ...currentPlan,
         status: 'scheduled-cancellation',
-        statusLabel: 'Cancelación programada',
-        shortDescription: `Tu plan sigue activo hasta el ${endDateLabel}. No se renovará automáticamente.`,
+        statusLabel: this.translate.instant(
+          'subscription.plans.control.statusLabel.scheduled-cancellation',
+        ),
+        shortDescription: this.translate.instant(
+          'subscription.plans.control.shortDescription.scheduled-cancellation',
+          { date: endDateLabel },
+        ),
       },
       activity: this.withSubscriptionActivity(response, {
-        statusDetail: 'Cancelacion programada',
-        billingDetail: `Acceso vigente hasta el ${endDateLabel} - sin siguiente cobro`,
+        statusDetail: this.translate.instant(
+          'subscription.plans.control.statusLabel.scheduled-cancellation',
+        ),
+        billingDetail: this.translate.instant(
+          'subscription.activity.billing.detail.accessUntil',
+          { date: endDateLabel },
+        ),
       }),
     };
   }
@@ -132,14 +141,18 @@ export class SubscriptionApi {
       currentPlan: {
         ...currentPlan,
         status: 'active',
-        statusLabel: 'Plan Control activo',
-        shortDescription: `Tu plan sigue activo hasta el ${endDateLabel}. Se renovará automáticamente.`,
+        statusLabel: this.translate.instant('subscription.plans.control.statusLabel.active'),
+        shortDescription: this.translate.instant(
+          'subscription.plans.control.shortDescription.active',
+          { date: endDateLabel },
+        ),
       },
       activity: this.withSubscriptionActivity(response, {
-        statusDetail: 'Plan Control activo',
-        billingDetail: `Próxima renovación: ${endDateLabel} - ${this.billingCycleLabel(
-          response.defaultBillingCycle,
-        )}`,
+        statusDetail: this.translate.instant('subscription.plans.control.statusLabel.active'),
+        billingDetail: this.translate.instant(
+          'subscription.activity.billing.detail.renewalWithDate',
+          { date: endDateLabel, cycle: this.billingCycleLabel(response.defaultBillingCycle) },
+        ),
       }),
     };
   }
@@ -153,17 +166,17 @@ export class SubscriptionApi {
     return [
       existingCreatedAccount ?? {
         id: 'created-account',
-        title: 'Cuenta creada',
-        detail: '16 abril 2026 - Plan Free asignado automáticamente',
+        title: this.translate.instant('subscription.activity.created-account.title'),
+        detail: this.translate.instant('subscription.activity.created-account.detail'),
       },
       {
         id: 'current-status',
-        title: 'Estado actual',
+        title: this.translate.instant('subscription.activity.current-status.title'),
         detail: activity.statusDetail,
       },
       {
         id: 'billing',
-        title: 'Facturación',
+        title: this.translate.instant('subscription.activity.billing.title'),
         detail: activity.billingDetail,
       },
     ];
@@ -319,10 +332,28 @@ export class SubscriptionApi {
   private formatDate(dateValue: string | undefined): string {
     const date = this.toLocalDate(dateValue);
 
-    return date === null ? 'la fecha registrada en tu suscripción' : this.longDateFormatter.format(date);
+    if (date === null) {
+      return this.translate.instant('subscription.planAction.fallbackDate');
+    }
+
+    return new Intl.DateTimeFormat(this.currentDateLocale(), {
+      day: 'numeric',
+      month: 'long',
+      year: 'numeric',
+    }).format(date);
+  }
+
+  private currentDateLocale(): string {
+    return (this.translate.currentLang ?? this.translate.defaultLang ?? 'en').startsWith('es')
+      ? 'es-PE'
+      : 'en-US';
   }
 
   private billingCycleLabel(billingCycle: BillingCycle): string {
-    return billingCycle === 'annual' ? 'pago anual' : 'pago mensual';
+    return this.translate.instant(
+      billingCycle === 'annual'
+        ? 'subscription.overview.priceLabel.annual'
+        : 'subscription.overview.priceLabel.monthly',
+    );
   }
 }
