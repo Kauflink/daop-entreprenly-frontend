@@ -160,49 +160,103 @@
   color: var(--color-text-primary);
 }
 
+/* Mobile top bar + backdrop: hidden on desktop, shown when the sidebar collapses. */
+.topbar {
+  display: none;
+}
+
+.backdrop {
+  display: none;
+}
+
 @media (max-width: 1080px) {
+  /* Single column: the sidebar becomes an off-canvas drawer (hamburger menu). */
   .dashboard-shell {
     grid-template-columns: 1fr;
   }
 
-  .sidebar {
-    position: relative;
-    height: auto;
-    padding: 22px;
+  .topbar {
+    position: fixed;
+    inset: 0 0 auto 0;
+    z-index: 60;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    height: 56px;
+    padding: 0 14px;
+    background: var(--color-sidebar-bg);
+    box-shadow: var(--color-sidebar-shadow);
   }
 
-  /* When stacked full-width, keep the logo and profile a sensible size instead
-     of stretching them across the whole viewport. */
+  .hamburger {
+    display: grid;
+    place-items: center;
+    width: 40px;
+    height: 40px;
+    border: 0;
+    border-radius: 10px;
+    background: var(--color-sidebar-item-bg);
+    color: var(--color-sidebar-item-text);
+    cursor: pointer;
+  }
+
+  .topbar__logo {
+    height: 30px;
+    width: auto;
+    object-fit: contain;
+  }
+
+  /* The full logo lives in the top bar on mobile, so hide the drawer's brand. */
   .brand {
-    margin-bottom: 4px;
+    display: none;
   }
 
-  .brand__logo {
-    max-width: 240px;
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 50;
+    height: 100dvh;
+    width: min(284px, 82vw);
+    padding: 70px 20px 20px;
+    transform: translateX(-100%);
+    transition: transform 0.25s ease;
+  }
+
+  .sidebar--open {
+    transform: translateX(0);
   }
 
   .profile {
-    margin-block: 8px;
-  }
-
-  .navigation-list {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .dashboard-content {
-    padding: 30px 22px 42px;
-  }
-}
-
-@media (max-width: 620px) {
-  .brand__logo {
-    max-width: 180px;
+    margin-block: 8px 16px;
   }
 
   .navigation-list {
     grid-template-columns: 1fr;
   }
 
+  .backdrop {
+    display: block;
+    position: fixed;
+    inset: 0;
+    z-index: 45;
+    background: rgb(0 0 0 / 45%);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease;
+  }
+
+  .dashboard-shell--menu-open .backdrop {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .dashboard-content {
+    padding: 72px 20px 40px;
+  }
+}
+
+@media (max-width: 620px) {
   .dashboard-content {
     padding-inline: 14px;
   }

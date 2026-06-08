@@ -1,5 +1,26 @@
-<div class="dashboard-shell">
-  <aside class="sidebar" [attr.aria-label]="'dashboard.sidebarLabel' | translate">
+<div class="dashboard-shell" [class.dashboard-shell--menu-open]="sidebarOpen()">
+  <!-- Mobile top bar with hamburger (hidden on desktop) -->
+  <header class="topbar">
+    <button
+      class="hamburger"
+      type="button"
+      (click)="toggleSidebar()"
+      [attr.aria-expanded]="sidebarOpen()"
+      [attr.aria-label]="'dashboard.sidebarLabel' | translate"
+    >
+      <mat-icon aria-hidden="true">{{ sidebarOpen() ? 'close' : 'menu' }}</mat-icon>
+    </button>
+    <img class="topbar__logo" src="assets/brand/entreprenly-logo-dashboard.png" alt="Entreprenly" />
+  </header>
+
+  <!-- Backdrop shown behind the drawer on mobile -->
+  <div class="backdrop" (click)="closeSidebar()" aria-hidden="true"></div>
+
+  <aside
+    class="sidebar"
+    [class.sidebar--open]="sidebarOpen()"
+    [attr.aria-label]="'dashboard.sidebarLabel' | translate"
+  >
     <div class="brand">
       <img
         class="brand__logo"
@@ -15,6 +36,7 @@
       class="profile"
       routerLink="/dashboard/profile"
       routerLinkActive="profile--active"
+      (click)="closeSidebar()"
       [attr.aria-label]="'dashboard.currentUserLabel' | translate"
     >
       <span class="profile__avatar" aria-hidden="true">
@@ -35,6 +57,7 @@
               class="navigation-link"
               routerLinkActive="navigation-link--active"
               [routerLink]="item.route"
+              (click)="closeSidebar()"
               [attr.aria-label]="item.labelKey | translate"
             >
               <mat-icon aria-hidden="true">{{ item.icon }}</mat-icon>
