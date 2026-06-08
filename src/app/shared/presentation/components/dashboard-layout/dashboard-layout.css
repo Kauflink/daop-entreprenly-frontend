@@ -171,6 +171,16 @@
     padding: 22px;
   }
 
+  /* When stacked full-width, keep the logo and profile a sensible size instead
+     of stretching them across the whole viewport. */
+  .brand {
+    margin-bottom: 4px;
+  }
+
+  .brand__logo {
+    max-width: 240px;
+  }
+
   .profile {
     margin-block: 8px;
   }
@@ -185,6 +195,10 @@
 }
 
 @media (max-width: 620px) {
+  .brand__logo {
+    max-width: 180px;
+  }
+
   .navigation-list {
     grid-template-columns: 1fr;
   }
