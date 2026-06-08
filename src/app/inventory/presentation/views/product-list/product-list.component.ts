@@ -70,4 +70,12 @@ export class ProductListComponent {
 
     this.router.navigate(path);
   }
+
+  onDelete(row: ProductRow): void {
+    if (row.type === 'unit') {
+      this.store.deleteUnitProduct(row.id);
+    } else {
+      this.store.deleteWeightProduct(row.id);
+    }
+  }
 }
