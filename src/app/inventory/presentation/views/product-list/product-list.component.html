@@ -54,8 +54,8 @@
         {{ 'products.col.price' | translate }}
       </span>
 
-      <span class="col-edit">
-        {{ 'products.col.edit' | translate }}
+      <span class="col-actions">
+        {{ 'products.col.actions' | translate }}
       </span>
 
     </div>
@@ -66,7 +66,8 @@
 
         <app-product-item
           [product]="product"
-          (edit)="onEdit($event)" />
+          (edit)="onEdit($event)"
+          (remove)="onDelete($event)" />
 
       } @empty {
 

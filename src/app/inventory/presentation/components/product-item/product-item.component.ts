@@ -26,6 +26,7 @@ export interface ProductRow {
 export class ProductItemComponent {
   @Input({ required: true }) product!: ProductRow;
   @Output() edit   = new EventEmitter<ProductRow>();
+  @Output() remove = new EventEmitter<ProductRow>();
 
   get qrImageUrl(): string {
     return buildQrCodeDataUrl(this.product.codeQR, 54);
