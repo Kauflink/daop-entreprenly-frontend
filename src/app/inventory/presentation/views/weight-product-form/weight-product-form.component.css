@@ -236,3 +236,39 @@
 
 .v-x { color: var(--color-danger); font-size: 15px; font-weight: 700; flex-shrink: 0; }
 .v-text { color: var(--color-danger); font-size: 12px; white-space: nowrap; flex-shrink: 0; }
+
+/* ===== Responsive ===== */
+@media (max-width: 600px) {
+  .modal-card {
+    padding: 24px 18px;
+    border-radius: 20px;
+    max-height: 92vh;
+    overflow-y: auto;
+  }
+
+  .btn-close {
+    top: 16px;
+    right: 16px;
+  }
+
+  .form-row-details {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .input-group {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 6px;
+  }
+
+  .prefix-box,
+  .input-gray-small {
+    width: 100%;
+  }
+
+  .btn-submit {
+    width: 100%;
+    padding: 14px 0;
+  }
+}

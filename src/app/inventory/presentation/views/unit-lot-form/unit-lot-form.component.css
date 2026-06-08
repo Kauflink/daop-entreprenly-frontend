@@ -137,3 +137,21 @@
 .field-row-valid .grey-input { flex: 1; }
 .v-x { color: var(--color-danger); font-size: 15px; font-weight: 700; flex-shrink: 0; }
 .v-text { color: var(--color-danger); font-size: 12px; white-space: nowrap; flex-shrink: 0; }
+
+/* ===== Responsive ===== */
+@media (max-width: 600px) {
+  .modal-card {
+    padding: 24px 18px;
+    border-radius: 20px;
+  }
+
+  .btn-close-circle {
+    top: 16px;
+    right: 16px;
+  }
+
+  .btn-save-orange {
+    width: 100%;
+    padding: 14px 0;
+  }
+}

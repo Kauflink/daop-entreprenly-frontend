@@ -283,3 +283,25 @@
 
 .v-x { color: var(--color-danger); font-size: 15px; font-weight: 700; flex-shrink: 0; }
 .v-text { color: var(--color-danger); font-size: 12px; white-space: nowrap; flex-shrink: 0; }
+
+/* ===== Responsive ===== */
+@media (max-width: 600px) {
+  .modal {
+    padding: 22px 18px 20px;
+  }
+
+  .qr-row {
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .qr-section {
+    min-width: 0;
+    width: 100%;
+  }
+
+  .btn-save {
+    width: 100%;
+    padding: 12px 0;
+  }
+}

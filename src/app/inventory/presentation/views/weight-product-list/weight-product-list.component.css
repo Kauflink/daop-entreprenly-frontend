@@ -1,4 +1,21 @@
+:host {
+  display: block;
+}
+
 .mat-table {
   width: 100%;
   margin-bottom: 16px;
+}
+
+/* ===== Responsive: scroll the wide table horizontally on small screens ===== */
+@media (max-width: 900px) {
+  :host {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  mat-table,
+  .mat-table {
+    min-width: 760px;
+  }
 }

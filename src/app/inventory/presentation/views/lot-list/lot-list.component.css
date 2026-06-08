@@ -387,3 +387,82 @@
   color: var(--color-text-primary);
   padding: 0 14px;
 }
+
+/* ===== Responsive ===== */
+@media (max-width: 768px) {
+  .page-header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 16px;
+  }
+
+  .header-actions {
+    width: 100%;
+  }
+
+  .search-input {
+    flex: 1;
+    width: auto;
+    min-width: 0;
+  }
+
+  .stats-row {
+    flex-wrap: wrap;
+  }
+
+  .stat-card {
+    flex: 1 1 calc(50% - 8px);
+  }
+
+  .lot-card {
+    min-width: calc((100% - 16px) / 2);
+    width: calc((100% - 16px) / 2);
+  }
+
+  .scroll-btn {
+    display: none;
+  }
+
+  .cards-wrapper {
+    gap: 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .page-title {
+    font-size: 22px;
+  }
+
+  .stats-row {
+    flex-direction: column;
+  }
+
+  .stat-card {
+    flex: 1 1 100%;
+  }
+
+  .lot-card {
+    min-width: 85%;
+    width: 85%;
+  }
+
+  .lot-alert-slider {
+    grid-template-columns: 30px minmax(0, 1fr) 30px;
+    gap: 6px;
+  }
+
+  .lot-alert {
+    gap: 12px;
+    padding: 12px 16px;
+  }
+
+  .lot-alert-icon {
+    font-size: 28px;
+  }
+
+  .modal-card {
+    width: 92%;
+    padding: 24px;
+    border-radius: 20px;
+  }
+}

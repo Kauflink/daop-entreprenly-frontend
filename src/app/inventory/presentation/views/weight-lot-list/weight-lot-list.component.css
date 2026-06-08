@@ -251,3 +251,38 @@
   align-items: center;
   height: 300px;
 }
+
+/* ===== Responsive ===== */
+@media (max-width: 768px) {
+  .page-container {
+    padding: 70px 12px 40px;
+  }
+
+  .btn-back-floating {
+    top: 16px;
+    right: 16px;
+    padding: 8px 16px;
+  }
+
+  .content-card {
+    padding: 24px 16px;
+    border-radius: 20px;
+  }
+
+  .product-detail-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  /* Keep the grid columns intact but let the table scroll horizontally */
+  .lots-table {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .table-header-labels,
+  .lot-row {
+    min-width: 540px;
+  }
+}

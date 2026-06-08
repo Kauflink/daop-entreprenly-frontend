@@ -80,3 +80,37 @@
   color: var(--color-text-muted);
   font-size: 14px;
 }
+
+/* ===== Responsive ===== */
+@media (max-width: 768px) {
+  .page {
+    padding: 24px 16px;
+  }
+
+  .page-header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 16px;
+  }
+
+  .btn-add {
+    align-self: flex-start;
+  }
+
+  /* Keep the table layout intact but let it scroll horizontally on small screens */
+  .table-card {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .table-head,
+  .table-body {
+    min-width: 700px;
+  }
+}
+
+@media (max-width: 480px) {
+  .page-title {
+    font-size: 24px;
+  }
+}

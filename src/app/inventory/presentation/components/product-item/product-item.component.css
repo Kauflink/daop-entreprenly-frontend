@@ -83,3 +83,13 @@
 
 .btn-edit:hover  { border-color: var(--color-primary); color: var(--color-primary); background: var(--color-theme-btn-active-bg); }
 .btn-edit:active { transform: scale(0.94); }
+
+/* ===== Responsive: keep row aligned with the scrollable table head ===== */
+@media (max-width: 768px) {
+  :host { min-width: 700px; }
+
+  .row {
+    min-width: 700px;
+    box-sizing: border-box;
+  }
+}
