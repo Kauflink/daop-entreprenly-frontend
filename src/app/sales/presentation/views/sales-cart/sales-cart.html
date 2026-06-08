@@ -75,8 +75,8 @@
           {{ item.weightKg }} {{ 'sales.ticket.kg' | translate }}
           }
         </td>
-        <td>S/ {{ item.unitPrice.toFixed(2) }}</td>
-        <td>S/ {{ item.subtotal.toFixed(2) }}</td>
+        <td>{{ currencyStore.format(item.unitPrice) }}</td>
+        <td>{{ currencyStore.format(item.subtotal) }}</td>
         <td>
           <button class="delete-btn" (click)="itemDeleted.emit(i)">🗑</button>
         </td>
