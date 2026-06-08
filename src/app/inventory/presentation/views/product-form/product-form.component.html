@@ -84,7 +84,7 @@
             <label class="field-label">{{ 'products.form.price' | translate }}</label>
             <div class="field-row-valid">
               <div class="input-prefix" [class.input-prefix--error]="form.get('price')?.invalid && form.get('price')?.touched">
-                <span>$</span>
+                <span>{{ currencyStore.symbol() }}</span>
                 <input class="field-input prefix"
                        formControlName="price"
                        type="number" step="0.01" min="0" />
@@ -114,7 +114,7 @@
             <label class="field-label">{{ 'products.form.pricePerKg' | translate }}</label>
             <div class="field-row-valid">
               <div class="input-prefix" [class.input-prefix--error]="form.get('pricePerKg')?.invalid && form.get('pricePerKg')?.touched">
-                <span>$</span>
+                <span>{{ currencyStore.symbol() }}</span>
                 <input class="field-input prefix"
                        formControlName="pricePerKg"
                        type="number" step="0.01" min="0" />

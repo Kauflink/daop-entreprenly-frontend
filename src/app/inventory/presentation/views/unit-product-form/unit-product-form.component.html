@@ -58,7 +58,7 @@
             <label>{{ 'products.form.price' | translate }}:</label>
             <div class="field-row-valid">
               <div class="prefix-box" [class.input-error]="form.get('price')?.invalid && form.get('price')?.touched">
-                <span>$</span>
+                <span>{{ currencyStore.symbol() }}</span>
                 <input type="number" formControlName="price">
               </div>
               @if (form.get('price')?.invalid && form.get('price')?.touched) {

@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TranslatePipe } from '@ngx-translate/core';
 
+import { CurrencyStore } from '../../../../shared/application/currency.store';
 import { InventoryStoreService } from '../../../application/inventory-store.service';
 import { UnitProduct }   from '../../../domain/model/unit-product.entity';
 import { WeightProduct } from '../../../domain/model/weight-product.entity';
@@ -22,6 +23,7 @@ export class ProductFormComponent implements OnInit {
   private readonly router = inject(Router);
   private readonly route  = inject(ActivatedRoute);
   private readonly fb     = inject(FormBuilder);
+  protected readonly currencyStore = inject(CurrencyStore);
 
   /* ── state ─────────────────────────────────────────────── */
   productType = signal<'unit' | 'weight'>('unit');

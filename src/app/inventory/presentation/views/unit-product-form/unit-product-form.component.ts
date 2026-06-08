@@ -3,6 +3,7 @@ import { FormBuilder, FormControl, ReactiveFormsModule, Validators } from '@angu
 import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { TranslatePipe } from '@ngx-translate/core';
+import { CurrencyStore } from '../../../../shared/application/currency.store';
 import { InventoryStoreService } from '../../../application/inventory-store.service';
 import { UnitProduct } from '../../../domain/model/unit-product.entity';
 import { buildQrCodeDataUrl } from '../../../infrastructure/qr-code-generator';
@@ -20,6 +21,7 @@ export class UnitProductFormComponent implements OnInit, OnDestroy {
   private route = inject(ActivatedRoute);
   private router = inject(Router);
   private _store = inject(InventoryStoreService);
+  protected readonly currencyStore = inject(CurrencyStore);
 
   isEdit = false;
   submitted = false;
