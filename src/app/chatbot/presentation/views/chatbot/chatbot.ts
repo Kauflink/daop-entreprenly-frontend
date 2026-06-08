@@ -11,6 +11,7 @@ import { WhatsappStatusCard } from '../../components/whatsapp-status-card/whatsa
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [QrConnectionCard, WhatsappStatusCard, TranslatePipe],
   templateUrl: './chatbot.html',
+  styleUrl: './chatbot.css',
 })
 export class Chatbot implements OnInit {
   protected readonly store = inject(ChatbotStoreService);

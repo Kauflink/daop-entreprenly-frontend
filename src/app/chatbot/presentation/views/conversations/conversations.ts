@@ -12,6 +12,7 @@ import { ChatInput } from '../../components/chat-input/chat-input';
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [ConversationList, ConversationHeader, MessageBubble, ChatInput, TranslatePipe],
   templateUrl: './conversations.html',
+  styleUrl: './conversations.css',
 })
 export class Conversations implements OnInit {
   protected readonly store = inject(ChatbotStoreService);
