@@ -9,6 +9,7 @@ import { CashSummary } from '../cash-summary/cash-summary';
 import { PaymentSelection, PaymentMethodComponent } from '../payment-method/payment-method';
 import { SalesCart, TicketItem } from '../sales-cart/sales-cart';
 import { TranslatePipe } from '@ngx-translate/core';
+import { CurrencyStore } from '../../../../shared/application/currency.store';
 
 @Component({
   selector: 'app-sales-page',
@@ -26,6 +27,7 @@ import { TranslatePipe } from '@ngx-translate/core';
 })
 export class SalesPage {
   protected readonly store = inject(SalesStore);
+  protected readonly currencyStore = inject(CurrencyStore);
 
   // === Modales ===
   protected readonly selectedProduct = signal<ProductSummary | null>(null);
