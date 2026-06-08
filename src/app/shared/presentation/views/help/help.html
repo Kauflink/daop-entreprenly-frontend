@@ -199,6 +199,10 @@
   @if (view() === 'results') {
     <div class="mx-auto max-w-5xl flex flex-col gap-4">
 
+      <button type="button" (click)="onBackToHome()"
+        class="self-start text-sm font-medium text-orange-500 hover:underline">
+        ← {{ 'dashboard-help.backToHome' | translate }}
+      </button>
       <h1 class="text-2xl font-bold text-gray-900">{{ 'dashboard-help.title' | translate }}</h1>
 
       <!-- Search bar -->
@@ -420,7 +424,13 @@
           <ol class="flex items-center gap-1.5 text-sm" role="list">
             <li>
               <button type="button" (click)="onBackToHome()" class="text-orange-500 hover:underline">
-                ← {{ article.categoryKey | translate }}
+                {{ 'dashboard-help.title' | translate }}
+              </button>
+            </li>
+            <li aria-hidden="true"><span class="text-gray-300">›</span></li>
+            <li>
+              <button type="button" (click)="onSelectCategory(article.categoryId)" class="text-orange-500 hover:underline">
+                {{ article.categoryKey | translate }}
               </button>
             </li>
             <li aria-hidden="true"><span class="text-gray-300">›</span></li>
