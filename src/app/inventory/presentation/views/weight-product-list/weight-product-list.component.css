@@ -1,5 +1,8 @@
 :host {
   display: block;
+  /* Scroll the wide table whenever the container is too narrow (sidebar, panels, mobile). */
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 .mat-table {
@@ -7,15 +10,7 @@
   margin-bottom: 16px;
 }
 
-/* ===== Responsive: scroll the wide table horizontally on small screens ===== */
-@media (max-width: 900px) {
-  :host {
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-  }
-
-  mat-table,
-  .mat-table {
-    min-width: 760px;
-  }
+mat-table,
+.mat-table {
+  min-width: 760px;
 }
