@@ -46,7 +46,7 @@
         <div class="flex gap-6 px-6 pb-6">
           @if (order.hasReceipt) {
             <img
-              [src]="receiptUrl(order.total)"
+              [src]="order.receiptImage || receiptUrl(order.total)"
               [alt]="'chatbot.orders.receiptAlt' | translate"
               class="h-44 w-36 rounded-xl object-cover shadow-sm"
             />
