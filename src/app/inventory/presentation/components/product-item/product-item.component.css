@@ -1,4 +1,4 @@
-:host { display: block; }
+:host { display: block; min-width: 740px; }
 
 .row {
   display: grid;
@@ -7,6 +7,8 @@
   padding: 14px 24px;
   border-bottom: 1px solid var(--color-card-border);
   transition: background 0.15s;
+  min-width: 740px;
+  box-sizing: border-box;
 }
 
 .row:hover { background: var(--color-inner-bg); }
@@ -83,13 +85,3 @@
 
 .btn-edit:hover  { border-color: var(--color-primary); color: var(--color-primary); background: var(--color-theme-btn-active-bg); }
 .btn-edit:active { transform: scale(0.94); }
-
-/* ===== Responsive: keep row aligned with the scrollable table head ===== */
-@media (max-width: 768px) {
-  :host { min-width: 700px; }
-
-  .row {
-    min-width: 700px;
-    box-sizing: border-box;
-  }
-}

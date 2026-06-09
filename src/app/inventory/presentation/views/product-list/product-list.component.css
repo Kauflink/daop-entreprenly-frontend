@@ -55,8 +55,17 @@
 .table-card {
   background: var(--color-card-bg);
   border-radius: 18px;
-  overflow: hidden;
+  /* Scroll horizontally whenever the container is narrower than the table,
+     regardless of viewport width (e.g. narrow content area beside a sidebar). */
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
   box-shadow: 0 2px 16px rgba(0,0,0,0.07);
+}
+
+/* Keep the columns readable: the table never shrinks below this, it scrolls instead. */
+.table-head,
+.table-body {
+  min-width: 740px;
 }
 
 .table-head {
@@ -95,17 +104,6 @@
 
   .btn-add {
     align-self: flex-start;
-  }
-
-  /* Keep the table layout intact but let it scroll horizontally on small screens */
-  .table-card {
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-  }
-
-  .table-head,
-  .table-body {
-    min-width: 700px;
   }
 }
 
