@@ -48,7 +48,7 @@
             <label>{{ 'products.form.pricePerKg' | translate }}:</label>
             <div class="field-row-valid">
               <div class="prefix-box" [class.input-error]="form.get('pricePerKg')?.invalid && form.get('pricePerKg')?.touched">
-                <span>$</span>
+                <span>{{ currency.symbol() }}</span>
                 <input type="number" step="0.01" formControlName="pricePerKg">
               </div>
               @if (form.get('pricePerKg')?.invalid && form.get('pricePerKg')?.touched) {
