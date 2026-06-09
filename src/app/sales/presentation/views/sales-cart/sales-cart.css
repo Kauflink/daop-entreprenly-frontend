@@ -93,8 +93,14 @@
   gap: 8px;
 }
 
+.table-wrap {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
 .ticket-table {
   width: 100%;
+  min-width: 480px;
   border-collapse: collapse;
 }
 
@@ -156,4 +162,10 @@
 
 .delete-btn:hover {
   background: rgba(211, 47, 47, 0.12);
+}
+
+@media (max-width: 600px) {
+  .card {
+    padding: 16px;
+  }
 }
