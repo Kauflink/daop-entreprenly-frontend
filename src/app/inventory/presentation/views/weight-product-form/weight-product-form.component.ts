@@ -1,6 +1,7 @@
 import { Component, effect, inject, signal } from '@angular/core';
 import { FormBuilder, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { CurrencyService } from '../../../../shared/infrastructure/currency-service';
 import { InventoryStoreService } from '../../../application/inventory-store.service';
 import { WeightProduct } from '../../../domain/model/weight-product.entity';
 import { MatButtonModule } from '@angular/material/button';
@@ -23,6 +24,7 @@ export class WeightProductFormComponent {
   private route = inject(ActivatedRoute);
   private router = inject(Router);
   private store = inject(InventoryStoreService);
+  protected readonly currency = inject(CurrencyService);
 
   form = this.fb.group({
     name:        new FormControl<string>('', { nonNullable: true, validators: [Validators.required] }),

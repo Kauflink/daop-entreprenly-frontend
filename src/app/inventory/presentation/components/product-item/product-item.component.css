@@ -1,4 +1,4 @@
-:host { display: block; }
+:host { display: block; min-width: 760px; }
 
 .row {
   display: grid;
@@ -7,6 +7,8 @@
   padding: 14px 24px;
   border-bottom: 1px solid var(--color-card-border);
   transition: background 0.15s;
+  min-width: 760px;
+  box-sizing: border-box;
 }
 
 .row:hover { background: var(--color-inner-bg); }

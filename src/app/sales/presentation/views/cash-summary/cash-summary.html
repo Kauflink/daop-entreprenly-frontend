@@ -8,21 +8,21 @@
         <span class="material-icons widget-icon">receipt</span>
         {{ 'sales.register.totalDay' | translate }}
       </p>
-      <p class="widget-value">S/ {{ store.totalDay().toFixed(2) }}</p>
+      <p class="widget-value">{{ currency.format(store.totalDay()) }}</p>
     </div>
     <div class="cash-widget">
       <p class="widget-label">
         <span class="material-icons widget-icon">payments</span>
         {{ 'sales.register.cash' | translate }}
       </p>
-      <p class="widget-value">S/ {{ store.totalCash().toFixed(2) }}</p>
+      <p class="widget-value">{{ currency.format(store.totalCash()) }}</p>
     </div>
     <div class="cash-widget">
       <p class="widget-label">
         <span class="material-icons widget-icon">point_of_sale</span>
         {{ 'sales.register.digital' | translate }}
       </p>
-      <p class="widget-value">S/ {{ store.totalDigital().toFixed(2) }}</p>
+      <p class="widget-value">{{ currency.format(store.totalDigital()) }}</p>
     </div>
   </div>
 </section>
