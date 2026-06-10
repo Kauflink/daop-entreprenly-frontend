@@ -7,7 +7,6 @@ import { Conversation, ConversationStatus } from '../domain/model/conversation.e
 import { ChatMessage } from '../domain/model/chat-message.entity';
 import { WhatsappSession } from '../domain/model/whatsapp-session.entity';
 import { ChatOrder, OrderStatus } from '../domain/model/chat-order.entity';
-import { InventoryProduct } from '../domain/model/inventory-product.entity';
 
 @Injectable({ providedIn: 'root' })
 export class ChatbotStoreService {
@@ -40,7 +39,6 @@ export class ChatbotStoreService {
    */
   readonly liveAnimation = signal(false);
   readonly orders = signal<ChatOrder[]>([]);
-  readonly inventoryProducts = signal<InventoryProduct[]>([]);
 
   readonly selectedConversation = computed(() =>
     this.conversations().find(c => c.id === this.selectedConversationId()) ?? null,
@@ -73,12 +71,6 @@ export class ChatbotStoreService {
   loadOrders(): void {
     this.api.chatOrders.getAll().subscribe(orders => {
       this.orders.set(orders);
-    });
-  }
-
-  loadInventoryProducts(): void {
-    this.api.inventoryProducts.getAll().subscribe(products => {
-      this.inventoryProducts.set(products);
     });
   }
 
@@ -241,28 +233,6 @@ export class ChatbotStoreService {
 
     this.api.chatMessages.create(message).subscribe(created => {
       this.messages.update(msgs => [...msgs, created]);
-    });
-  }
-
-  simulateScan(): void {
-    const current = this.session();
-    if (!current) return;
-    const updated: WhatsappSession = {
-      ...current,
-      status: 'connected',
-      connectedAt: new Date().toLocaleString(this.locale),
-    };
-    this.api.whatsappSessions.update(updated, current.id).subscribe(session => {
-      this.session.set(session);
-    });
-  }
-
-  simulateDisconnect(): void {
-    const current = this.session();
-    if (!current) return;
-    const updated: WhatsappSession = { ...current, status: 'disconnected', connectedAt: undefined };
-    this.api.whatsappSessions.update(updated, current.id).subscribe(session => {
-      this.session.set(session);
     });
   }
 
