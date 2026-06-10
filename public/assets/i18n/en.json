@@ -658,7 +658,8 @@
     },
     "conversations": {
       "empty": "No conversations yet.\nYour clients' chats will appear here\nwhen the chatbot receives messages.",
-      "placeholder": "Send and receive messages without needing your phone connected"
+      "placeholder": "Send and receive messages without needing your phone connected",
+      "back": "Conversations"
     },
     "payment": {
       "pendingBar": "Pending payment — Order {{ orderNumber }}",

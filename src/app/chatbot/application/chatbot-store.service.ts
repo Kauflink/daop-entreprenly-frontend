@@ -33,6 +33,12 @@ export class ChatbotStoreService {
   readonly isClientTyping = signal(false);
   /** Texto que el bot va escribiendo letra a letra en la barra de input */
   readonly botInputText = signal('');
+  /**
+   * true mientras la conversación se reproduce "en vivo" (mensaje a mensaje).
+   * En conversaciones pasadas es false para que el historial aparezca de golpe,
+   * sin animar burbuja por burbuja (como abrir un chat de WhatsApp).
+   */
+  readonly liveAnimation = signal(false);
   readonly orders = signal<ChatOrder[]>([]);
   readonly inventoryProducts = signal<InventoryProduct[]>([]);
 
@@ -116,6 +122,15 @@ export class ChatbotStoreService {
 
   private _playId = 0;
 
+  /** Returns to the conversation list (used by the mobile master-detail back button). */
+  clearSelection(): void {
+    this._playId++;
+    this.selectedConversationId.set(null);
+    this.messages.set([]);
+    this.isClientTyping.set(false);
+    this.botInputText.set('');
+  }
+
   selectConversation(id: number): void {
     this._playId++;
     const playId = this._playId;
@@ -130,6 +145,7 @@ export class ChatbotStoreService {
       const msgs = all.filter(m => m.conversationId === id);
       const conversation = this.conversations().find(c => c.id === id);
       const isLive = conversation?.status === 'ACTIVE' || conversation?.status === 'WAITING_PAYMENT';
+      this.liveAnimation.set(isLive);
       if (isLive) {
         this._playConversation(msgs, playId);
       } else {

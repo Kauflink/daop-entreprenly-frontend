@@ -57,12 +57,12 @@ import { ChatOrder } from '../../../domain/model/chat-order.entity';
               </span>
             </div>
 
-            <div class="flex gap-6 px-6 pb-6">
+            <div class="flex flex-col gap-6 px-6 pb-6 sm:flex-row">
               @if (order.hasReceipt) {
                 <img
                   [src]="receiptUrl(order.total)"
                   [alt]="'chatbot.orders.receiptAlt' | translate"
-                  class="h-44 w-36 rounded-xl object-cover shadow-sm"
+                  class="h-44 w-36 self-center rounded-xl object-cover shadow-sm sm:self-start"
                 />
               }
 
@@ -136,7 +136,7 @@ import { ChatOrder } from '../../../domain/model/chat-order.entity';
                 </div>
 
                 @if (order.status === 'WAITING_PAYMENT' && order.hasReceipt) {
-                  <div class="flex gap-3">
+                  <div class="flex flex-wrap gap-3">
                     <button
                       type="button"
                       (click)="approve(order.id)"
