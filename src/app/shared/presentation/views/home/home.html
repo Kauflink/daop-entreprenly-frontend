@@ -90,7 +90,7 @@
     <!-- ══════════════════════════ ACCESOS RÁPIDOS ══════════════════════════ -->
     <nav [attr.aria-label]="'dashboard-home.quickLinksLabel' | translate">
       <p class="mb-3 text-xs text-gray-400">{{ 'dashboard-home.quickLinksHint' | translate }}</p>
-      <ul class="grid grid-cols-5 gap-3" role="list">
+      <ul class="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5" role="list">
         @for (link of quickLinks(); track link.route) {
           <li>
             <a
@@ -135,8 +135,8 @@
                 }
               </span>
 
-              <span class="text-xs font-semibold text-gray-800">{{ link.labelKey | translate }}</span>
-              <span class="text-[10px] text-gray-400">
+              <span class="w-full truncate text-xs font-semibold text-gray-800">{{ link.labelKey | translate }}</span>
+              <span class="w-full truncate text-[10px] text-gray-400">
                 {{ link.subtextDynamic || (link.subtextKey | translate) }}
               </span>
             </a>
@@ -294,7 +294,8 @@
             }
           } @else {
             <!-- Tabla de pedidos -->
-            <table class="w-full text-left" [attr.aria-label]="'dashboard-home.orders.title' | translate">
+            <div class="-mx-1 overflow-x-auto px-1">
+            <table class="w-full min-w-[360px] text-left" [attr.aria-label]="'dashboard-home.orders.title' | translate">
               <thead>
                 <tr class="border-b border-gray-100">
                   <th scope="col" class="pb-2 text-[10px] font-semibold uppercase tracking-wide text-gray-400">#</th>
@@ -342,6 +343,7 @@
                 }
               </tbody>
             </table>
+            </div>
 
             <!-- Mini resumen -->
             <div class="mt-4 grid grid-cols-2 gap-2 border-t border-gray-100 pt-4">
