@@ -38,12 +38,16 @@
 .left-column {
   display: flex;
   flex-direction: column;
+  /* min-width: 0 lets the column shrink below its content's intrinsic width so
+     the cart table scrolls inside its own card instead of widening the page. */
+  min-width: 0;
 }
 
 .right-column {
   display: flex;
   flex-direction: column;
   gap: 16px;
+  min-width: 0;
 }
 
 /* ===== CARD RESUMEN (queda en sales-page) ===== */
@@ -150,7 +154,7 @@
    viewport is wide enough for both the cart and the 380px summary aside. */
 @media (max-width: 1185px) {
   .main-layout {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
 }
 
