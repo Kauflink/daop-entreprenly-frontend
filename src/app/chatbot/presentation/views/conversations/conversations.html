@@ -1,7 +1,12 @@
-<div class="flex h-full flex-col p-6 pt-4">
+<div class="flex h-full flex-col p-3 pt-2 sm:p-6 sm:pt-4">
   <div class="flex flex-1 overflow-hidden rounded-2xl bg-white shadow-sm">
 
-    <div class="w-64 flex-shrink-0">
+    <!-- Conversation list: full width on mobile, hidden once a chat is open; fixed column on desktop -->
+    <div
+      class="flex-shrink-0 md:block md:w-64"
+      [class.hidden]="store.selectedConversationId() !== null"
+      [class.w-full]="store.selectedConversationId() === null"
+    >
       <app-conversation-list
         [conversations]="store.conversations()"
         [selectedId]="store.selectedConversationId()"
@@ -9,13 +14,31 @@
       />
     </div>
 
-    <div class="flex flex-1 flex-col border-l border-gray-200">
+    <!-- Chat panel: hidden on mobile until a chat is open; always visible on desktop -->
+    <div
+      class="flex-1 flex-col border-l border-gray-200 md:flex"
+      [class.hidden]="store.selectedConversationId() === null"
+      [class.flex]="store.selectedConversationId() !== null"
+    >
       @if (store.selectedConversation(); as conversation) {
+        <div class="flex items-center gap-2 border-b border-gray-100 px-3 py-2 md:hidden">
+          <button
+            type="button"
+            (click)="onBackToList()"
+            class="flex items-center gap-1 rounded-full px-2 py-1 text-sm font-medium text-orange-500 hover:bg-orange-50"
+            [attr.aria-label]="'chatbot.conversations.back' | translate"
+          >
+            <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+            </svg>
+            {{ 'chatbot.conversations.back' | translate }}
+          </button>
+        </div>
         <app-conversation-header [conversation]="conversation" />
 
         <div class="flex flex-1 flex-col gap-3 overflow-y-auto bg-gray-50 p-6" #messagesContainer>
           @for (message of store.messages(); track message.id) {
-            <div class="msg-animate">
+            <div [class.msg-animate]="store.liveAnimation()">
               <app-message-bubble
                 [message]="message"
                 [clientInitials]="conversation.clientName.split(' ')[0][0] + (conversation.clientName.split(' ')[1]?.[0] ?? '')"
