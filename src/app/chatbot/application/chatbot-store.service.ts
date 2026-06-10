@@ -86,8 +86,15 @@ export class ChatbotStoreService {
     this.api.getBridgeQrState().subscribe({
       next: state => {
         this.bridgeQr.set(state.qr);
+        // Bridge just connected while app shows disconnected → refresh session from DB.
         if (state.connected && this.session()?.status !== 'connected') {
           this.loadSession();
+        }
+        // Bridge lost connection and generated a new QR while app still shows connected
+        // (e.g. credentials expired, bridge restarted) → mark session as disconnected
+        // so the QR card is shown automatically.
+        if (state.qr && this.session()?.status === 'connected') {
+          this.simulateDisconnect();
         }
       },
       error: () => { /* bridge offline: keep showing the placeholder */ },
