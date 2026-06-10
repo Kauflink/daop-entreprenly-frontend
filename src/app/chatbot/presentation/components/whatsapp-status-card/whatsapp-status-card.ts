@@ -20,8 +20,8 @@ import { WhatsappSession } from '../../../domain/model/whatsapp-session.entity';
         <p class="mt-1 text-sm text-red-500">{{ 'chatbot.statusCard.expiredDetail' | translate }}</p>
       </div>
     }
-    <div class="rounded-2xl border border-gray-200 bg-white p-5">
-      <div class="flex items-start justify-between gap-4">
+    <div class="max-w-2xl rounded-2xl border border-gray-200 bg-white p-5">
+      <div class="flex flex-wrap items-start justify-between gap-4">
         <div class="flex flex-col gap-1">
           <p class="font-bold text-gray-900">{{ 'chatbot.statusCard.cardTitle' | translate }}</p>
           @if (session(); as s) {
