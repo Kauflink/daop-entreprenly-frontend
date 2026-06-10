@@ -94,6 +94,11 @@ export class Conversations implements OnInit {
     this.store.selectConversation(id);
   }
 
+  /** Mobile master-detail: go back from the open chat to the conversation list. */
+  protected onBackToList(): void {
+    this.store.clearSelection();
+  }
+
   protected onMessageSent(content: string): void {
     this.store.sendMessage(content);
   }
