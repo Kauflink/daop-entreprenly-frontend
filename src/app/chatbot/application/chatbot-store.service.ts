@@ -213,7 +213,7 @@ export class ChatbotStoreService {
     timer(words.length * msPerWord + 250).subscribe(() => {
       this.botInputText.set('');
       this.api.chatMessages.create(msg).subscribe(created => {
-        this.messages.update(m => [...m, created]);
+        this.messages.update(m => m.some(x => x.id === created.id) ? m : [...m, created]);
       });
     });
   }
@@ -232,7 +232,7 @@ export class ChatbotStoreService {
     };
 
     this.api.chatMessages.create(message).subscribe(created => {
-      this.messages.update(msgs => [...msgs, created]);
+      this.messages.update(msgs => msgs.some(x => x.id === created.id) ? msgs : [...msgs, created]);
     });
   }
 
@@ -258,7 +258,7 @@ export class ChatbotStoreService {
       };
 
       this.api.chatMessages.create(sysMsg).subscribe(created => {
-        this.messages.update(m => [...m, created]);
+        this.messages.update(m => m.some(x => x.id === created.id) ? m : [...m, created]);
         timer(400).subscribe(() => this._typewriteAndSend(botMsg));
       });
     });
@@ -306,7 +306,7 @@ export class ChatbotStoreService {
       };
 
       this.api.chatMessages.create(sysMsg).subscribe(created => {
-        this.messages.update(m => [...m, created]);
+        this.messages.update(m => m.some(x => x.id === created.id) ? m : [...m, created]);
         timer(400).subscribe(() => this._typewriteAndSend(botMsg));
       });
     });
