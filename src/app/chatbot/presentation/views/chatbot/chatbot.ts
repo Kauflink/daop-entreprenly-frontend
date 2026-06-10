@@ -33,12 +33,14 @@ export class Chatbot implements OnInit {
   }
 
   protected onScanned(): void {
-    this.store.simulateScan();
+    // Bridge already updated the session status on the backend — just reload it.
+    this.store.loadSession();
     this.justConnected.set(true);
   }
 
   protected onReconnect(): void {
-    this.store.simulateDisconnect();
+    // Refresh the session status from the backend.
+    this.store.loadSession();
     this.justConnected.set(false);
   }
 }
