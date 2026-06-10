@@ -188,6 +188,21 @@ export class ChatbotStoreService {
   }
 
   /**
+   * Marks the session as connected in the DB and updates the signal so the
+   * status card is shown. Called when QrConnectionCard reports that the bridge
+   * is authenticated (either after a real QR scan or because the bridge was
+   * already running when the QR card appeared).
+   */
+  markSessionConnected(): void {
+    const current = this.session();
+    if (!current || current.status === 'connected') return;
+    const updated: WhatsappSession = { ...current, status: 'connected' };
+    this.api.whatsappSessions.update(updated, current.id).subscribe(session => {
+      this.session.set(session);
+    });
+  }
+
+  /**
    * Marks the session as disconnected in the DB and updates the signal so the
    * QR card is shown. Used both by the manual "Disconnect" button and by the
    * background bridge-health check when unexpected disconnections are detected.
