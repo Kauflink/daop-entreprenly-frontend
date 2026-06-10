@@ -20,19 +20,21 @@ export class Chatbot implements OnInit {
 
   ngOnInit(): void {
     this.store.loadSession();
-    this.store.refreshBridgeQr();
-    // While not connected, keep refreshing the real QR and the link state so the
-    // dashboard unlocks automatically once the WhatsApp bridge pairs.
-    // Poll bridge state every 3 s regardless of session status so the app
-    // detects both new connections (shows dashboard) and unexpected disconnections
-    // (shows QR card automatically when the bridge loses its WhatsApp session).
-    interval(3000)
+
+    // Check bridge health every 10 s while the app shows "connected" so that
+    // unexpected disconnections (credentials expired, bridge restarted) are
+    // detected automatically and the QR card is shown without a page reload.
+    interval(10_000)
       .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe(() => this.store.refreshBridgeQr());
+      .subscribe(() => {
+        if (this.store.isConnected()) {
+          this.store.checkBridgeConnection();
+        }
+      });
   }
 
   protected onScanned(): void {
-    this.store.simulateScan();
+    this.store.loadSession();
     this.justConnected.set(true);
   }
 
