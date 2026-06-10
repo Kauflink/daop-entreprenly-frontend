@@ -43,11 +43,11 @@ import { ChatOrder } from '../../../domain/model/chat-order.entity';
             [class]="borderClass(order.status)">
 
             <div class="flex items-start justify-between gap-4 p-6 pb-4">
-              <div>
-                <h2 class="font-bold text-gray-900">
+              <div class="min-w-0">
+                <h2 class="truncate font-bold text-gray-900">
                   {{ order.orderNumber }} — {{ clientName(order) }}
                 </h2>
-                <p class="mt-0.5 text-sm text-gray-500">
+                <p class="mt-0.5 truncate text-sm text-gray-500">
                   {{ order.paymentMethod }} · S/{{ order.total.toFixed(2) }} · {{ formatDate(order.createdAt) }}
                 </p>
               </div>
@@ -57,12 +57,12 @@ import { ChatOrder } from '../../../domain/model/chat-order.entity';
               </span>
             </div>
 
-            <div class="flex flex-col gap-6 px-6 pb-6 sm:flex-row">
+            <div class="flex flex-col gap-6 overflow-hidden px-6 pb-6 md:flex-row">
               @if (order.receiptImage) {
                 <img
                   [src]="order.receiptImage"
                   [alt]="'chatbot.orders.receiptAlt' | translate"
-                  class="h-44 w-36 self-center rounded-xl object-cover shadow-sm sm:self-start"
+                  class="h-44 w-36 shrink-0 self-center rounded-xl object-cover shadow-sm md:self-start"
                 />
               }
 
