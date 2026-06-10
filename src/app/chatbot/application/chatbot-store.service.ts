@@ -109,7 +109,11 @@ export class ChatbotStoreService {
 
   private appendRealtimeMessage(message: ChatMessage): void {
     if (message.conversationId !== this.selectedConversationId()) return;
-    this.messages.update(list => (list.some(m => m.id === message.id) ? list : [...list, message]));
+    this.messages.update(list => {
+      if (list.some(m => m.id === message.id)) return list;
+      this.liveAnimation.set(true);
+      return [...list, message];
+    });
   }
 
   private _playId = 0;
@@ -131,73 +135,15 @@ export class ChatbotStoreService {
     this.messages.set([]);
     this.isClientTyping.set(false);
     this.botInputText.set('');
+    this.liveAnimation.set(false);
 
     this.api.chatMessages.getAll().subscribe(all => {
       if (this._playId !== playId) return;
       const msgs = all.filter(m => m.conversationId === id);
-      const conversation = this.conversations().find(c => c.id === id);
-      const isLive = conversation?.status === 'ACTIVE' || conversation?.status === 'WAITING_PAYMENT';
-      this.liveAnimation.set(isLive);
-      if (isLive) {
-        this._playConversation(msgs, playId);
-      } else {
-        this.messages.set(msgs);
-      }
+      // Always show history instantly — no replay animation.
+      // Real-time new messages arrive via SSE and are shown with liveAnimation.
+      this.messages.set(msgs);
     });
-  }
-
-  private _playConversation(msgs: ChatMessage[], playId: number): void {
-    let t = 0;
-
-    for (const msg of msgs) {
-      if (msg.sender === 'bot') {
-        // Escribe palabra a palabra en la barra de input, luego auto-envía
-        const words = msg.content.split(' ');
-        const msPerWord = 70;
-        const startAt = t;
-
-        for (let i = 0; i < words.length; i++) {
-          const partial = words.slice(0, i + 1).join(' ');
-          timer(startAt + i * msPerWord).subscribe(() => {
-            if (this._playId !== playId) return;
-            this.botInputText.set(partial);
-          });
-        }
-
-        const sendAt = startAt + words.length * msPerWord + 250;
-        timer(sendAt).subscribe(() => {
-          if (this._playId !== playId) return;
-          this.botInputText.set('');
-          this.messages.update(m => [...m, msg]);
-        });
-
-        t = sendAt + 400;
-
-      } else if (msg.sender === 'client') {
-        // Muestra ●●● en el lado del cliente (CF), luego aparece el mensaje
-        timer(t).subscribe(() => {
-          if (this._playId !== playId) return;
-          this.isClientTyping.set(true);
-        });
-
-        const showAt = t + 900;
-        timer(showAt).subscribe(() => {
-          if (this._playId !== playId) return;
-          this.isClientTyping.set(false);
-          this.messages.update(m => [...m, msg]);
-        });
-
-        t = showAt + 400;
-
-      } else {
-        // system
-        timer(t).subscribe(() => {
-          if (this._playId !== playId) return;
-          this.messages.update(m => [...m, msg]);
-        });
-        t += 400;
-      }
-    }
   }
 
   /** Escribe el mensaje del bot palabra a palabra en la barra y lo envía al terminar */
