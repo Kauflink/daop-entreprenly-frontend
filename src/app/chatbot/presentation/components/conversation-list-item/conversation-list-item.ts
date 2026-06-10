@@ -10,9 +10,9 @@ import { Conversation } from '../../../domain/model/conversation.entity';
       [class]="selected() ? 'bg-orange-50' : 'hover:bg-gray-50'"
       (click)="selected_conversation.emit(conversation().id)"
     >
-      <div class="flex items-start justify-between gap-2">
-        <p class="font-bold text-gray-900">{{ conversation().clientName }}</p>
-        <span class="shrink-0 text-xs text-gray-400">{{ conversation().lastMessageTime }}</span>
+      <div class="flex min-w-0 items-start justify-between gap-2">
+        <p class="min-w-0 truncate font-bold text-gray-900">{{ conversation().clientName }}</p>
+        <span class="shrink-0 whitespace-nowrap text-xs text-gray-400">{{ conversation().lastMessageTime }}</span>
       </div>
       <p class="mt-0.5 truncate text-sm text-gray-500">{{ conversation().lastMessage }}</p>
     </button>
