@@ -42,7 +42,9 @@
       "price": "Price",
       "byUnit": "Unit",
       "byWeight": "Weight",
-      "edit": "Edit"
+      "edit": "Edit",
+      "delete": "Delete",
+      "actions": "Actions"
     },
     "form": {
       "addTitle": "Add New Product",
@@ -658,7 +660,8 @@
     },
     "conversations": {
       "empty": "No conversations yet.\nYour clients' chats will appear here\nwhen the chatbot receives messages.",
-      "placeholder": "Send and receive messages without needing your phone connected"
+      "placeholder": "Send and receive messages without needing your phone connected",
+      "back": "Conversations"
     },
     "payment": {
       "pendingBar": "Pending payment — Order {{ orderNumber }}",
@@ -682,6 +685,7 @@
       "empty": "No orders registered yet",
       "goToConversations": "View conversations →",
       "receiptAlt": "Payment receipt",
+      "clientFallback": "Customer",
       "delivery": "Delivery:",
       "total": "Total",
       "traceability": "Traceability",
@@ -709,16 +713,10 @@
       }
     },
     "qr": {
-      "expiredTitle": "QR code expired — linking not completed",
-      "expiredDetail": "The QR code was not scanned within the time limit. The previous code was automatically discarded and a new one was generated. Scan the new code to complete the linking.",
-      "newCode": "New code generated",
       "linkTitle": "Link WhatsApp Business",
-      "scanInstruction": "Scan the QR code from your app",
+      "scanInstruction": "Scan the QR code from your WhatsApp app",
       "alt": "QR code to link WhatsApp Business",
-      "generating": "Generating new code...",
-      "expiresIn": "Code expires in {{ seconds }} seconds",
-      "expiresInOne": "Code expires in {{ seconds }} second",
-      "simulateScan": "Simulate scan"
+      "waitingForBridge": "Waiting for bridge code..."
     },
     "statusCard": {
       "connectedTitle": "Account linked successfully",
@@ -870,6 +868,8 @@
     "subtitle": "Search for articles, guides and quick answers for your business.",
     "searchPlaceholder": "Search an article, problem or feature…",
     "searchBtn": "Search",
+    "backToHome": "Back to home",
+    "back": "Back",
     "backBtn": "Cancel",
     "popular": "View all",
     "allArticles": "All articles",

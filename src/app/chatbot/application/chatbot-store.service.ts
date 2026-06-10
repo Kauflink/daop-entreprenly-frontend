@@ -1,17 +1,26 @@
 import { Injectable, inject, signal, computed } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import { timer } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 import { ChatbotApiService } from '../infrastructure/chatbot-api.service';
+import { ChatbotStreamService } from '../infrastructure/chatbot-stream.service';
 import { Conversation, ConversationStatus } from '../domain/model/conversation.entity';
 import { ChatMessage } from '../domain/model/chat-message.entity';
 import { WhatsappSession } from '../domain/model/whatsapp-session.entity';
 import { ChatOrder, OrderStatus } from '../domain/model/chat-order.entity';
-import { InventoryProduct } from '../domain/model/inventory-product.entity';
+import { environment } from '../../../environments/environment';
+
+interface BridgeQrState { qr: string | null; connected: boolean; }
 
 @Injectable({ providedIn: 'root' })
 export class ChatbotStoreService {
   private api       = inject(ChatbotApiService);
+  private stream    = inject(ChatbotStreamService);
   private translate = inject(TranslateService);
+  private http      = inject(HttpClient);
+
+  /** Guards against opening more than one realtime stream across views. */
+  private realtimeConnected = false;
 
   /** Locale del idioma activo para formatear fechas */
   private get locale(): string {
@@ -28,8 +37,13 @@ export class ChatbotStoreService {
   readonly isClientTyping = signal(false);
   /** Texto que el bot va escribiendo letra a letra en la barra de input */
   readonly botInputText = signal('');
+  /**
+   * true mientras la conversación se reproduce "en vivo" (mensaje a mensaje).
+   * En conversaciones pasadas es false para que el historial aparezca de golpe,
+   * sin animar burbuja por burbuja (como abrir un chat de WhatsApp).
+   */
+  readonly liveAnimation = signal(false);
   readonly orders = signal<ChatOrder[]>([]);
-  readonly inventoryProducts = signal<InventoryProduct[]>([]);
 
   readonly selectedConversation = computed(() =>
     this.conversations().find(c => c.id === this.selectedConversationId()) ?? null,
@@ -65,13 +79,58 @@ export class ChatbotStoreService {
     });
   }
 
-  loadInventoryProducts(): void {
-    this.api.inventoryProducts.getAll().subscribe(products => {
-      this.inventoryProducts.set(products);
+  /**
+   * Subscribes to the backend realtime stream so conversations, orders and
+   * messages update immediately. Idempotent: safe to call from several views.
+   */
+  connectRealtime(): void {
+    if (this.realtimeConnected) return;
+    this.realtimeConnected = true;
+    this.stream.connect();
+    this.stream.conversations$.subscribe(conversation => this.upsertConversation(conversation));
+    this.stream.orders$.subscribe(order => this.upsertOrder(order));
+    this.stream.messages$.subscribe(message => this.appendRealtimeMessage(message));
+  }
+
+  private upsertConversation(conversation: Conversation): void {
+    this.conversations.update(list => {
+      const index = list.findIndex(c => c.id === conversation.id);
+      if (index === -1) return [conversation, ...list];
+      const next = [...list];
+      next[index] = conversation;
+      return next;
+    });
+  }
+
+  private upsertOrder(order: ChatOrder): void {
+    this.orders.update(list => {
+      const index = list.findIndex(o => o.id === order.id);
+      if (index === -1) return [...list, order];
+      const next = [...list];
+      next[index] = order;
+      return next;
+    });
+  }
+
+  private appendRealtimeMessage(message: ChatMessage): void {
+    if (message.conversationId !== this.selectedConversationId()) return;
+    this.messages.update(list => {
+      if (list.some(m => m.id === message.id)) return list;
+      this.liveAnimation.set(true);
+      return [...list, message];
     });
   }
 
   private _playId = 0;
+
+  /** Returns to the conversation list (used by the mobile master-detail back button). */
+  clearSelection(): void {
+    this._playId++;
+    this.selectedConversationId.set(null);
+    this.messages.set([]);
+    this.isClientTyping.set(false);
+    this.botInputText.set('');
+  }
 
   selectConversation(id: number): void {
     this._playId++;
@@ -81,72 +140,15 @@ export class ChatbotStoreService {
     this.messages.set([]);
     this.isClientTyping.set(false);
     this.botInputText.set('');
+    this.liveAnimation.set(false);
 
     this.api.chatMessages.getAll().subscribe(all => {
       if (this._playId !== playId) return;
       const msgs = all.filter(m => m.conversationId === id);
-      const conversation = this.conversations().find(c => c.id === id);
-      const isLive = conversation?.status === 'ACTIVE' || conversation?.status === 'WAITING_PAYMENT';
-      if (isLive) {
-        this._playConversation(msgs, playId);
-      } else {
-        this.messages.set(msgs);
-      }
+      // Always show history instantly — no replay animation.
+      // Real-time new messages arrive via SSE and are shown with liveAnimation.
+      this.messages.set(msgs);
     });
-  }
-
-  private _playConversation(msgs: ChatMessage[], playId: number): void {
-    let t = 0;
-
-    for (const msg of msgs) {
-      if (msg.sender === 'bot') {
-        // Escribe palabra a palabra en la barra de input, luego auto-envía
-        const words = msg.content.split(' ');
-        const msPerWord = 70;
-        const startAt = t;
-
-        for (let i = 0; i < words.length; i++) {
-          const partial = words.slice(0, i + 1).join(' ');
-          timer(startAt + i * msPerWord).subscribe(() => {
-            if (this._playId !== playId) return;
-            this.botInputText.set(partial);
-          });
-        }
-
-        const sendAt = startAt + words.length * msPerWord + 250;
-        timer(sendAt).subscribe(() => {
-          if (this._playId !== playId) return;
-          this.botInputText.set('');
-          this.messages.update(m => [...m, msg]);
-        });
-
-        t = sendAt + 400;
-
-      } else if (msg.sender === 'client') {
-        // Muestra ●●● en el lado del cliente (CF), luego aparece el mensaje
-        timer(t).subscribe(() => {
-          if (this._playId !== playId) return;
-          this.isClientTyping.set(true);
-        });
-
-        const showAt = t + 900;
-        timer(showAt).subscribe(() => {
-          if (this._playId !== playId) return;
-          this.isClientTyping.set(false);
-          this.messages.update(m => [...m, msg]);
-        });
-
-        t = showAt + 400;
-
-      } else {
-        // system
-        timer(t).subscribe(() => {
-          if (this._playId !== playId) return;
-          this.messages.update(m => [...m, msg]);
-        });
-        t += 400;
-      }
-    }
   }
 
   /** Escribe el mensaje del bot palabra a palabra en la barra y lo envía al terminar */
@@ -162,7 +164,7 @@ export class ChatbotStoreService {
     timer(words.length * msPerWord + 250).subscribe(() => {
       this.botInputText.set('');
       this.api.chatMessages.create(msg).subscribe(created => {
-        this.messages.update(m => [...m, created]);
+        this.messages.update(m => m.some(x => x.id === created.id) ? m : [...m, created]);
       });
     });
   }
@@ -181,29 +183,53 @@ export class ChatbotStoreService {
     };
 
     this.api.chatMessages.create(message).subscribe(created => {
-      this.messages.update(msgs => [...msgs, created]);
+      this.messages.update(msgs => msgs.some(x => x.id === created.id) ? msgs : [...msgs, created]);
     });
   }
 
-  simulateScan(): void {
+  /**
+   * Marks the session as connected in the DB and updates the signal so the
+   * status card is shown. Called when QrConnectionCard reports that the bridge
+   * is authenticated (either after a real QR scan or because the bridge was
+   * already running when the QR card appeared).
+   */
+  markSessionConnected(): void {
     const current = this.session();
-    if (!current) return;
-    const updated: WhatsappSession = {
-      ...current,
-      status: 'connected',
-      connectedAt: new Date().toLocaleString(this.locale),
-    };
+    if (!current || current.status === 'connected') return;
+    const updated: WhatsappSession = { ...current, status: 'connected' };
     this.api.whatsappSessions.update(updated, current.id).subscribe(session => {
       this.session.set(session);
     });
   }
 
+  /**
+   * Marks the session as disconnected in the DB and updates the signal so the
+   * QR card is shown. Used both by the manual "Disconnect" button and by the
+   * background bridge-health check when unexpected disconnections are detected.
+   */
   simulateDisconnect(): void {
     const current = this.session();
     if (!current) return;
     const updated: WhatsappSession = { ...current, status: 'disconnected', connectedAt: undefined };
     this.api.whatsappSessions.update(updated, current.id).subscribe(session => {
       this.session.set(session);
+    });
+  }
+
+  /**
+   * Polls the bridge QR state once. If the bridge generated a new QR while the
+   * app still shows "connected" (unexpected disconnection: credentials expired,
+   * bridge restarted), marks the session as disconnected so the QR card appears.
+   */
+  checkBridgeConnection(): void {
+    const url = `${environment.entreprenlyProviderApiBaseUrl}/chatbot/whatsapp/bridge/qr`;
+    this.http.get<BridgeQrState>(url).subscribe({
+      next: state => {
+        if (state.qr && this.session()?.status === 'connected') {
+          this.simulateDisconnect();
+        }
+      },
+      error: () => { /* bridge offline — keep current state */ },
     });
   }
 
@@ -229,7 +255,7 @@ export class ChatbotStoreService {
       };
 
       this.api.chatMessages.create(sysMsg).subscribe(created => {
-        this.messages.update(m => [...m, created]);
+        this.messages.update(m => m.some(x => x.id === created.id) ? m : [...m, created]);
         timer(400).subscribe(() => this._typewriteAndSend(botMsg));
       });
     });
@@ -277,7 +303,7 @@ export class ChatbotStoreService {
       };
 
       this.api.chatMessages.create(sysMsg).subscribe(created => {
-        this.messages.update(m => [...m, created]);
+        this.messages.update(m => m.some(x => x.id === created.id) ? m : [...m, created]);
         timer(400).subscribe(() => this._typewriteAndSend(botMsg));
       });
     });

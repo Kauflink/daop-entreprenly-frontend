@@ -12,6 +12,7 @@ import { ChatInput } from '../../components/chat-input/chat-input';
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [ConversationList, ConversationHeader, MessageBubble, ChatInput, TranslatePipe],
   templateUrl: './conversations.html',
+  styleUrl: './conversations.css',
 })
 export class Conversations implements OnInit {
   protected readonly store = inject(ChatbotStoreService);
@@ -61,6 +62,7 @@ export class Conversations implements OnInit {
     this.store.loadSession();
     this.store.loadConversations();
     this.store.loadOrders();
+    this.store.connectRealtime();
   }
 
   protected onApprove(): void {
@@ -91,6 +93,11 @@ export class Conversations implements OnInit {
 
   protected onConversationSelected(id: number): void {
     this.store.selectConversation(id);
+  }
+
+  /** Mobile master-detail: go back from the open chat to the conversation list. */
+  protected onBackToList(): void {
+    this.store.clearSelection();
   }
 
   protected onMessageSent(content: string): void {

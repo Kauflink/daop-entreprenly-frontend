@@ -55,13 +55,22 @@
 .table-card {
   background: var(--color-card-bg);
   border-radius: 18px;
-  overflow: hidden;
+  /* Scroll horizontally whenever the container is narrower than the table,
+     regardless of viewport width (e.g. narrow content area beside the sidebar). */
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
   box-shadow: 0 2px 16px rgba(0,0,0,0.07);
+}
+
+/* Keep the columns readable: the table never shrinks below this, it scrolls instead. */
+.table-head,
+.table-body {
+  min-width: 760px;
 }
 
 .table-head {
   display: grid;
-  grid-template-columns: 110px 1fr 1fr 90px 100px 90px 60px;
+  grid-template-columns: 110px 1fr 1fr 90px 100px 90px 96px;
   padding: 14px 24px;
   border-bottom: 1px solid var(--color-card-border);
   font-size: 13px;
@@ -69,14 +78,37 @@
   color: var(--color-text-muted);
 }
 
-.col-qr    { text-align: center; }
-.col-stock { text-align: center; }
-.col-price { text-align: center; }
-.col-edit  { text-align: center; }
+.col-qr      { text-align: center; }
+.col-stock   { text-align: center; }
+.col-price   { text-align: center; }
+.col-actions { text-align: center; }
 
 .empty-state {
   text-align: center;
   padding: 48px;
   color: var(--color-text-muted);
   font-size: 14px;
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 768px) {
+  .page {
+    padding: 24px 16px;
+  }
+
+  .page-header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 16px;
+  }
+
+  .btn-add {
+    align-self: flex-start;
+  }
+}
+
+@media (max-width: 480px) {
+  .page-title {
+    font-size: 24px;
+  }
 }

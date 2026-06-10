@@ -41,6 +41,7 @@
     }
   </div>
 
+  <div class="table-wrap">
   <table class="ticket-table">
     <thead>
       <tr>
@@ -75,8 +76,8 @@
           {{ item.weightKg }} {{ 'sales.ticket.kg' | translate }}
           }
         </td>
-        <td>S/ {{ item.unitPrice.toFixed(2) }}</td>
-        <td>S/ {{ item.subtotal.toFixed(2) }}</td>
+        <td>{{ currency.format(item.unitPrice) }}</td>
+        <td>{{ currency.format(item.subtotal) }}</td>
         <td>
           <button class="delete-btn" (click)="itemDeleted.emit(i)">🗑</button>
         </td>
@@ -85,4 +86,5 @@
       }
     </tbody>
   </table>
+  </div>
 </section>
