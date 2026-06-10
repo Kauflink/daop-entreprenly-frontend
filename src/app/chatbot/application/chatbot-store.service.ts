@@ -7,7 +7,6 @@ import { Conversation, ConversationStatus } from '../domain/model/conversation.e
 import { ChatMessage } from '../domain/model/chat-message.entity';
 import { WhatsappSession } from '../domain/model/whatsapp-session.entity';
 import { ChatOrder, OrderStatus } from '../domain/model/chat-order.entity';
-import { InventoryProduct } from '../domain/model/inventory-product.entity';
 
 @Injectable({ providedIn: 'root' })
 export class ChatbotStoreService {
@@ -33,10 +32,13 @@ export class ChatbotStoreService {
   readonly isClientTyping = signal(false);
   /** Texto que el bot va escribiendo letra a letra en la barra de input */
   readonly botInputText = signal('');
+  /**
+   * true mientras la conversación se reproduce "en vivo" (mensaje a mensaje).
+   * En conversaciones pasadas es false para que el historial aparezca de golpe,
+   * sin animar burbuja por burbuja (como abrir un chat de WhatsApp).
+   */
+  readonly liveAnimation = signal(false);
   readonly orders = signal<ChatOrder[]>([]);
-  readonly inventoryProducts = signal<InventoryProduct[]>([]);
-  /** Real WhatsApp pairing QR relayed by the bridge (null until one is available). */
-  readonly bridgeQr = signal<string | null>(null);
 
   readonly selectedConversation = computed(() =>
     this.conversations().find(c => c.id === this.selectedConversationId()) ?? null,
@@ -69,28 +71,6 @@ export class ChatbotStoreService {
   loadOrders(): void {
     this.api.chatOrders.getAll().subscribe(orders => {
       this.orders.set(orders);
-    });
-  }
-
-  loadInventoryProducts(): void {
-    this.api.inventoryProducts.getAll().subscribe(products => {
-      this.inventoryProducts.set(products);
-    });
-  }
-
-  /**
-   * Pulls the real WhatsApp pairing QR (and link state) from the backend bridge.
-   * When the bridge reports connected, refreshes the session so the dashboard unlocks.
-   */
-  refreshBridgeQr(): void {
-    this.api.getBridgeQrState().subscribe({
-      next: state => {
-        this.bridgeQr.set(state.qr);
-        if (state.connected && this.session()?.status !== 'connected') {
-          this.loadSession();
-        }
-      },
-      error: () => { /* bridge offline: keep showing the placeholder */ },
     });
   }
 
@@ -134,6 +114,15 @@ export class ChatbotStoreService {
 
   private _playId = 0;
 
+  /** Returns to the conversation list (used by the mobile master-detail back button). */
+  clearSelection(): void {
+    this._playId++;
+    this.selectedConversationId.set(null);
+    this.messages.set([]);
+    this.isClientTyping.set(false);
+    this.botInputText.set('');
+  }
+
   selectConversation(id: number): void {
     this._playId++;
     const playId = this._playId;
@@ -148,6 +137,7 @@ export class ChatbotStoreService {
       const msgs = all.filter(m => m.conversationId === id);
       const conversation = this.conversations().find(c => c.id === id);
       const isLive = conversation?.status === 'ACTIVE' || conversation?.status === 'WAITING_PAYMENT';
+      this.liveAnimation.set(isLive);
       if (isLive) {
         this._playConversation(msgs, playId);
       } else {
@@ -223,7 +213,7 @@ export class ChatbotStoreService {
     timer(words.length * msPerWord + 250).subscribe(() => {
       this.botInputText.set('');
       this.api.chatMessages.create(msg).subscribe(created => {
-        this.messages.update(m => [...m, created]);
+        this.messages.update(m => m.some(x => x.id === created.id) ? m : [...m, created]);
       });
     });
   }
@@ -242,29 +232,7 @@ export class ChatbotStoreService {
     };
 
     this.api.chatMessages.create(message).subscribe(created => {
-      this.messages.update(msgs => [...msgs, created]);
-    });
-  }
-
-  simulateScan(): void {
-    const current = this.session();
-    if (!current) return;
-    const updated: WhatsappSession = {
-      ...current,
-      status: 'connected',
-      connectedAt: new Date().toLocaleString(this.locale),
-    };
-    this.api.whatsappSessions.update(updated, current.id).subscribe(session => {
-      this.session.set(session);
-    });
-  }
-
-  simulateDisconnect(): void {
-    const current = this.session();
-    if (!current) return;
-    const updated: WhatsappSession = { ...current, status: 'disconnected', connectedAt: undefined };
-    this.api.whatsappSessions.update(updated, current.id).subscribe(session => {
-      this.session.set(session);
+      this.messages.update(msgs => msgs.some(x => x.id === created.id) ? msgs : [...msgs, created]);
     });
   }
 
@@ -290,7 +258,7 @@ export class ChatbotStoreService {
       };
 
       this.api.chatMessages.create(sysMsg).subscribe(created => {
-        this.messages.update(m => [...m, created]);
+        this.messages.update(m => m.some(x => x.id === created.id) ? m : [...m, created]);
         timer(400).subscribe(() => this._typewriteAndSend(botMsg));
       });
     });
@@ -338,7 +306,7 @@ export class ChatbotStoreService {
       };
 
       this.api.chatMessages.create(sysMsg).subscribe(created => {
-        this.messages.update(m => [...m, created]);
+        this.messages.update(m => m.some(x => x.id === created.id) ? m : [...m, created]);
         timer(400).subscribe(() => this._typewriteAndSend(botMsg));
       });
     });
