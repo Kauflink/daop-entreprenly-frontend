@@ -42,7 +42,9 @@
       "price": "Precio",
       "byUnit": "Unidad",
       "byWeight": "Peso",
-      "edit": "Editar"
+      "edit": "Editar",
+      "delete": "Eliminar",
+      "actions": "Acciones"
     },
     "form": {
       "addTitle": "Agregar Nuevo Producto",
@@ -667,7 +669,8 @@
     },
     "conversations": {
       "empty": "Aún no hay conversaciones.\nLos chats de tus clientes aparecerán aquí\ncuando el chatbot reciba mensajes.",
-      "placeholder": "Envía y recibe mensajes sin necesidad de tener tu teléfono conectado"
+      "placeholder": "Envía y recibe mensajes sin necesidad de tener tu teléfono conectado",
+      "back": "Conversaciones"
     },
     "payment": {
       "pendingBar": "Pago pendiente — Pedido {{ orderNumber }}",
@@ -691,6 +694,7 @@
       "empty": "No hay pedidos registrados aún",
       "goToConversations": "Ver conversaciones →",
       "receiptAlt": "Comprobante de pago",
+      "clientFallback": "Cliente",
       "delivery": "Entrega:",
       "total": "Total",
       "traceability": "Trazabilidad",
@@ -718,16 +722,10 @@
       }
     },
     "qr": {
-      "expiredTitle": "Código QR expirado — vinculación no completada",
-      "expiredDetail": "El código QR no fue escaneado en el tiempo límite. El código anterior fue descartado automáticamente y se generó uno nuevo. Escanea el nuevo código para completar la vinculación.",
-      "newCode": "Nuevo código generado",
       "linkTitle": "Vincular WhatsApp Business",
-      "scanInstruction": "Escanea el código QR desde tu app",
+      "scanInstruction": "Escanea el código QR desde tu app de WhatsApp",
       "alt": "Código QR para vincular WhatsApp Business",
-      "generating": "Generando nuevo código...",
-      "expiresIn": "El código expira en {{ seconds }} segundos",
-      "expiresInOne": "El código expira en {{ seconds }} segundo",
-      "simulateScan": "Simular escaneo"
+      "waitingForBridge": "Esperando código del bridge..."
     },
     "statusCard": {
       "connectedTitle": "Cuenta vinculada correctamente",
@@ -879,6 +877,8 @@
     "subtitle": "Busca artículos, guías y respuestas rápidas para tu negocio.",
     "searchPlaceholder": "Busca un artículo, problema o función…",
     "searchBtn": "Buscar",
+    "backToHome": "Volver al inicio",
+    "back": "Volver",
     "backBtn": "Cancelar",
     "popular": "Ver todos",
     "allArticles": "Todos los artículos",

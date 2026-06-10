@@ -1,6 +1,8 @@
 export const environment = {
   production: false,
-  entreprenlyProviderApiBaseUrl: 'http://localhost:3000/api/v1',
+  entreprenlyProviderApiBaseUrl: 'http://localhost:8092/api/v1',
+  entreprenlyProviderAuthEndpointPath: '/authentication',
+  entreprenlyProviderProfilesEndpointPath: '/profiles',
   entreprenlyProviderSalesEndpointPath: '/sales',
   entreprenlyProviderProfileEndpointPath: '/profile',
   entreprenlyProviderSalesProductsEndpointPath: '/sales-products',
@@ -19,4 +21,6 @@ export const environment = {
   entreprenlyProviderChatMessagesEndpointPath: '/chat-messages',
   entreprenlyProviderConversationsEndpointPath: '/conversations',
   entreprenlyProviderWhatsappSessionsEndpointPath: '/whatsapp-sessions',
+  entreprenlyProviderChatbotStreamEndpointPath: '/chatbot/stream',
+  entreprenlyProviderChatbotBridgeQrEndpointPath: '/chatbot/whatsapp/bridge/qr',
 };

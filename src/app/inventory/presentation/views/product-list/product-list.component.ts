@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { TranslatePipe } from '@ngx-translate/core';
 
+import { CurrencyService } from '../../../../shared/infrastructure/currency-service';
 import { InventoryStoreService } from '../../../application/inventory-store.service';
 import { UnitProduct } from '../../../domain/model/unit-product.entity';
 import { WeightProduct } from '../../../domain/model/weight-product.entity';
@@ -26,6 +27,7 @@ export class ProductListComponent {
   readonly store = inject(InventoryStoreService);
   readonly router = inject(Router);
   readonly route  = inject(ActivatedRoute);
+  private readonly currency = inject(CurrencyService);
 
   readonly allProducts = computed<ProductRow[]>(() => {
     const units: ProductRow[] = this.store.unitProducts().map((p: UnitProduct) => ({
@@ -38,7 +40,7 @@ export class ProductListComponent {
       stock: this.store.unitLots()
         .filter(l => l.productId === p.id)
         .reduce((acc, l) => acc + l.quantity, 0),
-      price: `$${p.price.toFixed(2)}`,
+      price: this.currency.format(p.price),
       raw: p
     }));
 
@@ -52,7 +54,7 @@ export class ProductListComponent {
       stock: this.store.weightLots()
         .filter(l => l.productId === p.id)
         .reduce((acc, l) => acc + l.quantityKg, 0),
-      price: `$${p.pricePerKg.toFixed(2)}/Kg`,
+      price: `${this.currency.format(p.pricePerKg)}/Kg`,
       raw: p
     }));
 
@@ -69,5 +71,13 @@ export class ProductListComponent {
       : ['/dashboard/inventory/products/weight-edit', row.id];
 
     this.router.navigate(path);
+  }
+
+  onDelete(row: ProductRow): void {
+    if (row.type === 'unit') {
+      this.store.deleteUnitProduct(row.id);
+    } else {
+      this.store.deleteWeightProduct(row.id);
+    }
   }
 }

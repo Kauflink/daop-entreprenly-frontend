@@ -19,4 +19,6 @@ export interface ChatOrder extends BaseEntity {
   hasReceipt: boolean;
   rejectionCount: number;
   createdAt: string;
+  /** Payment receipt image sent by the client (data URL), when available. */
+  receiptImage?: string;
 }

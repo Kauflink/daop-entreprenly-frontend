@@ -1,6 +1,7 @@
-import { ChangeDetectionStrategy, Component, computed, input, output, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, input, output, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { TranslatePipe } from '@ngx-translate/core';
+import { CurrencyService } from '../../../../shared/infrastructure/currency-service';
 import { ProductSummary } from '../../../domain/model/product-summary.entity';
 
 export interface TicketItem {
@@ -21,6 +22,8 @@ export interface TicketItem {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SalesCart {
+  protected readonly currency = inject(CurrencyService);
+
   readonly ticketItems = input.required<TicketItem[]>();
   readonly showEmptyError = input<boolean>(false);
   readonly products = input.required<ProductSummary[]>();

@@ -43,11 +43,11 @@ import { ChatOrder } from '../../../domain/model/chat-order.entity';
             [class]="borderClass(order.status)">
 
             <div class="flex items-start justify-between gap-4 p-6 pb-4">
-              <div>
-                <h2 class="font-bold text-gray-900">
+              <div class="min-w-0">
+                <h2 class="truncate font-bold text-gray-900">
                   {{ order.orderNumber }} — {{ clientName(order) }}
                 </h2>
-                <p class="mt-0.5 text-sm text-gray-500">
+                <p class="mt-0.5 truncate text-sm text-gray-500">
                   {{ order.paymentMethod }} · S/{{ order.total.toFixed(2) }} · {{ formatDate(order.createdAt) }}
                 </p>
               </div>
@@ -57,12 +57,12 @@ import { ChatOrder } from '../../../domain/model/chat-order.entity';
               </span>
             </div>
 
-            <div class="flex gap-6 px-6 pb-6">
-              @if (order.hasReceipt) {
+            <div class="flex flex-col gap-6 overflow-hidden px-6 pb-6 md:flex-row">
+              @if (order.receiptImage) {
                 <img
-                  [src]="receiptUrl(order.total)"
+                  [src]="order.receiptImage"
                   [alt]="'chatbot.orders.receiptAlt' | translate"
-                  class="h-44 w-36 rounded-xl object-cover shadow-sm"
+                  class="h-44 w-36 shrink-0 self-center rounded-xl object-cover shadow-sm md:self-start"
                 />
               }
 
@@ -136,7 +136,7 @@ import { ChatOrder } from '../../../domain/model/chat-order.entity';
                 </div>
 
                 @if (order.status === 'WAITING_PAYMENT' && order.hasReceipt) {
-                  <div class="flex gap-3">
+                  <div class="flex flex-wrap gap-3">
                     <button
                       type="button"
                       (click)="approve(order.id)"
@@ -184,19 +184,18 @@ export class Orders implements OnInit {
     this.store.loadSession();
     this.store.loadOrders();
     this.store.loadConversations();
-    this.store.loadInventoryProducts();
-  }
-
-  protected receiptUrl(total: number): string {
-    return `/assets/comprobante-${total.toFixed(2)}.svg`;
+    this.store.connectRealtime();
   }
 
   protected clientName(order: ChatOrder): string {
-    return this.store.conversations().find(c => c.id === order.conversationId)?.clientName ?? 'Cliente';
+    return (
+      this.store.conversations().find(c => c.id === order.conversationId)?.clientName ??
+      this.translate.instant('chatbot.orders.clientFallback')
+    );
   }
 
   protected formatDate(dateStr: string): string {
-    const lang   = this.translate.currentLang ?? this.translate.defaultLang ?? 'es';
+    const lang = this.translate.currentLang ?? this.translate.defaultLang ?? 'es';
     const locale = lang === 'en' ? 'en-US' : 'es-PE';
     return new Date(dateStr).toLocaleString(locale, {
       day: '2-digit', month: '2-digit', year: 'numeric',

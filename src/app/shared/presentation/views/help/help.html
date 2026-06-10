@@ -98,11 +98,12 @@
             <h2 id="categories-heading" class="mb-3 text-sm font-semibold text-gray-700">
               {{ 'dashboard-help.exploreByCategory' | translate }}
             </h2>
-            <div class="grid grid-cols-3 gap-3">
+            <div class="grid grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-3">
               @for (cat of categories; track cat.id) {
                 <button
                   type="button"
-                  class="flex items-center gap-3 rounded-xl border border-gray-100 bg-white px-4 py-3 text-left shadow-sm transition-shadow hover:shadow-md"
+                  (click)="onSelectCategory(cat.id)"
+                  class="flex items-center gap-3 rounded-xl border border-gray-100 bg-white px-4 py-3 text-left shadow-sm transition-shadow hover:shadow-md hover:border-orange-200 cursor-pointer"
                 >
                   <span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl" [class]="categoryBg(cat.id)" aria-hidden="true">
                     @if (cat.id === 'inventario') {
@@ -198,6 +199,10 @@
   @if (view() === 'results') {
     <div class="mx-auto max-w-5xl flex flex-col gap-4">
 
+      <button type="button" (click)="onBackToHome()"
+        class="self-start text-sm font-medium text-orange-500 hover:underline">
+        ← {{ 'dashboard-help.backToHome' | translate }}
+      </button>
       <h1 class="text-2xl font-bold text-gray-900">{{ 'dashboard-help.title' | translate }}</h1>
 
       <!-- Search bar -->
@@ -225,7 +230,7 @@
       <p class="text-sm text-gray-500" aria-live="polite">
         <strong class="text-gray-800">{{ searchResults().length }}</strong>
         {{ 'dashboard-help.results.count_other' | translate: { count: searchResults().length } }}
-        "<strong class="text-orange-500">{{ searchQuery() }}</strong>"
+        "<strong class="text-orange-500">{{ selectedCategoryId() ? selectedCategoryName() : searchQuery() }}</strong>"
       </p>
 
       @if (searchResults().length > 0) {
@@ -414,12 +419,23 @@
     @if (selectedArticle(); as article) {
       <div class="mx-auto max-w-5xl flex flex-col gap-4">
 
+        <button type="button" (click)="onBackFromArticle()"
+          class="self-start text-sm font-medium text-orange-500 hover:underline">
+          ← {{ 'dashboard-help.back' | translate }}
+        </button>
+
         <!-- Breadcrumb -->
         <nav aria-label="breadcrumb">
           <ol class="flex items-center gap-1.5 text-sm" role="list">
             <li>
               <button type="button" (click)="onBackToHome()" class="text-orange-500 hover:underline">
-                ← {{ article.categoryKey | translate }}
+                {{ 'dashboard-help.title' | translate }}
+              </button>
+            </li>
+            <li aria-hidden="true"><span class="text-gray-300">›</span></li>
+            <li>
+              <button type="button" (click)="onSelectCategory(article.categoryId)" class="text-orange-500 hover:underline">
+                {{ article.categoryKey | translate }}
               </button>
             </li>
             <li aria-hidden="true"><span class="text-gray-300">›</span></li>
@@ -659,7 +675,7 @@
 
             <form [formGroup]="reportForm" (ngSubmit)="onSubmitReport()" class="mt-5 flex flex-col gap-4" novalidate>
 
-              <div class="grid grid-cols-2 gap-4">
+              <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
                 <!-- Categoría -->
                 <div class="flex flex-col gap-1.5">
                   <label for="rep-category" class="text-sm font-medium text-gray-700">

@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, forkJoin, of } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 import { BaseApi } from '../../shared/infrastructure/base-api';
 import { Sale } from '../domain/model/sale.entity';
 import { SaleItem } from '../domain/model/sale-item.entity';
@@ -63,19 +62,19 @@ getSales(): Observable<Sale[]> {
     return this.cashRegistersEndpoint.update(register, register.id);
   }
 
-  decrementStock(items: SaleItem[]): Observable<void> {
-    const decrements = items.map((item) => {
-      if (item.quantity !== null) {
-        return this.productsEndpoint.decrementUnitStock(item.productId, item.quantity);
-      }
-      if (item.weightKg !== null) {
-        const inventoryId = item.productId - WEIGHT_ID_OFFSET;
-        return this.productsEndpoint.decrementWeightStock(inventoryId, item.weightKg);
-      }
-      return of(void 0);
-    });
-
-    if (decrements.length === 0) return of(void 0);
-    return forkJoin(decrements).pipe(map(() => void 0));
+  /**
+   * Builds the stock-decrement request for a single sale item.
+   * Returns null when the item has neither units nor weight (nothing to decrement),
+   * so the caller can simply skip it without an extra empty observable.
+   */
+  decrementStockForItem(item: SaleItem): Observable<void> | null {
+    if (item.quantity !== null) {
+      return this.productsEndpoint.decrementUnitStock(item.productId, item.quantity);
+    }
+    if (item.weightKg !== null) {
+      const inventoryId = item.productId - WEIGHT_ID_OFFSET;
+      return this.productsEndpoint.decrementWeightStock(inventoryId, item.weightKg);
+    }
+    return null;
   }
 }
