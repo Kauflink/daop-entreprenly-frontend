@@ -719,16 +719,10 @@
       }
     },
     "qr": {
-      "expiredTitle": "Código QR expirado — vinculación no completada",
-      "expiredDetail": "El código QR no fue escaneado en el tiempo límite. El código anterior fue descartado automáticamente y se generó uno nuevo. Escanea el nuevo código para completar la vinculación.",
-      "newCode": "Nuevo código generado",
       "linkTitle": "Vincular WhatsApp Business",
-      "scanInstruction": "Escanea el código QR desde tu app",
+      "scanInstruction": "Escanea el código QR desde tu app de WhatsApp",
       "alt": "Código QR para vincular WhatsApp Business",
-      "generating": "Generando nuevo código...",
-      "expiresIn": "El código expira en {{ seconds }} segundos",
-      "expiresInOne": "El código expira en {{ seconds }} segundo",
-      "simulateScan": "Simular escaneo"
+      "waitingForBridge": "Esperando código del bridge..."
     },
     "statusCard": {
       "connectedTitle": "Cuenta vinculada correctamente",

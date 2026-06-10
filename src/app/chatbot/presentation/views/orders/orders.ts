@@ -58,9 +58,9 @@ import { ChatOrder } from '../../../domain/model/chat-order.entity';
             </div>
 
             <div class="flex flex-col gap-6 px-6 pb-6 sm:flex-row">
-              @if (order.hasReceipt) {
+              @if (order.receiptImage) {
                 <img
-                  [src]="receiptUrl(order.total)"
+                  [src]="order.receiptImage"
                   [alt]="'chatbot.orders.receiptAlt' | translate"
                   class="h-44 w-36 self-center rounded-xl object-cover shadow-sm sm:self-start"
                 />
@@ -184,12 +184,7 @@ export class Orders implements OnInit {
     this.store.loadSession();
     this.store.loadOrders();
     this.store.loadConversations();
-    this.store.loadInventoryProducts();
     this.store.connectRealtime();
-  }
-
-  protected receiptUrl(total: number): string {
-    return `/assets/comprobante-${total.toFixed(2)}.svg`;
   }
 
   protected clientName(order: ChatOrder): string {

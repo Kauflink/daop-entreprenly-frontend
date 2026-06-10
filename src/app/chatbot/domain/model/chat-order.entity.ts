@@ -19,4 +19,5 @@ export interface ChatOrder extends BaseEntity {
   hasReceipt: boolean;
   rejectionCount: number;
   createdAt: string;
+  receiptImage?: string;
 }

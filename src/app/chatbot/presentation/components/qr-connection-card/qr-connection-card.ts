@@ -1,104 +1,87 @@
-import { ChangeDetectionStrategy, Component, DestroyRef, computed, inject, input, output, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, inject, output, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { HttpClient } from '@angular/common/http';
+import { interval, startWith, switchMap, catchError, of } from 'rxjs';
 import { TranslatePipe } from '@ngx-translate/core';
-import { interval, timer } from 'rxjs';
+import { environment } from '../../../../../environments/environment';
 import { buildQrCodeDataUrl } from '../../../../inventory/infrastructure/qr-code-generator';
 
+interface BridgeQrState {
+  qr: string | null;
+  connected: boolean;
+}
+
+/**
+ * Polls the backend bridge-QR endpoint every 5 seconds and renders the real
+ * WhatsApp pairing QR code. Emits (scanned) as soon as the bridge reports
+ * that the phone has completed the scan and WhatsApp is connected.
+ */
 @Component({
   selector: 'app-qr-connection-card',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [TranslatePipe],
   template: `
-    @if (isExpired() || hasError()) {
-      <div class="m-5 rounded-2xl border border-red-200 bg-red-50 p-4">
-        <p class="font-semibold text-red-600">{{ 'chatbot.qr.expiredTitle' | translate }}</p>
-        <p class="mt-1 text-sm text-red-500">{{ 'chatbot.qr.expiredDetail' | translate }}</p>
-      </div>
-    }
     <div class="flex flex-col items-center gap-3 py-20">
       <h2 class="text-lg font-bold text-gray-900">
-        {{ (isExpired() || hasError() ? 'chatbot.qr.newCode' : 'chatbot.qr.linkTitle') | translate }}
+        {{ 'chatbot.qr.linkTitle' | translate }}
       </h2>
       <p class="text-sm text-gray-500">{{ 'chatbot.qr.scanInstruction' | translate }}</p>
-      <div class="overflow-hidden rounded-xl bg-white p-2">
-        <img
-          class="block size-48"
-          [src]="qrCodeDataUrl()"
-          width="192"
-          height="192"
-          [alt]="'chatbot.qr.alt' | translate"
-        />
-      </div>
-      <p class="text-sm" [class]="seconds() <= 10 ? 'font-medium text-red-400' : 'text-gray-400'">
-        @if (isExpired()) {
-          {{ 'chatbot.qr.generating' | translate }}
-        } @else {
-          {{ (seconds() === 1 ? 'chatbot.qr.expiresInOne' : 'chatbot.qr.expiresIn') | translate: { seconds: seconds() } }}
-        }
-      </p>
-      <button
-        (click)="scanned.emit()"
-        class="mt-2 rounded-full bg-green-500 px-6 py-2 text-sm font-medium text-white transition-colors hover:bg-green-600"
-        type="button"
-      >
-        {{ 'chatbot.qr.simulateScan' | translate }}
-      </button>
+
+      @if (qrDataUrl()) {
+        <div class="overflow-hidden rounded-xl bg-white p-2 shadow-sm">
+          <img
+            class="block size-48"
+            [src]="qrDataUrl()!"
+            width="192"
+            height="192"
+            [alt]="'chatbot.qr.alt' | translate"
+          />
+        </div>
+      } @else {
+        <div class="flex size-48 items-center justify-center rounded-xl bg-gray-50">
+          <svg class="h-10 w-10 animate-spin text-orange-400" fill="none" viewBox="0 0 24 24" aria-hidden="true">
+            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/>
+            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/>
+          </svg>
+        </div>
+      }
+
+      <p class="text-sm text-gray-400">{{ 'chatbot.qr.waitingForBridge' | translate }}</p>
     </div>
   `,
 })
 export class QrConnectionCard {
-  readonly hasError = input<boolean>(false);
-  readonly retry   = output<void>();
-  readonly expired = output<void>();
+  /** Emitted when the bridge reports that the phone completed the QR scan. */
   readonly scanned = output<void>();
 
-  protected readonly seconds      = signal(120);
-  protected readonly isExpired    = signal(false);
-  /** Token de sesión temporal — se regenera cada vez que el QR expira */
-  protected readonly sessionToken = signal(this._generateToken());
-  protected readonly qrCodeDataUrl = computed(() =>
-    buildQrCodeDataUrl(this.sessionToken(), 192),
-  );
+  private readonly http        = inject(HttpClient);
+  private readonly destroyRef  = inject(DestroyRef);
+  private readonly bridgeQrUrl = `${environment.entreprenlyProviderApiBaseUrl}/chatbot/whatsapp/bridge/qr`;
 
-  /** Genera un token de sesión único (mismo formato que WhatsApp Web) */
-  private _generateToken(): string {
-    const chars  = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-    const random = Array.from({ length: 8 }, () =>
-      chars[Math.floor(Math.random() * chars.length)],
-    ).join('');
-    const ts = Math.floor(Date.now() / 1000);
-    return `WA-SESSION-${random}-${ts}`;
-  }
-
-  private resetting = false;
-  private readonly destroyRef = inject(DestroyRef);
+  protected readonly qrDataUrl = signal<string | null>(null);
 
   constructor() {
-    interval(1000)
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe(() => {
-        if (this.resetting) return;
-
-        this.seconds.update((seconds) => {
-          if (seconds <= 1) {
-            this.isExpired.set(true);
-            this.expired.emit();
-            this.resetting = true;
-
-            timer(3000)
-              .pipe(takeUntilDestroyed(this.destroyRef))
-              .subscribe(() => {
-                this.sessionToken.set(this._generateToken()); // nuevo token = nuevo QR
-                this.isExpired.set(false);
-                this.seconds.set(120);
-                this.resetting = false;
-              });
-
-            return 0;
-          }
-
-          return seconds - 1;
-        });
-      });
+    // Poll every 5 seconds; start immediately (startWith(0)).
+    interval(5000).pipe(
+      startWith(0),
+      switchMap(() =>
+        this.http.get<BridgeQrState>(this.bridgeQrUrl).pipe(
+          catchError(() => of<BridgeQrState>({ qr: null, connected: false })),
+        ),
+      ),
+      takeUntilDestroyed(this.destroyRef),
+    ).subscribe(state => {
+      if (state.connected) {
+        this.scanned.emit();
+        return;
+      }
+      if (state.qr) {
+        try {
+          this.qrDataUrl.set(buildQrCodeDataUrl(state.qr, 192));
+        } catch {
+          this.qrDataUrl.set(null);
+        }
+      }
+    });
   }
 }
