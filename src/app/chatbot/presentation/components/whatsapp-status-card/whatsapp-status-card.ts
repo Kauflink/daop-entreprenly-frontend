@@ -28,10 +28,10 @@ import { WhatsappSession } from '../../../domain/model/whatsapp-session.entity';
             <p class="text-sm text-gray-500">
               {{ s.phone }}
               @if (s.status === 'connected' && s.connectedAt) {
-                — {{ 'chatbot.statusCard.activeSince' | translate }} {{ s.connectedAt }}
+                — {{ 'chatbot.statusCard.activeSince' | translate }} {{ formatDate(s.connectedAt) }}
               }
               @if (s.status === 'expired' && s.connectedAt) {
-                — {{ 'chatbot.statusCard.lastConnection' | translate }} {{ s.connectedAt }}
+                — {{ 'chatbot.statusCard.lastConnection' | translate }} {{ formatDate(s.connectedAt) }}
               }
               @if (s.businessName) {
                 · {{ s.businessName }}
@@ -81,4 +81,16 @@ export class WhatsappStatusCard {
   readonly session = input<WhatsappSession | null>(null);
   readonly justConnected = input<boolean>(false);
   readonly reconnect = output<void>();
+
+  formatDate(raw: string | undefined): string {
+    if (!raw) return '';
+    try {
+      return new Date(raw).toLocaleString('es-PE', {
+        day: '2-digit', month: '2-digit', year: 'numeric',
+        hour: '2-digit', minute: '2-digit',
+      });
+    } catch {
+      return raw;
+    }
+  }
 }
