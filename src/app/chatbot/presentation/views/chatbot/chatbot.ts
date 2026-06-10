@@ -34,7 +34,7 @@ export class Chatbot implements OnInit {
   }
 
   protected onScanned(): void {
-    this.store.loadSession();
+    this.store.markSessionConnected();
     this.justConnected.set(true);
   }
 
