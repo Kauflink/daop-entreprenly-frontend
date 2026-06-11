@@ -22,6 +22,13 @@ export class ChatbotStoreService {
   /** Guards against opening more than one realtime stream across views. */
   private realtimeConnected = false;
 
+  /**
+   * Order ids whose approve/reject is in flight. Guards against a double-click
+   * firing the action twice before the first request returns, which would create
+   * duplicate confirmation messages (and duplicate WhatsApp deliveries).
+   */
+  private readonly processingOrders = new Set<number>();
+
   /** Locale del idioma activo para formatear fechas */
   private get locale(): string {
     const lang = this.translate.currentLang ?? this.translate.defaultLang ?? 'es';
@@ -235,10 +242,15 @@ export class ChatbotStoreService {
 
   approveOrder(orderId: number): void {
     const order = this.orders().find(o => o.id === orderId);
-    if (!order) return;
+    // Only a payment still awaiting review can be approved, and never twice at once.
+    if (!order || order.status !== 'WAITING_PAYMENT' || this.processingOrders.has(orderId)) return;
+    this.processingOrders.add(orderId);
 
     const updated: ChatOrder = { ...order, status: 'CONFIRMED' as OrderStatus };
-    this.api.chatOrders.update(updated, orderId).subscribe(confirmed => {
+    this.api.chatOrders.update(updated, orderId).subscribe({
+      error: () => this.processingOrders.delete(orderId),
+      next: confirmed => {
+      this.processingOrders.delete(orderId);
       this.orders.update(list => list.map(o => o.id === orderId ? confirmed : o));
       this._updateConversationStatus(order.conversationId, 'COMPLETED');
 
@@ -258,12 +270,15 @@ export class ChatbotStoreService {
         this.messages.update(m => m.some(x => x.id === created.id) ? m : [...m, created]);
         timer(400).subscribe(() => this._typewriteAndSend(botMsg));
       });
+      },
     });
   }
 
   rejectOrder(orderId: number, reason = 'Imagen ilegible'): void {
     const order = this.orders().find(o => o.id === orderId);
-    if (!order) return;
+    // Reject only an in-review payment, and never twice at once.
+    if (!order || order.status !== 'WAITING_PAYMENT' || this.processingOrders.has(orderId)) return;
+    this.processingOrders.add(orderId);
 
     const newRejectionCount = (order.rejectionCount ?? 0) + 1;
     const isBlocked = newRejectionCount >= 2;
@@ -276,7 +291,10 @@ export class ChatbotStoreService {
       rejectionCount: newRejectionCount,
     };
 
-    this.api.chatOrders.update(updated, orderId).subscribe(rejected => {
+    this.api.chatOrders.update(updated, orderId).subscribe({
+      error: () => this.processingOrders.delete(orderId),
+      next: rejected => {
+      this.processingOrders.delete(orderId);
       this.orders.update(list => list.map(o => o.id === orderId ? rejected : o));
 
       if (isBlocked) {
@@ -306,6 +324,7 @@ export class ChatbotStoreService {
         this.messages.update(m => m.some(x => x.id === created.id) ? m : [...m, created]);
         timer(400).subscribe(() => this._typewriteAndSend(botMsg));
       });
+      },
     });
   }
 
