@@ -1,6 +1,8 @@
 import { computed, effect, inject, Injectable, signal } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import { TranslateService } from '@ngx-translate/core';
-import { catchError, Observable, of, tap } from 'rxjs';
+import { catchError, of, tap } from 'rxjs';
+import { environment } from '../../../environments/environment';
 import { UserProfile } from '../domain/model/user-profile.entity';
 import { UserPreferences, Theme } from '../domain/model/user-preferences.entity';
 import { NotificationSettings } from '../domain/model/notification-settings.entity';
@@ -8,7 +10,6 @@ import { Currency, CurrencyService, isSupportedCurrency } from '../../shared/inf
 import { AuthStore } from '../../auth/application/auth-store';
 import { ProfileResource } from '../infrastructure/profile-response';
 import { ProfileAssembler } from '../infrastructure/profile-assembler';
-import { ProfileApiService } from '../infrastructure/profile-api.service';
 
 @Injectable({ providedIn: 'root' })
 export class ProfileStore {
@@ -19,11 +20,13 @@ export class ProfileStore {
       return null;
     }
   }
-  private readonly api = inject(ProfileApiService);
+  private readonly http = inject(HttpClient);
   private readonly translate = inject(TranslateService);
   private readonly currencyAssembler = inject(CurrencyService);
   private readonly authStore = inject(AuthStore);
   private readonly assembler = inject(ProfileAssembler);
+  private readonly profilesUrl =
+    environment.entreprenlyProviderApiBaseUrl + environment.entreprenlyProviderProfilesEndpointPath;
 
   /** Identifier of the loaded profile, used to target update endpoints. */
   private readonly profileId = signal<number>(0);
@@ -120,56 +123,57 @@ export class ProfileStore {
   load(): void {
     const userId = this.authStore.userId;
     if (!userId) return;
-    this.persist(this.api.getByUserId(userId), 'Failed to load profile');
+    this.http
+      .get<ProfileResource>(`${this.profilesUrl}?userId=${userId}`)
+      .pipe(
+        tap((resource) => this.applyResource(resource)),
+        catchError((error) => {
+          console.error('Failed to load profile', error);
+          return of(null);
+        }),
+      )
+      .subscribe();
   }
 
   updateProfile(partial: Partial<Omit<UserProfile, 'id'>>): void {
     const updated: UserProfile = { ...this.profile(), ...partial };
     this.profile.set(updated);
-    this.persist(
-      this.api.updateProfile(this.profileId(), {
-        firstName: updated.firstName,
-        lastName: updated.lastName,
-        phone: updated.phone,
-        avatarUrl: updated.avatarUrl,
-      }),
-      'Failed to persist profile changes',
-    );
+    this.put(`${this.profilesUrl}/${this.profileId()}`, {
+      firstName: updated.firstName,
+      lastName: updated.lastName,
+      phone: updated.phone,
+      avatarUrl: updated.avatarUrl,
+    });
   }
 
   updatePreferences(partial: Partial<Omit<UserPreferences, 'id'>>): void {
     const updated: UserPreferences = { ...this.preferences(), ...partial };
     this.preferences.set(updated);
-    this.persist(
-      this.api.updatePreferences(this.profileId(), {
-        language: updated.language,
-        timezone: updated.timezone,
-        theme: updated.theme,
-        currency: updated.currency,
-      }),
-      'Failed to persist profile changes',
-    );
+    this.put(`${this.profilesUrl}/${this.profileId()}/preferences`, {
+      language: updated.language,
+      timezone: updated.timezone,
+      theme: updated.theme,
+      currency: updated.currency,
+    });
   }
 
   updateNotifications(partial: Partial<Omit<NotificationSettings, 'id'>>): void {
     const updated: NotificationSettings = { ...this.notificationSettings(), ...partial };
     this.notificationSettings.set(updated);
-    this.persist(
-      this.api.updateNotifications(this.profileId(), {
-        stockAlerts: updated.stockAlerts,
-        paymentAlerts: updated.paymentAlerts,
-        chatbotMessages: updated.chatbotMessages,
-      }),
-      'Failed to persist profile changes',
-    );
+    this.put(`${this.profilesUrl}/${this.profileId()}/notification-settings`, {
+      stockAlerts: updated.stockAlerts,
+      paymentAlerts: updated.paymentAlerts,
+      chatbotMessages: updated.chatbotMessages,
+    });
   }
 
-  private persist(request: Observable<ProfileResource>, errorMessage: string): void {
-    request
+  private put(url: string, body: unknown): void {
+    this.http
+      .put<ProfileResource>(url, body)
       .pipe(
         tap((resource) => this.applyResource(resource)),
         catchError((error) => {
-          console.error(errorMessage, error);
+          console.error('Failed to persist profile changes', error);
           return of(null);
         }),
       )

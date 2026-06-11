@@ -18,8 +18,13 @@
       <app-preferences-card />
     </section>
 
+    <section class="profile-stack profile-stack--contact" [attr.aria-label]="'profile.page.contactSection' | translate">
+      <app-phone-verify-card />
+      <app-email-change-card />
+    </section>
+
     <section class="profile-panel profile-panel--security" [attr.aria-label]="'profile.page.securitySection' | translate">
-      <app-account-security-card />
+      <app-change-password-card />
     </section>
 
     <section class="profile-panel profile-panel--notifications" [attr.aria-label]="'profile.page.notificationsSection' | translate">
