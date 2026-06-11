@@ -104,3 +104,21 @@
   outline: 2px solid var(--color-primary);
   outline-offset: 2px;
 }
+
+@media (max-width: 620px) {
+  :host,
+  .card {
+    height: auto;
+  }
+
+  .card {
+    padding: 16px;
+    border-radius: 18px;
+  }
+
+  .dropzone {
+    min-height: 180px;
+    border-radius: 18px;
+    padding: 16px;
+  }
+}

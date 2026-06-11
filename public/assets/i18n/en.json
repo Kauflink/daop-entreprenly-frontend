@@ -159,6 +159,8 @@
     "brandLabel": "Go to Entreprenly dashboard",
     "currentUserLabel": "Current user",
     "welcome": "Welcome, user",
+    "welcomeUser": "Welcome, {{firstName}}",
+    "userFallback": "User",
     "logout": "Log out",
     "nav": {
       "home": "Home",
