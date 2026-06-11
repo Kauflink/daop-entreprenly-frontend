@@ -562,6 +562,9 @@
       "securitySection": "Seguridad de cuenta",
       "notificationsSection": "Notificaciones"
     },
+    "accountSecurity": {
+      "title": "Seguridad de la cuenta"
+    },
     "userInfo": {
       "avatarAlt": "Foto de perfil"
     },
