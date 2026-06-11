@@ -550,6 +550,18 @@
     "help": "Ayuda"
   },
   "profile": {
+    "page": {
+      "ariaLabel": "Configuracion de perfil",
+      "eyebrow": "Cuenta",
+      "title": "Perfil y configuracion",
+      "subtitle": "Gestiona tus datos personales, preferencias, contacto, seguridad y notificaciones desde un solo lugar.",
+      "identitySection": "Identidad y foto de perfil",
+      "personalSection": "Datos personales",
+      "preferencesSection": "Preferencias",
+      "contactSection": "Contacto y verificacion",
+      "securitySection": "Seguridad de cuenta",
+      "notificationsSection": "Notificaciones"
+    },
     "userInfo": {
       "avatarAlt": "Foto de perfil"
     },

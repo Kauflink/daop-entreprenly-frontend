@@ -7,6 +7,7 @@ import { PreferencesCard } from '../../components/preferences-card/preferences-c
 import { EmailChangeCard } from '../../components/email-change-card/email-change-card';
 import { NotificationsCard } from '../../components/notifications-card/notifications-card';
 import { ChangePasswordCard } from '../../components/change-password-card/change-password-card';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-profile-page',
@@ -19,6 +20,7 @@ import { ChangePasswordCard } from '../../components/change-password-card/change
     EmailChangeCard,
     NotificationsCard,
     ChangePasswordCard,
+    TranslatePipe,
   ],
   templateUrl: './profile-page.html',
   styleUrl: './profile-page.css',
