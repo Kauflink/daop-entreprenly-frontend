@@ -1,9 +1,9 @@
 <div class="card">
   <div class="inner">
     <div class="avatar" aria-hidden="true">
-      @if (store.profile().avatarUrl) {
+      @if (previewUrl() ?? store.profile().avatarUrl; as avatarUrl) {
         <img
-          [src]="store.profile().avatarUrl"
+          [src]="avatarUrl"
           [alt]="'profile.userInfo.avatarAlt' | translate"
           class="avatar__img"
         />
@@ -14,6 +14,22 @@
     <div class="info">
       <p class="info__name">{{ store.fullName() }}</p>
       <p class="info__role">{{ store.roleAndPlan() }}</p>
+      <input
+        #fileInput
+        type="file"
+        accept="image/*"
+        class="visually-hidden"
+        [attr.aria-label]="'profile.uploadPhoto.fileInputLabel' | translate"
+        (change)="onFileSelected($event)"
+      />
+      <button
+        type="button"
+        class="btn-select"
+        [disabled]="saving()"
+        (click)="triggerFileInput(fileInput)"
+      >
+        {{ 'profile.uploadPhoto.selectAction' | translate }}
+      </button>
     </div>
   </div>
 </div>
