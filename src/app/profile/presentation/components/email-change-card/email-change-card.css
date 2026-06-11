@@ -94,3 +94,20 @@ form {
   outline: 2px solid var(--color-label-accent);
   outline-offset: 2px;
 }
+
+@media (max-width: 620px) {
+  .card {
+    padding: 16px;
+    border-radius: 18px;
+  }
+
+  .field__row {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .field__input,
+  .btn-verify {
+    width: 100%;
+  }
+}
