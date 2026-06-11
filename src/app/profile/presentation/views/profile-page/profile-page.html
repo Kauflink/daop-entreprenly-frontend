@@ -1,35 +1,35 @@
-<main class="page" aria-label="Configuracion de perfil">
+<main class="page" [attr.aria-label]="'profile.page.ariaLabel' | translate">
+  <header class="page-header">
+    <p class="eyebrow">{{ 'profile.page.eyebrow' | translate }}</p>
+    <h1>{{ 'profile.page.title' | translate }}</h1>
+    <p>{{ 'profile.page.subtitle' | translate }}</p>
+  </header>
+
   <div class="grid">
-    <section class="profile-panel profile-panel--user" aria-label="Informacion del usuario">
+    <section class="profile-stack profile-stack--identity" [attr.aria-label]="'profile.page.identitySection' | translate">
       <app-user-info-card />
-    </section>
-
-    <section class="profile-panel profile-panel--update" aria-label="Datos del perfil">
-      <app-update-profile-card />
-    </section>
-
-    <section class="profile-panel profile-panel--preferences" aria-label="Preferencias">
-      <app-preferences-card />
-    </section>
-
-    <section class="profile-panel profile-panel--photo" aria-label="Foto de perfil">
       <app-upload-photo-card />
     </section>
 
-    <section class="profile-panel profile-panel--phone" aria-label="Telefono">
-      <app-phone-verify-card />
+    <section class="profile-panel profile-panel--personal" [attr.aria-label]="'profile.page.personalSection' | translate">
+      <app-update-profile-card />
     </section>
 
-    <section class="profile-panel profile-panel--email" aria-label="Email">
+    <section class="profile-panel profile-panel--preferences" [attr.aria-label]="'profile.page.preferencesSection' | translate">
+      <app-preferences-card />
+    </section>
+
+    <section class="profile-stack profile-stack--contact" [attr.aria-label]="'profile.page.contactSection' | translate">
+      <app-phone-verify-card />
       <app-email-change-card />
     </section>
 
-    <section class="profile-panel profile-panel--notifications" aria-label="Notificaciones">
-      <app-notifications-card />
+    <section class="profile-panel profile-panel--security" [attr.aria-label]="'profile.page.securitySection' | translate">
+      <app-change-password-card />
     </section>
 
-    <section class="profile-panel profile-panel--password" aria-label="Contrasena">
-      <app-change-password-card />
+    <section class="profile-panel profile-panel--notifications" [attr.aria-label]="'profile.page.notificationsSection' | translate">
+      <app-notifications-card />
     </section>
   </div>
 </main>
