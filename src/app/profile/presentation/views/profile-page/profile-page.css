@@ -50,7 +50,8 @@
   grid-template-columns: repeat(12, minmax(0, 1fr));
   grid-template-areas:
     'identity identity identity identity personal personal personal personal preferences preferences preferences preferences'
-    'security security security security security security notifications notifications notifications notifications notifications notifications';
+    'contact contact contact contact contact contact security security security security security security'
+    'notifications notifications notifications notifications notifications notifications security security security security security security';
   gap: var(--profile-gap);
   max-width: 1510px;
   width: 100%;
@@ -58,12 +59,23 @@
   align-items: stretch;
 }
 
-.profile-panel {
+.profile-panel,
+.profile-stack {
   min-width: 0;
+}
+
+.profile-panel {
   display: flex;
 }
 
-.profile-panel > * {
+.profile-stack {
+  display: grid;
+  gap: var(--profile-gap);
+  align-content: stretch;
+}
+
+.profile-panel > *,
+.profile-stack > * {
   width: 100%;
 }
 
@@ -79,6 +91,11 @@
   grid-area: preferences;
 }
 
+.profile-stack--contact {
+  grid-area: contact;
+  grid-template-rows: repeat(2, minmax(0, 1fr));
+}
+
 .profile-panel--security {
   grid-area: security;
 }
@@ -92,8 +109,9 @@
     grid-template-columns: repeat(2, minmax(0, 1fr));
     grid-template-areas:
       'identity personal'
-      'security preferences'
-      'security notifications';
+      'contact preferences'
+      'contact security'
+      'notifications security';
   }
 }
 
@@ -103,9 +121,14 @@
     grid-template-areas:
       'identity'
       'personal'
+      'contact'
       'preferences'
       'security'
       'notifications';
+  }
+
+  .profile-stack--contact {
+    grid-template-rows: auto;
   }
 }
 

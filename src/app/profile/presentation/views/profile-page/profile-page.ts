@@ -1,9 +1,11 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { UserInfoCard } from '../../components/user-info-card/user-info-card';
 import { UpdateProfileCard } from '../../components/update-profile-card/update-profile-card';
+import { PhoneVerifyCard } from '../../components/phone-verify-card/phone-verify-card';
 import { PreferencesCard } from '../../components/preferences-card/preferences-card';
+import { EmailChangeCard } from '../../components/email-change-card/email-change-card';
 import { NotificationsCard } from '../../components/notifications-card/notifications-card';
-import { AccountSecurityCard } from '../../components/account-security-card/account-security-card';
+import { ChangePasswordCard } from '../../components/change-password-card/change-password-card';
 import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
@@ -11,9 +13,11 @@ import { TranslatePipe } from '@ngx-translate/core';
   imports: [
     UserInfoCard,
     UpdateProfileCard,
+    PhoneVerifyCard,
     PreferencesCard,
+    EmailChangeCard,
     NotificationsCard,
-    AccountSecurityCard,
+    ChangePasswordCard,
     TranslatePipe,
   ],
   templateUrl: './profile-page.html',

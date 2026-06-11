@@ -16,33 +16,21 @@ const passwordsMatchValidator: ValidatorFn = (group: AbstractControl): Validatio
   return newPwd && confirm && newPwd !== confirm ? { passwordsMismatch: true } : null;
 };
 
-/**
- * Single card grouping the account security actions: phone verification,
- * email change with re-verification and password change.
- */
 @Component({
-  selector: 'app-account-security-card',
+  selector: 'app-change-password-card',
   imports: [ReactiveFormsModule, MatIconModule, TranslateModule],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  templateUrl: './account-security-card.html',
-  styleUrl: './account-security-card.css',
+  templateUrl: './change-password-card.html',
+  styleUrl: './change-password-card.css',
 })
-export class AccountSecurityCard {
+export class ChangePasswordCard {
   private readonly fb = inject(FormBuilder);
 
   protected readonly showCurrent = signal(false);
   protected readonly showNew = signal(false);
   protected readonly showConfirm = signal(false);
 
-  protected readonly phoneForm = this.fb.nonNullable.group({
-    phone: ['', [Validators.required, Validators.pattern(/^\+?[\d\s\-()]{7,20}$/)]],
-  });
-
-  protected readonly emailForm = this.fb.nonNullable.group({
-    email: ['', [Validators.required, Validators.email]],
-  });
-
-  protected readonly passwordForm = this.fb.nonNullable.group(
+  protected readonly form = this.fb.nonNullable.group(
     {
       currentPassword: ['', [Validators.required, Validators.minLength(8)]],
       newPassword: ['', [Validators.required, Validators.minLength(8)]],
@@ -52,25 +40,12 @@ export class AccountSecurityCard {
   );
 
   protected get mismatch(): boolean {
-    return (
-      this.passwordForm.hasError('passwordsMismatch') &&
-      this.passwordForm.get('confirmPassword')!.dirty
-    );
+    return this.form.hasError('passwordsMismatch') && this.form.get('confirmPassword')!.dirty;
   }
 
-  protected onPhoneSubmit(): void {
-    if (this.phoneForm.invalid) return;
-    // Verification logic delegated to a future service
-  }
-
-  protected onEmailSubmit(): void {
-    if (this.emailForm.invalid) return;
-    // Re-verification flow delegated to a future service
-  }
-
-  protected onPasswordSubmit(): void {
-    if (this.passwordForm.invalid) return;
+  protected onSubmit(): void {
+    if (this.form.invalid) return;
     // Password update delegated to a future service
-    this.passwordForm.reset();
+    this.form.reset();
   }
 }

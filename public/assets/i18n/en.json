@@ -288,18 +288,9 @@
       }
     },
     "limits": {
-      "products": {
-        "label": "Products",
-        "ariaLabel": "Usage of Products"
-      },
-      "active-batches": {
-        "label": "Active lots",
-        "ariaLabel": "Usage of Active lots"
-      },
-      "users": {
-        "label": "Users",
-        "ariaLabel": "Usage of Users"
-      }
+      "products": { "label": "Products", "ariaLabel": "Usage of Products" },
+      "active-batches": { "label": "Active lots", "ariaLabel": "Usage of Active lots" },
+      "users": { "label": "Users", "ariaLabel": "Usage of Users" }
     },
     "billing": {
       "eyebrow": "Billing",
@@ -561,9 +552,6 @@
       "contactSection": "Contact and verification",
       "securitySection": "Account security",
       "notificationsSection": "Notifications"
-    },
-    "accountSecurity": {
-      "title": "Account security"
     },
     "userInfo": {
       "avatarAlt": "Profile picture"
