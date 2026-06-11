@@ -1,23 +1,35 @@
-<main class="page" aria-label="Configuración de perfil">
+<main class="page" aria-label="Configuracion de perfil">
   <div class="grid">
-    <section class="col col--left" aria-label="Foto de perfil">
+    <section class="profile-panel profile-panel--user" aria-label="Informacion del usuario">
       <app-user-info-card />
+    </section>
+
+    <section class="profile-panel profile-panel--update" aria-label="Datos del perfil">
+      <app-update-profile-card />
+    </section>
+
+    <section class="profile-panel profile-panel--preferences" aria-label="Preferencias">
+      <app-preferences-card />
+    </section>
+
+    <section class="profile-panel profile-panel--photo" aria-label="Foto de perfil">
       <app-upload-photo-card />
     </section>
 
-    <section class="col col--center" aria-label="Datos del perfil">
-      <app-update-profile-card />
+    <section class="profile-panel profile-panel--phone" aria-label="Telefono">
       <app-phone-verify-card />
     </section>
 
-    <section class="col col--right" aria-label="Preferencias y email">
-      <app-preferences-card />
+    <section class="profile-panel profile-panel--email" aria-label="Email">
       <app-email-change-card />
     </section>
 
-    <div class="row row--bottom">
+    <section class="profile-panel profile-panel--notifications" aria-label="Notificaciones">
       <app-notifications-card />
+    </section>
+
+    <section class="profile-panel profile-panel--password" aria-label="Contrasena">
       <app-change-password-card />
-    </div>
+    </section>
   </div>
 </main>

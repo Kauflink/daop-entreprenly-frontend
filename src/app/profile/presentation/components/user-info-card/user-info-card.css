@@ -75,3 +75,26 @@
   color: var(--color-text-role);
   margin: 0;
 }
+
+@media (max-width: 620px) {
+  :host,
+  .card {
+    height: auto;
+  }
+
+  .card {
+    padding: 16px;
+    border-radius: 18px;
+  }
+
+  .inner {
+    justify-content: flex-start;
+    border-radius: 18px;
+    padding: 12px;
+  }
+
+  .avatar {
+    width: 58px;
+    height: 58px;
+  }
+}

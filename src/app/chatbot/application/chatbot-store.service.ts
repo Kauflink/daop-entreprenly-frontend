@@ -1,4 +1,5 @@
 import { Injectable, inject, signal, computed } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import { timer } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 import { ChatbotApiService } from '../infrastructure/chatbot-api.service';
@@ -7,12 +8,16 @@ import { Conversation, ConversationStatus } from '../domain/model/conversation.e
 import { ChatMessage } from '../domain/model/chat-message.entity';
 import { WhatsappSession } from '../domain/model/whatsapp-session.entity';
 import { ChatOrder, OrderStatus } from '../domain/model/chat-order.entity';
+import { environment } from '../../../environments/environment';
+
+interface BridgeQrState { qr: string | null; connected: boolean; }
 
 @Injectable({ providedIn: 'root' })
 export class ChatbotStoreService {
   private api       = inject(ChatbotApiService);
   private stream    = inject(ChatbotStreamService);
   private translate = inject(TranslateService);
+  private http      = inject(HttpClient);
 
   /** Guards against opening more than one realtime stream across views. */
   private realtimeConnected = false;
@@ -179,6 +184,52 @@ export class ChatbotStoreService {
 
     this.api.chatMessages.create(message).subscribe(created => {
       this.messages.update(msgs => msgs.some(x => x.id === created.id) ? msgs : [...msgs, created]);
+    });
+  }
+
+  /**
+   * Marks the session as connected in the DB and updates the signal so the
+   * status card is shown. Called when QrConnectionCard reports that the bridge
+   * is authenticated (either after a real QR scan or because the bridge was
+   * already running when the QR card appeared).
+   */
+  markSessionConnected(): void {
+    const current = this.session();
+    if (!current || current.status === 'connected') return;
+    const updated: WhatsappSession = { ...current, status: 'connected' };
+    this.api.whatsappSessions.update(updated, current.id).subscribe(session => {
+      this.session.set(session);
+    });
+  }
+
+  /**
+   * Marks the session as disconnected in the DB and updates the signal so the
+   * QR card is shown. Used both by the manual "Disconnect" button and by the
+   * background bridge-health check when unexpected disconnections are detected.
+   */
+  simulateDisconnect(): void {
+    const current = this.session();
+    if (!current) return;
+    const updated: WhatsappSession = { ...current, status: 'disconnected', connectedAt: undefined };
+    this.api.whatsappSessions.update(updated, current.id).subscribe(session => {
+      this.session.set(session);
+    });
+  }
+
+  /**
+   * Polls the bridge QR state once. If the bridge generated a new QR while the
+   * app still shows "connected" (unexpected disconnection: credentials expired,
+   * bridge restarted), marks the session as disconnected so the QR card appears.
+   */
+  checkBridgeConnection(): void {
+    const url = `${environment.entreprenlyProviderApiBaseUrl}/chatbot/whatsapp/bridge/qr`;
+    this.http.get<BridgeQrState>(url).subscribe({
+      next: state => {
+        if (state.qr && this.session()?.status === 'connected') {
+          this.simulateDisconnect();
+        }
+      },
+      error: () => { /* bridge offline — keep current state */ },
     });
   }
 
