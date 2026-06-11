@@ -541,6 +541,18 @@
     "help": "Help"
   },
   "profile": {
+    "page": {
+      "ariaLabel": "Profile settings",
+      "eyebrow": "Account",
+      "title": "Profile and settings",
+      "subtitle": "Manage your personal details, preferences, contact information, security, and notifications from one place.",
+      "identitySection": "Identity and profile photo",
+      "personalSection": "Personal details",
+      "preferencesSection": "Preferences",
+      "contactSection": "Contact and verification",
+      "securitySection": "Account security",
+      "notificationsSection": "Notifications"
+    },
     "userInfo": {
       "avatarAlt": "Profile picture"
     },
