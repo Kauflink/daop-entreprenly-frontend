@@ -1,73 +1,122 @@
 .page {
+  --color-card-shadow: 0 10px 26px rgb(0 0 0 / 10%);
+  --profile-gap: clamp(16px, 1.7vw, 24px);
+
   background: var(--color-bg-page);
   box-sizing: border-box;
   min-height: calc(100dvh - 98px);
   width: 100%;
 }
 
+.page-header {
+  max-width: 1510px;
+  width: 100%;
+  margin: 0 auto clamp(18px, 2vw, 28px);
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  min-height: 24px;
+  margin: 0 0 8px;
+  padding: 0 14px;
+  border-radius: 999px;
+  background: var(--color-inner-bg);
+  color: var(--color-label-accent);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+.page-header h1 {
+  margin: 0;
+  color: var(--color-text-strong);
+  font-size: clamp(28px, 3vw, 42px);
+  font-weight: 800;
+  line-height: 1.1;
+}
+
+.page-header p:last-child {
+  max-width: 720px;
+  margin: 10px 0 0;
+  color: var(--color-text-muted);
+  font-size: clamp(14px, 1.1vw, 16px);
+  line-height: 1.6;
+}
+
 .grid {
   display: grid;
   grid-template-columns: repeat(12, minmax(0, 1fr));
   grid-template-areas:
-    'user user user user update update update update preferences preferences preferences preferences'
-    'photo photo photo photo phone phone phone phone email email email email'
-    'notifications notifications notifications notifications notifications notifications password password password password password password';
-  gap: clamp(16px, 2vw, 24px);
+    'identity identity identity personal personal personal personal preferences preferences preferences preferences preferences'
+    'identity identity identity contact contact contact contact security security security security security'
+    'notifications notifications notifications notifications notifications notifications notifications security security security security security';
+  gap: var(--profile-gap);
   max-width: 1510px;
   width: 100%;
   margin: 0 auto;
   align-items: stretch;
 }
 
-.profile-panel {
-  display: flex;
+.profile-panel,
+.profile-stack {
   min-width: 0;
 }
 
-.profile-panel > * {
+.profile-panel {
+  display: flex;
+}
+
+.profile-stack {
+  display: grid;
+  gap: var(--profile-gap);
+  align-content: stretch;
+}
+
+.profile-panel > *,
+.profile-stack > * {
   width: 100%;
 }
 
-.profile-panel--user {
-  grid-area: user;
+.profile-stack--identity {
+  grid-area: identity;
+  grid-template-rows: minmax(128px, 0.85fr) minmax(240px, 1.15fr);
 }
 
-.profile-panel--update {
-  grid-area: update;
+.profile-panel--personal {
+  grid-area: personal;
 }
 
 .profile-panel--preferences {
   grid-area: preferences;
 }
 
-.profile-panel--photo {
-  grid-area: photo;
+.profile-stack--contact {
+  grid-area: contact;
+  grid-template-rows: repeat(2, minmax(0, 1fr));
 }
 
-.profile-panel--phone {
-  grid-area: phone;
-}
-
-.profile-panel--email {
-  grid-area: email;
+.profile-panel--security {
+  grid-area: security;
 }
 
 .profile-panel--notifications {
   grid-area: notifications;
 }
 
-.profile-panel--password {
-  grid-area: password;
-}
-
-@media (max-width: 1280px) {
+@media (max-width: 1360px) {
   .grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     grid-template-areas:
-      'user update'
-      'preferences photo'
-      'phone email'
-      'notifications password';
+      'identity personal'
+      'identity preferences'
+      'contact security'
+      'notifications security';
+  }
+
+  .profile-stack--identity {
+    grid-template-rows: auto 1fr;
   }
 }
 
@@ -75,23 +124,27 @@
   .grid {
     grid-template-columns: 1fr;
     grid-template-areas:
-      'user'
-      'update'
+      'identity'
+      'personal'
+      'contact'
       'preferences'
-      'photo'
-      'phone'
-      'email'
-      'notifications'
-      'password';
+      'security'
+      'notifications';
+  }
+
+  .profile-stack--identity,
+  .profile-stack--contact {
+    grid-template-rows: auto;
   }
 }
 
 @media (max-width: 620px) {
   .page {
+    --profile-gap: 14px;
     min-height: auto;
   }
 
-  .grid {
-    gap: 14px;
+  .page-header {
+    margin-bottom: 16px;
   }
 }
