@@ -9,10 +9,10 @@
   border: 1px solid var(--color-card-border);
   box-shadow: var(--color-card-shadow);
   border-radius: 25px;
-  padding: clamp(8px, 1.11dvh, 12px) 24px;
+  padding: clamp(10px, 1.4dvh, 16px) 24px;
   display: flex;
   flex-direction: column;
-  gap: clamp(6px, 0.93dvh, 10px);
+  gap: clamp(8px, 1.2dvh, 14px);
   flex: 1;
   min-height: 0;
 }
@@ -26,22 +26,38 @@
   margin: 0;
 }
 
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(4px, 0.7dvh, 8px);
+}
+
+.section + .section {
+  border-top: 1px solid var(--color-card-border);
+  padding-top: clamp(8px, 1.2dvh, 14px);
+}
+
+.section__title {
+  font-family: 'Reddit Sans', sans-serif;
+  font-weight: 800;
+  font-size: clamp(11px, 1.2dvh, 13px);
+  line-height: 1.3;
+  color: var(--color-text-secondary);
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
 form {
   display: flex;
   flex-direction: column;
   gap: clamp(5px, 0.74dvh, 8px);
-  flex: 1;
-  min-height: 0;
-  justify-content: space-between;
 }
 
 .field {
   display: flex;
   flex-direction: column;
   gap: clamp(3px, 0.55dvh, 6px);
-  flex: 1;
-  justify-content: center;
-  min-height: 0;
 }
 
 .field__label {
@@ -50,6 +66,18 @@ form {
   font-size: clamp(10px, 1.11dvh, 12px);
   line-height: 1.3;
   color: var(--color-label-accent);
+}
+
+.field__row {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.field__row .field__input {
+  flex: 1;
+  width: auto;
+  padding-right: 20px;
 }
 
 .field__input-wrap {
@@ -153,6 +181,35 @@ form {
   outline-offset: 2px;
 }
 
+.btn-verify {
+  background: var(--color-primary);
+  border: 1px solid var(--color-card-border);
+  box-shadow: var(--color-card-shadow);
+  border-radius: 25px;
+  padding: clamp(5px, 0.65dvh, 7px) 24px;
+  font-family: 'Reddit Sans', sans-serif;
+  font-weight: 800;
+  font-size: clamp(10px, 1.11dvh, 12px);
+  color: var(--color-primary-text);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: opacity 0.2s;
+}
+
+.btn-verify:hover:not(:disabled) {
+  opacity: 0.9;
+}
+
+.btn-verify:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btn-verify:focus-visible {
+  outline: 2px solid var(--color-label-accent);
+  outline-offset: 2px;
+}
+
 @media (max-width: 620px) {
   :host,
   .card {
@@ -162,5 +219,15 @@ form {
   .card {
     padding: 16px;
     border-radius: 18px;
+  }
+
+  .field__row {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .field__row .field__input,
+  .btn-verify {
+    width: 100%;
   }
 }
