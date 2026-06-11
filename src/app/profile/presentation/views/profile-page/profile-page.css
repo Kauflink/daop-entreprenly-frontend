@@ -49,9 +49,9 @@
   display: grid;
   grid-template-columns: repeat(12, minmax(0, 1fr));
   grid-template-areas:
-    'identity identity identity personal personal personal personal preferences preferences preferences preferences preferences'
-    'identity identity identity contact contact contact contact security security security security security'
-    'notifications notifications notifications notifications notifications notifications notifications security security security security security';
+    'identity identity identity identity personal personal personal personal preferences preferences preferences preferences'
+    'contact contact contact contact contact contact security security security security security security'
+    'notifications notifications notifications notifications notifications notifications security security security security security security';
   gap: var(--profile-gap);
   max-width: 1510px;
   width: 100%;
@@ -79,9 +79,8 @@
   width: 100%;
 }
 
-.profile-stack--identity {
+.profile-panel--identity {
   grid-area: identity;
-  grid-template-rows: minmax(128px, 0.85fr) minmax(240px, 1.15fr);
 }
 
 .profile-panel--personal {
@@ -110,13 +109,9 @@
     grid-template-columns: repeat(2, minmax(0, 1fr));
     grid-template-areas:
       'identity personal'
-      'identity preferences'
+      'contact preferences'
       'contact security'
       'notifications security';
-  }
-
-  .profile-stack--identity {
-    grid-template-rows: auto 1fr;
   }
 }
 
@@ -132,7 +127,6 @@
       'notifications';
   }
 
-  .profile-stack--identity,
   .profile-stack--contact {
     grid-template-rows: auto;
   }
