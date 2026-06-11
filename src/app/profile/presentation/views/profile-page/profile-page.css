@@ -7,66 +7,67 @@
 
 .grid {
   display: grid;
-  grid-template-columns:
-    minmax(240px, 0.95fr)
-    minmax(260px, 0.9fr)
-    minmax(280px, 1fr);
+  grid-template-columns: repeat(12, minmax(0, 1fr));
   grid-template-areas:
-    'left center right'
-    'bottom bottom bottom';
-  gap: clamp(16px, 2vw, 25px);
+    'user user user user update update update update preferences preferences preferences preferences'
+    'photo photo photo photo phone phone phone phone email email email email'
+    'notifications notifications notifications notifications notifications notifications password password password password password password';
+  gap: clamp(16px, 2vw, 24px);
   max-width: 1510px;
   width: 100%;
   margin: 0 auto;
-  align-items: start;
-}
-
-.col {
-  display: flex;
-  flex-direction: column;
-  gap: clamp(16px, 2vw, 25px);
-  min-width: 0;
-}
-
-.col--left {
-  grid-area: left;
-}
-
-.col--center {
-  grid-area: center;
-}
-
-.col--right {
-  grid-area: right;
-  gap: clamp(12px, 1.6vw, 18px);
-}
-
-.row--bottom {
-  grid-area: bottom;
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: clamp(16px, 2vw, 24px);
   align-items: stretch;
+}
+
+.profile-panel {
+  display: flex;
   min-width: 0;
 }
 
-.col > *,
-.row--bottom > * {
-  min-width: 0;
+.profile-panel > * {
+  width: 100%;
+}
+
+.profile-panel--user {
+  grid-area: user;
+}
+
+.profile-panel--update {
+  grid-area: update;
+}
+
+.profile-panel--preferences {
+  grid-area: preferences;
+}
+
+.profile-panel--photo {
+  grid-area: photo;
+}
+
+.profile-panel--phone {
+  grid-area: phone;
+}
+
+.profile-panel--email {
+  grid-area: email;
+}
+
+.profile-panel--notifications {
+  grid-area: notifications;
+}
+
+.profile-panel--password {
+  grid-area: password;
 }
 
 @media (max-width: 1280px) {
   .grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     grid-template-areas:
-      'left center'
-      'right right'
-      'bottom bottom';
-  }
-
-  .col--right {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+      'user update'
+      'preferences photo'
+      'phone email'
+      'notifications password';
   }
 }
 
@@ -74,15 +75,14 @@
   .grid {
     grid-template-columns: 1fr;
     grid-template-areas:
-      'left'
-      'center'
-      'right'
-      'bottom';
-  }
-
-  .col--right,
-  .row--bottom {
-    grid-template-columns: 1fr;
+      'user'
+      'update'
+      'preferences'
+      'photo'
+      'phone'
+      'email'
+      'notifications'
+      'password';
   }
 }
 
@@ -91,8 +91,7 @@
     min-height: auto;
   }
 
-  .grid,
-  .col {
+  .grid {
     gap: 14px;
   }
 }

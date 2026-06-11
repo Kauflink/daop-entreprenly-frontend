@@ -46,7 +46,11 @@
           <mat-icon>person</mat-icon>
         }
       </span>
-      <strong>{{ displayFirstName() || ('dashboard.userFallback' | translate) }}</strong>
+      @if (displayFirstName(); as firstName) {
+        <strong>{{ 'dashboard.welcomeUser' | translate: { firstName } }}</strong>
+      } @else {
+        <strong>{{ 'dashboard.welcome' | translate }}</strong>
+      }
     </a>
 
     <nav>
