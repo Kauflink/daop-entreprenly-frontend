@@ -110,13 +110,25 @@ export class ChatbotStoreService {
   }
 
   private upsertOrder(order: ChatOrder): void {
+    const prev = this.orders().find(o => o.id === order.id);
     this.orders.update(list => {
       const index = list.findIndex(o => o.id === order.id);
       if (index === -1) return [...list, order];
       const next = [...list];
-      next[index] = order;
+      // SSE order events don't carry receiptImage to keep payloads small.
+      // Preserve the image from the existing entry so it is never lost.
+      const merged: ChatOrder = order.receiptImage
+        ? order
+        : { ...order, receiptImage: next[index].receiptImage };
+      next[index] = merged;
       return next;
     });
+    // When a receipt is newly attached to the selected conversation's order,
+    // reload orders from HTTP so receiptImageSrc can render the actual image.
+    if (order.hasReceipt && !prev?.hasReceipt &&
+        order.conversationId === this.selectedConversationId()) {
+      this.loadOrders();
+    }
   }
 
   private appendRealtimeMessage(message: ChatMessage): void {
@@ -148,6 +160,9 @@ export class ChatbotStoreService {
     this.isClientTyping.set(false);
     this.botInputText.set('');
     this.liveAnimation.set(false);
+
+    // Refresh orders alongside messages so receiptImageSrc always has up-to-date data.
+    this.loadOrders();
 
     this.api.chatMessages.getAll().subscribe(all => {
       if (this._playId !== playId) return;
