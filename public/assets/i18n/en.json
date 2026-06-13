@@ -507,7 +507,8 @@
         "paymentSelected": "Payment method selected for subscription.",
         "fiscalCompleted": "Fiscal data completed for billing.",
         "emptyHistory": "Not enough activity to download.",
-        "historyDownloaded": "Subscription history downloaded."
+        "historyDownloaded": "Subscription history downloaded.",
+        "loadError": "We couldn't load your subscription. Please sign in again and retry."
       },
       "csv": {
         "filename": "subscription-history-entreprenly.csv",

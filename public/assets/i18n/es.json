@@ -516,7 +516,8 @@
         "paymentSelected": "Método de pago seleccionado para la suscripción.",
         "fiscalCompleted": "Datos fiscales completados para facturación.",
         "emptyHistory": "No hay actividad suficiente para descargar.",
-        "historyDownloaded": "Historial de suscripción descargado."
+        "historyDownloaded": "Historial de suscripción descargado.",
+        "loadError": "No se pudo cargar tu suscripción. Vuelve a iniciar sesión e inténtalo de nuevo."
       },
       "csv": {
         "filename": "historial-suscripcion-entreprenly.csv",
