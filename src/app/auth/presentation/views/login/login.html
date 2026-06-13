@@ -33,13 +33,13 @@
       </section>
 
       <section class="form-panel" aria-labelledby="login-title">
-        <span class="mini-tag">Iniciar sesion</span>
+        <span class="mini-tag">Iniciar sesión</span>
         <h2 id="login-title">Bienvenido de vuelta</h2>
-        <p class="form-copy">Ingresa con tu correo y contrasena.</p>
+        <p class="form-copy">Ingresa con tu correo y contraseña.</p>
 
         <form class="access-form" [formGroup]="form" (ngSubmit)="submitLogin()">
           <label>
-            <span>Correo electronico</span>
+            <span>Correo electrónico</span>
             <span class="field-shell">
               <span class="material-icons" aria-hidden="true">mail</span>
               <input
@@ -53,8 +53,8 @@
 
           <label>
             <span class="label-row">
-              <span>Contrasena</span>
-              <button type="button" (click)="forgotPassword()">Olvide mi contrasena</button>
+              <span>Contraseña</span>
+              <button type="button" (click)="forgotPassword()">Olvidé mi contraseña</button>
             </span>
             <span class="field-shell">
               <span class="material-icons" aria-hidden="true">lock</span>
@@ -70,7 +70,7 @@
           <div class="form-meta">
             <label class="check-row">
               <input formControlName="rememberSession" type="checkbox" />
-              <span>Mantener sesion iniciada</span>
+              <span>Mantener sesión iniciada</span>
             </label>
           </div>
 
@@ -92,8 +92,8 @@
         </form>
 
         <p class="switch-copy">
-          No tienes cuenta todavia?
-          <a routerLink="/register">Registrate aqui</a>
+          ¿No tienes cuenta todavía?
+          <a routerLink="/register">Regístrate aquí</a>
         </p>
       </section>
     </div>
