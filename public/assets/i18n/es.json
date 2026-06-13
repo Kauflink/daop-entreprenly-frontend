@@ -679,7 +679,19 @@
       "title": "Chatbot",
       "loading": "Cargando...",
       "connectPrompt": "Conecta tu WhatsApp Business para activar el chatbot",
-      "connectionStatus": "Estado de la conexión"
+      "connectionStatus": "Estado de la conexión",
+      "subtitle": "Conecta WhatsApp Business, automatiza respuestas y valida pedidos desde el panel."
+    },
+    "upgrade": {
+      "eyebrow": "Plan Control",
+      "title": "Actualiza para activar el chatbot",
+      "description": "El chatbot de WhatsApp esta disponible solo para negocios con Plan Control. Actualiza tu plan para conectar el QR y empezar a recibir pedidos automatizados.",
+      "action": "Actualizar a Plan Control",
+      "features": {
+        "automation": "Respuestas automaticas para clientes por WhatsApp.",
+        "orders": "Pedidos registrados desde conversaciones del chatbot.",
+        "receipts": "Recepcion y validacion operativa de comprobantes."
+      }
     },
     "conversations": {
       "empty": "Aún no hay conversaciones.\nLos chats de tus clientes aparecerán aquí\ncuando el chatbot reciba mensajes.",
