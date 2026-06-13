@@ -28,7 +28,7 @@ export class Login {
     { title: 'Inventario visible', copy: 'Productos, lotes y alertas quedan listos desde el dashboard.' },
     { title: 'Caja clara', copy: 'Ventas y pagos del turno se revisan desde un solo flujo.' },
     { title: 'Pedidos conectados', copy: 'WhatsApp, stock y seguimiento trabajan con el mismo contexto.' },
-    { title: 'Acceso rapido', copy: 'Ingresa con tu cuenta para administrar tu negocio.' },
+    { title: 'Acceso rápido', copy: 'Ingresa con tu cuenta para administrar tu negocio.' },
   ];
 
   protected readonly form = this.fb.nonNullable.group({
@@ -41,7 +41,7 @@ export class Login {
     this.error.set(null);
     this.notice.set(null);
     if (this.form.invalid) {
-      this.error.set('Completa correo y contrasena para ingresar.');
+      this.error.set('Completa correo y contraseña para ingresar.');
       return;
     }
     this.loading.set(true);
@@ -57,11 +57,11 @@ export class Login {
 
   protected forgotPassword(): void {
     this.error.set(null);
-    this.notice.set('Se simularia el envio de recuperacion al correo indicado.');
+    this.notice.set('Se simularía el envío de recuperación al correo indicado.');
   }
 
   protected loginWithGoogle(): void {
     this.error.set(null);
-    this.notice.set('Acceso con Google no disponible aun.');
+    this.notice.set('Acceso con Google no disponible aún.');
   }
 }

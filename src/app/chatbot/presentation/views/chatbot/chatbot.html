@@ -1,6 +1,5 @@
 <main class="chatbot-page">
   <header class="chatbot-header">
-    <p class="eyebrow">{{ 'chatbot.page.eyebrow' | translate }}</p>
     <h1>{{ 'chatbot.page.title' | translate }}</h1>
     <p>{{ 'chatbot.page.subtitle' | translate }}</p>
   </header>
@@ -27,7 +26,6 @@
   } @else if (!store.isSessionLoaded()) {
     <p class="status-text">{{ 'chatbot.page.loading' | translate }}</p>
   } @else if (store.session() === null || store.session()?.status === 'disconnected') {
-    <p class="status-text">{{ 'chatbot.page.connectPrompt' | translate }}</p>
     <div class="connection-card">
       <app-qr-connection-card (scanned)="onScanned()" />
     </div>

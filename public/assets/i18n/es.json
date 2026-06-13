@@ -679,7 +679,6 @@
     "page": {
       "title": "Chatbot",
       "loading": "Cargando...",
-      "connectPrompt": "Conecta tu WhatsApp Business para activar el chatbot",
       "connectionStatus": "Estado de la conexión",
       "subtitle": "Conecta WhatsApp Business, automatiza respuestas y valida pedidos desde el panel."
     },
