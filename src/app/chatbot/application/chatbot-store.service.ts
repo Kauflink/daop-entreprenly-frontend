@@ -22,6 +22,13 @@ export class ChatbotStoreService {
   /** Guards against opening more than one realtime stream across views. */
   private realtimeConnected = false;
 
+  /**
+   * Order ids whose approve/reject is in flight. Guards against a double-click
+   * firing the action twice before the first request returns, which would create
+   * duplicate confirmation messages (and duplicate WhatsApp deliveries).
+   */
+  private readonly processingOrders = new Set<number>();
+
   /** Locale del idioma activo para formatear fechas */
   private get locale(): string {
     const lang = this.translate.currentLang ?? this.translate.defaultLang ?? 'es';
@@ -103,13 +110,25 @@ export class ChatbotStoreService {
   }
 
   private upsertOrder(order: ChatOrder): void {
+    const prev = this.orders().find(o => o.id === order.id);
     this.orders.update(list => {
       const index = list.findIndex(o => o.id === order.id);
       if (index === -1) return [...list, order];
       const next = [...list];
-      next[index] = order;
+      // SSE order events don't carry receiptImage to keep payloads small.
+      // Preserve the image from the existing entry so it is never lost.
+      const merged: ChatOrder = order.receiptImage
+        ? order
+        : { ...order, receiptImage: next[index].receiptImage };
+      next[index] = merged;
       return next;
     });
+    // When a receipt is newly attached to the selected conversation's order,
+    // reload orders from HTTP so receiptImageSrc can render the actual image.
+    if (order.hasReceipt && !prev?.hasReceipt &&
+        order.conversationId === this.selectedConversationId()) {
+      this.loadOrders();
+    }
   }
 
   private appendRealtimeMessage(message: ChatMessage): void {
@@ -141,6 +160,9 @@ export class ChatbotStoreService {
     this.isClientTyping.set(false);
     this.botInputText.set('');
     this.liveAnimation.set(false);
+
+    // Refresh orders alongside messages so receiptImageSrc always has up-to-date data.
+    this.loadOrders();
 
     this.api.chatMessages.getAll().subscribe(all => {
       if (this._playId !== playId) return;
@@ -235,10 +257,15 @@ export class ChatbotStoreService {
 
   approveOrder(orderId: number): void {
     const order = this.orders().find(o => o.id === orderId);
-    if (!order) return;
+    // Only a payment still awaiting review can be approved, and never twice at once.
+    if (!order || order.status !== 'WAITING_PAYMENT' || this.processingOrders.has(orderId)) return;
+    this.processingOrders.add(orderId);
 
     const updated: ChatOrder = { ...order, status: 'CONFIRMED' as OrderStatus };
-    this.api.chatOrders.update(updated, orderId).subscribe(confirmed => {
+    this.api.chatOrders.update(updated, orderId).subscribe({
+      error: () => this.processingOrders.delete(orderId),
+      next: confirmed => {
+      this.processingOrders.delete(orderId);
       this.orders.update(list => list.map(o => o.id === orderId ? confirmed : o));
       this._updateConversationStatus(order.conversationId, 'COMPLETED');
 
@@ -258,12 +285,15 @@ export class ChatbotStoreService {
         this.messages.update(m => m.some(x => x.id === created.id) ? m : [...m, created]);
         timer(400).subscribe(() => this._typewriteAndSend(botMsg));
       });
+      },
     });
   }
 
   rejectOrder(orderId: number, reason = 'Imagen ilegible'): void {
     const order = this.orders().find(o => o.id === orderId);
-    if (!order) return;
+    // Reject only an in-review payment, and never twice at once.
+    if (!order || order.status !== 'WAITING_PAYMENT' || this.processingOrders.has(orderId)) return;
+    this.processingOrders.add(orderId);
 
     const newRejectionCount = (order.rejectionCount ?? 0) + 1;
     const isBlocked = newRejectionCount >= 2;
@@ -276,7 +306,10 @@ export class ChatbotStoreService {
       rejectionCount: newRejectionCount,
     };
 
-    this.api.chatOrders.update(updated, orderId).subscribe(rejected => {
+    this.api.chatOrders.update(updated, orderId).subscribe({
+      error: () => this.processingOrders.delete(orderId),
+      next: rejected => {
+      this.processingOrders.delete(orderId);
       this.orders.update(list => list.map(o => o.id === orderId ? rejected : o));
 
       if (isBlocked) {
@@ -306,6 +339,7 @@ export class ChatbotStoreService {
         this.messages.update(m => m.some(x => x.id === created.id) ? m : [...m, created]);
         timer(400).subscribe(() => this._typewriteAndSend(botMsg));
       });
+      },
     });
   }
 
