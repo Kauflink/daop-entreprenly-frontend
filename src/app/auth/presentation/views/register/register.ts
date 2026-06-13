@@ -50,8 +50,8 @@ export class Register {
   protected readonly benefits: Benefit[] = [
     { title: 'Inicio simple', copy: 'Crea tu cuenta en pocos pasos y entra al dashboard.' },
     { title: 'Plan Free listo', copy: 'Tu cuenta arranca con el plan inicial asignado.' },
-    { title: 'Operacion ordenada', copy: 'La cuenta representa un negocio con inventario, ventas y caja.' },
-    { title: 'Acceso inmediato', copy: 'Al registrarte quedas listo para iniciar sesion.' },
+    { title: 'Operación ordenada', copy: 'La cuenta representa un negocio con inventario, ventas y caja.' },
+    { title: 'Acceso inmediato', copy: 'Al registrarte quedas listo para iniciar sesión.' },
   ];
 
   protected readonly form = this.fb.nonNullable.group(
@@ -73,10 +73,10 @@ export class Register {
     const messages: string[] = [];
     if (this.form.get('firstName')?.invalid) messages.push('Ingresa tu nombre.');
     if (this.form.get('lastName')?.invalid) messages.push('Ingresa tu apellido.');
-    if (this.form.get('email')?.invalid) messages.push('Ingresa un correo valido.');
-    if (this.form.get('password')?.invalid) messages.push('La contrasena debe tener al menos 8 caracteres.');
-    if (this.form.hasError('passwordsMismatch')) messages.push('Las contrasenas no coinciden.');
-    if (this.form.get('acceptedTerms')?.invalid) messages.push('Debes aceptar los terminos.');
+    if (this.form.get('email')?.invalid) messages.push('Ingresa un correo válido.');
+    if (this.form.get('password')?.invalid) messages.push('La contraseña debe tener al menos 8 caracteres.');
+    if (this.form.hasError('passwordsMismatch')) messages.push('Las contraseñas no coinciden.');
+    if (this.form.get('acceptedTerms')?.invalid) messages.push('Debes aceptar los términos.');
     if (messages.length > 0) {
       this.errors.set(messages);
       return;
@@ -87,7 +87,7 @@ export class Register {
     this.authStore.register({ email, password, firstName, lastName, phone, timezone }).subscribe({
       next: () => this.router.navigate(['/dashboard']),
       error: () => {
-        this.errors.set(['No se pudo crear la cuenta (el correo ya podria estar registrado).']);
+        this.errors.set(['No se pudo crear la cuenta (el correo ya podría estar registrado).']);
         this.loading.set(false);
       },
     });
@@ -95,6 +95,6 @@ export class Register {
 
   protected registerWithGoogle(): void {
     this.errors.set([]);
-    this.notice.set('Registro con Google no disponible aun.');
+    this.notice.set('Registro con Google no disponible aún.');
   }
 }
