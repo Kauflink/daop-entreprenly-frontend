@@ -28,7 +28,9 @@
 /* ===== LAYOUT ===== */
 .main-layout {
   display: grid;
-  grid-template-columns: 1fr 380px;
+  /* minmax(0, 1fr) lets the left column shrink instead of forcing the grid
+     wider than the content area (which clipped the right column). */
+  grid-template-columns: minmax(0, 1fr) 380px;
   gap: 24px;
   align-items: start;
 }
@@ -36,12 +38,16 @@
 .left-column {
   display: flex;
   flex-direction: column;
+  /* min-width: 0 lets the column shrink below its content's intrinsic width so
+     the cart table scrolls inside its own card instead of widening the page. */
+  min-width: 0;
 }
 
 .right-column {
   display: flex;
   flex-direction: column;
   gap: 16px;
+  min-width: 0;
 }
 
 /* ===== CARD RESUMEN (queda en sales-page) ===== */
@@ -143,9 +149,12 @@
   font-size: 64px;
 }
 
-@media (max-width: 1080px) {
+/* Collapse to a single column at 1185px: above 1080px the dashboard sidebar
+   (217px) is still in flow, so the two-column layout only has room once the
+   viewport is wide enough for both the cart and the 380px summary aside. */
+@media (max-width: 1185px) {
   .main-layout {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
 }
 

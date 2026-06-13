@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, computed, inject, input } from '@angular/core';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
+import { ChatbotStoreService } from '../../../application/chatbot-store.service';
 import { ChatMessage } from '../../../domain/model/chat-message.entity';
 
 @Component({
@@ -22,7 +23,11 @@ import { ChatMessage } from '../../../domain/model/chat-message.entity';
         </div>
         <div class="max-w-xs rounded-2xl rounded-bl-sm bg-orange-400 px-4 py-2.5 shadow-sm">
           @if (message().type === 'image') {
-            <img [src]="message().content" [alt]="'chatbot.message.receiptAlt' | translate" class="w-40 rounded-lg" />
+            @if (receiptImageSrc()) {
+              <img [src]="receiptImageSrc()" [alt]="'chatbot.message.receiptAlt' | translate" class="w-40 rounded-lg" />
+            } @else {
+              <p class="text-sm text-white">📷 Comprobante de pago</p>
+            }
           } @else {
             <p class="text-sm text-white">{{ message().content }}</p>
           }
@@ -47,6 +52,14 @@ export class MessageBubble {
   readonly clientInitials = input<string>('AT');
 
   private readonly translate = inject(TranslateService);
+  private readonly store     = inject(ChatbotStoreService);
+
+  /** Resolves the receipt image from the order, so we never store base64 in chat messages. */
+  protected readonly receiptImageSrc = computed(() => {
+    if (this.message().type !== 'image') return '';
+    const convId = this.message().conversationId;
+    return this.store.orders().find(o => o.conversationId === convId && o.receiptImage)?.receiptImage ?? '';
+  });
 
   /** Traduce mensajes de sistema que usan formato 'chatbot.sys.CLAVE|param1|param2' */
   protected readonly systemText = computed(() => {
