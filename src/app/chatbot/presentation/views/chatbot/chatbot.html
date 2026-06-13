@@ -1,15 +1,42 @@
-<div class="p-8">
-  <h1 class="text-2xl font-bold text-gray-900">{{ 'chatbot.page.title' | translate }}</h1>
+<main class="chatbot-page">
+  <header class="chatbot-header">
+    <p class="eyebrow">{{ 'chatbot.page.eyebrow' | translate }}</p>
+    <h1>{{ 'chatbot.page.title' | translate }}</h1>
+    <p>{{ 'chatbot.page.subtitle' | translate }}</p>
+  </header>
 
-  @if (!store.isSessionLoaded()) {
-    <p class="mt-1 text-sm text-gray-400">{{ 'chatbot.page.loading' | translate }}</p>
+  @if (subscriptionStore.loading()) {
+    <p class="status-text">{{ 'chatbot.page.loading' | translate }}</p>
+  } @else if (!chatbotAllowed()) {
+    <section class="upgrade-card" aria-labelledby="chatbot-upgrade-title">
+      <div class="upgrade-card__icon" aria-hidden="true">QR</div>
+      <div class="upgrade-card__content">
+        <p class="upgrade-card__eyebrow">{{ 'chatbot.upgrade.eyebrow' | translate }}</p>
+        <h2 id="chatbot-upgrade-title">{{ 'chatbot.upgrade.title' | translate }}</h2>
+        <p>{{ 'chatbot.upgrade.description' | translate }}</p>
+        <ul>
+          <li>{{ 'chatbot.upgrade.features.automation' | translate }}</li>
+          <li>{{ 'chatbot.upgrade.features.orders' | translate }}</li>
+          <li>{{ 'chatbot.upgrade.features.receipts' | translate }}</li>
+        </ul>
+        <a class="upgrade-card__action" routerLink="/dashboard/subscription">
+          {{ 'chatbot.upgrade.action' | translate }}
+        </a>
+      </div>
+    </section>
+  } @else if (!store.isSessionLoaded()) {
+    <p class="status-text">{{ 'chatbot.page.loading' | translate }}</p>
   } @else if (store.session() === null || store.session()?.status === 'disconnected') {
-    <p class="mb-6 mt-1 text-sm text-gray-500">{{ 'chatbot.page.connectPrompt' | translate }}</p>
-    <div class="rounded-2xl bg-white shadow-sm">
+    <p class="status-text">{{ 'chatbot.page.connectPrompt' | translate }}</p>
+    <div class="connection-card">
       <app-qr-connection-card (scanned)="onScanned()" />
     </div>
   } @else {
-    <p class="mb-6 mt-1 text-sm text-gray-500">{{ 'chatbot.page.connectionStatus' | translate }}</p>
-    <app-whatsapp-status-card [session]="store.session()" [justConnected]="justConnected()" (reconnect)="onReconnect()" />
+    <p class="status-text">{{ 'chatbot.page.connectionStatus' | translate }}</p>
+    <app-whatsapp-status-card
+      [session]="store.session()"
+      [justConnected]="justConnected()"
+      (reconnect)="onReconnect()"
+    />
   }
-</div>
+</main>
