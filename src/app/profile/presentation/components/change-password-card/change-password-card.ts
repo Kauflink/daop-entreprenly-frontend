@@ -9,6 +9,7 @@ import {
 } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { TranslateModule } from '@ngx-translate/core';
+import { AuthApi } from '../../../../auth/infrastructure/auth-api';
 
 const passwordsMatchValidator: ValidatorFn = (group: AbstractControl): ValidationErrors | null => {
   const newPwd = group.get('newPassword')?.value;
@@ -25,10 +26,14 @@ const passwordsMatchValidator: ValidatorFn = (group: AbstractControl): Validatio
 })
 export class ChangePasswordCard {
   private readonly fb = inject(FormBuilder);
+  private readonly authApi = inject(AuthApi);
 
   protected readonly showCurrent = signal(false);
   protected readonly showNew = signal(false);
   protected readonly showConfirm = signal(false);
+
+  /** Submission feedback: 'idle' | 'pending' | 'success' | 'error'. */
+  protected readonly status = signal<'idle' | 'pending' | 'success' | 'error'>('idle');
 
   protected readonly form = this.fb.nonNullable.group(
     {
@@ -44,8 +49,15 @@ export class ChangePasswordCard {
   }
 
   protected onSubmit(): void {
-    if (this.form.invalid) return;
-    // Password update delegated to a future service
-    this.form.reset();
+    if (this.form.invalid || this.status() === 'pending') return;
+    const { currentPassword, newPassword } = this.form.getRawValue();
+    this.status.set('pending');
+    this.authApi.changePassword(currentPassword, newPassword).subscribe({
+      next: () => {
+        this.status.set('success');
+        this.form.reset();
+      },
+      error: () => this.status.set('error'),
+    });
   }
 }

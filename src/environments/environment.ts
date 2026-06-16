@@ -2,6 +2,7 @@ export const environment = {
   production: true,
   entreprenlyProviderApiBaseUrl: 'https://daop-api.entreprenly.online/api/v1',
   entreprenlyProviderAuthEndpointPath: '/authentication',
+  entreprenlyProviderUsersEndpointPath: '/users',
   entreprenlyProviderProfilesEndpointPath: '/profiles',
   entreprenlyProviderSalesEndpointPath: '/sales',
   entreprenlyProviderProfileEndpointPath: '/profile',

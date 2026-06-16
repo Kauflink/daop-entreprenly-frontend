@@ -19,6 +19,11 @@
           {{ 'profile.phoneVerify.verifyAction' | translate }}
         </button>
       </div>
+      @if (status() === 'success') {
+        <p class="field__success" role="status">
+          {{ 'profile.phoneVerify.feedback.success' | translate }}
+        </p>
+      }
     </div>
   </form>
 </div>
