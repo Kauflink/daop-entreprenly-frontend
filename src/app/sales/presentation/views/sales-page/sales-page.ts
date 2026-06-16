@@ -9,6 +9,7 @@ import { WeightModal } from '../../components/weight-modal/weight-modal';
 import { CashSummary } from '../cash-summary/cash-summary';
 import { PaymentSelection, PaymentMethodComponent } from '../payment-method/payment-method';
 import { SalesCart, TicketItem } from '../sales-cart/sales-cart';
+import { SalesHistory } from '../sales-history/sales-history';
 import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
@@ -20,6 +21,7 @@ import { TranslatePipe } from '@ngx-translate/core';
     PaymentMethodComponent,
     TranslatePipe,
     SalesCart,
+    SalesHistory,
   ],
   templateUrl: './sales-page.html',
   styleUrl: './sales-page.css',

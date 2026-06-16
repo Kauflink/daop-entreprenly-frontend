@@ -42,6 +42,10 @@ getSales(): Observable<Sale[]> {
     return this.salesEndpoint.getAll();
   }
 
+  getSalesByDate(date: string): Observable<Sale[]> {
+    return this.salesEndpoint.getByDate(date);
+  }
+
   createSale(sale: Sale): Observable<Sale> {
     return this.salesEndpoint.createSale(sale);
   }
