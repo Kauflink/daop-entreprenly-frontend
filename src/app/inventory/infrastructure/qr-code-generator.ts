@@ -1,7 +1,8 @@
 import { ErrorCorrectLevel, QRCode } from 'qrcode-generator-ts/js';
 
-export function buildQrCodeDataUrl(value: string, size = 90): string {
-  const text = value.trim() || ' ';
+export function buildQrCodeDataUrl(value: string | null | undefined, size = 90): string {
+  // codeQR is nullable (products may have no QR yet), so guard against null/undefined.
+  const text = (value ?? '').trim() || ' ';
   const maxTypeNumber = 40;
 
   for (let typeNumber = 1; typeNumber <= maxTypeNumber; typeNumber += 1) {
