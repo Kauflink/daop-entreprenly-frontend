@@ -1,0 +1,64 @@
+<section class="history">
+  <div class="history-head">
+    <h2 class="history-title">Historial de ventas</h2>
+    <input
+      type="date"
+      class="history-date"
+      [value]="store.selectedDate()"
+      (change)="onDateChange($event)"
+    />
+  </div>
+
+  @if (store.salesLoading()) {
+    <p class="history-empty">Cargando ventas…</p>
+  } @else if (store.sales().length === 0) {
+    <p class="history-empty">No hay ventas registradas para este día.</p>
+  } @else {
+    <div class="history-list">
+      @for (sale of store.sales(); track sale.id) {
+        <button class="history-row" type="button" (click)="openDetail(sale)">
+          <span class="row-time">{{ sale.createdAt | date: 'HH:mm' }}</span>
+          <span class="row-method">{{ methodLabel(sale) }}</span>
+          <span class="row-items">{{ sale.items.length }} prod.</span>
+          <span class="row-total">{{ currency.format(sale.total) }}</span>
+        </button>
+      }
+    </div>
+  }
+</section>
+
+@if (selectedSale(); as sale) {
+  <div class="modal-backdrop" (click)="closeDetail()">
+    <div class="detail-modal" (click)="$event.stopPropagation()">
+      <button class="close-btn" type="button" (click)="closeDetail()">✕</button>
+      <h3 class="detail-title">Detalle de venta</h3>
+      <p class="detail-sub">
+        {{ sale.createdAt | date: 'dd/MM/yyyy HH:mm' }} · {{ methodLabel(sale) }}
+      </p>
+      <table class="detail-table">
+        <thead>
+          <tr>
+            <th>Producto</th>
+            <th>Cant./Peso</th>
+            <th>P. Unit.</th>
+            <th>Subtotal</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (item of sale.items; track $index) {
+            <tr>
+              <td>{{ item.productName }}</td>
+              <td>{{ measure(item) }}</td>
+              <td>{{ currency.format(item.unitPrice) }}</td>
+              <td>{{ currency.format(item.subtotal) }}</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+      <div class="detail-total">
+        <span>Total</span>
+        <span>{{ currency.format(sale.total) }}</span>
+      </div>
+    </div>
+  </div>
+}
