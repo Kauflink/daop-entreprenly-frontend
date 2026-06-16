@@ -15,10 +15,20 @@
           [placeholder]="'profile.emailChange.fields.email.placeholder' | translate"
           autocomplete="email"
         />
-        <button type="submit" class="btn-verify" [disabled]="form.invalid">
+        <button type="submit" class="btn-verify" [disabled]="form.invalid || status() === 'pending'">
           {{ 'profile.emailChange.verifyAction' | translate }}
         </button>
       </div>
+      @if (status() === 'success') {
+        <p class="field__success" role="status">
+          {{ 'profile.emailChange.feedback.success' | translate }}
+        </p>
+      }
+      @if (status() === 'error') {
+        <p class="field__error" role="alert">
+          {{ 'profile.emailChange.feedback.error' | translate }}
+        </p>
+      }
     </div>
   </form>
 </div>

@@ -25,6 +25,8 @@ export class AuthApi {
   private readonly assembler = inject(AuthAssembler);
   private readonly baseUrl =
     environment.entreprenlyProviderApiBaseUrl + environment.entreprenlyProviderAuthEndpointPath;
+  private readonly usersUrl =
+    environment.entreprenlyProviderApiBaseUrl + environment.entreprenlyProviderUsersEndpointPath;
 
   signIn(email: string, password: string): Observable<AuthenticatedUser> {
     return this.http
@@ -34,5 +36,18 @@ export class AuthApi {
 
   signUp(request: SignUpRequest): Observable<SignUpResultResource> {
     return this.http.post<SignUpResultResource>(`${this.baseUrl}/sign-up`, request);
+  }
+
+  /** Changes the authenticated user's password (current password verified server-side). */
+  changePassword(currentPassword: string, newPassword: string): Observable<SignUpResultResource> {
+    return this.http.put<SignUpResultResource>(`${this.usersUrl}/me/password`, {
+      currentPassword,
+      newPassword,
+    });
+  }
+
+  /** Changes the authenticated user's email. The current JWT becomes stale afterwards. */
+  changeEmail(email: string): Observable<SignUpResultResource> {
+    return this.http.put<SignUpResultResource>(`${this.usersUrl}/me/email`, { email });
   }
 }

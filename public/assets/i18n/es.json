@@ -594,7 +594,10 @@
           "placeholder": "+51 999 999 999"
         }
       },
-      "verifyAction": "Verificar"
+      "verifyAction": "Verificar",
+      "feedback": {
+        "success": "Número de teléfono actualizado."
+      }
     },
     "emailChange": {
       "title": "Cambiar email con re-verificación",
@@ -604,7 +607,11 @@
           "placeholder": "nuevo-correo@entreprenly.online"
         }
       },
-      "verifyAction": "Verificar"
+      "verifyAction": "Verificar",
+      "feedback": {
+        "success": "Email actualizado. Vuelve a iniciar sesión con tu nuevo email.",
+        "error": "No se pudo cambiar el email. Puede que ya esté en uso."
+      }
     },
     "changePassword": {
       "title": "Cambiar contraseña",
@@ -630,6 +637,10 @@
       },
       "errors": {
         "mismatch": "Las contraseñas no coinciden."
+      },
+      "feedback": {
+        "success": "Contraseña actualizada correctamente.",
+        "error": "No se pudo cambiar la contraseña. Verifica tu contraseña actual."
       },
       "updateAction": "Actualizar contraseña"
     },

@@ -2,6 +2,7 @@ export const environment = {
   production: false,
   entreprenlyProviderApiBaseUrl: 'http://localhost:8092/api/v1',
   entreprenlyProviderAuthEndpointPath: '/authentication',
+  entreprenlyProviderUsersEndpointPath: '/users',
   entreprenlyProviderProfilesEndpointPath: '/profiles',
   entreprenlyProviderSalesEndpointPath: '/sales',
   entreprenlyProviderProfileEndpointPath: '/profile',
