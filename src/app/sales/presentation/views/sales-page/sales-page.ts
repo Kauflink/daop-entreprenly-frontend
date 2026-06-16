@@ -150,7 +150,6 @@ export class SalesPage implements OnInit {
         }),
     );
 
-    this.store.addSaleToRegister(this.subtotal(), isDigital);
     this.store.createSale(saleItems, domainMethod, this.subtotal());
 
     this.showSuccessModal.set(true);
