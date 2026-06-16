@@ -16,12 +16,20 @@ export class SalesStore {
   private readonly loadingSignal = signal<boolean>(false);
   private readonly errorSignal = signal<string | null>(null);
   private readonly cashRegisterSignal = signal<CashRegister | null>(null);
+  private readonly salesSignal = signal<Sale[]>([]);
+  private readonly salesLoadingSignal = signal<boolean>(false);
+  private readonly selectedDateSignal = signal<string>(
+    new Intl.DateTimeFormat('en-CA', { timeZone: 'America/Lima' }).format(new Date()),
+  );
 
   // === SIGNALS PÚBLICOS DE LECTURA ===
   readonly products = this.productsSignal.asReadonly();
   readonly loading = this.loadingSignal.asReadonly();
   readonly error = this.errorSignal.asReadonly();
   readonly cashRegister = this.cashRegisterSignal.asReadonly();
+  readonly sales = this.salesSignal.asReadonly();
+  readonly salesLoading = this.salesLoadingSignal.asReadonly();
+  readonly selectedDate = this.selectedDateSignal.asReadonly();
 
   // === COMPUTED ===
   readonly productCount = computed(() => this.products().length);
@@ -36,6 +44,43 @@ export class SalesStore {
   constructor() {
     this.loadProducts();
     this.loadTodayCashRegister();
+    this.loadSales();
+  }
+
+  /** Loads the sales registered on the currently selected business day, newest first. */
+  loadSales(): void {
+    this.salesLoadingSignal.set(true);
+    this.salesApi
+      .getSalesByDate(this.selectedDateSignal())
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: (sales) => {
+          this.salesSignal.set(
+            [...sales].sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime()),
+          );
+          this.salesLoadingSignal.set(false);
+        },
+        error: (err) => {
+          console.error('❌ Error loading sales:', err);
+          this.salesLoadingSignal.set(false);
+        },
+      });
+  }
+
+  /** Selects a business day and reloads its sales. */
+  selectDate(date: string): void {
+    this.selectedDateSignal.set(date);
+    this.loadSales();
+  }
+
+  private todayLocalIso(): string {
+    return new Intl.DateTimeFormat('en-CA', { timeZone: 'America/Lima' }).format(new Date());
+  }
+
+  private reloadSalesIfViewingToday(): void {
+    if (this.selectedDateSignal() === this.todayLocalIso()) {
+      this.loadSales();
+    }
   }
 
   /** Refetches the product list from the API. Call when the Sales view is (re)entered. */
@@ -132,7 +177,10 @@ export class SalesStore {
       .createSale(sale)
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
-        next: () => this.decrementStockSequentially(items, 0),
+        next: () => {
+          this.reloadSalesIfViewingToday();
+          this.decrementStockSequentially(items, 0);
+        },
         error: (err) => console.error('❌ Error persisting sale:', err),
       });
   }
