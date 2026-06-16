@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, computed, inject, signal } from '@angular/core';
 import { SalesStore } from '../../../application/sales-store';
 import { CurrencyService } from '../../../../shared/infrastructure/currency-service';
 import { PaymentMethod } from '../../../domain/model/payment-method.enum';
@@ -25,9 +25,13 @@ import { TranslatePipe } from '@ngx-translate/core';
   styleUrl: './sales-page.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SalesPage {
+export class SalesPage implements OnInit {
   protected readonly store = inject(SalesStore);
   protected readonly currencyAssembler = inject(CurrencyService);
+
+  ngOnInit(): void {
+    this.store.reloadProducts();
+  }
 
   // === Modales ===
   protected readonly selectedProduct = signal<ProductSummary | null>(null);

@@ -38,6 +38,11 @@ export class SalesStore {
     this.loadTodayCashRegister();
   }
 
+  /** Refetches the product list from the API. Call when the Sales view is (re)entered. */
+  reloadProducts(): void {
+    this.loadProducts();
+  }
+
   private loadProducts(): void {
     this.loadingSignal.set(true);
     this.errorSignal.set(null);
