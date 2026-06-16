@@ -585,7 +585,10 @@
           "placeholder": "+51 999 999 999"
         }
       },
-      "verifyAction": "Verify"
+      "verifyAction": "Verify",
+      "feedback": {
+        "success": "Phone number updated."
+      }
     },
     "emailChange": {
       "title": "Change email with re-verification",
@@ -595,7 +598,11 @@
           "placeholder": "new-email@entreprenly.online"
         }
       },
-      "verifyAction": "Verify"
+      "verifyAction": "Verify",
+      "feedback": {
+        "success": "Email updated. Please sign in again with your new email.",
+        "error": "The email could not be changed. It may already be in use."
+      }
     },
     "changePassword": {
       "title": "Change password",
@@ -621,6 +628,10 @@
       },
       "errors": {
         "mismatch": "Passwords do not match."
+      },
+      "feedback": {
+        "success": "Password updated successfully.",
+        "error": "The password could not be changed. Check your current password."
       },
       "updateAction": "Update password"
     },

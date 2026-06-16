@@ -95,6 +95,22 @@ form {
   outline-offset: 2px;
 }
 
+.field__error {
+  font-family: 'Reddit Sans', sans-serif;
+  font-size: 11px;
+  color: var(--color-danger);
+  margin: 0;
+  padding-left: 12px;
+}
+
+.field__success {
+  font-family: 'Reddit Sans', sans-serif;
+  font-size: 11px;
+  color: var(--color-success);
+  margin: 0;
+  padding-left: 12px;
+}
+
 @media (max-width: 620px) {
   .card {
     padding: 16px;
