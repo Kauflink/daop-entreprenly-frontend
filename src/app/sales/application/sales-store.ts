@@ -9,6 +9,11 @@ import { SaleItem } from '../domain/model/sale-item.entity';
 import { SaleStatus } from '../domain/model/sale-status.enum';
 import { SalesApi } from '../infrastructure/sales-api';
 
+/** Rounds a monetary amount to two decimals to avoid floating-point drift. */
+function roundToCents(amount: number): number {
+  return Math.round(amount * 100) / 100;
+}
+
 @Injectable({ providedIn: 'root' })
 export class SalesStore {
   // === ESTADO ===
@@ -33,10 +38,24 @@ export class SalesStore {
 
   // === COMPUTED ===
   readonly productCount = computed(() => this.products().length);
-  readonly totalCash = computed(() => this.cashRegisterSignal()?.totalCash ?? 0);
-  readonly totalDigital = computed(() => this.cashRegisterSignal()?.totalDigital ?? 0);
-  readonly totalDay = computed(() => (this.cashRegisterSignal()?.totalCash ?? 0) + (this.cashRegisterSignal()?.totalDigital ?? 0));
-  readonly saleCount = computed(() => this.cashRegisterSignal()?.saleCount ?? 0);
+  // Cash summary totals are derived from the real sales of the selected day so that
+  // the "Resumen de Caja" always matches the sales history (single source of truth).
+  readonly totalCash = computed(() =>
+    roundToCents(
+      this.salesSignal()
+        .filter((sale) => sale.paymentMethod === PaymentMethod.CASH)
+        .reduce((sum, sale) => sum + sale.total, 0),
+    ),
+  );
+  readonly totalDigital = computed(() =>
+    roundToCents(
+      this.salesSignal()
+        .filter((sale) => sale.paymentMethod !== PaymentMethod.CASH)
+        .reduce((sum, sale) => sum + sale.total, 0),
+    ),
+  );
+  readonly totalDay = computed(() => roundToCents(this.totalCash() + this.totalDigital()));
+  readonly saleCount = computed(() => this.salesSignal().length);
 
   private readonly destroyRef = inject(DestroyRef);
   private readonly salesApi = inject(SalesApi);
