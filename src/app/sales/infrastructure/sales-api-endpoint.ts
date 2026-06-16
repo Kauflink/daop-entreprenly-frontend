@@ -29,4 +29,13 @@ export class SalesApiEndpoint extends BaseApiEndpoint<
         catchError(this.handleError('Failed to create sale')),
       );
   }
+
+  getByDate(date: string): Observable<Sale[]> {
+    return this.http
+      .get<SaleResource[]>(`${this.endpointUrl}?date=${date}`)
+      .pipe(
+        map((resources) => resources.map((resource) => this.assembler.toEntityFromResource(resource))),
+        catchError(this.handleError('Failed to load sales by date')),
+      );
+  }
 }
