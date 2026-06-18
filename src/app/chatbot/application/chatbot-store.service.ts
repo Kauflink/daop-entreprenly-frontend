@@ -233,6 +233,10 @@ export class ChatbotStoreService {
     const current = this.session();
     if (!current) return;
     const updated: WhatsappSession = { ...current, status: 'disconnected', connectedAt: undefined };
+    const disconnectUrl = `${environment.entreprenlyProviderApiBaseUrl}/chatbot/whatsapp/bridge/session`;
+    this.http.delete(disconnectUrl).subscribe({
+      error: () => {},
+    });
     this.api.whatsappSessions.update(updated, current.id).subscribe(session => {
       this.session.set(session);
     });
