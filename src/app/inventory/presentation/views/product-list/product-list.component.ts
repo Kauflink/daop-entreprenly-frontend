@@ -1,6 +1,7 @@
-import { Component, inject, computed } from '@angular/core';
+import { Component, inject, computed, signal } from '@angular/core';
 import { Router, RouterOutlet, ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { TranslatePipe } from '@ngx-translate/core';
 
@@ -15,6 +16,7 @@ import { ProductItemComponent, ProductRow } from '../../components/product-item/
   standalone: true,
   imports: [
     CommonModule,
+    FormsModule,
     MatProgressSpinnerModule,
     TranslatePipe,
     ProductItemComponent,
@@ -29,7 +31,9 @@ export class ProductListComponent {
   readonly route  = inject(ActivatedRoute);
   private readonly currencyStore = inject(CurrencyStore);
 
-  readonly allProducts = computed<ProductRow[]>(() => {
+  searchTerm = signal('');
+
+  private readonly allProducts = computed<ProductRow[]>(() => {
     const units: ProductRow[] = this.store.unitProducts().map((p: UnitProduct) => ({
       id: p.id,
       type: 'unit' as const,
@@ -59,6 +63,19 @@ export class ProductListComponent {
     }));
 
     return [...units, ...weights];
+  });
+
+  readonly products = computed<ProductRow[]>(() => {
+    const term = this.searchTerm().trim().toLowerCase();
+
+    if (!term) {
+      return this.allProducts();
+    }
+
+    return this.allProducts().filter(product =>
+      product.name.toLowerCase().includes(term) ||
+      product.description?.toLowerCase().includes(term)
+    );
   });
 
   goToAdd(): void {
