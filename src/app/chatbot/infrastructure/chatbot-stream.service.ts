@@ -1,6 +1,7 @@
 import { Injectable, NgZone, inject } from '@angular/core';
 import { Subject, Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
+import { AuthStore } from '../../auth/application/auth-store';
 import { Conversation } from '../domain/model/conversation.entity';
 import { ChatMessage } from '../domain/model/chat-message.entity';
 import { ChatOrder } from '../domain/model/chat-order.entity';
@@ -15,6 +16,7 @@ import { ChatOrder } from '../domain/model/chat-order.entity';
 @Injectable({ providedIn: 'root' })
 export class ChatbotStreamService {
   private readonly zone = inject(NgZone);
+  private readonly auth = inject(AuthStore);
 
   private readonly messageSubject = new Subject<ChatMessage>();
   private readonly conversationSubject = new Subject<Conversation>();
@@ -34,7 +36,13 @@ export class ChatbotStreamService {
   connect(): void {
     if (this.source || typeof EventSource === 'undefined') return;
 
-    const source = new EventSource(this.streamUrl);
+    // EventSource cannot send an Authorization header, so the JWT travels as a
+    // query parameter; the backend validates it before opening the stream.
+    const token = this.auth.token;
+    if (!token) return;
+
+    const url = `${this.streamUrl}?token=${encodeURIComponent(token)}`;
+    const source = new EventSource(url);
     this.source = source;
 
     source.addEventListener('message', e => this.emit(this.messageSubject, e));

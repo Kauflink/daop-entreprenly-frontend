@@ -14,15 +14,27 @@
 
     </div>
 
-    <button
-      class="btn-add"
-      (click)="goToAdd()">
+    <div class="header-actions">
 
-      <span class="plus">+</span>
+      <input
+        class="search-input"
+        type="text"
+        [placeholder]="'products.search' | translate"
+        [ngModel]="searchTerm()"
+        (ngModelChange)="searchTerm.set($event)"
+      />
 
-      {{ 'products.add' | translate }}
+      <button
+        class="btn-add"
+        (click)="goToAdd()">
 
-    </button>
+        <span class="plus">+</span>
+
+        {{ 'products.add' | translate }}
+
+      </button>
+
+    </div>
 
   </div>
 
@@ -60,7 +72,7 @@
 
     <div class="table-body">
 
-      @for (product of allProducts(); track product.type + '-' + product.id) {
+      @for (product of products(); track product.type + '-' + product.id) {
 
         <app-product-item
           [product]="product"

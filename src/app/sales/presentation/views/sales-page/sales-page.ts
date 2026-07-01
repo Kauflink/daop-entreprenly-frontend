@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, computed, inject, signal } from '@angular/core';
 import { SalesStore } from '../../../application/sales-store';
 import { CurrencyService } from '../../../../shared/infrastructure/currency-service';
 import { PaymentMethod } from '../../../domain/model/payment-method.enum';
@@ -9,6 +9,7 @@ import { WeightModal } from '../../components/weight-modal/weight-modal';
 import { CashSummary } from '../cash-summary/cash-summary';
 import { PaymentSelection, PaymentMethodComponent } from '../payment-method/payment-method';
 import { SalesCart, TicketItem } from '../sales-cart/sales-cart';
+import { SalesHistory } from '../sales-history/sales-history';
 import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
@@ -20,14 +21,19 @@ import { TranslatePipe } from '@ngx-translate/core';
     PaymentMethodComponent,
     TranslatePipe,
     SalesCart,
+    SalesHistory,
   ],
   templateUrl: './sales-page.html',
   styleUrl: './sales-page.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SalesPage {
+export class SalesPage implements OnInit {
   protected readonly store = inject(SalesStore);
   protected readonly currencyAssembler = inject(CurrencyService);
+
+  ngOnInit(): void {
+    this.store.reloadProducts();
+  }
 
   // === Modales ===
   protected readonly selectedProduct = signal<ProductSummary | null>(null);
@@ -144,7 +150,6 @@ export class SalesPage {
         }),
     );
 
-    this.store.addSaleToRegister(this.subtotal(), isDigital);
     this.store.createSale(saleItems, domainMethod, this.subtotal());
 
     this.showSuccessModal.set(true);

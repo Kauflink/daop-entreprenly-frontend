@@ -31,6 +31,7 @@
     "unit-products": "Productos por Unidad",
     "weight-products": "Productos por Peso",
     "subtitle": "Catálogo de productos disponibles.",
+    "search": "Buscar productos...",
     "add": "Agregar producto",
     "empty": "No hay productos registrados.",
     "col": {
@@ -516,7 +517,8 @@
         "paymentSelected": "Método de pago seleccionado para la suscripción.",
         "fiscalCompleted": "Datos fiscales completados para facturación.",
         "emptyHistory": "No hay actividad suficiente para descargar.",
-        "historyDownloaded": "Historial de suscripción descargado."
+        "historyDownloaded": "Historial de suscripción descargado.",
+        "loadError": "No se pudo cargar tu suscripción. Vuelve a iniciar sesión e inténtalo de nuevo."
       },
       "csv": {
         "filename": "historial-suscripcion-entreprenly.csv",
@@ -593,7 +595,10 @@
           "placeholder": "+51 999 999 999"
         }
       },
-      "verifyAction": "Verificar"
+      "verifyAction": "Verificar",
+      "feedback": {
+        "success": "Número de teléfono actualizado."
+      }
     },
     "emailChange": {
       "title": "Cambiar email con re-verificación",
@@ -603,7 +608,11 @@
           "placeholder": "nuevo-correo@entreprenly.online"
         }
       },
-      "verifyAction": "Verificar"
+      "verifyAction": "Verificar",
+      "feedback": {
+        "success": "Email actualizado. Vuelve a iniciar sesión con tu nuevo email.",
+        "error": "No se pudo cambiar el email. Puede que ya esté en uso."
+      }
     },
     "changePassword": {
       "title": "Cambiar contraseña",
@@ -629,6 +638,10 @@
       },
       "errors": {
         "mismatch": "Las contraseñas no coinciden."
+      },
+      "feedback": {
+        "success": "Contraseña actualizada correctamente.",
+        "error": "No se pudo cambiar la contraseña. Verifica tu contraseña actual."
       },
       "updateAction": "Actualizar contraseña"
     },

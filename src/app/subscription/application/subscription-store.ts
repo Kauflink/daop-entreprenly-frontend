@@ -58,11 +58,19 @@ export class SubscriptionStore {
     }
 
     this.loadingSignal.set(true);
-    this.subscriptionApi.getSubscriptionDashboard().subscribe((dashboard) => {
-      this.dashboardSignal.set(dashboard);
-      this.selectedCycleSignal.set('monthly');
-      this.loadedSignal.set(true);
-      this.loadingSignal.set(false);
+    this.subscriptionApi.getSubscriptionDashboard().subscribe({
+      next: (dashboard) => {
+        this.dashboardSignal.set(dashboard);
+        this.selectedCycleSignal.set('monthly');
+        this.loadedSignal.set(true);
+        this.loadingSignal.set(false);
+      },
+      error: () => {
+        // Do not mark as loaded so the next visit retries instead of silently
+        // showing the default Free dashboard.
+        this.loadingSignal.set(false);
+        this.feedbackSignal.set('subscription.store.feedback.loadError');
+      },
     });
   }
 

@@ -31,6 +31,7 @@
     "unit-products": "Unit Products",
     "weight-products": "Weight Products",
     "subtitle": "Available products catalog.",
+    "search": "Search products...",
     "add": "Add product",
     "empty": "No products registered.",
     "col": {
@@ -507,7 +508,8 @@
         "paymentSelected": "Payment method selected for subscription.",
         "fiscalCompleted": "Fiscal data completed for billing.",
         "emptyHistory": "Not enough activity to download.",
-        "historyDownloaded": "Subscription history downloaded."
+        "historyDownloaded": "Subscription history downloaded.",
+        "loadError": "We couldn't load your subscription. Please sign in again and retry."
       },
       "csv": {
         "filename": "subscription-history-entreprenly.csv",
@@ -584,7 +586,10 @@
           "placeholder": "+51 999 999 999"
         }
       },
-      "verifyAction": "Verify"
+      "verifyAction": "Verify",
+      "feedback": {
+        "success": "Phone number updated."
+      }
     },
     "emailChange": {
       "title": "Change email with re-verification",
@@ -594,7 +599,11 @@
           "placeholder": "new-email@entreprenly.online"
         }
       },
-      "verifyAction": "Verify"
+      "verifyAction": "Verify",
+      "feedback": {
+        "success": "Email updated. Please sign in again with your new email.",
+        "error": "The email could not be changed. It may already be in use."
+      }
     },
     "changePassword": {
       "title": "Change password",
@@ -620,6 +629,10 @@
       },
       "errors": {
         "mismatch": "Passwords do not match."
+      },
+      "feedback": {
+        "success": "Password updated successfully.",
+        "error": "The password could not be changed. Check your current password."
       },
       "updateAction": "Update password"
     },
