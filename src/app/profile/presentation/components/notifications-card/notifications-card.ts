@@ -18,14 +18,12 @@ export class NotificationsCard {
 
   protected readonly form = this.fb.nonNullable.group({
     stockAlerts: [false],
-    paymentAlerts: [false],
-    chatbotMessages: [false],
   });
 
   constructor() {
     effect(() => {
-      const { stockAlerts, paymentAlerts, chatbotMessages } = this.store.notificationSettings();
-      this.form.setValue({ stockAlerts, paymentAlerts, chatbotMessages }, { emitEvent: false });
+      const { stockAlerts } = this.store.notificationSettings();
+      this.form.setValue({ stockAlerts }, { emitEvent: false });
     });
 
     this.form.valueChanges

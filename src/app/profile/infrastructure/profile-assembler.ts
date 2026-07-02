@@ -39,8 +39,6 @@ export class ProfileAssembler {
     return {
       id: resource.id,
       stockAlerts: resource.notificationSettings.stockAlerts,
-      paymentAlerts: resource.notificationSettings.paymentAlerts,
-      chatbotMessages: resource.notificationSettings.chatbotMessages,
     };
   }
 }

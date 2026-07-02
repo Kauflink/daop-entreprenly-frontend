@@ -659,16 +659,6 @@
           "name": "Alertas de Stock y Lotes",
           "desc": "Avisos sobre stock bajo, lotes vencidos o próximos a vencer.",
           "toggleLabel": "Activar alertas de stock y lotes"
-        },
-        "payment": {
-          "name": "Validaciones de pago",
-          "desc": "Notificaciones cuando llega un comprobante o queda un pago pendiente.",
-          "toggleLabel": "Activar validaciones de pago"
-        },
-        "chatbot": {
-          "name": "Mensajes del chatbot",
-          "desc": "Aviso de nuevas conversaciones y respuestas del chatbot.",
-          "toggleLabel": "Activar mensajes del chatbot"
         }
       },
       "saveAction": "Guardar notificaciones"

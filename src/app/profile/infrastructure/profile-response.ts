@@ -11,8 +11,6 @@ export interface PreferencesResource {
 /** Notification settings as returned/accepted by the backend (nested in the profile). */
 export interface NotificationSettingsResource {
   stockAlerts: boolean;
-  paymentAlerts: boolean;
-  chatbotMessages: boolean;
 }
 
 /** Profile resource from the backend clean REST contract (camelCase, nested). */

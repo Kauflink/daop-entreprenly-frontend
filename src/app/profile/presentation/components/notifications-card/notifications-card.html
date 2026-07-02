@@ -16,41 +16,5 @@
       </label>
     </div>
 
-    <div class="toggle-item">
-      <div class="toggle-item__text">
-        <p class="toggle-item__name">
-          {{ 'profile.notifications.items.payment.name' | translate }}
-        </p>
-        <p class="toggle-item__desc">
-          {{ 'profile.notifications.items.payment.desc' | translate }}
-        </p>
-      </div>
-      <label
-        class="toggle-item__switch"
-        [attr.aria-label]="'profile.notifications.items.payment.toggleLabel' | translate"
-      >
-        <input type="checkbox" formControlName="paymentAlerts" class="visually-hidden" />
-        <span class="toggle-item__track" aria-hidden="true"></span>
-      </label>
-    </div>
-
-    <div class="toggle-item">
-      <div class="toggle-item__text">
-        <p class="toggle-item__name">
-          {{ 'profile.notifications.items.chatbot.name' | translate }}
-        </p>
-        <p class="toggle-item__desc">
-          {{ 'profile.notifications.items.chatbot.desc' | translate }}
-        </p>
-      </div>
-      <label
-        class="toggle-item__switch"
-        [attr.aria-label]="'profile.notifications.items.chatbot.toggleLabel' | translate"
-      >
-        <input type="checkbox" formControlName="chatbotMessages" class="visually-hidden" />
-        <span class="toggle-item__track" aria-hidden="true"></span>
-      </label>
-    </div>
-
   </form>
 </div>
