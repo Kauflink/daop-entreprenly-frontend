@@ -68,8 +68,10 @@
 
     @if (paymentMethodModalOpen()) {
       <app-payment-method-modal
+        [billingSetup]="dashboard().billingSetup"
         (closed)="closePaymentMethodModal()"
         (saved)="savePaymentMethod($event)"
+        (selected)="selectPaymentMethod($event)"
       />
     }
 

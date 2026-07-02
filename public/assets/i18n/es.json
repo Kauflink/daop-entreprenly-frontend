@@ -295,6 +295,7 @@
         "title": "Método de pago",
         "emptyDescription": "Aún no hay tarjeta o medio de pago registrado.",
         "addAction": "Agregar métodos de pago",
+        "viewAction": "Ver métodos de pago",
         "manageAction": "Gestionar métodos de pago",
         "available": "Disponible para pagos y renovaciones",
         "additionalMethod": "+{{ count }} método adicional",
@@ -488,7 +489,13 @@
     },
     "paymentMethod": {
       "addTitle": "Agregar método de pago",
+      "listTitle": "Métodos de pago",
       "holderPlaceholder": "Nombre del titular",
+      "cardEnding": "{{ brand }} terminada en {{ lastFour }}",
+      "holderExpiry": "{{ holder }} · vence {{ month }}/{{ year }}",
+      "primary": "Principal",
+      "addAnother": "Agregar método de pago",
+      "backToList": "Volver",
       "save": "Guardar cambios"
     },
     "history": {
@@ -524,7 +531,7 @@
         "filename": "historial-suscripcion-entreprenly.csv",
         "header": "Evento,Detalle"
       },
-      "paymentMethodActionLabel": "Agregar métodos de pago",
+      "paymentMethodActionLabel": "Ver métodos de pago",
       "fiscalDataActionLabel": "Editar datos fiscales",
       "paymentMethodDescription": "{{ brand }} terminada en {{ lastFour }} - vence {{ month }}/{{ year }}",
       "fiscalDataDescription": "{{ documentType }} {{ documentNumber }} - {{ businessName }}"
