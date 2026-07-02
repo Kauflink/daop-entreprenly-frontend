@@ -14,7 +14,7 @@
     {{
       (showPaymentForm()
         ? 'subscription.paymentMethod.addTitle'
-        : 'subscription.paymentMethod.listTitle'
+        : 'subscription.upgrade.payment.selectMethod'
       ) | translate
     }}
   </h2>
@@ -33,7 +33,7 @@
           <span>
             <strong>
               {{
-                'subscription.paymentMethod.cardEnding'
+                'subscription.upgrade.payment.cardEndingShort'
                   | translate
                     : {
                         brand: paymentMethod.cardBrand,
@@ -43,7 +43,7 @@
             </strong>
             <small>
               {{
-                'subscription.paymentMethod.holderExpiry'
+                'subscription.upgrade.payment.holderExpiry'
                   | translate
                     : {
                         holder: paymentMethod.holderName,
@@ -54,14 +54,14 @@
             </small>
           </span>
           @if (paymentMethod.isDefault) {
-            <em>{{ 'subscription.paymentMethod.primary' | translate }}</em>
+            <em>{{ 'subscription.billing.paymentMethod.available' | translate }}</em>
           }
         </button>
       }
     </div>
 
     <button class="primary-button" type="button" (click)="showAddPaymentForm()">
-      {{ 'subscription.paymentMethod.addAnother' | translate }}
+      {{ 'subscription.paymentMethod.addTitle' | translate }}
     </button>
   } @else {
     <form class="modal-form" [formGroup]="paymentForm" (ngSubmit)="save()">
@@ -130,7 +130,7 @@
       <div class="modal-actions">
         @if (paymentMethods().length > 0) {
           <button class="secondary-button" type="button" (click)="showPaymentList()">
-            {{ 'subscription.paymentMethod.backToList' | translate }}
+            {{ 'subscription.upgrade.back' | translate }}
           </button>
         }
         <button class="primary-button" type="submit">{{ 'subscription.paymentMethod.save' | translate }}</button>

@@ -296,7 +296,7 @@
         "emptyDescription": "Aún no hay tarjeta o medio de pago registrado.",
         "addAction": "Agregar métodos de pago",
         "viewAction": "Ver métodos de pago",
-        "manageAction": "Gestionar métodos de pago",
+        "manageAction": "Ver métodos de pago",
         "available": "Disponible para pagos y renovaciones",
         "additionalMethod": "+{{ count }} método adicional",
         "additionalMethods": "+{{ count }} métodos adicionales",
