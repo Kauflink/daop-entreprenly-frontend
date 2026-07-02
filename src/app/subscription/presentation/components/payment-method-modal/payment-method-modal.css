@@ -71,6 +71,59 @@ h2 {
   margin-top: 26px;
 }
 
+.payment-method-list {
+  display: grid;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.payment-method-option {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 14px;
+  align-items: center;
+  width: 100%;
+  border: 1px solid var(--color-inner-bg);
+  border-radius: 18px;
+  background: #fffdfa;
+  color: #080604;
+  cursor: pointer;
+  font: inherit;
+  padding: 16px;
+  text-align: left;
+}
+
+.payment-method-option--selected {
+  border-color: #bee3cb;
+  background: #f2fbf5;
+}
+
+.payment-method-option span {
+  display: grid;
+  gap: 4px;
+}
+
+.payment-method-option strong {
+  font-size: 14px;
+  font-weight: 850;
+}
+
+.payment-method-option small {
+  color: #6f625a;
+  font-size: 12px;
+}
+
+.payment-method-option em {
+  border-radius: 999px;
+  background: #eaf7ef;
+  color: #004e1d;
+  font-size: 11px;
+  font-style: normal;
+  font-weight: 850;
+  padding: 6px 10px;
+  text-transform: uppercase;
+}
+
 label {
   display: grid;
   gap: 8px;
@@ -116,6 +169,7 @@ small {
 
 .primary-button {
   grid-column: 1 / -1;
+  width: 100%;
   min-height: 58px;
   border: 0;
   border-radius: 999px;
@@ -126,6 +180,29 @@ small {
   font-weight: 850;
   padding: 0 30px;
   box-shadow: 0 14px 28px rgb(243 131 19 / 28%);
+}
+
+.payment-method-list + .primary-button {
+  margin-top: 20px;
+}
+
+.modal-actions {
+  display: grid;
+  grid-column: 1 / -1;
+  grid-template-columns: auto 1fr;
+  gap: 12px;
+}
+
+.secondary-button {
+  min-height: 58px;
+  border: 1px solid var(--color-inner-bg);
+  border-radius: 999px;
+  background: #fffdfa;
+  color: var(--color-label-accent);
+  cursor: pointer;
+  font: inherit;
+  font-weight: 850;
+  padding: 0 24px;
 }
 
 button:focus-visible,
@@ -145,6 +222,11 @@ input:focus-visible {
   }
 
   .modal-form {
+    grid-template-columns: 1fr;
+  }
+
+  .payment-method-option,
+  .modal-actions {
     grid-template-columns: 1fr;
   }
 }

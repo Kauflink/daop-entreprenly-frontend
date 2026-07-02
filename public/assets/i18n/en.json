@@ -300,6 +300,7 @@
         "title": "Payment method",
         "emptyDescription": "No payment method registered yet.",
         "addAction": "Add payment methods",
+        "viewAction": "View payment methods",
         "manageAction": "Manage payment methods",
         "available": "Available for payments and renewals",
         "additionalMethod": "+{{ count }} additional method",
@@ -479,7 +480,13 @@
     },
     "paymentMethod": {
       "addTitle": "Add payment method",
+      "listTitle": "Payment methods",
       "holderPlaceholder": "Cardholder name",
+      "cardEnding": "{{ brand }} ending in {{ lastFour }}",
+      "holderExpiry": "{{ holder }} · expires {{ month }}/{{ year }}",
+      "primary": "Primary",
+      "addAnother": "Add payment method",
+      "backToList": "Back",
       "save": "Save changes"
     },
     "history": {
@@ -515,7 +522,7 @@
         "filename": "subscription-history-entreprenly.csv",
         "header": "Event,Detail"
       },
-      "paymentMethodActionLabel": "Add payment methods",
+      "paymentMethodActionLabel": "View payment methods",
       "fiscalDataActionLabel": "Edit fiscal data",
       "paymentMethodDescription": "{{ brand }} ending in {{ lastFour }} - expires {{ month }}/{{ year }}",
       "fiscalDataDescription": "{{ documentType }} {{ documentNumber }} - {{ businessName }}"
