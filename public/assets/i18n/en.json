@@ -289,9 +289,18 @@
       }
     },
     "limits": {
-      "products": { "label": "Products", "ariaLabel": "Usage of Products" },
-      "active-batches": { "label": "Active lots", "ariaLabel": "Usage of Active lots" },
-      "users": { "label": "Users", "ariaLabel": "Usage of Users" }
+      "products": {
+        "label": "Products",
+        "ariaLabel": "Usage of Products"
+      },
+      "active-batches": {
+        "label": "Active lots",
+        "ariaLabel": "Usage of Active lots"
+      },
+      "users": {
+        "label": "Users",
+        "ariaLabel": "Usage of Users"
+      }
     },
     "billing": {
       "eyebrow": "Billing",
@@ -301,7 +310,7 @@
         "emptyDescription": "No payment method registered yet.",
         "addAction": "Add payment methods",
         "viewAction": "View payment methods",
-        "manageAction": "Manage payment methods",
+        "manageAction": "View payment methods",
         "available": "Available for payments and renewals",
         "additionalMethod": "+{{ count }} additional method",
         "additionalMethods": "+{{ count }} additional methods",
