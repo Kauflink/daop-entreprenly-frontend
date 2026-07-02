@@ -659,16 +659,6 @@
           "name": "Stock and Batch Alerts",
           "desc": "Notices about low stock, expired batches, or batches close to expiring.",
           "toggleLabel": "Enable stock and batch alerts"
-        },
-        "payment": {
-          "name": "Payment validations",
-          "desc": "Notifications when a receipt arrives or a payment is pending.",
-          "toggleLabel": "Enable payment validations"
-        },
-        "chatbot": {
-          "name": "Chatbot messages",
-          "desc": "Notices about new conversations and chatbot responses.",
-          "toggleLabel": "Enable chatbot messages"
         }
       },
       "saveAction": "Save notifications"
