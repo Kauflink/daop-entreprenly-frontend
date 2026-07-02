@@ -110,6 +110,10 @@ export class SubscriptionPage implements OnInit {
     this.closePaymentMethodModal();
   }
 
+  protected selectPaymentMethod(paymentMethodId: string): void {
+    this.subscriptionApp.selectPaymentMethod(paymentMethodId);
+  }
+
   protected saveUpgradePaymentMethod(paymentMethod: BillingPaymentMethodInput): void {
     this.subscriptionApp.addPaymentMethod(paymentMethod);
   }

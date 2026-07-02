@@ -29,7 +29,7 @@ export class BillingSetup {
   protected readonly hasPaymentMethod = computed(() => this.primaryPaymentMethod() !== null);
   protected readonly hasFiscalData = computed(() => this.fiscalData() !== null);
   protected readonly paymentActionLabelKey = computed(
-    () => 'subscription.billing.paymentMethod.addAction',
+    () => 'subscription.billing.paymentMethod.viewAction',
   );
   protected readonly fiscalActionLabelKey = computed(() =>
     this.hasFiscalData()

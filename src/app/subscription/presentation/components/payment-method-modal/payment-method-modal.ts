@@ -1,10 +1,14 @@
 import { CdkTrapFocus } from '@angular/cdk/a11y';
-import { ChangeDetectionStrategy, Component, computed, inject, output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, input, output, signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { TranslatePipe } from '@ngx-translate/core';
 import { startWith } from 'rxjs';
-import { BillingPaymentMethodInput, detectCardBrand } from '../../../domain/model/billing-setup.entity';
+import {
+  BillingPaymentMethodInput,
+  BillingSetup,
+  detectCardBrand,
+} from '../../../domain/model/billing-setup.entity';
 import { CardBrandBadge } from '../card-brand-badge/card-brand-badge';
 
 @Component({
@@ -18,8 +22,10 @@ import { CardBrandBadge } from '../card-brand-badge/card-brand-badge';
   },
 })
 export class PaymentMethodModal {
+  readonly billingSetup = input.required<BillingSetup>();
   readonly closed = output<void>();
   readonly saved = output<BillingPaymentMethodInput>();
+  readonly selected = output<string>();
 
   private readonly formBuilder = inject(NonNullableFormBuilder);
 
@@ -37,6 +43,11 @@ export class PaymentMethodModal {
   );
   protected readonly detectedCardBrand = computed(
     () => detectCardBrand(this.cardNumberValue()).label,
+  );
+  protected readonly addingPaymentMethod = signal(false);
+  protected readonly paymentMethods = computed(() => this.billingSetup().paymentMethods);
+  protected readonly showPaymentForm = computed(
+    () => this.addingPaymentMethod() || this.paymentMethods().length === 0,
   );
 
   protected close(): void {
@@ -63,6 +74,19 @@ export class PaymentMethodModal {
       expiryMonth,
       expiryYear,
     });
+  }
+
+  protected showAddPaymentForm(): void {
+    this.addingPaymentMethod.set(true);
+  }
+
+  protected showPaymentList(): void {
+    this.paymentForm.reset();
+    this.addingPaymentMethod.set(false);
+  }
+
+  protected selectPaymentMethod(paymentMethodId: string): void {
+    this.selected.emit(paymentMethodId);
   }
 
   protected hasFieldError(fieldName: keyof typeof this.paymentForm.controls): boolean {
