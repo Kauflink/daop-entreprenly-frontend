@@ -43,3 +43,15 @@ __screenshots__/
 .DS_Store
 Thumbs.db
 .claude/
+
+# AI assistant tooling (kept locally, out of the repo — only AGENTS.md is tracked)
+.agents/
+.junie/
+.gemini/
+.cursor/
+.windsurf/
+.github/copilot-instructions.md
+skills-lock.json
+
+# Firebase deploy cache
+.firebase/
