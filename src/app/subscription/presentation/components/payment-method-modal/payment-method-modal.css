@@ -31,9 +31,9 @@
   width: 38px;
   height: 38px;
   place-items: center;
-  border: 1px solid var(--color-inner-bg);
+  border: 1px solid #eae4e0;
   border-radius: 50%;
-  background: var(--color-card-bg);
+  background: #fbfaf8;
   color: var(--color-label-accent);
   cursor: pointer;
   font: inherit;
@@ -43,8 +43,9 @@
 
 .eyebrow {
   display: inline-flex;
+  border: 1px solid #eae4e0;
   border-radius: 999px;
-  background: var(--color-inner-bg);
+  background: #fbfaf8;
   color: var(--color-label-accent);
   font-size: 11px;
   font-weight: 800;
@@ -83,9 +84,9 @@ h2 {
   gap: 14px;
   align-items: center;
   width: 100%;
-  border: 1px solid var(--color-inner-bg);
+  border: 1px solid #eae4e0;
   border-radius: 18px;
-  background: #fff2d8;
+  background: #fbfaf8;
   color: #080604;
   cursor: pointer;
   font: inherit;
@@ -135,9 +136,9 @@ label {
 input {
   width: 100%;
   min-height: 46px;
-  border: 1px solid var(--color-inner-bg);
+  border: 1px solid #eae4e0;
   border-radius: 12px;
-  background: #fff2d8;
+  background: #fbfaf8;
   color: #080604;
   font: inherit;
   padding: 0 14px;
@@ -199,9 +200,9 @@ small {
 
 .secondary-button {
   min-height: 58px;
-  border: 1px solid var(--color-inner-bg);
+  border: 1px solid #eae4e0;
   border-radius: 999px;
-  background: #fff2d8;
+  background: #fbfaf8;
   color: var(--color-label-accent);
   cursor: pointer;
   font: inherit;
