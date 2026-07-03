@@ -8,6 +8,7 @@ import { MatIcon } from '@angular/material/icon';
 
 import { InventoryStoreService } from '../../../application/inventory-store.service';
 import { StockAlert } from '../../../domain/model/stock-alert.entity';
+import { ProfileStore } from '../../../../profile/application/profile-store';
 
 import { UnitProduct } from '../../../domain/model/unit-product.entity';
 import { WeightProduct } from '../../../domain/model/weight-product.entity';
@@ -43,6 +44,7 @@ export class LotListComponent {
 
   readonly store = inject(InventoryStoreService);
   readonly router = inject(Router);
+  private readonly profileStore = inject(ProfileStore);
 
   // ───────────────── SIGNALS ─────────────────
 
@@ -61,7 +63,17 @@ export class LotListComponent {
     )
   );
 
-  totalAlertCount = computed(() => this.rawAlerts().length);
+  /** Whether the user has stock alert notifications enabled in their profile. */
+  readonly notificationsEnabled = computed(() =>
+    this.profileStore.notificationSettings().stockAlerts
+  );
+
+  /** Alerts shown in the bell, gated by the profile "stock alerts" preference. */
+  readonly alerts = computed(() =>
+    this.notificationsEnabled() ? this.rawAlerts() : []
+  );
+
+  totalAlertCount = computed(() => this.alerts().length);
 
   toggleAlertsMenu(): void {
     this.alertsMenuOpen.update(open => !open);

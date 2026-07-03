@@ -104,6 +104,7 @@
       "buttonLabel": "View lot alerts",
       "dropdownTitle": "Lot alerts",
       "empty": "No pending alerts.",
+      "disabled": "Stock notifications are turned off. Enable them in your profile.",
       "title": {
         "expired": "{{count}} expired lot(s)",
         "outOfStock": "{{count}} lot(s) out of stock",
