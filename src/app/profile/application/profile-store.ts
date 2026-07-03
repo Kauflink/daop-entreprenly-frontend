@@ -52,8 +52,6 @@ export class ProfileStore {
   readonly notificationSettings = signal<NotificationSettings>({
     id: 0,
     stockAlerts: false,
-    paymentAlerts: false,
-    chatbotMessages: false,
   });
 
   readonly fullName = computed(() => `${this.profile().firstName} ${this.profile().lastName}`);
@@ -115,8 +113,6 @@ export class ProfileStore {
     this.notificationSettings.set({
       id: 0,
       stockAlerts: false,
-      paymentAlerts: false,
-      chatbotMessages: false,
     });
   }
 
@@ -162,8 +158,6 @@ export class ProfileStore {
     this.notificationSettings.set(updated);
     this.put(`${this.profilesUrl}/${this.profileId()}/notification-settings`, {
       stockAlerts: updated.stockAlerts,
-      paymentAlerts: updated.paymentAlerts,
-      chatbotMessages: updated.chatbotMessages,
     });
   }
 
