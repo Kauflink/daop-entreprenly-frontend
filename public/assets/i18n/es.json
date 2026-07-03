@@ -104,6 +104,7 @@
       "buttonLabel": "Ver alertas de lotes",
       "dropdownTitle": "Alertas de lotes",
       "empty": "No hay alertas pendientes.",
+      "disabled": "Las notificaciones de stock están desactivadas. Actívalas en tu perfil.",
       "title": {
         "expired": "{{count}} lote(s) vencido(s)",
         "outOfStock": "{{count}} lote(s) sin stock",
