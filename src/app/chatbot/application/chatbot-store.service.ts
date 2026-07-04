@@ -1,6 +1,6 @@
 import { Injectable, inject, signal, computed } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { timer } from 'rxjs';
+import { timer, interval } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 import { ChatbotApiService } from '../infrastructure/chatbot-api.service';
 import { ChatbotStreamService } from '../infrastructure/chatbot-stream.service';
@@ -97,6 +97,12 @@ export class ChatbotStoreService {
     this.stream.conversations$.subscribe(conversation => this.upsertConversation(conversation));
     this.stream.orders$.subscribe(order => this.upsertOrder(order));
     this.stream.messages$.subscribe(message => this.appendRealtimeMessage(message));
+
+    interval(8_000).subscribe(() => {
+      this.loadConversations();
+      this.loadOrders();
+      this.pollNewMessages();
+    });
   }
 
   private upsertConversation(conversation: Conversation): void {
@@ -129,6 +135,19 @@ export class ChatbotStoreService {
         order.conversationId === this.selectedConversationId()) {
       this.loadOrders();
     }
+  }
+
+  private pollNewMessages(): void {
+    const conversationId = this.selectedConversationId();
+    if (!conversationId) return;
+    this.api.chatMessages.getAll().subscribe(all => {
+      const fresh = all.filter(m => m.conversationId === conversationId);
+      this.messages.update(current => {
+        const existingIds = new Set(current.map(m => m.id));
+        const toAdd = fresh.filter(m => !existingIds.has(m.id));
+        return toAdd.length === 0 ? current : [...current, ...toAdd];
+      });
+    });
   }
 
   private appendRealtimeMessage(message: ChatMessage): void {
