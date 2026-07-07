@@ -3,53 +3,28 @@ import { ProductSummary } from '../domain/model/product-summary.entity';
 import {
   ProductResource,
   ProductsResponse,
-  UnitLotResource,
-  UnitProductResource,
-  WeightLotResource,
-  WeightProductResource,
+  SalesProductResource,
 } from './products-response';
-
-// Los IDs de productos por peso se offsetean para evitar colisión con productos por unidad
-const WEIGHT_ID_OFFSET = 1000;
 
 export class ProductAssembler implements BaseAssembler<
   ProductSummary,
   ProductResource,
   ProductsResponse
 > {
-  // ===== Inventory BC =====
+  // ===== Sales catalog =====
 
-  toEntityFromUnitResource(
-    resource: UnitProductResource,
-    lots: UnitLotResource[],
-  ): ProductSummary {
-    const availableStock = lots
-      .filter((l) => l.productId === resource.id)
-      .reduce((sum, l) => sum + l.quantity, 0);
-
+  /**
+   * Mapea un producto vendible del catálogo (nombre, precio, tipo y stock ya calculado por
+   * Inventario) a un ProductSummary del dominio. El catálogo no expone id de producto, así que
+   * se asigna un id local por posición para identificar el ítem dentro de la vista de venta.
+   */
+  toEntityFromSalesProduct(resource: SalesProductResource, index: number): ProductSummary {
     return new ProductSummary({
-      id: resource.id,
+      id: index + 1,
       name: resource.name,
       unitPrice: resource.price,
-      isWeighted: false,
-      availableStock,
-    });
-  }
-
-  toEntityFromWeightResource(
-    resource: WeightProductResource,
-    lots: WeightLotResource[],
-  ): ProductSummary {
-    const availableStock = lots
-      .filter((l) => l.productId === resource.id)
-      .reduce((sum, l) => sum + l.quantityKg, 0);
-
-    return new ProductSummary({
-      id: resource.id + WEIGHT_ID_OFFSET,
-      name: resource.name,
-      unitPrice: resource.pricePerKg,
-      isWeighted: true,
-      availableStock,
+      isWeighted: resource.byWeight,
+      availableStock: resource.stock,
     });
   }
 
