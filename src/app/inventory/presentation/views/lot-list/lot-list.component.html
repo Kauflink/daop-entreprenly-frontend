@@ -29,9 +29,11 @@
               <span>{{ totalAlertCount() }} {{ 'lots.alerts.totalLabel' | translate }}</span>
             </div>
 
-            @if (rawAlerts().length > 0) {
+            @if (!notificationsEnabled()) {
+              <p class="alert-empty">{{ 'lots.alerts.disabled' | translate }}</p>
+            } @else if (alerts().length > 0) {
               <div class="alert-dropdown-list">
-                @for (alert of rawAlerts(); track alert.productType + '-' + alert.productId + '-' + alert.lotId + '-' + alert.alertType + '-' + $index) {
+                @for (alert of alerts(); track alert.productType + '-' + alert.productId + '-' + alert.lotId + '-' + alert.alertType + '-' + $index) {
                   <button
                     type="button"
                     class="lot-alert"
