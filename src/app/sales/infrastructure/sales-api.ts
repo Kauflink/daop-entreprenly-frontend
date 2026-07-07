@@ -3,13 +3,10 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { BaseApi } from '../../shared/infrastructure/base-api';
 import { Sale } from '../domain/model/sale.entity';
-import { SaleItem } from '../domain/model/sale-item.entity';
 import { ProductSummary } from '../domain/model/product-summary.entity';
 import { ProductsApiEndpoint } from './products-api-endpoint';
 import { SalesApiEndpoint } from './sales-api-endpoint';
 import { environment } from '../../../environments/environment';
-
-const WEIGHT_ID_OFFSET = 1000;
 
 export interface ScaleStatus {
   id: number;
@@ -34,7 +31,7 @@ export class SalesApi extends BaseApi {
     return this.productsEndpoint.getAll();
   }
 
-getSales(): Observable<Sale[]> {
+  getSales(): Observable<Sale[]> {
     return this.salesEndpoint.getAll();
   }
 
@@ -48,21 +45,5 @@ getSales(): Observable<Sale[]> {
 
   getScaleStatus(): Observable<ScaleStatus> {
     return this.http.get<ScaleStatus>(`${environment.entreprenlyProviderApiBaseUrl}/iot-scale`);
-  }
-
-  /**
-   * Builds the stock-decrement request for a single sale item.
-   * Returns null when the item has neither units nor weight (nothing to decrement),
-   * so the caller can simply skip it without an extra empty observable.
-   */
-  decrementStockForItem(item: SaleItem): Observable<void> | null {
-    if (item.quantity !== null) {
-      return this.productsEndpoint.decrementUnitStock(item.productId, item.quantity);
-    }
-    if (item.weightKg !== null) {
-      const inventoryId = item.productId - WEIGHT_ID_OFFSET;
-      return this.productsEndpoint.decrementWeightStock(inventoryId, item.weightKg);
-    }
-    return null;
   }
 }

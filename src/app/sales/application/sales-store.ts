@@ -139,34 +139,13 @@ export class SalesStore {
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
         next: () => {
+          // The backend decrements inventory stock while registering the sale, so we just
+          // reload the catalog to reflect the updated stock.
           this.reloadSalesIfViewingToday();
-          this.decrementStockSequentially(items, 0);
+          this.loadProducts();
         },
         error: (err) => console.error('❌ Error persisting sale:', err),
       });
-  }
-
-  /**
-   * Decrements stock one item at a time, advancing to the next item only after the
-   * previous request completes, and reloads the product list once every item is done.
-   * Sequential by design to stay within the taught RxJS patterns (no forkJoin/switchMap).
-   */
-  private decrementStockSequentially(items: SaleItem[], index: number): void {
-    if (index >= items.length) {
-      this.loadProducts();
-      return;
-    }
-
-    const decrement$ = this.salesApi.decrementStockForItem(items[index]);
-    if (!decrement$) {
-      this.decrementStockSequentially(items, index + 1);
-      return;
-    }
-
-    decrement$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe({
-      next: () => this.decrementStockSequentially(items, index + 1),
-      error: (err) => console.error('❌ Error updating stock:', err),
-    });
   }
 
   private formatError(error: unknown, fallback: string): string {
