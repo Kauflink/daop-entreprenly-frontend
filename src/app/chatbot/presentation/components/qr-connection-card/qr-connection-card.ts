@@ -54,9 +54,12 @@ export class QrConnectionCard {
   /** Emitted when the bridge reports that the phone completed the QR scan. */
   readonly scanned = output<void>();
 
-  private readonly http        = inject(HttpClient);
-  private readonly destroyRef  = inject(DestroyRef);
-  private readonly bridgeQrUrl = `${environment.entreprenlyProviderApiBaseUrl}/chatbot/whatsapp/bridge/qr`;
+  private readonly http       = inject(HttpClient);
+  private readonly destroyRef = inject(DestroyRef);
+  // Authenticated proxy: the backend resolves the caller's seller id from the JWT and asks the
+  // bridge to start/read that seller's session — the bridge itself has no concept of "who is
+  // asking", so this must never be called with a client-supplied email or seller id.
+  private readonly qrPollUrl = `${environment.entreprenlyProviderApiBaseUrl}/whatsapp-sessions/qr`;
 
   protected readonly qrDataUrl = signal<string | null>(null);
 
@@ -65,7 +68,7 @@ export class QrConnectionCard {
     interval(5000).pipe(
       startWith(0),
       switchMap(() =>
-        this.http.get<BridgeQrState>(this.bridgeQrUrl).pipe(
+        this.http.get<BridgeQrState>(this.qrPollUrl).pipe(
           catchError(() => of<BridgeQrState>({ qr: null, connected: false })),
         ),
       ),

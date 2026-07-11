@@ -248,7 +248,7 @@ export class ChatbotStoreService {
    * bridge restarted), marks the session as disconnected so the QR card appears.
    */
   checkBridgeConnection(): void {
-    const url = `${environment.entreprenlyProviderApiBaseUrl}/chatbot/whatsapp/bridge/qr`;
+    const url = `${environment.entreprenlyProviderApiBaseUrl}/whatsapp-sessions/qr`;
     this.http.get<BridgeQrState>(url).subscribe({
       next: state => {
         if (state.qr && this.session()?.status === 'connected') {
